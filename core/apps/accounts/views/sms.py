@@ -18,7 +18,7 @@ from core.http import serializers, views as http_views
 
 class RegisterView(views.APIView, services.UserService, http_views.ApiResponse):
     """
-    Register new user
+        Register new user
     """
     serializer_class = serializers.RegisterSerializer
     throttle_classes = [throttling.UserRateThrottle]
@@ -69,7 +69,7 @@ class ConfirmView(views.APIView, services.UserService, http_views.ApiResponse):
             return self.error(e)
 
 
-class ResetConfirmationCodeView(views.APIView, http_views.ApiResponse, services.UserService): # noqa
+class ResetConfirmationCodeView(views.APIView, http_views.ApiResponse, services.UserService):  # noqa
     """
     Reset confirm otp code
     """
@@ -80,7 +80,7 @@ class ResetConfirmationCodeView(views.APIView, http_views.ApiResponse, services.
         ser.is_valid(raise_exception=True)
 
         data = ser.data
-        code, phone, password = data.get('code'), data.get('phone'), data.get('password') # noqa
+        code, phone, password = data.get('code'), data.get('phone'), data.get('password')  # noqa
 
         try:
             res = services.SmsService.check_confirm(phone, code)
@@ -105,7 +105,7 @@ class ResetPasswordView(http_views.AbstractSendSms):
     """
     Reset user password
     """
-    serializer_class: typing.Type[serializers.ResetPasswordSerializer] = serializers.ResetPasswordSerializer # noqa
+    serializer_class: typing.Type[serializers.ResetPasswordSerializer] = serializers.ResetPasswordSerializer  # noqa
 
 
 class MeView(views.APIView, http_views.ApiResponse):
