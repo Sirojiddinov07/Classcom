@@ -1,12 +1,14 @@
 from django.db import models
-from core.apps.classcom import choices, models as md
+from core.apps.classcom import choices
 from django.utils.translation import gettext_lazy as __
+
+from core.http.models import User
 
 
 class Schedule(models.Model):
     shift = models.CharField(max_length=255, choices=choices.ShiftChoice.choices, default=choices.ShiftChoice.MORNING)
-    teacher = models.ForeignKey(md.User, models.CASCADE)
-    science = models.ForeignKey(md.Science, models.CASCADE)
+    teacher = models.ForeignKey(User, models.CASCADE)
+    science = models.ForeignKey("Science", models.CASCADE)
     start_time = models.TimeField()
     end_time = models.TimeField()
 

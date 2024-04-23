@@ -1,12 +1,11 @@
 from django.db import models
-from core.apps.classcom import models as md
 from django.utils.translation import gettext_lazy as __
 
 
 class Download(models.Model):
-    teacher = models.ForeignKey(md.Teacher, on_delete=models.CASCADE)
+    teacher = models.ForeignKey("Teacher", on_delete=models.CASCADE)
     date = models.DateField()
-    resource = models.ForeignKey(md.Resource, on_delete=models.CASCADE)
+    resource = models.ForeignKey("Resource", on_delete=models.CASCADE)
 
     def __str__(self):
         return super().__str__()
