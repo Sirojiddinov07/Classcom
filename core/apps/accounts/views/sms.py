@@ -12,8 +12,9 @@ from core.utils import dd
 
 
 class RegisterView(views.APIView, services.UserService, http_views.ApiResponse):
-    """Register new user"""
-
+    """
+        Register new user
+    """
     serializer_class = serializers.RegisterSerializer
     throttle_classes = [throttling.UserRateThrottle]
     permission_classes = [permissions.AllowAny]
@@ -57,8 +58,10 @@ class ConfirmView(views.APIView, services.UserService, http_views.ApiResponse):
             return self.error(e)  # Api exception for APIException
 
 
-class ResetConfirmationCodeView(views.APIView, http_views.ApiResponse, services.UserService):
-    """Reset confirm otp code"""
+class ResetConfirmationCodeView(views.APIView, http_views.ApiResponse, services.UserService):  # noqa
+    """
+    Reset confirm otp code
+    """
 
     serializer_class = serializers.ResetConfirmationSerializer
     permission_classes = [permissions.AllowAny]
@@ -68,7 +71,9 @@ class ResetConfirmationCodeView(views.APIView, http_views.ApiResponse, services.
         ser.is_valid(raise_exception=True)
 
         data = ser.data
+
         code, phone = data.get('code'), data.get('phone')
+
         try:
             res = services.SmsService.check_confirm(phone, code)
             if res:
@@ -113,8 +118,10 @@ class ResendView(http_views.AbstractSendSms):
 
 
 class ResetPasswordView(http_views.AbstractSendSms):
-    """Reset user password"""
-    serializer_class: typing.Type[serializers.ResetPasswordSerializer] = serializers.ResetPasswordSerializer
+    """
+    Reset user password
+    """
+    serializer_class: typing.Type[serializers.ResetPasswordSerializer] = serializers.ResetPasswordSerializer  # noqa
 
 
 class MeView(views.APIView, http_views.ApiResponse):
