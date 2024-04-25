@@ -38,6 +38,7 @@ class ConfirmView(views.APIView, services.UserService, http_views.ApiResponse):
     """Confirm otp code"""
 
     serializer_class = serializers.ConfirmSerializer
+    permission_classes = [permissions.AllowAny]
 
     def post(self, request: rest_request.Request):
         ser = self.serializer_class(data=request.data)
