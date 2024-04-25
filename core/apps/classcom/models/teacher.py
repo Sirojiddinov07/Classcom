@@ -1,11 +1,12 @@
 from django.db import models
-from core.apps.classcom import models as md
 from django.utils.translation import gettext_lazy as __
+
+from core.http.models import User
 
 
 class Teacher(models.Model):
-    user = models.ForeignKey(md.User, on_delete=models.CASCADE)
-    science = models.ManyToManyField(md.Science, blank=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    science = models.ManyToManyField("Science", blank=True)
 
     def __str__(self):
         return self.user.first_name

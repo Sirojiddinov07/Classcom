@@ -1,1 +1,2 @@
-from .shift_choice import *  # noqa
+from .shift import *  # noqa
+from .role import *  # noqa

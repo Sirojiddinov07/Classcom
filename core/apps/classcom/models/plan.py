@@ -1,11 +1,10 @@
 from django.db import models
-from core.apps.classcom import models as md
 from django.utils.translation import gettext_lazy as __
 
 
 class Plan(models.Model):
-    classes = models.ForeignKey(md.Classes, on_delete=models.CASCADE)
-    topic = models.ForeignKey(md.Topic, on_delete=models.CASCADE)
+    classes = models.ForeignKey("Classes", on_delete=models.CASCADE)
+    topic = models.ForeignKey("Topic", on_delete=models.CASCADE)
     hour = models.IntegerField(default=0)
 
     def __str__(self):
