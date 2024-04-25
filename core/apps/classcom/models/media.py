@@ -3,8 +3,10 @@ from django.utils.translation import gettext_lazy as __
 
 
 class Media(models.Model):
-    name = models.CharField(max_length=255)
+    name = models.CharField(max_length=255, blank=True, null=True)
     file = models.FileField(upload_to='media/')
+    type = models.CharField(max_length=255, blank=True, null=True)
+    size = models.BigIntegerField(blank=True, null=True, default=0)
 
     def __str__(self):
         return self.name
