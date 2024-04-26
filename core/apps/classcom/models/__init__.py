@@ -4,7 +4,6 @@ from .science import *  # noqa
 from .moderator import *  # noqa
 from .plan import *  # noqa
 from .topic import *  # noqa
-from .history import *  # noqa
 from .quarter import *  # noqa
 from .teacher import *  # noqa
 from .classes import *  # noqa
