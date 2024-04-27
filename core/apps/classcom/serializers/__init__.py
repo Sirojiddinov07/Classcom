@@ -5,3 +5,4 @@ from .science import *  # noqa
 from .media import *  # noqa
 from .moderator import *  # noqa
 from .schedule import *  # noqa
+from .plan import * # noqa

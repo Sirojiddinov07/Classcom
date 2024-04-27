@@ -7,8 +7,8 @@ class Plan(models.Model):
     topic = models.ForeignKey("Topic", on_delete=models.CASCADE)
     hour = models.IntegerField(default=0)
 
-    def __str__(self):
-        return __(self.topic)
+    def __str(self):
+        return self.topic.id
 
     class Meta:
         unique_together = (('topic', 'classes'),)
