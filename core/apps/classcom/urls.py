@@ -8,6 +8,7 @@ router.register("science", views.ScienceViewSet, basename="science")
 router.register("class", views.ClassesViewSet, basename="class")
 router.register("resource", views.ResourceViewSet, basename="resource")
 router.register("media", views.MediaViewSet, basename="media")
+router.register("schedule", views.ScheduleViewSet, basename="schedule")
 
 urlpatterns = [
     path('', include(router.urls)),
