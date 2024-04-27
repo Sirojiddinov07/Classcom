@@ -1,6 +1,8 @@
-from django.urls import path, include
-from core.apps.classcom import views
+from django.urls import path
+from django.urls import include
 from rest_framework import routers
+
+from core.apps.classcom import views
 
 router = routers.DefaultRouter()
 router.register("topic", views.TopicViewSet, basename="topic")
