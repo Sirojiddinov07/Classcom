@@ -9,7 +9,7 @@ router.register("class", views.ClassesViewSet, basename="class")
 router.register("resource", views.ResourceViewSet, basename="resource")
 router.register("media", views.MediaViewSet, basename="media")
 router.register("schedule", views.ScheduleViewSet, basename="schedule")
-router.register("moderator", views.ModeratorViewSet, basename="moderator")
+router.register("moderator", views.ModeratorCreateViewSet, basename="moderator")
 
 urlpatterns = [
     path('', include(router.urls)),
