@@ -10,3 +10,4 @@ from .classes import *  # noqa
 from .download import *  # noqa
 from .schedule import *  # noqa
 from .media import *  # noqa
+from .download_token import *  # noqa
