@@ -3,12 +3,10 @@ from django.db import models
 from core.http.models.base import AbstractBaseModel
 
 from core.http.models.user import User
+from core.http.choices.feedback import FeedbackType
 
 
 class Feedback(AbstractBaseModel):
-    class FeedbackType(models.TextChoices):
-        firsttype = "first" # TODO o'zgaruvchi nomi o'zgartirilish
-        second = "second" # TODO o'zgaruvchi nomi o'zgartirilishi
     feedback_type = models.CharField(max_length=10, choices=FeedbackType.choices)
     body = models.TextField(validators=[MaxLengthValidator(1000)])
 
@@ -26,11 +24,11 @@ class Feedback(AbstractBaseModel):
 
 
 class Answer(AbstractBaseModel):
-    body = models.TextField(validators=[MaxLengthValidator(1000)])
     feedback = models.ForeignKey(Feedback, on_delete=models.CASCADE, related_name='answers')
+    body = models.TextField(validators=[MaxLengthValidator(1000)])
 
     def __str__(self) -> str:
-        return f"{self.user} | {self.feedback}"
+        return f"{self.feedback.user} | {self.feedback}"
     
     class Meta:
         db_table = 'naswer'

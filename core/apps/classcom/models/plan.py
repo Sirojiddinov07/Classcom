@@ -7,7 +7,7 @@ class Plan(models.Model):
     topic = models.ForeignKey("Topic", on_delete=models.CASCADE)
     hour = models.IntegerField(default=0)
 
-    def __str(self):
+    def __str__(self):
         return self.topic.id
 
     class Meta:

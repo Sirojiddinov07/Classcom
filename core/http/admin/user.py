@@ -1,5 +1,6 @@
-from django.contrib.auth import admin
+from django.contrib import admin
 from import_export import admin as import_export
+from core.http import models
 from core.http.forms import CustomUserCreationForm
 
 
