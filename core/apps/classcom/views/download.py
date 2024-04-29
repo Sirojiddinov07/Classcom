@@ -18,14 +18,17 @@ class DownloadResourceView(APIView):
         resource = get_object_or_404(Resource, id=resource_id)
         media = get_object_or_404(Media, resource=resource)
         teacher = get_object_or_404(Teacher, user=request.user)
-        download = Download.objects.create(teacher=teacher, resource=resource, date=datetime.date.today())
-
-        download_token = DownloadToken.objects.create(
-            download=download,
-            expires_at=timezone.now() + datetime.timedelta(minutes=30)
+        download = Download.objects.create(
+            teacher=teacher, resource=resource, date=datetime.date.today()
         )
 
-        download_url = request.build_absolute_uri(reverse('download_file', args=[download_token.token]))
+        download_token = DownloadToken.objects.create(
+            download=download, expires_at=timezone.now() + datetime.timedelta(minutes=5)
+        )
+
+        download_url = request.build_absolute_uri(
+            reverse("download_file", args=[download_token.token])
+        )
 
         return Response({"download_url": download_url})
 
@@ -42,12 +45,14 @@ class DownloadFileView(APIView):
         download = download_token.download
 
         if download.teacher.user != request.user:
-            return Response({"detail": "You are not authorized to download this file"}, status=403)
+            return Response(
+                {"detail": "You are not authorized to download this file"}, status=403
+            )
 
         media = get_object_or_404(Media, resource=download.resource)
 
         file_path = media.file.path
-        response = FileResponse(open(file_path, 'rb'))
+        response = FileResponse(open(file_path, "rb"))
 
         download_token.delete()
 
