@@ -8,3 +8,4 @@ from .schedule import *  # noqa
 from .plan import * # noqa
 from .feedback import * # noqa
 from .notification import * # noqa
+from .days_off import *  # noqa
