@@ -1,6 +1,6 @@
-from django.contrib import admin
+from django.contrib.auth import admin
 from import_export import admin as import_export
-from core.http import models
+from core.http.forms import CustomUserCreationForm
 
 
 class GroupAdmin(import_export.ImportExportModelAdmin):
@@ -11,11 +11,29 @@ class GroupAdmin(import_export.ImportExportModelAdmin):
     )
 
 
-@admin.register(models.User)
-class UserAdmin(import_export.ImportExportModelAdmin):
-    list_display = ['phone', "first_name", "last_name"]
-    search_fields = ["phone", "first_name", "last_name"]
-    filter_horizontal = (
-        "groups",
-        "user_permissions",
+class UserAdmin(admin.UserAdmin, import_export.ImportExportModelAdmin):
+    add_form = CustomUserCreationForm
+    list_display = ['phone', 'first_name', 'last_name', 'role']
+    search_fields = ['phone', 'first_name', 'last_name']
+    list_filter = ['role']
+    fieldsets = (
+        (None, {
+            'fields': ('username', 'phone', 'password')
+        }),
+        ('Personal info', {
+            'fields': ('first_name', 'last_name', 'email', 'role', 'region', 'district', 'institution', 'science_group',
+                       'institution_number')
+        }),
+        ('Permissions', {
+            'fields': ('is_active', 'is_staff', 'is_superuser', 'groups', 'user_permissions')
+        }),
+        ('Important dates', {
+            'fields': ('last_login', 'date_joined')
+        }),
+    )
+    add_fieldsets = (
+        (None, {
+            'classes': ('wide',),
+            'fields': ('phone', 'password1', 'password2'),
+        }),
     )
