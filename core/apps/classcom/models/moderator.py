@@ -23,7 +23,7 @@ class Moderator(models.Model):
         choices=choices.Degree.choices,
         default=choices.Degree.AUTHOR
     )
-    docs = models.FileField(upload_to='documents/')
+    docs = models.FileField(upload_to='documents/', null=True, blank=True)
     is_contracted = models.BooleanField(default=False)
 
     def __str__(self) -> str:
