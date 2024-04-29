@@ -12,6 +12,7 @@ router.register("resource", views.ResourceViewSet, basename="resource")
 router.register("media", views.MediaViewSet, basename="media")
 router.register("schedule", views.ScheduleViewSet, basename="schedule")
 router.register("moderator", views.ModeratorCreateViewSet, basename="moderator")
+router.register("days_off", views.DaysOffViewSet, basename="days_off")
 
 urlpatterns = [
     path('', include(router.urls)),
