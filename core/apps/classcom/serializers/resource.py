@@ -11,7 +11,7 @@ class ResourceSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Resource
         fields = (
-            "id", "name", "desc",
+            "id", "name",
             "classes", "topic", "media"
         )
         extra_kwargs = {"media": {"write_only": True}}
