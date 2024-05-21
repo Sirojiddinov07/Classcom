@@ -13,8 +13,8 @@ class Schedule(models.Model):
     )
     user = models.ForeignKey(User, models.CASCADE)
     science = models.ForeignKey("Science", models.CASCADE)
-    science = models.ForeignKey("Classes", models.CASCADE)
-    date = models.DateField()
+    classes = models.ForeignKey("Classes", models.CASCADE)
+    weekday = models.CharField(max_length=15, choices=choices.Weekday.choices)
     start_time = models.TimeField()
     end_time = models.TimeField()
 
