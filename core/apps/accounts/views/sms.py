@@ -1,6 +1,9 @@
 import typing
 import uuid
 
+from drf_yasg import openapi
+from drf_yasg .utils import swagger_auto_schema
+
 from django.utils.translation import gettext_lazy as _
 from rest_framework import permissions, request as rest_request, throttling, views
 
@@ -19,6 +22,18 @@ class RegisterView(views.APIView, services.UserService, http_views.ApiResponse):
     throttle_classes = [throttling.UserRateThrottle]
     permission_classes = [permissions.AllowAny]
 
+    @swagger_auto_schema(
+        manual_parameters=[
+            openapi.Parameter(
+                name='Register',
+                in_=openapi.IN_HEADER,
+                type=openapi.TYPE_STRING,
+                description='Register',
+                required=False
+            )
+        ],
+        responses={200: openapi.Response('Success', schema=serializer_class)}, 
+    )
     def post(self, request: rest_request.Request):
         ser = self.serializer_class(data=request.data)
         ser.is_valid(raise_exception=True)
@@ -40,6 +55,19 @@ class ConfirmView(views.APIView, services.UserService, http_views.ApiResponse):
     serializer_class = serializers.ConfirmSerializer
     permission_classes = [permissions.AllowAny]
 
+    @swagger_auto_schema(
+        request_body=serializer_class,
+        manual_parameters=[
+            openapi.Parameter(
+                name='Authorization',
+                in_=openapi.IN_HEADER,
+                type=openapi.TYPE_STRING,
+                description='Bearer Token',
+                required=False
+            )
+        ],
+        responses={201: openapi.Response('Success', schema=serializers.ConfirmSerializer)}, 
+    )
     def post(self, request: rest_request.Request):
         ser = self.serializer_class(data=request.data)
         ser.is_valid(raise_exception=True)
@@ -66,7 +94,19 @@ class ResetConfirmationCodeView(views.APIView, http_views.ApiResponse, services.
 
     serializer_class = serializers.ResetConfirmationSerializer
     permission_classes = [permissions.AllowAny]
-
+    
+    @swagger_auto_schema(
+        manual_parameters=[
+            openapi.Parameter(
+                name='Reset confirm',
+                in_=openapi.IN_HEADER,
+                type=openapi.TYPE_STRING,
+                description='Reset confirm',
+                required=False
+            )
+        ],
+        responses={200: openapi.Response('Success', schema=serializer_class)}, 
+    )
     def post(self, request: rest_request.Request):
         ser = self.serializer_class(data=request.data)
         ser.is_valid(raise_exception=True)
@@ -98,6 +138,18 @@ class ResetSetPasswordView(views.APIView, http_views.ApiResponse, services.UserS
     serializer_class = sms_serializers.SetPasswordSerializer
     permission_classes = [permissions.AllowAny]
 
+    @swagger_auto_schema(
+        manual_parameters=[
+            openapi.Parameter(
+                name='Reset set password',
+                in_=openapi.IN_HEADER,
+                type=openapi.TYPE_STRING,
+                description='Rset set password',
+                required=False
+            )
+        ],
+        responses={200: openapi.Response('Success', schema=serializer_class)}, 
+    )
     def post(self, request):
         ser = self.serializer_class(data=request.data)
         ser.is_valid(raise_exception=True)
@@ -128,6 +180,18 @@ class ResetPasswordView(http_views.AbstractSendSms):
 class MeView(views.APIView, http_views.ApiResponse):
     """Get user information"""
 
+    @swagger_auto_schema(
+        manual_parameters=[
+            openapi.Parameter(
+                name='Me',
+                in_=openapi.IN_HEADER,
+                type=openapi.TYPE_STRING,
+                description='Me',
+                required=False
+            )
+        ],
+        responses={200: openapi.Response('Success', schema=serializers.UserSerializer)}, 
+    )
     def get(self, request: rest_request.Request):
         user = request.user
         return self.success(data=serializers.UserSerializer(user).data)
