@@ -18,7 +18,7 @@ class DistrictSerializer(serializers.ModelSerializer):
         fields = ["district", "region"]
 
 
-class UserSerializer(serializers.ModelSerializer):
+class UserModeratorSerializer(serializers.ModelSerializer):
     region = RegionSerializer()
     district = DistrictSerializer()
 
@@ -46,7 +46,7 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class ModeratorCreateSerializer(serializers.ModelSerializer):
-    user = UserSerializer()
+    user = UserModeratorSerializer()
 
     class Meta:
         model = models.Moderator
@@ -54,7 +54,7 @@ class ModeratorCreateSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         user_data = validated_data.pop("user")
-        user_serializer = UserSerializer(data=user_data)
+        user_serializer = UserModeratorSerializer(data=user_data)
         user_serializer.is_valid(raise_exception=True)
         user = user_serializer.save()
         moderator = models.Moderator.objects.create(user=user, **validated_data)
