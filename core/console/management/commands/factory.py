@@ -22,7 +22,8 @@ class Command(management.BaseCommand):
 
         if len(FACTORYS) == 0:
             self.print(
-                "FACTORYS not defined:\n\nsettings file add FACTORYS variable", "error"
+                "FACTORYS not defined:\n\nsettings file add FACTORYS variable",
+                "error",
             )
             return
 

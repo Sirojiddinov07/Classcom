@@ -1,6 +1,10 @@
 from common.env import env
-from config.conf import rest_framework
 from config.settings.common import *  # noqa
+from config.settings.common import (
+    MIDDLEWARE,
+    ALLOWED_HOSTS,
+    INSTALLED_APPS,
+)
 
 DATABASES = {
     "default": {
@@ -41,6 +45,6 @@ INSTALLED_APPS += ["debug_toolbar", "django_extensions"]
 # Allowed Hosts
 ALLOWED_HOSTS += ["127.0.0.1", "192.168.100.26"]
 
-rest_framework.REST_FRAMEWORK["DEFAULT_THROTTLE_RATES"] = {
+REST_FRAMEWORK["DEFAULT_THROTTLE_RATES"] = {
     "user": "10/min",
 }

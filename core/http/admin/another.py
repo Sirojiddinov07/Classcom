@@ -20,7 +20,8 @@ class TagsInline(admin.TabularInline):
 
 
 class PostAdmin(
-    modeltranslation.TabbedTranslationAdmin, import_export.ImportExportModelAdmin
+    modeltranslation.TabbedTranslationAdmin,
+    import_export.ImportExportModelAdmin,
 ):  # noqa
     fields: tuple = ("title", "desc", "image", "tags")
     search_fields: list = ["title", "desc"]

@@ -19,10 +19,13 @@ def getScript(url: object) -> str:
         url: str = static.static(f"vite/{url}")
 
     if ext == "css":
-        script: str = "<link rel='stylesheet' type='text/css' href='{}'>".format(url)
+        script: str = (
+            "<link rel='stylesheet' type='text/css' href='{}'>".format(url)
+        )
     else:
         script: str = (
-            "<script type='module' type='text/javascript' src='{" "}'></script>"
+            "<script type='module' type='text/javascript' src='{"
+            "}'></script>"
         ).format(url)
     return script
 
@@ -38,14 +41,13 @@ def vite_load(*args):
             f" {settings.VITE_APP_DIR}/manifest.json file is empty?"
         )
     if not env("VITE_LIVE"):
-        imports_files = "".join([getScript(file["file"]) for file in manifest.values()])
+        imports_files = "".join(
+            [getScript(file["file"]) for file in manifest.values()]
+        )
 
     else:
         imports_files = "".join([getScript(file) for file in args])
-        imports_files += f""" <script type="module" 
-        src="http://{env('VITE_HOST')}:{env('VITE_PORT')}/@vite/client"></script> <script 
-        type="module" src="{static.static(
-            "js/vite-refresh.js")}"></script>
-                      """
+        imports_files += f""" <script type="module" src="http://{env('VITE_HOST')}:{env('VITE_PORT')}/@vite/client">
+        </script> <script type="module" src="{static.static("js/vite-refresh.js")}"></script>"""
 
     return safestring.mark_safe(imports_files)

@@ -15,7 +15,9 @@ class User(auth_models.AbstractUser):
     updated_at = models.DateTimeField(auto_now=True)
     validated_at = models.DateTimeField(null=True, blank=True)
     role = models.CharField(
-        max_length=255, choices=choices.RoleChoice, default=choices.RoleChoice.USER
+        max_length=255,
+        choices=choices.RoleChoice,
+        default=choices.RoleChoice.USER,
     )
 
     USERNAME_FIELD = "phone"
@@ -55,7 +57,8 @@ class SmsConfirm(models.Model):
 
         if (
             self.resend_unlock_time is not None
-            and self.resend_unlock_time.timestamp() < datetime.now().timestamp()
+            and self.resend_unlock_time.timestamp()
+            < datetime.now().timestamp()
         ):
             self.resend_unlock_time = None
 
