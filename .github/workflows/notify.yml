@@ -24,4 +24,3 @@ jobs:
           to: ${{ secrets.CHAT_ID }}
           disable_web_page_preview: true
           disable_notification: false
-  
