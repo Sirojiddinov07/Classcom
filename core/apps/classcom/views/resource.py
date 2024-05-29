@@ -20,9 +20,9 @@ class ResourceViewSet(viewsets.ModelViewSet):
 
         search_term = self.request.query_params.get("search", None)
         if search_term:
-            queryset = queryset.filter(name__icontains=search_term) | queryset.filter(
-                media__description__icontains=search_term
-            )
+            queryset = queryset.filter(
+                name__icontains=search_term
+            ) | queryset.filter(media__description__icontains=search_term)
 
         return queryset
 
@@ -33,7 +33,9 @@ class ResourceViewSet(viewsets.ModelViewSet):
         if self.action == "retrieve":
             return [
                 permissions.IsAuthor(models.Resource, self.kwargs.get("pk")),
-                http_permissions.HasRole([choices.Role.MODERATOR, choices.Role.ADMIN]),
+                http_permissions.HasRole(
+                    [choices.Role.MODERATOR, choices.Role.ADMIN]
+                ),
             ]
         return []
 

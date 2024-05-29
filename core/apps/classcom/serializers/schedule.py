@@ -50,7 +50,14 @@ class ScheduleListSerializer(serializers.ModelSerializer):
 class ScheduleCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Schedule
-        fields = ("shift", "science", "classes", "weekday", "start_time", "end_time")
+        fields = (
+            "shift",
+            "science",
+            "classes",
+            "weekday",
+            "start_time",
+            "end_time",
+        )
 
     def create(self, validated_data):
         user = self.context["request"].user

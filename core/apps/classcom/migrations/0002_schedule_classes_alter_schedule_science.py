@@ -25,7 +25,8 @@ class Migration(migrations.Migration):
             model_name="schedule",
             name="science",
             field=models.ForeignKey(
-                on_delete=django.db.models.deletion.CASCADE, to="classcom.science"
+                on_delete=django.db.models.deletion.CASCADE,
+                to="classcom.science",
             ),
         ),
     ]
