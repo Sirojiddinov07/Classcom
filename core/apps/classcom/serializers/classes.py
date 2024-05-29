@@ -5,4 +5,4 @@ from core.apps.classcom import models
 class ClassesSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Classes
-        fields = '__all__'
+        fields = "__all__"

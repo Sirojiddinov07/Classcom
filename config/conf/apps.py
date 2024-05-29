@@ -13,7 +13,6 @@ INSTALLED_APPS = [
     "import_export",
     "django_ckeditor_5",
     "polymorphic",
-
     #####################
     # My apps
     #####################
@@ -21,5 +20,5 @@ INSTALLED_APPS = [
     "core.http.HttpConfig",
     "core.apps.accounts.apps.AccountsConfig",
     "core.console.ConsoleConfig",
-    "core.apps.classcom.apps.ClassComConfig"
+    "core.apps.classcom.apps.ClassComConfig",
 ]

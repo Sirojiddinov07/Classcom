@@ -1,32 +1,28 @@
 from rest_framework import serializers
+
 from core.apps.classcom import models
 from core.apps.classcom.serializers import media
 
 
 class ResourceSerializer(serializers.ModelSerializer):
     """
-        Serializer for the Resource model
+    Serializer for the Resource model
     """
+
+    media = media.MediaSerializer(many=True, read_only=True)
 
     class Meta:
         model = models.Resource
-        fields = (
-            "id", "name", "desc",
-            "classes", "topic", "media"
-        )
+        fields = ("id", "name", "classes", "topic", "media")
         extra_kwargs = {"media": {"write_only": True}}
 
 
 class ResourceDetailSerializer(ResourceSerializer):
     """
-        Serializer for resource detail page
+    Serializer for resource detail page
     """
-
-    _media = media.MediaSerializer(many=True, read_only=True, source="media")
 
     class Meta:
         model = models.Resource
-        fields = ResourceSerializer.Meta.fields + (
-            "_media",
-        )
+        fields = ResourceSerializer.Meta.fields + ("media",)
         extra_kwargs = ResourceSerializer.Meta.extra_kwargs

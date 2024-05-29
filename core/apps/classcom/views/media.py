@@ -6,7 +6,7 @@ class MediaViewSet(
     mixins.CreateModelMixin,
     mixins.RetrieveModelMixin,
     mixins.DestroyModelMixin,
-    viewsets.GenericViewSet
+    viewsets.GenericViewSet,
 ):
     serializer_class = serializers.MediaSerializer
     queryset = models.Media.objects.all()
