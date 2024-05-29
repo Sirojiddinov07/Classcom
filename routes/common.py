@@ -21,9 +21,9 @@ urlpatterns = [
     path("accounts/", include("django.contrib.auth.urls")),
     path("schema/", SpectacularAPIView.as_view(), name="schema"),
     path("i18n/", include("django.conf.urls.i18n")),
-    path("/", include("core.apps.accounts.urls")),
-    path("/", include("core.apps.home.urls")),
-    path("/", include("core.apps.classcom.urls")),
+    path("", include("core.apps.accounts.urls")),
+    path("", include("core.apps.home.urls")),
+    path("", include("core.apps.classcom.urls")),
 
     path(
         "ckeditor5/",
@@ -31,12 +31,12 @@ urlpatterns = [
         name="ck_editor_5_upload_file",
     ),  # noqa
     path(
-        "api/schema/swagger-ui/",
+        "swagger/",
         SpectacularSwaggerView.as_view(url_name="schema"),
         name="swagger-ui",
     ),
     path(
-        "api/schema/redoc/",
+        "redoc/",
         SpectacularRedocView.as_view(url_name="schema"),
         name="redoc",
     ),
