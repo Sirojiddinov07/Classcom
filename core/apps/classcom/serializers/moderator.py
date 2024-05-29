@@ -9,14 +9,14 @@ class ModeratorSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Moderator
         fields = (
-            'id',
-            'user',
-            'balance',
-            'science',
-            'classes',
-            'degree',
-            'docs',
-            'is_contracted'
+            "id",
+            "user",
+            "balance",
+            "science",
+            "classes",
+            "degree",
+            "docs",
+            "is_contracted",
         )
 
     def get_docs(self, obj):

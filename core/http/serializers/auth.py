@@ -17,22 +17,19 @@ class RegisterSerializer(serializers.ModelSerializer):
     def validate_phone(self, value):
         user = models.User.objects.filter(phone=value, validated_at__isnull=False)
         if user.exists():
-            raise exceptions.ValidationError(_("Phone number already registered."), code='unique')
+            raise exceptions.ValidationError(
+                _("Phone number already registered."), code="unique"
+            )
         return value
 
     class Meta:
         model = models.User
-        fields = [
-            "first_name", "last_name",
-            "phone", "password"
-        ]
+        fields = ["first_name", "last_name", "phone", "password"]
         extra_kwargs = {
             "first_name": {
                 "required": True,
             },
-            "last_name": {
-                "required": True
-            }
+            "last_name": {"required": True},
         }
 
 

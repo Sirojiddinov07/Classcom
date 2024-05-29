@@ -9,7 +9,7 @@ class Schedule(models.Model):
     shift = models.CharField(
         max_length=255,
         choices=choices.ShiftChoice.choices,
-        default=choices.ShiftChoice.MORNING
+        default=choices.ShiftChoice.MORNING,
     )
     user = models.ForeignKey(User, models.CASCADE)
     science = models.ForeignKey("Science", models.CASCADE)

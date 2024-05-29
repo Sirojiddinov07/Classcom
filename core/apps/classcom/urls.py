@@ -14,5 +14,5 @@ router.register("schedule", views.ScheduleViewSet, basename="schedule")
 router.register("moderator", views.ModeratorViewSet, basename="moderator")
 
 urlpatterns = [
-    path('', include(router.urls)),
+    path("", include(router.urls)),
 ]

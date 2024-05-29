@@ -53,10 +53,10 @@ class ExceptionMiddleware:
             any additional arguments passed to the BreakException.
             """
             error_data = {
-                'message': e.message,
+                "message": e.message,
                 "data": e.data,
                 "errors": [
                     e.args.__str__(),
-                ]
+                ],
             }
             return response.JsonResponse(error_data)

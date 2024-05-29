@@ -13,8 +13,9 @@ from core.utils import dd
 
 class RegisterView(views.APIView, services.UserService, http_views.ApiResponse):
     """
-        Register new user
+    Register new user
     """
+
     serializer_class = serializers.RegisterSerializer
     throttle_classes = [throttling.UserRateThrottle]
     permission_classes = [permissions.AllowAny]
@@ -27,11 +28,10 @@ class RegisterView(views.APIView, services.UserService, http_views.ApiResponse):
 
         # Create pending user
         self.create_user(
-            phone, data.get("first_name"),
-            data.get("last_name"), data.get("password")
+            phone, data.get("first_name"), data.get("last_name"), data.get("password")
         )
         self.send_confirmation(phone)  # Send confirmation code for sms eskiz.uz
-        return self.success(_(enums.Messages.SEND_MESSAGE) % {'phone': phone})
+        return self.success(_(enums.Messages.SEND_MESSAGE) % {"phone": phone})
 
 
 class ConfirmView(views.APIView, services.UserService, http_views.ApiResponse):
@@ -59,7 +59,9 @@ class ConfirmView(views.APIView, services.UserService, http_views.ApiResponse):
             return self.error(e)  # Api exception for APIException
 
 
-class ResetConfirmationCodeView(views.APIView, http_views.ApiResponse, services.UserService):  # noqa
+class ResetConfirmationCodeView(
+    views.APIView, http_views.ApiResponse, services.UserService
+):  # noqa
     """
     Reset confirm otp code
     """
@@ -73,20 +75,22 @@ class ResetConfirmationCodeView(views.APIView, http_views.ApiResponse, services.
 
         data = ser.data
 
-        code, phone = data.get('code'), data.get('phone')
+        code, phone = data.get("code"), data.get("phone")
 
         try:
             res = services.SmsService.check_confirm(phone, code)
             if res:
                 token = models.ResetToken.objects.create(
                     user=User.objects.filter(phone=phone).first(),
-                    token=str(uuid.uuid4())
+                    token=str(uuid.uuid4()),
                 )
-                return self.success(data={
-                    "token": token.token,
-                    "created_at": token.created_at,
-                    "updated_at": token.updated_at,
-                })
+                return self.success(
+                    data={
+                        "token": token.token,
+                        "created_at": token.created_at,
+                        "updated_at": token.updated_at,
+                    }
+                )
             return self.error(_(enums.Messages.INVALID_OTP))
         except exceptions.SmsException as e:
             return self.error(str(e), error_code=enums.Codes.INVALID_OTP_ERROR)
@@ -115,6 +119,7 @@ class ResetSetPasswordView(views.APIView, http_views.ApiResponse, services.UserS
 
 class ResendView(http_views.AbstractSendSms):
     """Resend Otp Code"""
+
     serializer_class = serializers.ResendSerializer
 
 
@@ -122,7 +127,10 @@ class ResetPasswordView(http_views.AbstractSendSms):
     """
     Reset user password
     """
-    serializer_class: typing.Type[serializers.ResetPasswordSerializer] = serializers.ResetPasswordSerializer  # noqa
+
+    serializer_class: typing.Type[serializers.ResetPasswordSerializer] = (
+        serializers.ResetPasswordSerializer
+    )  # noqa
 
 
 class MeView(views.APIView, http_views.ApiResponse):

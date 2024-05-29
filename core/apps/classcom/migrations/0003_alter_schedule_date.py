@@ -6,13 +6,23 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('classcom', '0002_schedule_classes_alter_schedule_science'),
+        ("classcom", "0002_schedule_classes_alter_schedule_science"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='schedule',
-            name='date',
-            field=models.CharField(choices=[('dushanba', 'Dushanba'), ('seshanba', 'Seshanba'), ('chorshanba', 'Chorshanba'), ('payshanba', 'Payshanba'), ('juma', 'Juma'), ('shanba', 'Shanba')], max_length=15),
+            model_name="schedule",
+            name="date",
+            field=models.CharField(
+                choices=[
+                    ("dushanba", "Dushanba"),
+                    ("seshanba", "Seshanba"),
+                    ("chorshanba", "Chorshanba"),
+                    ("payshanba", "Payshanba"),
+                    ("juma", "Juma"),
+                    ("shanba", "Shanba"),
+                ],
+                max_length=15,
+            ),
         ),
     ]

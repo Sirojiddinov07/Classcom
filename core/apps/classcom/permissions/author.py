@@ -2,7 +2,7 @@ from rest_framework import permissions
 
 
 class IsAuthor(permissions.BasePermission):
-    message = 'You do not have permission to perform this operation.'
+    message = "You do not have permission to perform this operation."
 
     def __init__(self, model, pk):
         super().__init__()
