@@ -22,7 +22,9 @@ class Console(management.BaseCommand):
     def log(self, message):
         self.get_stdout().write(
             self.get_style().ERROR(
-                "\n====================\n{}\n====================\n".format(message)
+                "\n====================\n{}\n====================\n".format(
+                    message
+                )
             )
         )
 
@@ -55,7 +57,8 @@ class BaseMake(management.BaseCommand):
             os.makedirs(os.path.join(core_http_path, self.path))
 
         with open(
-            os.path.join(core_http_path, f"{self.path}/{name.lower()}.py"), "w+"
+            os.path.join(core_http_path, f"{self.path}/{name.lower()}.py"),
+            "w+",
         ) as file:  # noqa
             file.write(stub)
 

@@ -15,9 +15,11 @@ class RegisterSerializer(serializers.ModelSerializer):
     phone = serializers.CharField(max_length=255)
 
     def validate_phone(self, value):
-        user = models.User.objects.filter(phone=value, validated_at__isnull=False)
+        user = models.User.objects.filter(
+            phone=value, validated_at__isnull=False
+        )
         if user.exists():
-            raise exceptions.ValidationError(
+            return exceptions.ValidationError(
                 _("Phone number already registered."), code="unique"
             )
         return value

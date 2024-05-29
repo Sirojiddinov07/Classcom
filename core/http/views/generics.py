@@ -15,11 +15,18 @@ class ApiResponse:
     ):
         if data is None:
             data = {}
-        response_data = {"success": success, "message": message, "data": data, **kwargs}
+        response_data = {
+            "success": success,
+            "message": message,
+            "data": data,
+            **kwargs,
+        }
 
         return response.Response(data=response_data, status=status_code)
 
-    def success(self, message="", data=None, status_code=status.HTTP_200_OK, **kwargs):
+    def success(
+        self, message="", data=None, status_code=status.HTTP_200_OK, **kwargs
+    ):
         return self.response(True, message, data, status_code, **kwargs)
 
     def error(
@@ -55,5 +62,7 @@ class CreateApiView(generics.CreateAPIView, ApiResponse):
     def create(self, request, *args, **kwargs):
         super().create(request, *args, **kwargs)
         return self.success(
-            self.message if hasattr(self, "message") else "Successfully created"
+            self.message
+            if hasattr(self, "message")
+            else "Successfully created"
         )  # noqa

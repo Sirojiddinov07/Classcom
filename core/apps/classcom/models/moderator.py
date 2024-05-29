@@ -8,10 +8,16 @@ from core.apps.classcom import choices
 class Moderator(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     balance = models.BigIntegerField(default=0)
-    science = models.ForeignKey(to="Science", on_delete=models.SET_NULL, null=True)
-    classes = models.ForeignKey(to="Classes", on_delete=models.SET_NULL, null=True)
+    science = models.ForeignKey(
+        to="Science", on_delete=models.SET_NULL, null=True
+    )
+    classes = models.ForeignKey(
+        to="Classes", on_delete=models.SET_NULL, null=True
+    )
     degree = models.CharField(
-        max_length=15, choices=choices.Degree.choices, default=choices.Degree.AUTHOR
+        max_length=15,
+        choices=choices.Degree.choices,
+        default=choices.Degree.AUTHOR,
     )
     docs = models.FileField(upload_to="documents/")
     is_contracted = models.BooleanField(default=False)

@@ -45,12 +45,24 @@ class Migration(migrations.Migration):
                         verbose_name="ID",
                     ),
                 ),
-                ("name", models.CharField(blank=True, max_length=255, null=True)),
-                ("title", models.CharField(blank=True, max_length=255, null=True)),
+                (
+                    "name",
+                    models.CharField(blank=True, max_length=255, null=True),
+                ),
+                (
+                    "title",
+                    models.CharField(blank=True, max_length=255, null=True),
+                ),
                 ("description", models.TextField(blank=True, null=True)),
                 ("file", models.FileField(upload_to="media/")),
-                ("type", models.CharField(blank=True, max_length=255, null=True)),
-                ("size", models.BigIntegerField(blank=True, default=0, null=True)),
+                (
+                    "type",
+                    models.CharField(blank=True, max_length=255, null=True),
+                ),
+                (
+                    "size",
+                    models.BigIntegerField(blank=True, default=0, null=True),
+                ),
                 ("created_at", models.DateTimeField(auto_now=True)),
                 ("updated_at", models.DateTimeField(auto_now=True)),
             ],
@@ -137,7 +149,10 @@ class Migration(migrations.Migration):
                         to="classcom.classes",
                     ),
                 ),
-                ("media", models.ManyToManyField(blank=True, to="classcom.media")),
+                (
+                    "media",
+                    models.ManyToManyField(blank=True, to="classcom.media"),
+                ),
                 (
                     "user",
                     models.ForeignKey(
@@ -166,7 +181,10 @@ class Migration(migrations.Migration):
                 (
                     "shift",
                     models.CharField(
-                        choices=[("MORNING", "morning"), ("EVENING", "evening")],
+                        choices=[
+                            ("MORNING", "morning"),
+                            ("EVENING", "evening"),
+                        ],
                         default="MORNING",
                         max_length=255,
                     ),
@@ -267,7 +285,10 @@ class Migration(migrations.Migration):
                     ),
                 ),
                 ("payment_status", models.BooleanField(default=False)),
-                ("science", models.ManyToManyField(blank=True, to="classcom.science")),
+                (
+                    "science",
+                    models.ManyToManyField(blank=True, to="classcom.science"),
+                ),
                 (
                     "user",
                     models.ForeignKey(
@@ -351,7 +372,8 @@ class Migration(migrations.Migration):
             model_name="resource",
             name="topic",
             field=models.ForeignKey(
-                on_delete=django.db.models.deletion.CASCADE, to="classcom.topic"
+                on_delete=django.db.models.deletion.CASCADE,
+                to="classcom.topic",
             ),
         ),
         migrations.CreateModel(
@@ -377,7 +399,8 @@ class Migration(migrations.Migration):
                 (
                     "topic",
                     models.ForeignKey(
-                        on_delete=django.db.models.deletion.CASCADE, to="classcom.topic"
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="classcom.topic",
                     ),
                 ),
             ],

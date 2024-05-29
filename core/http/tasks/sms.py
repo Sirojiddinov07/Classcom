@@ -21,5 +21,7 @@ def SendConfirm(phone, code):
         )
     except Exception as e:
         console.Console().error(
-            "Error: {phone}-{code}\n\n{error}".format(phone=phone, code=code, error=e)
+            "Error: {phone}-{code}\n\n{error}".format(
+                phone=phone, code=code, error=e
+            )
         )  # noqa

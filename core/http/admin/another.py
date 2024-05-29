@@ -20,7 +20,8 @@ class TagsInline(admin.TabularInline):
 
 
 class PostAdmin(
-    modeltranslation.TabbedTranslationAdmin, import_export.ImportExportModelAdmin
+    modeltranslation.TabbedTranslationAdmin,
+    import_export.ImportExportModelAdmin,
 ):  # noqa
     fields: tuple = ("title", "desc", "image", "tags")
     search_fields: list = ["title", "desc"]
@@ -29,7 +30,9 @@ class PostAdmin(
     form = forms.PostAdminForm
     inlines = [PostInline]
     formfield_overrides = {
-        db_model.ManyToManyField: {"widget": django_select2.Select2MultipleWidget}
+        db_model.ManyToManyField: {
+            "widget": django_select2.Select2MultipleWidget
+        }
     }
 
 
