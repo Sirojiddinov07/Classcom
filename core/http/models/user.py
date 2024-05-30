@@ -11,6 +11,7 @@ from core.http import managers, choices
 class User(auth_models.AbstractUser):
     phone = models.CharField(max_length=255, unique=True)
     username = models.CharField(max_length=255, null=True, blank=True)
+    avatar = models.ImageField(upload_to='avatar/',blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     validated_at = models.DateTimeField(null=True, blank=True)
