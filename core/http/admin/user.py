@@ -1,6 +1,6 @@
 from django.contrib.auth import admin
 from import_export import admin as import_export
-<<<<<<< HEAD
+from core.http.forms import CustomUserCreationForm
 
 
 class CustomUserAdmin(admin.UserAdmin, import_export.ImportExportModelAdmin):
@@ -9,17 +9,12 @@ class CustomUserAdmin(admin.UserAdmin, import_export.ImportExportModelAdmin):
         "last_name",
         "phone",
     )
-=======
-from core.http.forms import CustomUserCreationForm
->>>>>>> origin/dev
 
 
 class GroupAdmin(import_export.ImportExportModelAdmin):
     list_display = ["name"]
     search_fields = ["name"]
-<<<<<<< HEAD
-    filter_horizontal = ("permissions",)
-=======
+
     filter_horizontal = (
         "permissions",
     )
@@ -51,4 +46,3 @@ class UserAdmin(admin.UserAdmin, import_export.ImportExportModelAdmin):
             'fields': ('phone', 'password1', 'password2'),
         }),
     )
->>>>>>> origin/dev

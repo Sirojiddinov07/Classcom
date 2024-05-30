@@ -50,20 +50,7 @@ class ModeratorCreateSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = models.Moderator
-<<<<<<< HEAD
-        fields = (
-            "id",
-            "user",
-            "balance",
-            "science",
-            "classes",
-            "degree",
-            "docs",
-            "is_contracted",
-        )
-=======
         fields = ["user", "science", "classes", "degree", "docs"]
->>>>>>> origin/dev
 
     def create(self, validated_data):
         user_data = validated_data.pop("user")
