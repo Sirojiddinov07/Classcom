@@ -1,7 +1,17 @@
 from django.contrib import admin
-from core.apps.classcom import models
+from import_export.admin import ImportExportModelAdmin
 
-admin.site.register(models.Plan)
+from core.apps.classcom import models
+from core.apps.classcom import resources
+
+
+class PlanAdmin(ImportExportModelAdmin):
+    """
+    Cosutimize the plan model in admin panel interface
+    """
+    resource_class = resources.PlanResource
+
+
 admin.site.register(models.Topic)
 admin.site.register(models.Media)
 admin.site.register(models.Classes)
@@ -13,3 +23,5 @@ admin.site.register(models.Schedule)
 admin.site.register(models.Settings)
 admin.site.register(models.Download)
 admin.site.register(models.Moderator)
+admin.site.register(models.Plan, PlanAdmin)
+admin.site.register(models.DaysOff)

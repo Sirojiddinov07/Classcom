@@ -20,7 +20,17 @@ class User(auth_models.AbstractUser):
         default=choices.RoleChoice.USER,
     )
 
+<<<<<<< HEAD
     USERNAME_FIELD = "phone"
+=======
+    region = models.ForeignKey('Region', on_delete=models.CASCADE, null=True, blank=True)
+    district = models.ForeignKey('District', on_delete=models.CASCADE, null=True, blank=True)
+    institution = models.CharField(max_length=255, choices=choices.Institution.choices, null=True, blank=True)
+    science_group = models.ForeignKey('ScienceGroups', on_delete=models.CASCADE, null=True, blank=True)
+    institution_number = models.CharField(max_length=255, null=True, blank=True)
+
+    USERNAME_FIELD = u"phone"
+>>>>>>> origin/dev
     objects = managers.UserManager()
 
     def __str__(self):
