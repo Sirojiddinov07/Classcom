@@ -20,11 +20,7 @@ router.register("resource", views.ResourceViewSet, basename="resource")
 
 
 urlpatterns = [
-<<<<<<< HEAD
-    path("", include(router.urls)),
-=======
     path('', include(router.urls)),
     path('download_resource/<int:resource_id>/', views.DownloadResourceView.as_view(), name='download_resource'), # noqa
     path('download_file/<uuid:download_token>/', views.DownloadFileView.as_view(), name='download_file'), # noqa
->>>>>>> origin/dev
 ]

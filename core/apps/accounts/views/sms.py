@@ -1,16 +1,9 @@
 import typing
 import uuid
 
-<<<<<<< HEAD
-=======
-from drf_yasg import openapi
-from drf_yasg .utils import swagger_auto_schema
 
 from django.utils.translation import gettext_lazy as _
 from rest_framework import permissions, request as rest_request, throttling, views
->>>>>>> origin/dev
-
-from django.utils.translation import gettext_lazy as _
 
 from rest_framework import (
     permissions,
@@ -37,17 +30,10 @@ class RegisterView(views.APIView, services.UserService):
     throttle_classes = [throttling.UserRateThrottle]
     permission_classes = [permissions.AllowAny]
 
-    @swagger_auto_schema(
-        manual_parameters=[
-            openapi.Parameter(
-                name='Register',
-                in_=openapi.IN_HEADER,
-                type=openapi.TYPE_STRING,
-                description='Register',
-                required=False
-            )
-        ],
-        responses={200: openapi.Response('Success', schema=serializer_class)}, 
+    @extend_schema(
+        request=serializer_class,
+        summary="Register new user",
+        description="Yangi user ro'yhatdan o'tish uchun"
     )
     def post(self, request: rest_request.Request):
         ser = self.serializer_class(data=request.data)
@@ -76,25 +62,10 @@ class ConfirmView(views.APIView, services.UserService):
     serializer_class = serializers.ConfirmSerializer
     permission_classes = [permissions.AllowAny]
 
-<<<<<<< HEAD
     @extend_schema(
         request=serializer_class,
         summary="Auth confirm.",
         description="Auth confirm user.",
-=======
-    @swagger_auto_schema(
-        request_body=serializer_class,
-        manual_parameters=[
-            openapi.Parameter(
-                name='Authorization',
-                in_=openapi.IN_HEADER,
-                type=openapi.TYPE_STRING,
-                description='Bearer Token',
-                required=False
-            )
-        ],
-        responses={201: openapi.Response('Success', schema=serializers.ConfirmSerializer)}, 
->>>>>>> origin/dev
     )
     def post(self, request: rest_request.Request):
         ser = self.serializer_class(data=request.data)
@@ -133,17 +104,10 @@ class ResetConfirmationCodeView(views.APIView, services.UserService):
     serializer_class = serializers.ResetConfirmationSerializer
     permission_classes = [permissions.AllowAny]
     
-    @swagger_auto_schema(
-        manual_parameters=[
-            openapi.Parameter(
-                name='Reset confirm',
-                in_=openapi.IN_HEADER,
-                type=openapi.TYPE_STRING,
-                description='Reset confirm',
-                required=False
-            )
-        ],
-        responses={200: openapi.Response('Success', schema=serializer_class)}, 
+    @extend_schema(
+        request=serializer_class,
+        summary="Reset confirm otp code.",
+        description="Reset confirm otp code.",
     )
     def post(self, request: rest_request.Request):
         ser = self.serializer_class(data=request.data)
@@ -184,17 +148,10 @@ class ResetSetPasswordView(views.APIView, services.UserService):
     serializer_class = sms_serializers.SetPasswordSerializer
     permission_classes = [permissions.AllowAny]
 
-    @swagger_auto_schema(
-        manual_parameters=[
-            openapi.Parameter(
-                name='Reset set password',
-                in_=openapi.IN_HEADER,
-                type=openapi.TYPE_STRING,
-                description='Rset set password',
-                required=False
-            )
-        ],
-        responses={200: openapi.Response('Success', schema=serializer_class)}, 
+    @extend_schema(
+            request=serializer_class,
+            summary="Reset user password.",
+            description="Reset user password.",
     )
     def post(self, request):
         ser = self.serializer_class(data=request.data)
@@ -233,23 +190,13 @@ class ResetPasswordView(http_views.AbstractSendSms):
 class MeView(viewsets.ViewSet):
     """Get user information"""
 
-<<<<<<< HEAD
     serializer_class = serializers.UserSerializer
 
-=======
-    @swagger_auto_schema(
-        manual_parameters=[
-            openapi.Parameter(
-                name='Me',
-                in_=openapi.IN_HEADER,
-                type=openapi.TYPE_STRING,
-                description='Me',
-                required=False
-            )
-        ],
-        responses={200: openapi.Response('Success', schema=serializers.UserSerializer)}, 
+    @extend_schema(
+        request=serializer_class,
+        summary="Get user information.",
+        description="Get user information.",
     )
->>>>>>> origin/dev
     def get(self, request: rest_request.Request):
         user = request.user
         return response.Response(serializers.UserSerializer(user).data)

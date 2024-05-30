@@ -13,14 +13,10 @@ class ResourceSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = models.Resource
-<<<<<<< HEAD
-        fields = ("id", "name", "classes", "topic", "media")
-=======
         fields = (
             "id", "name",
             "classes", "topic", "media"
         )
->>>>>>> origin/dev
         extra_kwargs = {"media": {"write_only": True}}
 
 

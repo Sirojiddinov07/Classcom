@@ -19,11 +19,7 @@ class Moderator(models.Model):
         choices=choices.Degree.choices,
         default=choices.Degree.AUTHOR,
     )
-<<<<<<< HEAD
-    docs = models.FileField(upload_to="documents/")
-=======
     docs = models.FileField(upload_to='documents/', null=True, blank=True)
->>>>>>> origin/dev
     is_contracted = models.BooleanField(default=False)
 
     def __str__(self) -> str:
