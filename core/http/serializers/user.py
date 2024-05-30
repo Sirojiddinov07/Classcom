@@ -5,7 +5,7 @@ from core.http import models
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
-        fields = ["first_name", "last_name", "phone"]
+        fields = ["first_name", "last_name", "phone", 'role']
         model = models.User
 
     def update(self, instance, validated_data):
