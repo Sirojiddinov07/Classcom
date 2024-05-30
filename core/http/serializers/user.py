@@ -12,7 +12,6 @@ class UserSerializer(serializers.ModelSerializer):
         model = models.User
             
     def get_avatar(self, obj):
-        print(f'obj: {obj.avatar}')
         if obj.avatar:
             avatar_url = obj.avatar.url.replace(settings.MEDIA_URL, '')
             media_url = settings.MEDIA_URL if settings.MEDIA_URL.endswith("/") else settings.MEDIA_URL + "/"
