@@ -5,7 +5,13 @@ from core.apps.classcom import models
 
 class PlanSerializer(serializers.ModelSerializer):
     """
+<<<<<<< HEAD
+    PlanSerializer class
+    note:
+        O'qituvchi uchun tematik plan
+=======
     PlanSerializer class for Teachers
+>>>>>>> origin/dev
     """
 
     class Meta:

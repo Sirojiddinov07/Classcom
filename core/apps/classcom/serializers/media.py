@@ -13,5 +13,5 @@ class MediaSerializer(serializers.ModelSerializer):
             "file",
             "size",
             "created_at",
-            "updated_at"
+            "updated_at",
         )

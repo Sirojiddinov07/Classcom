@@ -6,7 +6,7 @@ class Media(models.Model):
     name = models.CharField(max_length=255, blank=True, null=True)
     title = models.CharField(max_length=255, blank=True, null=True)
     description = models.TextField(blank=True, null=True)
-    file = models.FileField(upload_to='media/')
+    file = models.FileField(upload_to="media/")
     type = models.CharField(max_length=255, blank=True, null=True)
     size = models.BigIntegerField(blank=True, null=True, default=0)
     created_at = models.DateTimeField(auto_now=True)

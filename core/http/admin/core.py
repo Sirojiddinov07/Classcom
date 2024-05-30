@@ -1,6 +1,7 @@
 """
 Admin panel register
 """
+
 from django.contrib import admin
 from django.contrib.auth import models as db_models
 
@@ -15,5 +16,11 @@ admin.site.register(models.Tags, another.TagsAdmin)
 admin.site.register(models.Post, another.PostAdmin)
 admin.site.register(models.Comment, another.CommentAdmin)
 admin.site.register(models.SmsConfirm, another.SmsConfirmAdmin)
+<<<<<<< HEAD
+admin.site.register(
+    models.FrontendTranslation, another.FrontendTranslationAdmin
+)  # noqa
+=======
 admin.site.register(models.FrontendTranslation, another.FrontendTranslationAdmin)  # noqa
 admin.site.register(models.User, user.UserAdmin)
+>>>>>>> origin/dev

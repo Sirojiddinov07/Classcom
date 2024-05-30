@@ -15,171 +15,399 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='Classes',
+            name="Classes",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=255)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("name", models.CharField(max_length=255)),
             ],
             options={
-                'verbose_name': 'Classes',
-                'verbose_name_plural': 'Classes',
+                "verbose_name": "Classes",
+                "verbose_name_plural": "Classes",
             },
         ),
         migrations.CreateModel(
-            name='Media',
+            name="Media",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(blank=True, max_length=255, null=True)),
-                ('title', models.CharField(blank=True, max_length=255, null=True)),
-                ('description', models.TextField(blank=True, null=True)),
-                ('file', models.FileField(upload_to='media/')),
-                ('type', models.CharField(blank=True, max_length=255, null=True)),
-                ('size', models.BigIntegerField(blank=True, default=0, null=True)),
-                ('created_at', models.DateTimeField(auto_now=True)),
-                ('updated_at', models.DateTimeField(auto_now=True)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "name",
+                    models.CharField(blank=True, max_length=255, null=True),
+                ),
+                (
+                    "title",
+                    models.CharField(blank=True, max_length=255, null=True),
+                ),
+                ("description", models.TextField(blank=True, null=True)),
+                ("file", models.FileField(upload_to="media/")),
+                (
+                    "type",
+                    models.CharField(blank=True, max_length=255, null=True),
+                ),
+                (
+                    "size",
+                    models.BigIntegerField(blank=True, default=0, null=True),
+                ),
+                ("created_at", models.DateTimeField(auto_now=True)),
+                ("updated_at", models.DateTimeField(auto_now=True)),
             ],
             options={
-                'verbose_name': 'Media',
-                'verbose_name_plural': 'Medias',
+                "verbose_name": "Media",
+                "verbose_name_plural": "Medias",
             },
         ),
         migrations.CreateModel(
-            name='Quarter',
+            name="Quarter",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=255)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("name", models.CharField(max_length=255)),
             ],
             options={
-                'verbose_name': 'Quarter',
-                'verbose_name_plural': 'Quarters',
+                "verbose_name": "Quarter",
+                "verbose_name_plural": "Quarters",
             },
         ),
         migrations.CreateModel(
-            name='Science',
+            name="Science",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField()),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("name", models.CharField()),
             ],
             options={
-                'verbose_name': 'Science',
-                'verbose_name_plural': 'Sciences',
+                "verbose_name": "Science",
+                "verbose_name_plural": "Sciences",
             },
         ),
         migrations.CreateModel(
-            name='Settings',
+            name="Settings",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('key', models.CharField(max_length=255, unique=True)),
-                ('value', models.TextField()),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("key", models.CharField(max_length=255, unique=True)),
+                ("value", models.TextField()),
             ],
             options={
-                'verbose_name': 'Settings',
-                'verbose_name_plural': 'Settings',
+                "verbose_name": "Settings",
+                "verbose_name_plural": "Settings",
             },
         ),
         migrations.CreateModel(
-            name='Resource',
+            name="Resource",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=255)),
-                ('classes', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='classcom.classes')),
-                ('media', models.ManyToManyField(blank=True, to='classcom.media')),
-                ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("name", models.CharField(max_length=255)),
+                (
+                    "classes",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="classcom.classes",
+                    ),
+                ),
+                (
+                    "media",
+                    models.ManyToManyField(blank=True, to="classcom.media"),
+                ),
+                (
+                    "user",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
             ],
             options={
-                'verbose_name': 'Resource',
-                'verbose_name_plural': 'Resources',
+                "verbose_name": "Resource",
+                "verbose_name_plural": "Resources",
             },
         ),
         migrations.CreateModel(
-            name='Schedule',
+            name="Schedule",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('shift', models.CharField(choices=[('MORNING', 'morning'), ('EVENING', 'evening')], default='MORNING', max_length=255)),
-                ('date', models.DateField()),
-                ('start_time', models.TimeField()),
-                ('end_time', models.TimeField()),
-                ('science', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='classcom.classes')),
-                ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "shift",
+                    models.CharField(
+                        choices=[
+                            ("MORNING", "morning"),
+                            ("EVENING", "evening"),
+                        ],
+                        default="MORNING",
+                        max_length=255,
+                    ),
+                ),
+                ("date", models.DateField()),
+                ("start_time", models.TimeField()),
+                ("end_time", models.TimeField()),
+                (
+                    "science",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="classcom.classes",
+                    ),
+                ),
+                (
+                    "user",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
             ],
             options={
-                'verbose_name': 'Schedule',
-                'verbose_name_plural': 'Schedules',
+                "verbose_name": "Schedule",
+                "verbose_name_plural": "Schedules",
             },
         ),
         migrations.CreateModel(
-            name='Moderator',
+            name="Moderator",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('balance', models.BigIntegerField(default=0)),
-                ('degree', models.CharField(choices=[('HIGHER', 'Oliy toifa'), ('EXCELLENT', "Xalq ta'limi a'lochisi"), ('GOOD_TEACHER', '"Eng yaxshi o\'qituvchi" konkursi g\'olibi'), ('AUTHOR', 'Darslik muallifi')], default='AUTHOR', max_length=15)),
-                ('docs', models.FileField(upload_to='documents/')),
-                ('is_contracted', models.BooleanField(default=False)),
-                ('classes', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, to='classcom.classes')),
-                ('user', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
-                ('science', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, to='classcom.science')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("balance", models.BigIntegerField(default=0)),
+                (
+                    "degree",
+                    models.CharField(
+                        choices=[
+                            ("HIGHER", "Oliy toifa"),
+                            ("EXCELLENT", "Xalq ta'limi a'lochisi"),
+                            (
+                                "GOOD_TEACHER",
+                                "\"Eng yaxshi o'qituvchi\" konkursi g'olibi",
+                            ),
+                            ("AUTHOR", "Darslik muallifi"),
+                        ],
+                        default="AUTHOR",
+                        max_length=15,
+                    ),
+                ),
+                ("docs", models.FileField(upload_to="documents/")),
+                ("is_contracted", models.BooleanField(default=False)),
+                (
+                    "classes",
+                    models.ForeignKey(
+                        null=True,
+                        on_delete=django.db.models.deletion.SET_NULL,
+                        to="classcom.classes",
+                    ),
+                ),
+                (
+                    "user",
+                    models.OneToOneField(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
+                (
+                    "science",
+                    models.ForeignKey(
+                        null=True,
+                        on_delete=django.db.models.deletion.SET_NULL,
+                        to="classcom.science",
+                    ),
+                ),
             ],
             options={
-                'verbose_name': 'Moderator',
-                'verbose_name_plural': 'Moderators',
+                "verbose_name": "Moderator",
+                "verbose_name_plural": "Moderators",
             },
         ),
         migrations.CreateModel(
-            name='Teacher',
+            name="Teacher",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('payment_status', models.BooleanField(default=False)),
-                ('science', models.ManyToManyField(blank=True, to='classcom.science')),
-                ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("payment_status", models.BooleanField(default=False)),
+                (
+                    "science",
+                    models.ManyToManyField(blank=True, to="classcom.science"),
+                ),
+                (
+                    "user",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
             ],
             options={
-                'verbose_name': 'Teacher',
-                'verbose_name_plural': 'Teachers',
+                "verbose_name": "Teacher",
+                "verbose_name_plural": "Teachers",
             },
         ),
         migrations.CreateModel(
-            name='Download',
+            name="Download",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('date', models.DateField()),
-                ('resource', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='classcom.resource')),
-                ('teacher', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='classcom.teacher')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("date", models.DateField()),
+                (
+                    "resource",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="classcom.resource",
+                    ),
+                ),
+                (
+                    "teacher",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="classcom.teacher",
+                    ),
+                ),
             ],
             options={
-                'verbose_name': 'Download',
-                'verbose_name_plural': 'Downloads',
+                "verbose_name": "Download",
+                "verbose_name_plural": "Downloads",
             },
         ),
         migrations.CreateModel(
-            name='Topic',
+            name="Topic",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=255)),
-                ('quarter', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='classcom.quarter')),
-                ('science', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='classcom.science')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("name", models.CharField(max_length=255)),
+                (
+                    "quarter",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="classcom.quarter",
+                    ),
+                ),
+                (
+                    "science",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="classcom.science",
+                    ),
+                ),
             ],
             options={
-                'verbose_name': 'Topic',
-                'verbose_name_plural': 'Topics',
+                "verbose_name": "Topic",
+                "verbose_name_plural": "Topics",
             },
         ),
         migrations.AddField(
-            model_name='resource',
-            name='topic',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='classcom.topic'),
+            model_name="resource",
+            name="topic",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                to="classcom.topic",
+            ),
         ),
         migrations.CreateModel(
-            name='Plan',
+            name="Plan",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('hour', models.IntegerField(default=0)),
-                ('classes', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='classcom.classes')),
-                ('topic', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='classcom.topic')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("hour", models.IntegerField(default=0)),
+                (
+                    "classes",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="classcom.classes",
+                    ),
+                ),
+                (
+                    "topic",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="classcom.topic",
+                    ),
+                ),
             ],
             options={
-                'verbose_name': 'Plan',
-                'verbose_name_plural': 'Plan',
-                'unique_together': {('topic', 'classes')},
+                "verbose_name": "Plan",
+                "verbose_name_plural": "Plan",
+                "unique_together": {("topic", "classes")},
             },
         ),
     ]

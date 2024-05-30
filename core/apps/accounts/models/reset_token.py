@@ -1,8 +1,5 @@
-import uuid
-
 from django.db import models
 
-from config import settings
 from core.http.models import User
 
 
@@ -17,5 +14,5 @@ class ResetToken(models.Model):
         return self.token
 
     class Meta:
-        verbose_name = 'Reset Token'
-        verbose_name_plural = 'Reset Tokens'
+        verbose_name = "Reset Token"
+        verbose_name_plural = "Reset Tokens"
