@@ -1,4 +1,4 @@
-from core.http import serializers
+from rest_framework import serializers
 from core.http.choices import District
 
 
