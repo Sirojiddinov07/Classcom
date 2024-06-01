@@ -1,4 +1,4 @@
-from rest_framework import status
+from rest_framework import status, permissions
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -7,6 +7,7 @@ from core.http.choices import Region, District
 
 
 class GenerateDistrictsView(APIView):
+    permission_classes = [permissions.AllowAny]
     def get(self, request, region_id):
         try:
             region = Region.objects.get(id=region_id)
