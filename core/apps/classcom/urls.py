@@ -18,6 +18,8 @@ router.register("schedule", views.ScheduleViewSet, basename="schedule")
 router.register("moderator", views.ModeratorCreateViewSet, basename="moderator")
 router.register("days_off", views.DaysOffViewSet, basename="days_off")
 router.register("resource", views.ResourceViewSet, basename="resource")
+router.register("region", views.RegionViewSet, basename="region ")
+router.register("district", views.DistrictViewSet, basename="district ")
 
 
 urlpatterns = [
