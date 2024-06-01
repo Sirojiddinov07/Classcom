@@ -9,8 +9,7 @@ RUN apt update && apt upgrade -y && apt install git -y
 WORKDIR /code
 
 COPY . /code/
-RUN pip install -r requirements/common.txt
-RUN pip install -r requirements/local.txt
+
 RUN pip install poetry
 
 RUN poetry install
