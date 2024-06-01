@@ -8,7 +8,7 @@ from core.http import models
 class UserSerializer(serializers.ModelSerializer):
     avatar = serializers.SerializerMethodField('get_avatar')
     class Meta:
-        fields = ["avatar","first_name", "last_name", "phone", 'role']
+        fields = ["avatar", "first_name", "last_name", "phone", 'role']
         model = models.User
             
     def get_avatar(self, obj):
