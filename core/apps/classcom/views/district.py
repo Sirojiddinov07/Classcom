@@ -1,10 +1,11 @@
 from rest_framework import viewsets, permissions
 
-from core.apps.classcom.serializers import DistrictSerializer
-from core.http.choices import District
+from core.apps.classcom.serializers import RegionDetailSerializer
+from core.http import models
+from rest_framework import mixins
 
-
-class DistrictViewSet(viewsets.ModelViewSet):
+class DistrictViewSet(mixins.RetrieveModelMixin, viewsets.GenericViewSet):
     permission_classes = [permissions.AllowAny]
-    queryset = District.objects.all()
-    serializer_class = DistrictSerializer
+    queryset = models.Region.objects.all()
+    serializer_class = RegionDetailSerializer
+

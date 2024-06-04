@@ -2,30 +2,22 @@ from rest_framework import serializers
 from core.apps.classcom import models
 from django.utils.translation import gettext as _
 from core.http import choices
-
-
-class RegionSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = choices.Region
-        fields = ["region"]
-
-
-class DistrictSerializer(serializers.ModelSerializer):
-    region = RegionSerializer()
-
-    class Meta:
-        model = choices.District
-        fields = ["district", "region"]
+from core.apps.classcom.serializers import RegionSerializer,DistrictSerializer
 
 
 class UserModeratorSerializer(serializers.ModelSerializer):
-    region = RegionSerializer()
-    district = DistrictSerializer()
+    _region = RegionSerializer(read_only=True,source="region")
+    _district = DistrictSerializer(read_only=True,source="district")
 
     class Meta:
         model = models.User
-        fields = ["first_name", "last_name", "phone", "password", "region", "district", "institution",
-                  "institution_number"]
+        fields = [
+            "first_name", "last_name",
+              "phone", "password",
+                "_region", "_district",
+                "region","district",
+                  "institution","institution_number"
+                  ]
 
     def validate_phone(self, value):
         user = models.User.objects.filter(phone=value, validated_at__isnull=False)
