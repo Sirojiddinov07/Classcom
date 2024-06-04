@@ -24,13 +24,11 @@ urlpatterns = [
     path("", include("core.apps.accounts.urls")),
     path("", include("core.apps.home.urls")),
     path("", include("core.apps.classcom.urls")),
-
     path(
         "ckeditor5/",
         include("django_ckeditor_5.urls"),
         name="ck_editor_5_upload_file",
     ),  # noqa
-
     path("i18n/", include("django.conf.urls.i18n")),
     # Internal apps
     path("", include("core.apps.accounts.urls")),
@@ -42,7 +40,6 @@ urlpatterns = [
     re_path(
         r"media/(?P<path>.*)", serve, {"document_root": settings.MEDIA_ROOT}
     ),  # noqa
-
     path("schema/", SpectacularAPIView.as_view(), name="schema"),
     path(
         "swagger/",

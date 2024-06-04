@@ -8,8 +8,10 @@ from ..models.notification import Notification
 @receiver(post_save, sender=Answer)
 def notify_user_on_answer(sender, instance, created, **kwargs):
     if created:
-        Notification.objects.create(user=instance.feedback.user, message=instance.body)
-       
+        Notification.objects.create(
+            user=instance.feedback.user, message=instance.body
+        )
+
         feedback = instance.feedback
         feedback.answered = True
         feedback.save()

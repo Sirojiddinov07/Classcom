@@ -10,4 +10,4 @@ class PlanViewSet(viewsets.ModelViewSet):
     queryset = models.Plan.objects.all()
     serializer_class = serializers.PlanSerializer
     filter_backends = [DjangoFilterBackend]
-    filterset_fields = ['classes', 'topic', 'hour']
+    filterset_fields = ["classes", "topic", "hour"]

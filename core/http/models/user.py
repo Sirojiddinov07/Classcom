@@ -11,7 +11,7 @@ from core.http import managers, choices
 class User(auth_models.AbstractUser):
     phone = models.CharField(max_length=255, unique=True)
     username = models.CharField(max_length=255, null=True, blank=True)
-    avatar = models.ImageField(upload_to='avatar/',blank=True, null=True)
+    avatar = models.ImageField(upload_to="avatar/", blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     validated_at = models.DateTimeField(null=True, blank=True)
@@ -21,15 +21,27 @@ class User(auth_models.AbstractUser):
         default=choices.RoleChoice.USER,
     )
 
+    region = models.ForeignKey(
+        "Region", on_delete=models.CASCADE, null=True, blank=True
+    )
+    district = models.ForeignKey(
+        "District", on_delete=models.CASCADE, null=True, blank=True
+    )
+    institution = models.CharField(
+        max_length=255,
+        choices=choices.Institution.choices,
+        null=True,
+        blank=True,
+    )
+    science_group = models.ForeignKey(
+        "ScienceGroups", on_delete=models.CASCADE, null=True, blank=True
+    )
+    institution_number = models.CharField(
+        max_length=255, null=True, blank=True
+    )
 
-    region = models.ForeignKey('Region', on_delete=models.CASCADE, null=True, blank=True)
-    district = models.ForeignKey('District', on_delete=models.CASCADE, null=True, blank=True)
-    institution = models.CharField(max_length=255, choices=choices.Institution.choices, null=True, blank=True)
-    science_group = models.ForeignKey('ScienceGroups', on_delete=models.CASCADE, null=True, blank=True)
-    institution_number = models.CharField(max_length=255, null=True, blank=True)
+    USERNAME_FIELD = "phone"
 
-    USERNAME_FIELD = u"phone"
-    
     objects = managers.UserManager()
 
     def __str__(self):

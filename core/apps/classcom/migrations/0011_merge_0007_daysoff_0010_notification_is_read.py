@@ -6,9 +6,8 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('classcom', '0007_daysoff'),
-        ('classcom', '0010_notification_is_read'),
+        ("classcom", "0007_daysoff"),
+        ("classcom", "0010_notification_is_read"),
     ]
 
-    operations = [
-    ]
+    operations = []

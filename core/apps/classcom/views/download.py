@@ -8,7 +8,13 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from core.apps.classcom.models import Resource, Download, Teacher, Media, DownloadToken
+from core.apps.classcom.models import (
+    Resource,
+    Download,
+    Teacher,
+    Media,
+    DownloadToken,
+)
 
 
 class DownloadResourceView(APIView):
@@ -23,7 +29,8 @@ class DownloadResourceView(APIView):
         )
 
         download_token = DownloadToken.objects.create(
-            download=download, expires_at=timezone.now() + datetime.timedelta(minutes=5)
+            download=download,
+            expires_at=timezone.now() + datetime.timedelta(minutes=5),
         )
 
         download_url = request.build_absolute_uri(
@@ -46,7 +53,8 @@ class DownloadFileView(APIView):
 
         if download.teacher.user != request.user:
             return Response(
-                {"detail": "You are not authorized to download this file"}, status=403
+                {"detail": "You are not authorized to download this file"},
+                status=403,
             )
 
         media = get_object_or_404(Media, resource=download.resource)

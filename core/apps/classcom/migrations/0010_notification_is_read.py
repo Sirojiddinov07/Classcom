@@ -6,13 +6,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('classcom', '0009_rename_nswered_feedback_answered'),
+        ("classcom", "0009_rename_nswered_feedback_answered"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='notification',
-            name='is_read',
+            model_name="notification",
+            name="is_read",
             field=models.BooleanField(default=False),
         ),
     ]

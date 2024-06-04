@@ -6,13 +6,16 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('classcom', '0011_merge_0007_daysoff_0010_notification_is_read'),
+        ("classcom", "0011_merge_0007_daysoff_0010_notification_is_read"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='feedback',
-            name='feedback_type',
-            field=models.CharField(choices=[('first', 'First'), ('second', 'Second')], max_length=10),
+            model_name="feedback",
+            name="feedback_type",
+            field=models.CharField(
+                choices=[("first", "First"), ("second", "Second")],
+                max_length=10,
+            ),
         ),
     ]

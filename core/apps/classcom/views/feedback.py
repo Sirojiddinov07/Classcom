@@ -19,16 +19,15 @@ class FeedbackCreateViewSet(ModelViewSet):
         serializer.save(user=self.request.user)
 
 
-class AnswerCreateViewSet(ModelViewSet,ApiResponse):
+class AnswerCreateViewSet(ModelViewSet, ApiResponse):
     serializer_class = AnswerSerializer
     queryset = Answer.objects.all()
     permission_classes = (IsAdminUser,)
 
-    @action(methods=['post'], detail=True)
+    @action(methods=["post"], detail=True)
     def create_answer(self, request, id):
         serializer = self.serializer_class(data=request.data)
         if serializer.is_valid():
             serializer.save(feedback_id=id)
             return ApiResponse.success(__("Success"))
         return ApiResponse.error(__("Bad Request"))
-    
