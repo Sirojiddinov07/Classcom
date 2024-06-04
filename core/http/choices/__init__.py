@@ -1,2 +1,2 @@
 from .user import *  # noqa
-from .locations import *  # noqa
+from .location import * # noqa

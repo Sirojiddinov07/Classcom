@@ -1,5 +1,5 @@
 from import_export import resources, fields
-from core.http.choices import Region, District, ScienceGroups
+from core.http.models import Region, District, ScienceGroups
 
 
 class RegionResource(resources.ModelResource):

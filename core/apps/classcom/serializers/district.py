@@ -1,8 +1,11 @@
 from rest_framework import serializers
-from core.http.choices import District
+from core.http import models
 
 
-class RegionSerializer(serializers.ModelSerializer):
+class DistrictSerializer(serializers.ModelSerializer):
     class Meta:
-        model = District
-        fields = ["id", "district", "region"]
+        model = models.District
+        fields = [
+            "id",
+            "district"
+        ]
