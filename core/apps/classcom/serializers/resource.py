@@ -15,7 +15,7 @@ class ResourceSerializer(serializers.ModelSerializer):
         model = models.Resource
         fields = (
             "id", "name",
-            "classes", "topic", "media"
+            "classes", "topic", "media", "type"
         )
         extra_kwargs = {"media": {"write_only": True}}
 
@@ -36,7 +36,7 @@ class ResourceCreateSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = models.Resource
-        fields = ('name', 'description', 'banner', 'topic', 'classes', 'media')
+        fields = ('name', 'description', 'banner', 'type', 'topic', 'classes', 'media')
 
     def create(self, validated_data):
         media_data = validated_data.pop('media')
