@@ -29,3 +29,18 @@ class ResourceDetailSerializer(ResourceSerializer):
         model = models.Resource
         fields = ResourceSerializer.Meta.fields + ("media",)
         extra_kwargs = ResourceSerializer.Meta.extra_kwargs
+
+
+class ResourceCreateSerializer(serializers.ModelSerializer):
+    media = media.MediaSerializer(many=True)
+
+    class Meta:
+        model = models.Resource
+        fields = ('name', 'description', 'banner', 'topic', 'classes', 'media')
+
+    def create(self, validated_data):
+        media_data = validated_data.pop('media')
+        resource = models.Resource.objects.create(user=self.context['request'].user, **validated_data)
+        for media_item in media_data:
+            models.Media.objects.create(resource=resource, **media_item)
+        return resource
