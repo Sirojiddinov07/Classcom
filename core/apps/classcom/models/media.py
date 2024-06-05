@@ -15,7 +15,6 @@ class Media(models.Model):
 
     def save(self, *args, **kwargs):
         self.size = self.file.size
-        # self.type = self.file.content_type
         self.name = self.file.name
         super().save(*args, **kwargs)
 
