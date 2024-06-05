@@ -14,16 +14,16 @@ router.register("notification", views.NotificationListView, basename="notificati
 router.register("class", views.ClassesViewSet, basename="class")
 router.register("science", views.ScienceViewSet, basename="science")
 router.register("schedule", views.ScheduleViewSet, basename="schedule")
-router.register("moderator", views.ModeratorCreateViewSet, basename="moderator")
+# router.register("moderator", views.ModeratorCreateViewSet, basename="moderator")
 router.register("days_off", views.DaysOffViewSet, basename="days_off")
 router.register("resource", views.ResourceViewSet, basename="resource")
 router.register("region", views.RegionViewSet, basename="region")
 router.register("district", views.DistrictViewSet, basename="district")
 
-
 urlpatterns = [
     path('', include(router.urls)),
-    path('download_resource/<int:resource_id>/', views.DownloadResourceView.as_view(), name='download_resource'), # noqa
-    path('download_file/<uuid:download_token>/', views.DownloadFileView.as_view(), name='download_file'), # noqa
-
+    path('download_resource/<int:resource_id>/', views.DownloadResourceView.as_view(), name='download_resource'),
+    # noqa
+    path('download_file/<uuid:download_token>/', views.DownloadFileView.as_view(), name='download_file'),  # noqa
+    path('moderator/', views.ModeratorCreateViewSet.as_view(), name='moderator'),
 ]
