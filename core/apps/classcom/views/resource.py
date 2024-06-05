@@ -1,10 +1,8 @@
 from rest_framework import viewsets
-
 from core.apps.classcom import models
 from core.apps.classcom import choices
 from core.apps.classcom import serializers
 from core.apps.classcom import permissions
-
 from core.http import permissions as http_permissions
 
 
@@ -40,6 +38,8 @@ class ResourceViewSet(viewsets.ModelViewSet):
         return []
 
     def get_serializer_class(self):
-        if self.action == "retrieve":
+        if self.action in ["create", "update", "partial_update"]:
+            return serializers.ResourceCreateSerializer
+        elif self.action == "retrieve":
             return serializers.ResourceDetailSerializer
         return serializers.ResourceSerializer
