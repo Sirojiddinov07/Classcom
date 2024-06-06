@@ -60,7 +60,7 @@ class PlanDetailSerializer(serializers.ModelSerializer):
 # Plan Create Serializer
 ##############################################################################################################
 class PlanCreateSerializer(serializers.ModelSerializer):
-    plan_resource = serializers.FileField(write_only=True)
+    plan_resource = media.MediaSerializer(many=True)
 
     class Meta:
         model = models.Plan
@@ -68,17 +68,11 @@ class PlanCreateSerializer(serializers.ModelSerializer):
             'name', 'description', 'banner', 'type', 'topic', 'classes', 'quarter', 'science', 'hour', 'plan_resource')
 
     def create(self, validated_data):
-        media_data = validated_data.pop('plan_resource')
-        plan = models.Plan.objects.create(user=self.context['request'].user, **validated_data)
-
-        media_data = {
-            'file': media_data,
-            'name': media_data.name,
-            'size': media_data.size,
-        }
-        models.Media.objects.create(resource=plan, **media_data)
-
-        return plan
+        media_data = validated_data.pop('media')
+        resource = models.Plan.objects.create(user=self.context['request'].user, **validated_data)
+        for media_item in media_data:
+            models.Media.objects.create(resource=resource, **media_item)
+        return resource
 
 # class PlanSerializer(serializers.ModelSerializer):
 #     type_id = serializers.SerializerMethodField()
