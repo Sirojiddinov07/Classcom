@@ -32,15 +32,21 @@ class ResourceDetailSerializer(ResourceSerializer):
 
 
 class ResourceCreateSerializer(serializers.ModelSerializer):
-    media = media.MediaSerializer(many=True)
+    media_file = serializers.FileField(write_only=True)
 
     class Meta:
         model = models.Resource
-        fields = ('name', 'description', 'banner', 'type', 'topic', 'classes', 'media')
+        fields = ('name', 'description', 'banner', 'type', 'topic', 'classes', 'media_file')
 
     def create(self, validated_data):
-        media_data = validated_data.pop('media')
+        media_file = validated_data.pop('media_file')
         resource = models.Resource.objects.create(user=self.context['request'].user, **validated_data)
-        for media_item in media_data:
-            models.Media.objects.create(resource=resource, **media_item)
+
+        media_data = {
+            'file': media_file,
+            'name': media_file.name,
+            'size': media_file.size,
+        }
+        models.Media.objects.create(resource=resource, **media_data)
+
         return resource
