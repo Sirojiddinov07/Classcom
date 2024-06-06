@@ -6,6 +6,7 @@ from django.db import models
 from django.contrib.auth import models as auth_models
 
 from core.http import managers, choices
+from core.apps.classcom.choices import Role
 
 
 class User(auth_models.AbstractUser):
@@ -17,8 +18,8 @@ class User(auth_models.AbstractUser):
     validated_at = models.DateTimeField(null=True, blank=True)
     role = models.CharField(
         max_length=255,
-        choices=choices.RoleChoice,
-        default=choices.RoleChoice.USER,
+        choices=Role,
+        default=Role.USER,
     )
 
 
