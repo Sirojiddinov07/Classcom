@@ -40,6 +40,7 @@ class ResourceCreateSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         media_file = validated_data.pop('media_file')
+        validated_data.pop('user', None)
         resource = models.Resource.objects.create(user=self.context['request'].user, **validated_data)
 
         media_data = {

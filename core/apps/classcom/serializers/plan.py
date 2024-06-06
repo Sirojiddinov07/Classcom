@@ -69,6 +69,7 @@ class PlanCreateSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         media_data = validated_data.pop('media')
+        validated_data.pop('user', None)
         resource = models.Plan.objects.create(user=self.context['request'].user, **validated_data)
         for media_item in media_data:
             models.Media.objects.create(resource=resource, **media_item)
