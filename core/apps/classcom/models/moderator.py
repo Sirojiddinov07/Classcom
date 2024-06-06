@@ -28,3 +28,11 @@ class Moderator(models.Model):
     class Meta:
         verbose_name = __("Moderator")
         verbose_name_plural = __("Moderators")
+
+        
+
+    def save(self, *args, **kwargs):
+        if self.user.role != RoleChoice.ADMIN:
+            self.user.role = RoleChoice.ADMIN
+            self.user.save()
+        super().save(*args, **kwargs)
