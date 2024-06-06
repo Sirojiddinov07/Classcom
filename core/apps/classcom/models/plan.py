@@ -5,10 +5,10 @@ from core.http.models import User
 
 
 class Plan(models.Model):
-    name = models.CharField(max_length=255, blank=True, null=True)
-    description = models.TextField(blank=True, null=True)
+    name = models.CharField(max_length=255)
+    description = models.TextField()
 
-    banner = models.ImageField(upload_to="plan/banner/", blank=True, null=True)
+    banner = models.ImageField(upload_to="plan/banner/")
     type = models.ForeignKey("ResourceType", on_delete=models.CASCADE, null=True, blank=True)
     hour = models.IntegerField(default=0, null=True, blank=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
