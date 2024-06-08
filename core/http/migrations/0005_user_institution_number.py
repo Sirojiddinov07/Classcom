@@ -6,13 +6,16 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('http', '0004_rename_name_district_district_remove_region_district_and_more'),
+        (
+            "http",
+            "0004_rename_name_district_district_remove_region_district_and_more",
+        ),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='user',
-            name='institution_number',
+            model_name="user",
+            name="institution_number",
             field=models.CharField(blank=True, max_length=255, null=True),
         ),
     ]

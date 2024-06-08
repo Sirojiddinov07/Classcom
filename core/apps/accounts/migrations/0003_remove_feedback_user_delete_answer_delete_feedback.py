@@ -6,18 +6,18 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('accounts', '0002_feedback_answer'),
+        ("accounts", "0002_feedback_answer"),
     ]
 
     operations = [
         migrations.RemoveField(
-            model_name='feedback',
-            name='user',
+            model_name="feedback",
+            name="user",
         ),
         migrations.DeleteModel(
-            name='Answer',
+            name="Answer",
         ),
         migrations.DeleteModel(
-            name='Feedback',
+            name="Feedback",
         ),
     ]

@@ -6,13 +6,15 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('classcom', '0004_rename_date_schedule_weekday'),
+        ("classcom", "0004_rename_date_schedule_weekday"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='moderator',
-            name='docs',
-            field=models.FileField(blank=True, null=True, upload_to='documents/'),
+            model_name="moderator",
+            name="docs",
+            field=models.FileField(
+                blank=True, null=True, upload_to="documents/"
+            ),
         ),
     ]

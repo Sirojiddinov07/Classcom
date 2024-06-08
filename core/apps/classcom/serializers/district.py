@@ -5,7 +5,4 @@ from core.http import models
 class DistrictSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.District
-        fields = [
-            "id",
-            "district"
-        ]
+        fields = ["id", "district"]

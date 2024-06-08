@@ -9,10 +9,16 @@ class Resource(models.Model):
     description = models.TextField()
 
     banner = models.ImageField(upload_to="resource_banners/")
-    type = models.ForeignKey("ResourceType", on_delete=models.CASCADE, null=True, blank=True)
-    topic = models.ForeignKey("Topic", on_delete=models.CASCADE, null=True, blank=True)
+    type = models.ForeignKey(
+        "ResourceType", on_delete=models.CASCADE, null=True, blank=True
+    )
+    topic = models.ForeignKey(
+        "Topic", on_delete=models.CASCADE, null=True, blank=True
+    )
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    classes = models.ForeignKey("Classes", on_delete=models.CASCADE, null=True, blank=True)
+    classes = models.ForeignKey(
+        "Classes", on_delete=models.CASCADE, null=True, blank=True
+    )
     media = models.ManyToManyField("Media", blank=True)
 
     def __str__(self):

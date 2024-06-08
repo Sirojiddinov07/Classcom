@@ -23,16 +23,19 @@ class ModeratorCreateViewSetTestCase(TestCase):
             "science": 1,
             "classes": 1,
             "degree": "HIGHER",
-            "docs": "string"
+            "docs": "string",
         }
-        response = self.client.post('core/apps/classcom/views/moderator.py', data=data)
+        response = self.client.post(
+            "core/apps/classcom/views/moderator.py", data=data
+        )
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertEqual(Moderator.objects.count(), 1)
-        self.assertEqual(Moderator.objects.get().name, data['name'])
+        self.assertEqual(Moderator.objects.get().name, data["name"])
 
     def test_moderator_creation_with_invalid_data(self):
-        data = {
-        }
-        response = self.client.post('core/apps/classcom/views/moderator.py', data=data)
+        data = {}
+        response = self.client.post(
+            "core/apps/classcom/views/moderator.py", data=data
+        )
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertEqual(Moderator.objects.count(), 0)

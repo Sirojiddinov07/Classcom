@@ -3,7 +3,12 @@ import uuid
 
 
 from django.utils.translation import gettext_lazy as _
-from rest_framework import permissions, request as rest_request, throttling, views
+from rest_framework import (
+    permissions,
+    request as rest_request,
+    throttling,
+    views,
+)
 
 from rest_framework import (
     permissions,
@@ -33,7 +38,7 @@ class RegisterView(views.APIView, services.UserService):
     @extend_schema(
         request=serializer_class,
         summary="Register new user",
-        description="Yangi user ro'yhatdan o'tish uchun"
+        description="Yangi user ro'yhatdan o'tish uchun",
     )
     def post(self, request: rest_request.Request):
         ser = self.serializer_class(data=request.data)
@@ -103,7 +108,7 @@ class ResetConfirmationCodeView(views.APIView, services.UserService):
 
     serializer_class = serializers.ResetConfirmationSerializer
     permission_classes = [permissions.AllowAny]
-    
+
     @extend_schema(
         request=serializer_class,
         summary="Reset confirm otp code.",
@@ -149,9 +154,9 @@ class ResetSetPasswordView(views.APIView, services.UserService):
     permission_classes = [permissions.AllowAny]
 
     @extend_schema(
-            request=serializer_class,
-            summary="Reset user password.",
-            description="Reset user password.",
+        request=serializer_class,
+        summary="Reset user password.",
+        description="Reset user password.",
     )
     def post(self, request):
         ser = self.serializer_class(data=request.data)
