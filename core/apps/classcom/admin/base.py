@@ -9,6 +9,7 @@ class PlanAdmin(ImportExportModelAdmin):
     """
     Cosutimize the plan model in admin panel interface
     """
+
     resource_class = resources.PlanResource
 
 

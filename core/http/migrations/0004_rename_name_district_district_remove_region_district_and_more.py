@@ -7,23 +7,27 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('http', '0003_district_sciencegroups_user_institution_and_more'),
+        ("http", "0003_district_sciencegroups_user_institution_and_more"),
     ]
 
     operations = [
         migrations.RenameField(
-            model_name='district',
-            old_name='name',
-            new_name='district',
+            model_name="district",
+            old_name="name",
+            new_name="district",
         ),
         migrations.RemoveField(
-            model_name='region',
-            name='district',
+            model_name="region",
+            name="district",
         ),
         migrations.AddField(
-            model_name='district',
-            name='region',
-            field=models.ForeignKey(default=1, on_delete=django.db.models.deletion.CASCADE, to='http.region'),
+            model_name="district",
+            name="region",
+            field=models.ForeignKey(
+                default=1,
+                on_delete=django.db.models.deletion.CASCADE,
+                to="http.region",
+            ),
             preserve_default=False,
         ),
     ]

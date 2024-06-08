@@ -6,6 +6,3 @@ class CustomUserCreationForm(UserCreationForm):
     class Meta(UserCreationForm.Meta):
         model = User
         fields = ("phone",)
-
-
-

@@ -7,25 +7,25 @@ from core.apps.classcom.serializers import media
 class PlanScienceSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Science
-        fields = ('id', 'name')
+        fields = ("id", "name")
 
 
 class PlanQuarterSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Quarter
-        fields = ('id', 'name')
+        fields = ("id", "name")
 
 
 class TypeSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.ResourceType
-        fields = ('id', 'name')
+        fields = ("id", "name")
 
 
 class PlanClassSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Classes
-        fields = ('id', 'name')
+        fields = ("id", "name")
 
 
 class PlanTopicSerializer(serializers.ModelSerializer):
@@ -34,7 +34,7 @@ class PlanTopicSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = models.Topic
-        fields = ('id', 'name', 'quarter', 'science')
+        fields = ("id", "name", "quarter", "science")
 
 
 ##############################################################################################################
@@ -51,8 +51,16 @@ class PlanDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Plan
         fields = (
-            "id", "name", "description", "banner",
-            "classes", "topic", "media", "type", "quarter", "science"
+            "id",
+            "name",
+            "description",
+            "banner",
+            "classes",
+            "topic",
+            "media",
+            "type",
+            "quarter",
+            "science",
         )
 
 
@@ -65,15 +73,28 @@ class PlanCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Plan
         fields = (
-            'name', 'description', 'banner', 'type', 'topic', 'classes', 'quarter', 'science', 'hour', 'plan_resource')
+            "name",
+            "description",
+            "banner",
+            "type",
+            "topic",
+            "classes",
+            "quarter",
+            "science",
+            "hour",
+            "plan_resource",
+        )
 
     def create(self, validated_data):
-        media_data = validated_data.pop('media')
-        validated_data.pop('user', None)
-        resource = models.Plan.objects.create(user=self.context['request'].user, **validated_data)
+        media_data = validated_data.pop("media")
+        validated_data.pop("user", None)
+        resource = models.Plan.objects.create(
+            user=self.context["request"].user, **validated_data
+        )
         for media_item in media_data:
             models.Media.objects.create(resource=resource, **media_item)
         return resource
+
 
 # class PlanSerializer(serializers.ModelSerializer):
 #     type_id = serializers.SerializerMethodField()

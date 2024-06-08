@@ -20,7 +20,7 @@ class Moderator(models.Model):
         choices=choices.Degree.choices,
         default=choices.Degree.AUTHOR,
     )
-    docs = models.FileField(upload_to='documents/', null=True, blank=True)
+    docs = models.FileField(upload_to="documents/", null=True, blank=True)
     is_contracted = models.BooleanField(default=False)
 
     def __str__(self) -> str:
@@ -29,8 +29,6 @@ class Moderator(models.Model):
     class Meta:
         verbose_name = __("Moderator")
         verbose_name_plural = __("Moderators")
-
-        
 
     def save(self, *args, **kwargs):
         if self.user.role != Role.MODERATOR:

@@ -16,6 +16,6 @@ class MediaSerializer(serializers.ModelSerializer):
         )
 
     def create(self, validated_data):
-        file = validated_data.get('file')
-        validated_data['type'] = file.content_type
+        file = validated_data.get("file")
+        validated_data["type"] = file.content_type
         return super().create(validated_data)

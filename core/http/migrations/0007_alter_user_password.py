@@ -6,14 +6,16 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('http', '0006_alter_user_password'),
+        ("http", "0006_alter_user_password"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='user',
-            name='password',
-            field=models.CharField(default=1, max_length=128, verbose_name='password'),
+            model_name="user",
+            name="password",
+            field=models.CharField(
+                default=1, max_length=128, verbose_name="password"
+            ),
             preserve_default=False,
         ),
     ]

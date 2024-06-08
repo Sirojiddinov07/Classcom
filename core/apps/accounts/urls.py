@@ -49,4 +49,3 @@ urlpatterns = [
         name="change-password",
     ),
 ]
-
