@@ -64,11 +64,12 @@ class PlanDetailSerializer(serializers.ModelSerializer):
         )
 
 
-##############################################################################################################
+###########################################################
 # Plan Create Serializer
-##############################################################################################################
+###########################################################
 class PlanCreateSerializer(serializers.ModelSerializer):
-    plan_resource = media.MediaSerializer(many=True)
+    _media = media.MediaSerializer(many=True,read_only=True,source="plan_resource")
+    media = serializers.ListField(child=serializers.FileField(),write_only=True)
 
     class Meta:
         model = models.Plan
@@ -82,70 +83,18 @@ class PlanCreateSerializer(serializers.ModelSerializer):
             "quarter",
             "science",
             "hour",
-            "plan_resource",
+            "media",
+            "_media"
         )
 
     def create(self, validated_data):
-        media_data = validated_data.pop("media")
         validated_data.pop("user", None)
+        media = validated_data.pop("media", [])
         resource = models.Plan.objects.create(
             user=self.context["request"].user, **validated_data
         )
-        for media_item in media_data:
-            models.Media.objects.create(resource=resource, **media_item)
+        for media_item in media:
+            media = models.Media.objects.create(file=media_item)
+            resource.plan_resource.add(media)
         return resource
 
-
-# class PlanSerializer(serializers.ModelSerializer):
-#     type_id = serializers.SerializerMethodField()
-#     type_name = serializers.SerializerMethodField()
-#     class_id = serializers.SerializerMethodField()
-#     class_name = serializers.SerializerMethodField()
-#     topic_id = serializers.SerializerMethodField()
-#     topic_name = serializers.SerializerMethodField()
-#     quarter_id = serializers.SerializerMethodField()
-#     quarter_name = serializers.SerializerMethodField()
-#     science_id = serializers.SerializerMethodField()
-#     science_name = serializers.SerializerMethodField()
-#     media = media.MediaSerializer(many=True, read_only=True)
-#
-#     class Meta:
-#         model = models.Resource
-#         fields = (
-#             "id", "name", "description", "banner",
-#             "class_id", "class_name",
-#             "topic_id", "topic_name",
-#             "quarter_id", "quarter_name",
-#             "science_id", "science_name",
-#             "media", "type_id", "type_name"
-#         )
-#
-#     def get_type_id(self, obj):
-#         return obj.type.id
-#
-#     def get_type_name(self, obj):
-#         return obj.type.name
-#
-#     def get_class_id(self, obj):
-#         return obj.classes.id
-#
-#     def get_class_name(self, obj):
-#         return obj.classes.name
-#
-#     def get_topic_id(self, obj):
-#         return obj.topic.id
-#
-#     def get_topic_name(self, obj):
-#         return obj.topic.name
-#
-#     def get_quarter_id(self, obj):
-#         return obj.topic.quarter.id
-#
-#     def get_quarter_name(self, obj):
-#         return obj.topic.quarter.name
-#
-#     def get_science_id(self, obj):
-#         return obj.topic.science.id
-#
-#     def get_science_name(self, obj):
-#         return obj.topic.science.name
