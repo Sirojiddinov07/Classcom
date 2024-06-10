@@ -23,7 +23,7 @@ class Plan(models.Model):
     )
 
     def __str__(self):
-        return str(self.topic.name)
+        return self.name
 
     class Meta:
         unique_together = (("topic", "classes"),)

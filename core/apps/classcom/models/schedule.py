@@ -17,6 +17,7 @@ class Schedule(models.Model):
     weekday = models.CharField(max_length=15, choices=choices.Weekday.choices)
     start_time = models.TimeField()
     end_time = models.TimeField()
+    lesson_time = models.CharField(max_length=25, null=True, blank=True)
 
     def __str__(self):
         return f"{self.user} {self.science} {self.start_time} {self.end_time}"
