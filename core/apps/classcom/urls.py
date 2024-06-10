@@ -38,4 +38,6 @@ urlpatterns = [
     path(
         "moderator/", views.ModeratorCreateViewSet.as_view(), name="moderator"
     ),
+    path("get-schedule/", views.get_schedule_data, name='get_schedule_data'),
+
 ]

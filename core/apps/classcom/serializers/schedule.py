@@ -34,6 +34,7 @@ class ScheduleListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Schedule
         fields = (
+            "id",
             "shift",
             "user",
             "science",
@@ -41,6 +42,7 @@ class ScheduleListSerializer(serializers.ModelSerializer):
             "weekday",
             "start_time",
             "end_time",
+            "lesson_time"
         )
 
 
@@ -57,6 +59,7 @@ class ScheduleCreateSerializer(serializers.ModelSerializer):
             "weekday",
             "start_time",
             "end_time",
+            "lesson_time"
         )
 
     def create(self, validated_data):
