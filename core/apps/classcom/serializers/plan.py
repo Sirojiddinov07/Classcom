@@ -68,8 +68,12 @@ class PlanDetailSerializer(serializers.ModelSerializer):
 # Plan Create Serializer
 ###########################################################
 class PlanCreateSerializer(serializers.ModelSerializer):
-    _media = media.MediaSerializer(many=True,read_only=True,source="plan_resource")
-    media = serializers.ListField(child=serializers.FileField(),write_only=True)
+    _media = media.MediaSerializer(
+        many=True, read_only=True, source="plan_resource"
+    )
+    media = serializers.ListField(
+        child=serializers.FileField(), write_only=True
+    )
 
     class Meta:
         model = models.Plan
@@ -84,7 +88,7 @@ class PlanCreateSerializer(serializers.ModelSerializer):
             "science",
             "hour",
             "media",
-            "_media"
+            "_media",
         )
 
     def create(self, validated_data):
@@ -97,4 +101,3 @@ class PlanCreateSerializer(serializers.ModelSerializer):
             media = models.Media.objects.create(file=media_item)
             resource.plan_resource.add(media)
         return resource
-
