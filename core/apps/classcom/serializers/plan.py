@@ -47,6 +47,22 @@ class PlanDetailSerializer(serializers.ModelSerializer):
     quarter = PlanQuarterSerializer()
     science = PlanScienceSerializer()
     media = media.MediaSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = models.Plan
+        fields = (
+            "id",
+            "name",
+            "description",
+            "banner",
+            "classes",
+            "topic",
+            "media",
+            "type",
+            "quarter",
+            "science",
+        )
+
 class PlanSerializer(serializers.ModelSerializer):
     """
     <<<<<<< HEAD
