@@ -24,7 +24,7 @@ class ResourceDetailSerializer(ResourceSerializer):
 
     class Meta:
         model = models.Resource
-        fields = ResourceSerializer.Meta.fields + ("media",)
+        fields = ResourceSerializer.Meta.fields
         extra_kwargs = ResourceSerializer.Meta.extra_kwargs
 
 

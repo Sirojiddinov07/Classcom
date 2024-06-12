@@ -30,9 +30,6 @@ urlpatterns = [
         name="ck_editor_5_upload_file",
     ),  # noqa
     path("i18n/", include("django.conf.urls.i18n")),
-    # Internal apps
-    path("", include("core.apps.accounts.urls")),
-    path("", include("core.apps.home.urls")),
     # Media and static files
     re_path(
         r"static/(?P<path>.*)", serve, {"document_root": settings.STATIC_ROOT}

@@ -4,10 +4,16 @@ from core.apps.classcom import choices
 from core.apps.classcom import serializers
 from core.apps.classcom import permissions
 from core.http import permissions as http_permissions
+from django.views.decorators.cache import never_cache
+from django.utils.decorators import method_decorator
 
 
 class ResourceViewSet(viewsets.ModelViewSet):
     queryset = models.Resource.objects.all()
+
+    @method_decorator(never_cache)
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
 
     def get_queryset(self):
         queryset = self.queryset.filter(user=self.request.user)
@@ -23,6 +29,8 @@ class ResourceViewSet(viewsets.ModelViewSet):
             ) | queryset.filter(media__description__icontains=search_term)
 
         return queryset
+
+
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
