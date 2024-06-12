@@ -34,17 +34,7 @@ MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",  # Cors middleware
     "django.middleware.locale.LocaleMiddleware",  # Locale middleware
     "core.middlewares.cache_middleware.CacheMiddleware",  # Cache middle
-    *(
-        ["django.middleware.cache.UpdateCacheMiddleware"]
-        if env.bool("CACHE_ENABLED")
-        else []
-    ),  # Update cache middle
     "django.middleware.common.CommonMiddleware",
-    *(
-        ["django.middleware.cache.FetchFromCacheMiddleware"]
-        if env.bool("CACHE_ENABLED")
-        else []
-    ),  # Fetch from cache middle
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
