@@ -13,7 +13,7 @@ class ResourceSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = models.Resource
-        fields = ("id", "name", "classes", "topic", "media")
+        fields = ("id", "name", "classes", "topic", "media", "type")
         extra_kwargs = {"media": {"write_only": True}}
 
 
@@ -26,3 +26,37 @@ class ResourceDetailSerializer(ResourceSerializer):
         model = models.Resource
         fields = ResourceSerializer.Meta.fields + ("media",)
         extra_kwargs = ResourceSerializer.Meta.extra_kwargs
+
+
+class ResourceCreateSerializer(serializers.ModelSerializer):
+    media_file = serializers.FileField(write_only=True)
+    _media = serializers.SerializerMethodField(read_only=True)
+
+    def get__media(self,obj):
+        return media.MediaSerializer(obj.media.first()).data
+
+    class Meta:
+        model = models.Resource
+        fields = (
+            "name",
+            "description",
+            "banner",
+            "type",
+            "topic",
+            "classes",
+            "media_file",
+            "_media",
+        )
+
+    def create(self, validated_data):
+        media_file = validated_data.pop("media_file")
+        validated_data.pop("user", None)
+        resource = models.Resource.objects.create(
+            user=self.context["request"].user, **validated_data
+        )
+
+        resource.media.create(
+            file=media_file, name=media_file.name, size=media_file.size
+        )
+
+        return resource

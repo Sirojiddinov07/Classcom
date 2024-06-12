@@ -1,12 +1,19 @@
-from rest_framework import viewsets
-from core.apps.classcom import models
-from core.apps.classcom import serializers
+from rest_framework import permissions, views, status
+from rest_framework.response import Response
+from rest_framework.permissions import AllowAny
+
+from core.apps.classcom.serializers import ModeratorCreateSerializer
 
 
-class ModeratorCreateViewSet(viewsets.ModelViewSet):
-    queryset = models.Moderator.objects.all()
-    serializer_class = serializers.ModeratorCreateSerializer
+class ModeratorCreateViewSet(views.APIView):
+    permission_classes = [AllowAny]
+    serializer_class = ModeratorCreateSerializer
 
+    def post(self, request):
+        serializer = self.serializer_class(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
     def get_permissions(self):
         if self.action == "create":
             return []

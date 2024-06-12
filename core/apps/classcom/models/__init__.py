@@ -14,3 +14,4 @@ from .notification import *  # noqa
 from .feedback import *  # noqa
 from .download_token import *  # noqa
 from .days_off import *  # noqa
+from .resource_type import *  # noqa

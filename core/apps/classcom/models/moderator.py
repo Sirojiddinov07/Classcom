@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as __
 
+from core.apps.classcom.choices import Role
 from core.http.models import User
 from core.apps.classcom import choices
 
@@ -28,3 +29,9 @@ class Moderator(models.Model):
     class Meta:
         verbose_name = __("Moderator")
         verbose_name_plural = __("Moderators")
+
+    def save(self, *args, **kwargs):
+        if self.user.role != Role.MODERATOR:
+            self.user.role = Role.MODERATOR
+            self.user.save()
+        super().save(*args, **kwargs)

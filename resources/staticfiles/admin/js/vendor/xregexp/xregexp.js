@@ -773,7 +773,7 @@ function hex(dec) {
 
 function isQuantifierNext(pattern, pos, flags) {
   var inlineCommentPattern = '\\(\\?#[^)]*\\)';
-  var lineCommentPattern = '#[^#\\n]*';
+  var lineCommentPattern = '#[^#\\.env]*';
   var quantifierPattern = '[?*+]|{\\d+(?:,\\d*)?}';
   var regex = (0, _indexOf["default"])(flags).call(flags, 'x') !== -1 ? // Ignore any leading whitespace, line comments, and inline comments
   /^(?:\s|#[^#\n]*|\(\?#[^)]*\))*(?:[?*+]|{\d+(?:,\d*)?})/ : // Ignore any leading inline comments
@@ -1001,7 +1001,7 @@ function setNamespacing(on) {
  *     - `u` - unicode (ES6)
  *     - `y` - sticky (Firefox 3+, ES6)
  *   Additional XRegExp flags:
- *     - `n` - named capture only
+ *     - `.env` - named capture only
  *     - `s` - dot matches all (aka singleline) - works even when not natively supported
  *     - `x` - free-spacing and line comments (aka extended)
  *     - `A` - 21-bit Unicode properties (aka astral) - requires the Unicode Base addon
@@ -1165,7 +1165,7 @@ XRegExp._pad4 = pad4;
  *   () => '\\x07',
  *   {scope: 'all'}
  * );
- * XRegExp('\\a[\\a-\\n]+').test('\x07\n\x07'); // -> true
+ * XRegExp('\\a[\\a-\\.env]+').test('\x07\.env\x07'); // -> true
  *
  * // Add the U (ungreedy) flag from PCRE and RE2, which reverses greedy and lazy quantifiers.
  * // Since `scope` is not specified, it uses 'default' (i.e., transformations apply outside of
@@ -1625,7 +1625,7 @@ XRegExp.matchChain = function (str, chain) {
  * Returns a new string with one or all matches of a pattern replaced. The pattern can be a string
  * or regex, and the replacement can be a string or a function to be called for each match. To
  * perform a global search and replace, use the optional `scope` argument or include flag g if using
- * a regex. Replacement strings can use `$<n>` or `${n}` for named and numbered backreferences.
+ * a regex. Replacement strings can use `$<.env>` or `${.env}` for named and numbered backreferences.
  * Replacement functions can use named backreferences via the last argument. Also fixes browser bugs
  * compared to the native `String.prototype.replace` and can be used reliably cross-browser.
  *
@@ -1638,18 +1638,18 @@ XRegExp.matchChain = function (str, chain) {
  *     - $&, $0 - Inserts the matched substring.
  *     - $` - Inserts the string that precedes the matched substring (left context).
  *     - $' - Inserts the string that follows the matched substring (right context).
- *     - $n, $nn - Where n/nn are digits referencing an existing capturing group, inserts
- *       backreference n/nn.
- *     - $<n>, ${n} - Where n is a name or any number of digits that reference an existing capturing
- *       group, inserts backreference n.
+ *     - $.env, $nn - Where .env/nn are digits referencing an existing capturing group, inserts
+ *       backreference .env/nn.
+ *     - $<.env>, ${.env} - Where .env is a name or any number of digits that reference an existing capturing
+ *       group, inserts backreference .env.
  *   Replacement functions are invoked with three or more arguments:
  *     - args[0] - The matched substring (corresponds to `$&` above). If the `namespacing` feature
  *       is off, named backreferences are accessible as properties of this argument.
- *     - args[1..n] - One argument for each backreference (corresponding to `$1`, `$2`, etc. above).
+ *     - args[1...env] - One argument for each backreference (corresponding to `$1`, `$2`, etc. above).
  *       If the regex has no capturing groups, no arguments appear in this position.
- *     - args[n+1] - The zero-based index of the match within the entire search string.
- *     - args[n+2] - The total string being searched.
- *     - args[n+3] - If the the search pattern is a regex with named capturing groups, the last
+ *     - args[.env+1] - The zero-based index of the match within the entire search string.
+ *     - args[.env+2] - The total string being searched.
+ *     - args[.env+3] - If the the search pattern is a regex with named capturing groups, the last
  *       argument is the groups object. Its keys are the backreference names and its values are the
  *       backreference values. If the `namespacing` feature is off, this argument is not present.
  * @param {String} [scope] Use 'one' to replace the first match only, or 'all'. Defaults to 'one'.
@@ -2035,7 +2035,7 @@ fixed.match = function (regex) {
   return fixed.exec.call(regex, nullThrows(this));
 };
 /**
- * Adds support for `${n}` (or `$<n>`) tokens for named and numbered backreferences in replacement
+ * Adds support for `${.env}` (or `$<.env>`) tokens for named and numbered backreferences in replacement
  * text, and provides named backreferences to replacement functions as `arguments[0].name`. Also
  * fixes browser bugs in replacement text syntax when performing a replacement using a nonregex
  * search value, and the value of a replacement regex's `lastIndex` property during replacement
@@ -2115,7 +2115,7 @@ fixed.replace = function (search, replacement) {
         // when the search regex uses native named capture
 
         var numNonCaptureArgs = isType(args[args.length - 1], 'Object') ? 4 : 3;
-        var numCaptures = args.length - numNonCaptureArgs; // Handle named or numbered backreference with curly or angled braces: ${n}, $<n>
+        var numCaptures = args.length - numNonCaptureArgs; // Handle named or numbered backreference with curly or angled braces: ${.env}, $<.env>
 
         if (bracketed) {
           // Handle backreference to numbered capture, if `bracketed` is an integer. Use
@@ -2176,7 +2176,7 @@ fixed.replace = function (search, replacement) {
         // Type-convert and drop leading zero
 
 
-        dollarToken = +dollarToken; // XRegExp behavior for `$n` and `$nn`:
+        dollarToken = +dollarToken; // XRegExp behavior for `$.env` and `$nn`:
         // - Backrefs end after 1 or 2 digits. Use `${..}` or `$<..>` for more digits.
         // - `$1` is an error if no capturing groups.
         // - `$10` is an error if less than 10 capturing groups. Use `${1}0` or `$<1>0`
@@ -2353,7 +2353,7 @@ if (!hasNativeS) {
 }
 /*
  * Named backreference: `\k<name>`. Backreference names can use RegExpIdentifierName characters
- * only. Also allows numbered backreferences as `\k<n>`.
+ * only. Also allows numbered backreferences as `\k<.env>`.
  */
 
 
@@ -2367,7 +2367,7 @@ XRegExp.addToken(/\\k<([^>]+)>/, function (match) {
   if (!index || index > this.captureNames.length) {
     throw new SyntaxError("Backreference to undefined group ".concat(match[0]));
   } // Keep backreferences separate from subsequent literal numbers. This avoids e.g.
-  // inadvertedly changing `(?<n>)\k<n>1` to `()\11`.
+  // inadvertedly changing `(?<.env>)\k<.env>1` to `()\11`.
 
 
   return (0, _concat["default"])(_context7 = "\\".concat(index)).call(_context7, endIndex === match.input.length || isNaN(match.input[endIndex]) ? '' : '(?:)');
@@ -2417,7 +2417,7 @@ XRegExp.addToken(/\(\?P?<((?:[\$A-Z_a-z\xAA\xB5\xBA\xC0-\xD6\xD8-\xF6\xF8-\u02C1
 });
 /*
  * Capturing group; match the opening parenthesis only. Required for support of named capturing
- * groups. Also adds named capture only mode (flag n).
+ * groups. Also adds named capture only mode (flag .env).
  */
 
 XRegExp.addToken(/\((?!\?)/, function (match, scope, flags) {

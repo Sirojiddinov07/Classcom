@@ -6,9 +6,19 @@ from core.http.models import User
 
 class Resource(models.Model):
     name = models.CharField(max_length=255)
-    topic = models.ForeignKey("Topic", on_delete=models.CASCADE)
+    description = models.TextField()
+
+    banner = models.ImageField(upload_to="resource_banners/")
+    type = models.ForeignKey(
+        "ResourceType", on_delete=models.CASCADE, null=True, blank=True
+    )
+    topic = models.ForeignKey(
+        "Topic", on_delete=models.CASCADE, null=True, blank=True
+    )
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    classes = models.ForeignKey("Classes", on_delete=models.CASCADE)
+    classes = models.ForeignKey(
+        "Classes", on_delete=models.CASCADE, null=True, blank=True
+    )
     media = models.ManyToManyField("Media", blank=True)
 
     def __str__(self):

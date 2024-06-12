@@ -1,9 +1,11 @@
-from rest_framework import serializers
-from core.apps.classcom import models
 from django.utils.translation import gettext as _
-from core.http import models as http_models
+from rest_framework import serializers
+
+from core.services import UserService
+from core.apps.classcom import models
+from core.http.models import Region, District
 from core.apps.classcom.serializers import RegionSerializer, DistrictSerializer
-from rest_framework.exceptions import APIException
+
 
 
 class UserModeratorSerializer(serializers.ModelSerializer):
@@ -24,7 +26,7 @@ class UserModeratorSerializer(serializers.ModelSerializer):
             "institution",
             "institution_number",
         ]
-        extra_kwargs = {
+    extra_kwargs = {
             "region": {
                 "write_only": True,
             },
@@ -32,32 +34,75 @@ class UserModeratorSerializer(serializers.ModelSerializer):
                 "write_only": True,
             },
         }
-
     def validate_phone(self, value):
-        user = models.User.objects.filter(
+        if models.User.objects.filter(
             phone=value, validated_at__isnull=False
-        )
-        if user.exists():
-            raise serializers.ValidationError(
+        ).exists():
+        raise serializers.ValidationError(
                 _("Phone number already registered."), code="unique"
             )
         return value
 
+    def create(self, validated_data):
+        password = validated_data.pop("password")
+        user = models.User.objects.create(**validated_data)
+        user.set_password(password)
+        user.save()
+        return user
+
 
 class ModeratorCreateSerializer(serializers.ModelSerializer):
-    user = UserModeratorSerializer()
+    first_name = serializers.CharField(source="user.first_name")
+    last_name = serializers.CharField(source="user.last_name")
+    phone = serializers.CharField(source="user.phone", required=True)
+    password = serializers.CharField(
+        source="user.password", write_only=True, required=True
+    )
+    region = serializers.PrimaryKeyRelatedField(
+        queryset=Region.objects.all(), source="user.region"
+    )
+    district = serializers.PrimaryKeyRelatedField(
+        queryset=District.objects.all(), source="user.district"
+    )
+    institution = serializers.CharField(source="user.institution")
+    institution_number = serializers.CharField(
+        source="user.institution_number"
+    )
 
     class Meta:
         model = models.Moderator
-        fields = ["user", "science", "classes", "degree", "docs"]
+        fields = [
+            "first_name",
+            "last_name",
+            "phone",
+            "password",
+            "region",
+            "district",
+            "institution",
+            "institution_number",
+            "science",
+            "classes",
+            "degree",
+            "docs",
+        ]
 
     def create(self, validated_data):
         user_data = validated_data.pop("user")
-        user_data["region"] = user_data["region"].id
-        user_data["district"] = user_data["district"].id
+
+        region = user_data.pop("region")
+        district = user_data.pop("district")
+
+        user_data["region"] = region.id
+        user_data["district"] = district.id
+
         user_serializer = UserModeratorSerializer(data=user_data)
         user_serializer.is_valid(raise_exception=True)
         user = user_serializer.save()
+
+        sms_service = UserService()
+        sms_service.send_confirmation(user.phone)
+
+
         moderator = models.Moderator.objects.create(
             user=user, **validated_data
         )
