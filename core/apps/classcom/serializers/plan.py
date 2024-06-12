@@ -47,6 +47,16 @@ class PlanDetailSerializer(serializers.ModelSerializer):
     quarter = PlanQuarterSerializer()
     science = PlanScienceSerializer()
     media = media.MediaSerializer(many=True, read_only=True)
+class PlanSerializer(serializers.ModelSerializer):
+    """
+    <<<<<<< HEAD
+        PlanSerializer class
+        note:
+            O'qituvchi uchun tematik plan
+    =======
+        PlanSerializer class for Teachers
+    >>>>>>> origin/dev
+    """
 
     class Meta:
         model = models.Plan
