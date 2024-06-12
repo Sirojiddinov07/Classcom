@@ -9,10 +9,11 @@ class ResourceSerializer(serializers.ModelSerializer):
     Serializer for the Resource model
     """
 
+    media = media.MediaSerializer(many=True, read_only=True)
 
     class Meta:
         model = models.Resource
-        fields = ("id", "name", "classes", "topic", "type")
+        fields = ("id", "name", "classes", "topic", "media", "type")
         extra_kwargs = {"media": {"write_only": True}}
 
 
@@ -20,11 +21,10 @@ class ResourceDetailSerializer(ResourceSerializer):
     """
     Serializer for resource detail page
     """
-    
-    media = media.MediaSerializer(many=True, read_only=True)
+
     class Meta:
         model = models.Resource
-        fields = ResourceSerializer.Meta.fields + ("media",)
+        fields = ResourceSerializer.Meta.fields
         extra_kwargs = ResourceSerializer.Meta.extra_kwargs
 
 
