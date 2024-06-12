@@ -2,8 +2,13 @@ from django.http import JsonResponse
 from django.utils.decorators import method_decorator
 from django.views import View
 from django.views.decorators.csrf import csrf_exempt
-from rest_framework import viewsets
+from rest_framework import viewsets, status
 import json
+
+from rest_framework.generics import GenericAPIView
+from rest_framework.mixins import ListModelMixin
+from rest_framework.response import Response
+from rest_framework.views import APIView
 
 from core.apps.classcom.choices import Weekday, ShiftChoice
 from core.apps.classcom.models import Schedule
@@ -26,96 +31,87 @@ class ScheduleViewSet(viewsets.ModelViewSet):
         return ScheduleCreateSerializer
 
 
-def get_schedule_data(request):
-    response_data = []
 
-    # Default empty schedule object
-    empty_schedule = {
-        "id": None,
-        "science": {"id": None, "name": None},
-        "classes": {"id": None, "name": None},
-        "start_time": None,
-        "end_time": None,
-        "lesson_time": None,
-    }
-    def get_empty_schedule(lesson_time):
-        return {
-            "lesson_time": str(lesson_time),
-            "science": {
-                "id": None,
-                "name": None
-            },
-            "classes": {
-                "id": None,
-                "name": None
-            },
-            "start_time": None,
-            "end_time": None,
-        }
+class GetScheduleDataView(GenericAPIView, ListModelMixin):
 
-    for day in Weekday.choices:
-        morning_schedule = [get_empty_schedule(i) for i in range(1, 7)]
-        evening_schedule = [get_empty_schedule(i) for i in range(1, 7)]
+    def get(self, request):
+        response_data = []
 
-
-        morning_schedules = Schedule.objects.filter(shift=ShiftChoice.MORNING, weekday=day[0]).order_by('lesson_time')
-        for schedule in morning_schedules:
-            lesson_time_index = int(schedule.lesson_time) - 1
-            morning_schedule[lesson_time_index] = {
-                "lesson_time": schedule.lesson_time,
+        def get_empty_schedule(lesson_time):
+            return {
+                "lesson_time": str(lesson_time),
                 "science": {
-                    "id": schedule.science.id,
-                    "name": schedule.science.name,
+                    "id": None,
+                    "name": None
                 },
                 "classes": {
-                    "id": schedule.classes.id,
-                    "name": schedule.classes.name,
+                    "id": None,
+                    "name": None
                 },
-                "start_time": schedule.start_time,
-                "end_time": schedule.end_time,
+                "start_time": None,
+                "end_time": None,
             }
 
-        evening_schedules = Schedule.objects.filter(shift=ShiftChoice.EVENING, weekday=day[0]).order_by('lesson_time')
-        for schedule in evening_schedules:
-            lesson_time_index = int(schedule.lesson_time) - 1
-            evening_schedule[lesson_time_index] = {
-                "lesson_time": schedule.lesson_time,
-                "science": {
-                    "id": schedule.science.id,
-                    "name": schedule.science.name,
-                },
-                "classes": {
-                    "id": schedule.classes.id,
-                    "name": schedule.classes.name,
-                },
-                "start_time": schedule.start_time,
-                "end_time": schedule.end_time,
-            }
-        response_data.append(
-            {
-                "id": day[0],
-                "data": {
-                    "morning": morning_schedule,
-                    "evening": evening_schedule,
-                },
-            }
-        )
+        for day in Weekday.choices:
+            morning_schedule = [get_empty_schedule(i) for i in range(1, 7)]
+            evening_schedule = [get_empty_schedule(i) for i in range(1, 7)]
 
-    return JsonResponse(response_data, safe=False)
+            morning_schedules = Schedule.objects.filter(shift=ShiftChoice.MORNING, weekday=day[0]).order_by('lesson_time')
+            for schedule in morning_schedules:
+                lesson_time_index = int(schedule.lesson_time) - 1
+                morning_schedule[lesson_time_index] = {
+                    "lesson_time": schedule.lesson_time,
+                    "science": {
+                        "id": schedule.science.id,
+                        "name": schedule.science.name,
+                    },
+                    "classes": {
+                        "id": schedule.classes.id,
+                        "name": schedule.classes.name,
+                    },
+                    "start_time": schedule.start_time,
+                    "end_time": schedule.end_time,
+                }
 
+            evening_schedules = Schedule.objects.filter(shift=ShiftChoice.EVENING, weekday=day[0]).order_by('lesson_time')
+            for schedule in evening_schedules:
+                lesson_time_index = int(schedule.lesson_time) - 1
+                evening_schedule[lesson_time_index] = {
+                    "lesson_time": schedule.lesson_time,
+                    "science": {
+                        "id": schedule.science.id,
+                        "name": schedule.science.name,
+                    },
+                    "classes": {
+                        "id": schedule.classes.id,
+                        "name": schedule.classes.name,
+                    },
+                    "start_time": schedule.start_time,
+                    "end_time": schedule.end_time,
+                }
 
+            response_data.append(
+                {
+                    "id": day[0],
+                    "data": {
+                        "morning": morning_schedule,
+                        "evening": evening_schedule,
+                    },
+                }
+            )
+
+        return Response(response_data)
 
 @method_decorator(csrf_exempt, name='dispatch')
-class DayScheduleView(View):
+class DayScheduleView(APIView):
 
     def post(self, request, *args, **kwargs):
         try:
-            data = json.loads(request.body)
+            data = request.data
             weekday = data.get('weekday')
 
             response_data = {}
 
-            # Default empty schedule object
             def get_empty_schedule(lesson_time):
                 return {
                     "lesson_time": str(lesson_time),
@@ -131,15 +127,13 @@ class DayScheduleView(View):
                     "end_time": None,
                 }
 
-            # Validate weekday
             weekday_choices = dict(Weekday.choices)
             if weekday not in weekday_choices:
-                return JsonResponse({"error": "Invalid weekday"}, status=400)
+                return Response({"error": "Invalid weekday"}, status=status.HTTP_400_BAD_REQUEST)
 
             morning_schedule = [get_empty_schedule(i) for i in range(1, 7)]
             evening_schedule = [get_empty_schedule(i) for i in range(1, 7)]
 
-            # Fetch and sort all morning schedules for the given weekday
             morning_schedules = Schedule.objects.filter(shift=ShiftChoice.MORNING, weekday=weekday).order_by('lesson_time')
             for schedule in morning_schedules:
                 lesson_time_index = int(schedule.lesson_time) - 1
@@ -157,7 +151,6 @@ class DayScheduleView(View):
                     "end_time": schedule.end_time,
                 }
 
-            # Fetch and sort all evening schedules for the given weekday
             evening_schedules = Schedule.objects.filter(shift=ShiftChoice.EVENING, weekday=weekday).order_by('lesson_time')
             for schedule in evening_schedules:
                 lesson_time_index = int(schedule.lesson_time) - 1
@@ -183,29 +176,26 @@ class DayScheduleView(View):
                 }
             }
 
-            return JsonResponse(response_data, safe=False)
+            return Response(response_data)
         except json.JSONDecodeError:
-            return JsonResponse({"error": "Invalid JSON"}, status=400)
-
-
+            return Response({"error": "Invalid JSON"}, status=status.HTTP_400_BAD_REQUEST)
 
 @method_decorator(csrf_exempt, name='dispatch')
-class RangeScheduleView(View):
+class RangeScheduleView(APIView):
     def post(self, request, *args, **kwargs):
         try:
-            data = json.loads(request.body)
+            data = request.data
             start_day = data.get('start_day')
             end_day = data.get('end_day')
 
-            # Validate weekdays
             weekday_choices = list(dict(Weekday.choices).keys())
             if start_day not in weekday_choices or end_day not in weekday_choices:
-                return JsonResponse({"error": "Invalid weekday"}, status=400)
+                return Response({"error": "Invalid weekday"}, status=status.HTTP_400_BAD_REQUEST)
 
             start_index = weekday_choices.index(start_day)
             end_index = weekday_choices.index(end_day)
             if start_index > end_index:
-                return JsonResponse({"error": "Start day must be before or the same as end day"}, status=400)
+                return Response({"error": "Start day must be before or the same as end day"}, status=status.HTTP_400_BAD_REQUEST)
 
             response_data = []
 
@@ -271,6 +261,6 @@ class RangeScheduleView(View):
                     }
                 })
 
-            return JsonResponse(response_data, safe=False)
+            return Response(response_data)
         except json.JSONDecodeError:
-            return JsonResponse({"error": "Invalid JSON"}, status=400)
+            return Response({"error": "Invalid JSON"}, status=status.HTTP_400_BAD_REQUEST)
