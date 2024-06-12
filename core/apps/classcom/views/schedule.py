@@ -30,6 +30,14 @@ def get_schedule_data(request):
     response_data = []
 
     # Default empty schedule object
+    empty_schedule = {
+        "id": None,
+        "science": {"id": None, "name": None},
+        "classes": {"id": None, "name": None},
+        "start_time": None,
+        "end_time": None,
+        "lesson_time": None,
+    }
     def get_empty_schedule(lesson_time):
         return {
             "lesson_time": str(lesson_time),
@@ -48,6 +56,7 @@ def get_schedule_data(request):
     for day in Weekday.choices:
         morning_schedule = [get_empty_schedule(i) for i in range(1, 7)]
         evening_schedule = [get_empty_schedule(i) for i in range(1, 7)]
+
 
         morning_schedules = Schedule.objects.filter(shift=ShiftChoice.MORNING, weekday=day[0]).order_by('lesson_time')
         for schedule in morning_schedules:
@@ -82,14 +91,15 @@ def get_schedule_data(request):
                 "start_time": schedule.start_time,
                 "end_time": schedule.end_time,
             }
-
-        response_data.append({
-            "id": day[0],
-            "data": {
-                "morning": morning_schedule,
-                "evening": evening_schedule
+        response_data.append(
+            {
+                "id": day[0],
+                "data": {
+                    "morning": morning_schedule,
+                    "evening": evening_schedule,
+                },
             }
-        })
+        )
 
     return JsonResponse(response_data, safe=False)
 

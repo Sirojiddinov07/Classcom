@@ -32,7 +32,7 @@ class ResourceCreateSerializer(serializers.ModelSerializer):
     media_file = serializers.FileField(write_only=True)
     _media = serializers.SerializerMethodField(read_only=True)
 
-    def get__media(self,obj):
+    def get__media(self, obj):
         return media.MediaSerializer(obj.media.first()).data
 
     class Meta:

@@ -42,7 +42,7 @@ class ScheduleListSerializer(serializers.ModelSerializer):
             "weekday",
             "start_time",
             "end_time",
-            "lesson_time"
+            "lesson_time",
         )
 
 
@@ -59,7 +59,7 @@ class ScheduleCreateSerializer(serializers.ModelSerializer):
             "weekday",
             "start_time",
             "end_time",
-            "lesson_time"
+            "lesson_time",
         )
 
     def create(self, validated_data):

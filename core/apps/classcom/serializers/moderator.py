@@ -38,7 +38,7 @@ class UserModeratorSerializer(serializers.ModelSerializer):
         if models.User.objects.filter(
             phone=value, validated_at__isnull=False
         ).exists():
-        raise serializers.ValidationError(
+            raise serializers.ValidationError(
                 _("Phone number already registered."), code="unique"
             )
         return value
