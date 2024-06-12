@@ -14,3 +14,7 @@ class ModeratorCreateViewSet(views.APIView):
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(serializer.data, status=status.HTTP_201_CREATED)
+    def get_permissions(self):
+        if self.action == "create":
+            return []
+        return super().get_permissions()
