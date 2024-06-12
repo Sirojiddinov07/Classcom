@@ -9,8 +9,7 @@ from core.http import permissions as http_permissions
 class ResourceViewSet(viewsets.ModelViewSet):
     queryset = models.Resource.objects.all()
 
-    def get_queryset(self):
-        queryset = self.queryset
+        queryset = self.queryset.filter(user=self.request.user)
 
         class_id = self.request.query_params.get("class_id")
         if class_id:
