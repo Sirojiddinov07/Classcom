@@ -2,6 +2,7 @@ from rest_framework import serializers
 
 from core.apps.classcom import models
 from core.apps.classcom.serializers import media
+from core.http import serializers as http_serializers
 
 
 class ResourceSerializer(serializers.ModelSerializer):
@@ -21,10 +22,13 @@ class ResourceDetailSerializer(ResourceSerializer):
     """
     Serializer for resource detail page
     """
-
+    
+    user = http_serializers.UserSerializer()
     class Meta:
         model = models.Resource
-        fields = ResourceSerializer.Meta.fields
+        fields = ResourceSerializer.Meta.fields + (
+            "banner","description","user"
+        )
         extra_kwargs = ResourceSerializer.Meta.extra_kwargs
 
 
