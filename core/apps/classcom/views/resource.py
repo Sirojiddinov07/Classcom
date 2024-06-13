@@ -30,15 +30,13 @@ class ResourceViewSet(viewsets.ModelViewSet):
 
         return queryset
 
-
-
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
 
-
     def get_serializer_class(self):
-        if self.action in ["create", "update", "partial_update"]:
-            return serializers.ResourceCreateSerializer
-        elif self.action == "retrieve":
-            return serializers.ResourceDetailSerializer
+        match self.action:
+            case "create" | "update" | "partial_update":
+                return serializers.ResourceCreateSerializer
+            case "retrieve":
+                return serializers.ResourceDetailSerializer
         return serializers.ResourceSerializer

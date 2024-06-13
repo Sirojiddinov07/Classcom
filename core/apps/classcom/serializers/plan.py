@@ -63,6 +63,7 @@ class PlanDetailSerializer(serializers.ModelSerializer):
             "science",
         )
 
+
 class PlanSerializer(serializers.ModelSerializer):
     """
     <<<<<<< HEAD
