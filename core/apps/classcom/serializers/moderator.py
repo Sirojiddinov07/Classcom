@@ -7,7 +7,6 @@ from core.http.models import Region, District
 from core.apps.classcom.serializers import RegionSerializer, DistrictSerializer
 
 
-
 class UserModeratorSerializer(serializers.ModelSerializer):
     _region = RegionSerializer(read_only=True, source="region")
     _district = DistrictSerializer(read_only=True, source="district")
@@ -26,14 +25,16 @@ class UserModeratorSerializer(serializers.ModelSerializer):
             "institution",
             "institution_number",
         ]
+
     extra_kwargs = {
-            "region": {
-                "write_only": True,
-            },
-            "district": {
-                "write_only": True,
-            },
-        }
+        "region": {
+            "write_only": True,
+        },
+        "district": {
+            "write_only": True,
+        },
+    }
+
     def validate_phone(self, value):
         if models.User.objects.filter(
             phone=value, validated_at__isnull=False
@@ -101,7 +102,6 @@ class ModeratorCreateSerializer(serializers.ModelSerializer):
 
         sms_service = UserService()
         sms_service.send_confirmation(user.phone)
-
 
         moderator = models.Moderator.objects.create(
             user=user, **validated_data

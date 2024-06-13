@@ -38,9 +38,19 @@ urlpatterns = [
     path(
         "moderator/", views.ModeratorCreateViewSet.as_view(), name="moderator"
     ),
-
-    path("get-schedule/", views.GetScheduleDataView.as_view(), name='get_schedule_data'),
-    path('get-day-schedule/', views.DayScheduleView.as_view(), name='get_day_schedule'),
-    path('get-days-schedule/', views.RangeScheduleView.as_view(), name='get_range_schedule'),
-
+    path(
+        "get-schedule/",
+        views.GetScheduleDataView.as_view(),
+        name="get_schedule_data",
+    ),
+    path(
+        "get-day-schedule/",
+        views.DayScheduleView.as_view(),
+        name="get_day_schedule",
+    ),
+    path(
+        "get-days-schedule/",
+        views.RangeScheduleView.as_view(),
+        name="get_range_schedule",
+    ),
 ]
