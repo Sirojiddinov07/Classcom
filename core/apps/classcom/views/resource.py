@@ -35,15 +35,6 @@ class ResourceViewSet(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
 
-    def get_permissions(self):
-        if self.action == "retrieve":
-            return [
-                permissions.IsAuthor(models.Resource, self.kwargs.get("pk")),
-                http_permissions.HasRole(
-                    [choices.Role.MODERATOR, choices.Role.ADMIN]
-                ),
-            ]
-        return []
 
     def get_serializer_class(self):
         if self.action in ["create", "update", "partial_update"]:
