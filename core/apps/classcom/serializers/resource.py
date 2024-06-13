@@ -12,7 +12,6 @@ class ResourceSerializer(serializers.ModelSerializer):
 
     user = http_serializers.UserSerializer()
     media = media.MediaSerializer(many=True, read_only=True)
-    user = UserMinimalSerializer(read_only=True)
     class Meta:
         model = models.Resource
         fields = (
