@@ -2,6 +2,12 @@ from rest_framework import serializers
 
 from core.apps.classcom import models
 from core.apps.classcom.serializers import media
+from core.http.models import User
+
+class UserMinimalSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ('first_name', 'last_name')
 
 
 class ResourceSerializer(serializers.ModelSerializer):
@@ -10,10 +16,10 @@ class ResourceSerializer(serializers.ModelSerializer):
     """
 
     media = media.MediaSerializer(many=True, read_only=True)
-
+    user = UserMinimalSerializer(read_only=True)
     class Meta:
         model = models.Resource
-        fields = ("id", "name", "classes", "topic", "media", "type")
+        fields = ("id", "name", "description", "user", "classes", "topic", "media", "type", "banner",)
         extra_kwargs = {"media": {"write_only": True}}
 
 
