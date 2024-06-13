@@ -66,14 +66,6 @@ class RegisterView(views.APIView, services.UserService):
         )
 
 
-class UserMinimalSerializer(ModelSerializer):
-    class Meta:
-        model = User
-        fields = ('first_name', 'last_name')
-
-# Custom serializer
-
-# Custom view
 class CustomTokenObtainPairView(TokenObtainPairView):
     serializer_class = CustomTokenObtainPairSerializer
 
