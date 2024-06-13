@@ -1,4 +1,4 @@
-from rest_framework import permissions, views, status,viewsets
+from rest_framework import permissions, views, status, viewsets
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
 
@@ -14,4 +14,3 @@ class ModeratorCreateViewSet(views.APIView):
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(serializer.data, status=status.HTTP_201_CREATED)
-    

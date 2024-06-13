@@ -31,7 +31,6 @@ class ScheduleViewSet(viewsets.ModelViewSet):
         return ScheduleCreateSerializer
 
 
-
 class GetScheduleDataView(GenericAPIView, ListModelMixin):
 
     def get(self, request):
@@ -40,14 +39,8 @@ class GetScheduleDataView(GenericAPIView, ListModelMixin):
         def get_empty_schedule(lesson_time):
             return {
                 "lesson_time": str(lesson_time),
-                "science": {
-                    "id": None,
-                    "name": None
-                },
-                "classes": {
-                    "id": None,
-                    "name": None
-                },
+                "science": {"id": None, "name": None},
+                "classes": {"id": None, "name": None},
                 "start_time": None,
                 "end_time": None,
             }
@@ -56,7 +49,9 @@ class GetScheduleDataView(GenericAPIView, ListModelMixin):
             morning_schedule = [get_empty_schedule(i) for i in range(1, 7)]
             evening_schedule = [get_empty_schedule(i) for i in range(1, 7)]
 
-            morning_schedules = Schedule.objects.filter(shift=ShiftChoice.MORNING, weekday=day[0]).order_by('lesson_time')
+            morning_schedules = Schedule.objects.filter(
+                shift=ShiftChoice.MORNING, weekday=day[0]
+            ).order_by("lesson_time")
             for schedule in morning_schedules:
                 lesson_time_index = int(schedule.lesson_time) - 1
                 morning_schedule[lesson_time_index] = {
@@ -73,7 +68,9 @@ class GetScheduleDataView(GenericAPIView, ListModelMixin):
                     "end_time": schedule.end_time,
                 }
 
-            evening_schedules = Schedule.objects.filter(shift=ShiftChoice.EVENING, weekday=day[0]).order_by('lesson_time')
+            evening_schedules = Schedule.objects.filter(
+                shift=ShiftChoice.EVENING, weekday=day[0]
+            ).order_by("lesson_time")
             for schedule in evening_schedules:
                 lesson_time_index = int(schedule.lesson_time) - 1
                 evening_schedule[lesson_time_index] = {
@@ -102,39 +99,39 @@ class GetScheduleDataView(GenericAPIView, ListModelMixin):
 
         return Response(response_data)
 
-@method_decorator(csrf_exempt, name='dispatch')
+
+@method_decorator(csrf_exempt, name="dispatch")
 class DayScheduleView(APIView):
 
     def post(self, request, *args, **kwargs):
         try:
             data = request.data
-            weekday = data.get('weekday')
+            weekday = data.get("weekday")
 
             response_data = {}
 
             def get_empty_schedule(lesson_time):
                 return {
                     "lesson_time": str(lesson_time),
-                    "science": {
-                        "id": None,
-                        "name": None
-                    },
-                    "classes": {
-                        "id": None,
-                        "name": None
-                    },
+                    "science": {"id": None, "name": None},
+                    "classes": {"id": None, "name": None},
                     "start_time": None,
                     "end_time": None,
                 }
 
             weekday_choices = dict(Weekday.choices)
             if weekday not in weekday_choices:
-                return Response({"error": "Invalid weekday"}, status=status.HTTP_400_BAD_REQUEST)
+                return Response(
+                    {"error": "Invalid weekday"},
+                    status=status.HTTP_400_BAD_REQUEST,
+                )
 
             morning_schedule = [get_empty_schedule(i) for i in range(1, 7)]
             evening_schedule = [get_empty_schedule(i) for i in range(1, 7)]
 
-            morning_schedules = Schedule.objects.filter(shift=ShiftChoice.MORNING, weekday=weekday).order_by('lesson_time')
+            morning_schedules = Schedule.objects.filter(
+                shift=ShiftChoice.MORNING, weekday=weekday
+            ).order_by("lesson_time")
             for schedule in morning_schedules:
                 lesson_time_index = int(schedule.lesson_time) - 1
                 morning_schedule[lesson_time_index] = {
@@ -151,7 +148,9 @@ class DayScheduleView(APIView):
                     "end_time": schedule.end_time,
                 }
 
-            evening_schedules = Schedule.objects.filter(shift=ShiftChoice.EVENING, weekday=weekday).order_by('lesson_time')
+            evening_schedules = Schedule.objects.filter(
+                shift=ShiftChoice.EVENING, weekday=weekday
+            ).order_by("lesson_time")
             for schedule in evening_schedules:
                 lesson_time_index = int(schedule.lesson_time) - 1
                 evening_schedule[lesson_time_index] = {
@@ -172,44 +171,52 @@ class DayScheduleView(APIView):
                 "id": weekday,
                 "data": {
                     "morning": morning_schedule,
-                    "evening": evening_schedule
-                }
+                    "evening": evening_schedule,
+                },
             }
 
             return Response(response_data)
         except json.JSONDecodeError:
-            return Response({"error": "Invalid JSON"}, status=status.HTTP_400_BAD_REQUEST)
+            return Response(
+                {"error": "Invalid JSON"}, status=status.HTTP_400_BAD_REQUEST
+            )
 
-@method_decorator(csrf_exempt, name='dispatch')
+
+@method_decorator(csrf_exempt, name="dispatch")
 class RangeScheduleView(APIView):
     def post(self, request, *args, **kwargs):
         try:
             data = request.data
-            start_day = data.get('start_day')
-            end_day = data.get('end_day')
+            start_day = data.get("start_day")
+            end_day = data.get("end_day")
 
             weekday_choices = list(dict(Weekday.choices).keys())
-            if start_day not in weekday_choices or end_day not in weekday_choices:
-                return Response({"error": "Invalid weekday"}, status=status.HTTP_400_BAD_REQUEST)
+            if (
+                start_day not in weekday_choices
+                or end_day not in weekday_choices
+            ):
+                return Response(
+                    {"error": "Invalid weekday"},
+                    status=status.HTTP_400_BAD_REQUEST,
+                )
 
             start_index = weekday_choices.index(start_day)
             end_index = weekday_choices.index(end_day)
             if start_index > end_index:
-                return Response({"error": "Start day must be before or the same as end day"}, status=status.HTTP_400_BAD_REQUEST)
+                return Response(
+                    {
+                        "error": "Start day must be before or the same as end day"
+                    },
+                    status=status.HTTP_400_BAD_REQUEST,
+                )
 
             response_data = []
 
             def get_empty_schedule(lesson_time):
                 return {
                     "lesson_time": str(lesson_time),
-                    "science": {
-                        "id": None,
-                        "name": None
-                    },
-                    "classes": {
-                        "id": None,
-                        "name": None
-                    },
+                    "science": {"id": None, "name": None},
+                    "classes": {"id": None, "name": None},
                     "start_time": None,
                     "end_time": None,
                 }
@@ -219,7 +226,9 @@ class RangeScheduleView(APIView):
                 morning_schedule = [get_empty_schedule(i) for i in range(1, 7)]
                 evening_schedule = [get_empty_schedule(i) for i in range(1, 7)]
 
-                morning_schedules = Schedule.objects.filter(shift=ShiftChoice.MORNING, weekday=day).order_by('lesson_time')
+                morning_schedules = Schedule.objects.filter(
+                    shift=ShiftChoice.MORNING, weekday=day
+                ).order_by("lesson_time")
                 for schedule in morning_schedules:
                     lesson_time_index = int(schedule.lesson_time) - 1
                     morning_schedule[lesson_time_index] = {
@@ -236,7 +245,9 @@ class RangeScheduleView(APIView):
                         "end_time": schedule.end_time,
                     }
 
-                evening_schedules = Schedule.objects.filter(shift=ShiftChoice.EVENING, weekday=day).order_by('lesson_time')
+                evening_schedules = Schedule.objects.filter(
+                    shift=ShiftChoice.EVENING, weekday=day
+                ).order_by("lesson_time")
                 for schedule in evening_schedules:
                     lesson_time_index = int(schedule.lesson_time) - 1
                     evening_schedule[lesson_time_index] = {
@@ -253,14 +264,18 @@ class RangeScheduleView(APIView):
                         "end_time": schedule.end_time,
                     }
 
-                response_data.append({
-                    "id": day,
-                    "data": {
-                        "morning": morning_schedule,
-                        "evening": evening_schedule
+                response_data.append(
+                    {
+                        "id": day,
+                        "data": {
+                            "morning": morning_schedule,
+                            "evening": evening_schedule,
+                        },
                     }
-                })
+                )
 
             return Response(response_data)
         except json.JSONDecodeError:
-            return Response({"error": "Invalid JSON"}, status=status.HTTP_400_BAD_REQUEST)
+            return Response(
+                {"error": "Invalid JSON"}, status=status.HTTP_400_BAD_REQUEST
+            )
