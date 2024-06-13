@@ -30,7 +30,6 @@ class ScheduleViewSet(viewsets.ModelViewSet):
             return ScheduleListSerializer
         return ScheduleCreateSerializer
 
-
 class GetScheduleDataView(GenericAPIView, ListModelMixin):
 
     def get(self, request):
@@ -45,61 +44,70 @@ class GetScheduleDataView(GenericAPIView, ListModelMixin):
                 "end_time": None,
             }
 
-        for day in Weekday.choices:
-            morning_schedule = [get_empty_schedule(i) for i in range(1, 7)]
-            evening_schedule = [get_empty_schedule(i) for i in range(1, 7)]
+        quarters = [1, 2, 3, 4]  # Define quarters to loop through
 
-            morning_schedules = Schedule.objects.filter(
-                shift=ShiftChoice.MORNING, weekday=day[0]
-            ).order_by("lesson_time")
-            for schedule in morning_schedules:
-                lesson_time_index = int(schedule.lesson_time) - 1
-                morning_schedule[lesson_time_index] = {
-                    "lesson_time": schedule.lesson_time,
-                    "science": {
-                        "id": schedule.science.id,
-                        "name": schedule.science.name,
-                    },
-                    "classes": {
-                        "id": schedule.classes.id,
-                        "name": schedule.classes.name,
-                    },
-                    "start_time": schedule.start_time,
-                    "end_time": schedule.end_time,
-                }
+        for quarter in quarters:
+            quarter_data = {
+                "quarter": quarter,
+                "days": []
+            }
 
-            evening_schedules = Schedule.objects.filter(
-                shift=ShiftChoice.EVENING, weekday=day[0]
-            ).order_by("lesson_time")
-            for schedule in evening_schedules:
-                lesson_time_index = int(schedule.lesson_time) - 1
-                evening_schedule[lesson_time_index] = {
-                    "lesson_time": schedule.lesson_time,
-                    "science": {
-                        "id": schedule.science.id,
-                        "name": schedule.science.name,
-                    },
-                    "classes": {
-                        "id": schedule.classes.id,
-                        "name": schedule.classes.name,
-                    },
-                    "start_time": schedule.start_time,
-                    "end_time": schedule.end_time,
-                }
+            for day in Weekday.choices:
+                morning_schedule = [get_empty_schedule(i) for i in range(1, 7)]
+                evening_schedule = [get_empty_schedule(i) for i in range(1, 7)]
 
-            response_data.append(
-                {
-                    "id": day[0],
-                    "data": {
-                        "morning": morning_schedule,
-                        "evening": evening_schedule,
-                    },
-                }
-            )
+                morning_schedules = Schedule.objects.filter(
+                    shift=ShiftChoice.MORNING, weekday=day[0], quarter=quarter
+                ).order_by("lesson_time")
+                for schedule in morning_schedules:
+                    lesson_time_index = int(schedule.lesson_time) - 1
+                    morning_schedule[lesson_time_index] = {
+                        "lesson_time": schedule.lesson_time,
+                        "science": {
+                            "id": schedule.science.id,
+                            "name": schedule.science.name,
+                        },
+                        "classes": {
+                            "id": schedule.classes.id,
+                            "name": schedule.classes.name,
+                        },
+                        "start_time": schedule.start_time.strftime("%H:%M"),  # Format time as needed
+                        "end_time": schedule.end_time.strftime("%H:%M"),
+                    }
+
+                evening_schedules = Schedule.objects.filter(
+                    shift=ShiftChoice.EVENING, weekday=day[0], quarter=quarter
+                ).order_by("lesson_time")
+                for schedule in evening_schedules:
+                    lesson_time_index = int(schedule.lesson_time) - 1
+                    evening_schedule[lesson_time_index] = {
+                        "lesson_time": schedule.lesson_time,
+                        "science": {
+                            "id": schedule.science.id,
+                            "name": schedule.science.name,
+                        },
+                        "classes": {
+                            "id": schedule.classes.id,
+                            "name": schedule.classes.name,
+                        },
+                        "start_time": schedule.start_time.strftime("%H:%M"),
+                        "end_time": schedule.end_time.strftime("%H:%M"),
+                    }
+
+                quarter_data["days"].append(
+                    {
+                        "id": day[0],
+                        "name": day[1],
+                        "data": {
+                            "morning": morning_schedule,
+                            "evening": evening_schedule,
+                        },
+                    }
+                )
+
+            response_data.append(quarter_data)
 
         return Response(response_data)
-
-
 @method_decorator(csrf_exempt, name="dispatch")
 class DayScheduleView(APIView):
 
