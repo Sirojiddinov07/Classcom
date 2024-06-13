@@ -1,4 +1,5 @@
 from .resource import *  # noqa
+from .resource_type import *  # noqa
 from .region import *  # noqa
 from .classes import *  # noqa
 from .topic import *  # noqa
