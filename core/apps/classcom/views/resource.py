@@ -37,8 +37,9 @@ class ResourceViewSet(viewsets.ModelViewSet):
 
 
     def get_serializer_class(self):
-        if self.action in ["create", "update", "partial_update"]:
-            return serializers.ResourceCreateSerializer
-        elif self.action == "retrieve":
-            return serializers.ResourceDetailSerializer
+        match self.action:
+            case "create" | "update" | "partial_update":
+                return serializers.ResourceCreateSerializer
+            case "retrieve":
+                return serializers.ResourceDetailSerializer
         return serializers.ResourceSerializer
