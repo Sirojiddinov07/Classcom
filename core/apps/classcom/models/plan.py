@@ -24,6 +24,5 @@ class Plan(models.Model):
         return self.name
 
     class Meta:
-        unique_together = (("topic", "classes"),)
         verbose_name = __("Plan")
         verbose_name_plural = __("Plan")
