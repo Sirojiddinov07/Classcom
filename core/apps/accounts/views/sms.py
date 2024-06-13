@@ -20,12 +20,17 @@ from rest_framework import (
     response,
     status,
 )
+from rest_framework.response import Response
+from rest_framework.serializers import ModelSerializer
+from rest_framework_simplejwt.views import TokenObtainPairView
 
 from core import enums, exceptions, services
+from core.apps.accounts.serializers.custom_token import CustomTokenObtainPairSerializer
 from core.http import serializers, views as http_views
 from core.http.models import User
 from core.apps.accounts import models, serializers as sms_serializers
 from drf_spectacular.utils import extend_schema
+
 
 
 class RegisterView(views.APIView, services.UserService):
@@ -60,6 +65,27 @@ class RegisterView(views.APIView, services.UserService):
             status=status.HTTP_202_ACCEPTED,
         )
 
+
+class UserMinimalSerializer(ModelSerializer):
+    class Meta:
+        model = User
+        fields = ('first_name', 'last_name')
+
+# Custom serializer
+
+# Custom view
+class CustomTokenObtainPairView(TokenObtainPairView):
+    serializer_class = CustomTokenObtainPairSerializer
+
+    def post(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+
+        try:
+            serializer.is_valid(raise_exception=True)
+        except Exception as e:
+            return Response({'detail': str(e)}, status=status.HTTP_400_BAD_REQUEST)
+
+        return Response(serializer.validated_data, status=status.HTTP_200_OK)
 
 class ConfirmView(views.APIView, services.UserService):
     """Confirm otp code"""
