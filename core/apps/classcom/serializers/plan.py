@@ -66,28 +66,26 @@ class PlanDetailSerializer(serializers.ModelSerializer):
 
 class PlanSerializer(serializers.ModelSerializer):
     """
-    <<<<<<< HEAD
         PlanSerializer class
         note:
             O'qituvchi uchun tematik plan
     =======
         PlanSerializer class for Teachers
-    >>>>>>> origin/dev
     """
 
     class Meta:
         model = models.Plan
         fields = (
             "id",
-            "name",
-            "description",
-            "banner",
+            # "name",
+            # "description",
+            # "banner",
             "classes",
-            "topic",
-            "media",
-            "type",
+            # "topic",
+            # "media",
+            # "type",
             "quarter",
-            "science",
+            # "science",
         )
 
 
