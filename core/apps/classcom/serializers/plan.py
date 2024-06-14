@@ -36,6 +36,11 @@ class PlanTopicSerializer(serializers.ModelSerializer):
         model = models.Topic
         fields = ("id", "name", "quarter", "science")
 
+class MediaSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = models.Media
+        fields = ("id", "name")
 
 ##############################################################################################################
 # Plan Detail Serializer
@@ -46,7 +51,7 @@ class PlanDetailSerializer(serializers.ModelSerializer):
     topic = PlanTopicSerializer()
     quarter = PlanQuarterSerializer()
     science = PlanScienceSerializer()
-    media = media.MediaSerializer(many=True, read_only=True)
+    plan_resource = MediaSerializer(many=True, read_only=True)
 
     class Meta:
         model = models.Plan
@@ -57,10 +62,10 @@ class PlanDetailSerializer(serializers.ModelSerializer):
             "banner",
             "classes",
             "topic",
-            "media",
             "type",
             "quarter",
             "science",
+            "plan_resource"
         )
 
 
