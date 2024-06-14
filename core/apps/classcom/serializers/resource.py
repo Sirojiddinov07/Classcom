@@ -2,7 +2,19 @@ from rest_framework import serializers
 
 from core.apps.classcom import models
 from core.apps.classcom.serializers import media
+from core.apps.classcom.serializers.resource_type import ResourceTypeSerializer
 from core.http import serializers as http_serializers
+
+class ClassesSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Classes
+        fields = ("name",)
+
+
+class TopicSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Topic
+        fields = ("name", )
 
 
 class ResourceSerializer(serializers.ModelSerializer):
@@ -12,7 +24,9 @@ class ResourceSerializer(serializers.ModelSerializer):
 
     user = http_serializers.UserSerializer()
     media = media.MediaSerializer(many=True, read_only=True)
-
+    topic = TopicSerializer(read_only=True)
+    type = ResourceTypeSerializer(read_only=True)
+    classes = ClassesSerializer(read_only=True)
     class Meta:
         model = models.Resource
         fields = (

@@ -15,7 +15,7 @@ urlpatterns = [
     path("auth/me/update/", views.MeUpdateView.as_view(), name="me-update"),
     path(
         "auth/token/",
-        jwt_views.TokenObtainPairView.as_view(),
+        views.CustomTokenObtainPairView.as_view(),
         name="token_obtain_pair",
     ),
     path(
