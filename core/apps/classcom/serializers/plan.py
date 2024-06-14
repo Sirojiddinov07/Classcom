@@ -77,7 +77,10 @@ class PlanSerializer(serializers.ModelSerializer):
     =======
         PlanSerializer class for Teachers
     """
+    status = serializers.SerializerMethodField()
 
+    def get_status(self, obj):
+        return "active"
     class Meta:
         model = models.Plan
         fields = (
@@ -87,10 +90,10 @@ class PlanSerializer(serializers.ModelSerializer):
             # "banner",
             "classes",
             # "topic",
-            # "media",
             # "type",
             "quarter",
-            # "science",
+            "science",
+            "status"
         )
 
 
