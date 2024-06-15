@@ -34,7 +34,7 @@ class Schedule(models.Model):
     start_time = models.TimeField()
     end_time = models.TimeField()
     lesson_time = models.CharField(
-        max_length=25, null=True, blank=True, validators=[validate_lesson_time]
+        max_length=25, validators=[validate_lesson_time]
     )
     quarter = models.ForeignKey("Quarter", models.CASCADE, default=1)
 
