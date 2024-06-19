@@ -4,6 +4,7 @@ from django.utils.translation import gettext_lazy as __
 
 class Media(models.Model):
     name = models.CharField(max_length=255, blank=True, null=True)
+    desc = models.TextField(blank=True, null=True)
     file = models.FileField(upload_to="media/")
     type = models.CharField(max_length=255, blank=True, null=True)
     size = models.BigIntegerField(blank=True, null=True, default=0)
@@ -15,7 +16,8 @@ class Media(models.Model):
 
     def save(self, *args, **kwargs):
         self.size = self.file.size
-        self.name = self.file.name
+        if self.name is None:
+            self.name = self.file.name
         super().save(*args, **kwargs)
 
     class Meta:
