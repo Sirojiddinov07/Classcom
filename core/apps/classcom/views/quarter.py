@@ -6,5 +6,5 @@ from core.apps.classcom.serializers import QuarterMiniSerializer
 
 
 class QuarterListView(generics.ListAPIView):
-    queryset = Quarter.objects.all()
+    queryset = Quarter.objects.all().order_by('choices')
     serializer_class = QuarterMiniSerializer
