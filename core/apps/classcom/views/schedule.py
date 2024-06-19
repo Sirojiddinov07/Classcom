@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, date
 
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
@@ -30,7 +30,7 @@ class ScheduleViewSet(viewsets.ModelViewSet):
         return ScheduleCreateSerializer
 
 
-class GetScheduleDataView(GenericAPIView):
+class GetScheduleDataView(APIView):
 
     def get_empty_schedule(self, lesson_time):
         return {
@@ -44,103 +44,81 @@ class GetScheduleDataView(GenericAPIView):
     def get(self, request):
         response_data = []
 
-        # Fetch distinct quarters from the Schedule model
-        quarters = Schedule.objects.values_list(
-            "quarter", flat=True
-        ).distinct()
+        # Get today's date
+        today = date.today()
 
-        for quarter_id in quarters:
-            quarter_instance = Quarter.objects.get(id=quarter_id)
-            if quarter_instance.choices >= 5:
-                quarter_data = {
-                    "quarter": quarter_instance.choices,
-                    "holidays": ["Now holiday days"],
+        # Find the quarter that includes today's date
+        current_quarter = None
+        quarters = Quarter.objects.all()
+        for quarter in quarters:
+            if quarter.start_date <= today <= quarter.end_date:
+                current_quarter = quarter
+                break
+
+        if current_quarter is None:
+            return Response({"error": "No active quarter found for today's date."}, status=400)
+
+        quarter_data = {
+            "quarter": current_quarter.choices,
+            "days": []
+        }
+
+        for day in Weekday.choices:
+            morning_schedule = [self.get_empty_schedule(i) for i in range(1, 7)]
+            evening_schedule = [self.get_empty_schedule(i) for i in range(1, 7)]
+
+            morning_schedules = Schedule.objects.filter(
+                shift=ShiftChoice.MORNING, weekday=day[0], quarter=current_quarter
+            ).order_by("lesson_time")
+
+            for schedule in morning_schedules:
+                lesson_time_index = int(schedule.lesson_time) - 1
+                morning_schedule[lesson_time_index] = {
+                    "lesson_time": schedule.lesson_time,
+                    "science": {
+                        "id": schedule.science.id,
+                        "name": schedule.science.name,
+                    },
+                    "classes": {
+                        "id": schedule.classes.id,
+                        "name": schedule.classes.name,
+                    },
+                    "start_time": schedule.start_time.strftime("%H:%M"),
+                    "end_time": schedule.end_time.strftime("%H:%M"),
                 }
-            else:
-                quarter_data = {
-                    "quarter": quarter_instance.choices,
-                    "days": [],
+
+            evening_schedules = Schedule.objects.filter(
+                shift=ShiftChoice.EVENING, weekday=day[0], quarter=current_quarter
+            ).order_by("lesson_time")
+            for schedule in evening_schedules:
+                lesson_time_index = int(schedule.lesson_time) - 1
+                evening_schedule[lesson_time_index] = {
+                    "lesson_time": schedule.lesson_time,
+                    "science": {
+                        "id": schedule.science.id,
+                        "name": schedule.science.name,
+                    },
+                    "classes": {
+                        "id": schedule.classes.id,
+                        "name": schedule.classes.name,
+                    },
+                    "start_time": schedule.start_time.strftime("%H:%M"),
+                    "end_time": schedule.end_time.strftime("%H:%M"),
                 }
 
-                for day in Weekday.choices:
-                    morning_schedule = [
-                        self.get_empty_schedule(i) for i in range(1, 7)
-                    ]
-                    evening_schedule = [
-                        self.get_empty_schedule(i) for i in range(1, 7)
-                    ]
+            quarter_data["days"].append(
+                {
+                    "id": day[0].lower(),
+                    "name": day[1],
+                    "data": {
+                        "morning": morning_schedule,
+                        "evening": evening_schedule,
+                    },
+                }
+            )
 
-                    morning_schedules = Schedule.objects.filter(
-                        shift=ShiftChoice.MORNING,
-                        weekday=day[0],
-                        quarter=quarter_instance,
-                    ).order_by("lesson_time")
-
-                    for schedule in morning_schedules:
-                        lesson_time_index = int(schedule.lesson_time) - 1
-                        morning_schedule[lesson_time_index] = {
-                            "lesson_time": schedule.lesson_time,
-                            "science": {
-                                "id": schedule.science.id,
-                                "name": schedule.science.name,
-                            },
-                            "classes": {
-                                "id": schedule.classes.id,
-                                "name": schedule.classes.name,
-                            },
-                            "start_time": schedule.start_time.strftime(
-                                "%H:%M"
-                            ),
-                            "end_time": schedule.end_time.strftime("%H:%M"),
-                        }
-
-                    evening_schedules = Schedule.objects.filter(
-                        shift=ShiftChoice.EVENING,
-                        weekday=day[0],
-                        quarter=quarter_instance,
-                    ).order_by("lesson_time")
-                    for schedule in evening_schedules:
-                        lesson_time_index = int(schedule.lesson_time) - 1
-                        evening_schedule[lesson_time_index] = {
-                            "lesson_time": schedule.lesson_time,
-                            "science": {
-                                "id": schedule.science.id,
-                                "name": schedule.science.name,
-                            },
-                            "classes": {
-                                "id": schedule.classes.id,
-                                "name": schedule.classes.name,
-                            },
-                            "start_time": schedule.start_time.strftime(
-                                "%H:%M"
-                            ),
-                            "end_time": schedule.end_time.strftime("%H:%M"),
-                        }
-
-                    quarter_data["days"].append(
-                        {
-                            "id": day[0].lower(),
-                            "name": day[1],
-                            "data": {
-                                "morning": morning_schedule,
-                                "evening": evening_schedule,
-                            },
-                        }
-                    )
-
-            response_data.append(quarter_data)
-
+        response_data.append(quarter_data)
         return Response(response_data)
-
-
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from rest_framework import status
-from django.utils.decorators import method_decorator
-from django.views.decorators.csrf import csrf_exempt
-from core.apps.classcom.models import Schedule, Quarter
-from core.apps.classcom.choices import Weekday, ShiftChoice
-from datetime import datetime
 
 
 @method_decorator(csrf_exempt, name="dispatch")
