@@ -8,7 +8,7 @@ from core.apps.classcom import serializers
 
 
 class PlanViewSet(viewsets.ModelViewSet):
-    queryset = models.Plan.objects.all()
+    queryset = models.Plan.objects.all().order_by("id")
     filter_backends = [DjangoFilterBackend]
     filterset_fields = ["classes", "topic", "hour", "quarter"]
     pagination_class = PageNumberPagination
