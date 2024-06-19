@@ -53,4 +53,6 @@ urlpatterns = [
         views.RangeScheduleView.as_view(),
         name="get_range_schedule",
     ),
+    # path('schedules/<str:date_str>/', views.DateScheduleView.as_view(), name='day_schedule'),
+
 ]
