@@ -11,10 +11,10 @@ class Quarter(models.Model):
     Q4 = 4
 
     QUARTER_CHOICES = [
-        (Q1, 'First Quarter'),
-        (Q2, 'Second Quarter'),
-        (Q3, 'Third Quarter'),
-        (Q4, 'Fourth Quarter'),
+        (Q1, "First Quarter"),
+        (Q2, "Second Quarter"),
+        (Q3, "Third Quarter"),
+        (Q4, "Fourth Quarter"),
     ]
 
     choices = models.IntegerField(
