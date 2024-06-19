@@ -1,4 +1,3 @@
-# classcom/views.py
 from rest_framework import generics
 
 from core.apps.classcom.models import Quarter
