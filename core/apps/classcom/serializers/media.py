@@ -9,6 +9,7 @@ class MediaSerializer(serializers.ModelSerializer):
         fields = (
             "id",
             "name",
+            "desc",
             "file",
             "size",
             "created_at",
