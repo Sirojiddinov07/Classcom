@@ -12,7 +12,6 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-   
         migrations.RemoveField(
             model_name="quarter",
             name="name",
@@ -44,8 +43,6 @@ class Migration(migrations.Migration):
                 blank=True, default=datetime.datetime.today
             ),
         ),
-       
-  
         migrations.AlterField(
             model_name="schedule",
             name="weekday",

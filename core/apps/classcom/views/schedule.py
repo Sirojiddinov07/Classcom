@@ -45,27 +45,35 @@ class GetScheduleDataView(GenericAPIView):
         response_data = []
 
         # Fetch distinct quarters from the Schedule model
-        quarters = Schedule.objects.values_list('quarter', flat=True).distinct()
+        quarters = Schedule.objects.values_list(
+            "quarter", flat=True
+        ).distinct()
 
         for quarter_id in quarters:
             quarter_instance = Quarter.objects.get(id=quarter_id)
             if quarter_instance.choices >= 5:
                 quarter_data = {
                     "quarter": quarter_instance.choices,
-                    "holidays": ["Now holiday days"]
+                    "holidays": ["Now holiday days"],
                 }
             else:
                 quarter_data = {
                     "quarter": quarter_instance.choices,
-                    "days": []
+                    "days": [],
                 }
 
                 for day in Weekday.choices:
-                    morning_schedule = [self.get_empty_schedule(i) for i in range(1, 7)]
-                    evening_schedule = [self.get_empty_schedule(i) for i in range(1, 7)]
+                    morning_schedule = [
+                        self.get_empty_schedule(i) for i in range(1, 7)
+                    ]
+                    evening_schedule = [
+                        self.get_empty_schedule(i) for i in range(1, 7)
+                    ]
 
                     morning_schedules = Schedule.objects.filter(
-                        shift=ShiftChoice.MORNING, weekday=day[0], quarter=quarter_instance
+                        shift=ShiftChoice.MORNING,
+                        weekday=day[0],
+                        quarter=quarter_instance,
                     ).order_by("lesson_time")
 
                     for schedule in morning_schedules:
@@ -80,12 +88,16 @@ class GetScheduleDataView(GenericAPIView):
                                 "id": schedule.classes.id,
                                 "name": schedule.classes.name,
                             },
-                            "start_time": schedule.start_time.strftime("%H:%M"),
+                            "start_time": schedule.start_time.strftime(
+                                "%H:%M"
+                            ),
                             "end_time": schedule.end_time.strftime("%H:%M"),
                         }
 
                     evening_schedules = Schedule.objects.filter(
-                        shift=ShiftChoice.EVENING, weekday=day[0], quarter=quarter_instance
+                        shift=ShiftChoice.EVENING,
+                        weekday=day[0],
+                        quarter=quarter_instance,
                     ).order_by("lesson_time")
                     for schedule in evening_schedules:
                         lesson_time_index = int(schedule.lesson_time) - 1
@@ -99,7 +111,9 @@ class GetScheduleDataView(GenericAPIView):
                                 "id": schedule.classes.id,
                                 "name": schedule.classes.name,
                             },
-                            "start_time": schedule.start_time.strftime("%H:%M"),
+                            "start_time": schedule.start_time.strftime(
+                                "%H:%M"
+                            ),
                             "end_time": schedule.end_time.strftime("%H:%M"),
                         }
 
@@ -152,7 +166,7 @@ class DayScheduleView(APIView):
                 )
 
             # Check if the requested date is a Sunday
-            if date.strftime('%A').lower() == 'sunday':
+            if date.strftime("%A").lower() == "sunday":
                 return Response(
                     {"message": "This day is a holiday."},
                     status=status.HTTP_200_OK,
@@ -160,21 +174,29 @@ class DayScheduleView(APIView):
 
             # Find the quarter that includes the given date
             try:
-                quarter_instance = Quarter.objects.get(start_date__lte=date, end_date__gte=date)
+                quarter_instance = Quarter.objects.get(
+                    start_date__lte=date, end_date__gte=date
+                )
             except Quarter.DoesNotExist:
                 return Response(
                     {"error": "No quarter found for the given date."},
                     status=status.HTTP_404_NOT_FOUND,
                 )
 
-            weekday = date.strftime('%A').lower()
+            weekday = date.strftime("%A").lower()
 
             # Initialize empty schedules
-            morning_schedule = [self.get_empty_schedule(i) for i in range(1, 7)]
-            evening_schedule = [self.get_empty_schedule(i) for i in range(1, 7)]
+            morning_schedule = [
+                self.get_empty_schedule(i) for i in range(1, 7)
+            ]
+            evening_schedule = [
+                self.get_empty_schedule(i) for i in range(1, 7)
+            ]
 
             morning_schedules = Schedule.objects.filter(
-                shift=ShiftChoice.MORNING, weekday=weekday, quarter=quarter_instance
+                shift=ShiftChoice.MORNING,
+                weekday=weekday,
+                quarter=quarter_instance,
             ).order_by("lesson_time")
             for schedule in morning_schedules:
                 lesson_time_index = int(schedule.lesson_time) - 1
@@ -193,7 +215,9 @@ class DayScheduleView(APIView):
                 }
 
             evening_schedules = Schedule.objects.filter(
-                shift=ShiftChoice.EVENING, weekday=weekday, quarter=quarter_instance
+                shift=ShiftChoice.EVENING,
+                weekday=weekday,
+                quarter=quarter_instance,
             ).order_by("lesson_time")
             for schedule in evening_schedules:
                 lesson_time_index = int(schedule.lesson_time) - 1
@@ -237,7 +261,6 @@ class DayScheduleView(APIView):
         }
 
 
-
 @method_decorator(csrf_exempt, name="dispatch")
 class RangeScheduleView(APIView):
     def post(self, request, *args, **kwargs):
@@ -248,7 +271,10 @@ class RangeScheduleView(APIView):
             quarter = data.get("quarter")  # Added quarter parameter
 
             weekday_choices = dict(Weekday.choices)
-            if start_day not in weekday_choices or end_day not in weekday_choices:
+            if (
+                start_day not in weekday_choices
+                or end_day not in weekday_choices
+            ):
                 return Response(
                     {"error": "Invalid weekday"},
                     status=status.HTTP_400_BAD_REQUEST,
@@ -258,7 +284,9 @@ class RangeScheduleView(APIView):
             end_index = list(weekday_choices.keys()).index(end_day)
             if start_index > end_index:
                 return Response(
-                    {"error": "Start day must be before or the same as end day"},
+                    {
+                        "error": "Start day must be before or the same as end day"
+                    },
                     status=status.HTTP_400_BAD_REQUEST,
                 )
 

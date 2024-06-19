@@ -8,11 +8,11 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
         data = super().validate(attrs)
 
         refresh = self.get_token(self.user)
-        data['refresh'] = str(refresh)
-        data['access'] = str(refresh.access_token)
+        data["refresh"] = str(refresh)
+        data["access"] = str(refresh.access_token)
 
         # Get user information
         user_serializer = UserSerializer(self.user)
-        data['user'] = user_serializer.data
+        data["user"] = user_serializer.data
 
         return data
