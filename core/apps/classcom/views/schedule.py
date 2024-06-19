@@ -56,7 +56,7 @@ class GetScheduleDataView(APIView):
                 break
 
         if current_quarter is None:
-            return Response({"error": "No active quarter found for today's date."}, status=400)
+            return Response({"No active quarter found for today's date."})
 
         quarter_data = {
             "quarter": current_quarter.choices,
@@ -146,7 +146,7 @@ class DayScheduleView(APIView):
             # Check if the requested date is a Sunday
             if date.strftime("%A").lower() == "sunday":
                 return Response(
-                    {"message": "This day is a holiday."},
+                    {"message": "This day is Sunday."},
                     status=status.HTTP_200_OK,
                 )
 

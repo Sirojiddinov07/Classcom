@@ -5,4 +5,4 @@ from core.apps.classcom import models
 class QuarterMiniSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Quarter
-        fields = ("id", "choices")
+        fields = ("id", "choices", "start_date", "end_date")
