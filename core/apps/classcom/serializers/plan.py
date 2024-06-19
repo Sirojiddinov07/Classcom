@@ -124,7 +124,7 @@ class PlanCreateSerializer(serializers.ModelSerializer):
             "_media",
         )
 
-    def create(self,validated_data):
+    def create(self, validated_data):
         validated_data.pop("user", None)
         media = validated_data.pop("media", [])
         resource = models.Plan.objects.create(
