@@ -575,7 +575,7 @@ var sort = arr.sort;
 var splice = arr.splice;
 
 
-var whitespace = "[\\x20\\t\\r\\.env\\f]";
+var whitespace = "[\\x20\\t\\r\\n\\f]";
 
 
 var rtrimCSS = new RegExp(
@@ -671,7 +671,7 @@ var i,
 
 	// https://www.w3.org/TR/css-syntax-3/#ident-token-diagram
 	identifier = "(?:\\\\[\\da-fA-F]{1,6}" + whitespace +
-		"?|\\\\[^\\r\\.env\\f]|[\\w-]|[^\0-\\x7f])+",
+		"?|\\\\[^\\r\\n\\f]|[\\w-]|[^\0-\\x7f])+",
 
 	// Attribute selectors: https://www.w3.org/TR/selectors/#attribute-selectors
 	attributes = "\\[" + whitespace + "*(" + identifier + ")(?:" + whitespace +
@@ -715,7 +715,7 @@ var i,
 		PSEUDO: new RegExp( "^" + pseudos ),
 		CHILD: new RegExp(
 			"^:(only|first|last|nth|nth-last)-(child|of-type)(?:\\(" +
-				whitespace + "*(even|odd|(([+-]|)(\\d*).env|)" + whitespace + "*(?:([+-]|)" +
+				whitespace + "*(even|odd|(([+-]|)(\\d*)n|)" + whitespace + "*(?:([+-]|)" +
 				whitespace + "*(\\d+)|))" + whitespace + "*\\)|)", "i" ),
 		bool: new RegExp( "^(?:" + booleans + ")$", "i" ),
 
@@ -737,7 +737,7 @@ var i,
 	// CSS escapes
 	// https://www.w3.org/TR/CSS21/syndata.html#escaped-characters
 	runescape = new RegExp( "\\\\[\\da-fA-F]{1,6}" + whitespace +
-		"?|\\\\([^\\r\\.env\\f])", "g" ),
+		"?|\\\\([^\\r\\n\\f])", "g" ),
 	funescape = function( escape, nonHex ) {
 		var high = "0x" + escape.slice( 1 ) - 0x10000;
 
@@ -1021,7 +1021,7 @@ function createButtonPseudo( type ) {
  */
 function createDisabledPseudo( disabled ) {
 
-	// Known :disabled false positives: fieldset[disabled] > legend:nth-of-type(.env+2) :can-disable
+	// Known :disabled false positives: fieldset[disabled] > legend:nth-of-type(n+2) :can-disable
 	return function( elem ) {
 
 		// Only certain elements can match :enabled or :disabled
@@ -1568,8 +1568,8 @@ Expr = jQuery.expr = {
 			/* matches from matchExpr["CHILD"]
 				1 type (only|nth|...)
 				2 what (child|of-type)
-				3 argument (even|odd|\d*|\d*.env([+-]\d+)?|...)
-				4 xn-component of xn+y argument ([+-]?\d*.env|)
+				3 argument (even|odd|\d*|\d*n([+-]\d+)?|...)
+				4 xn-component of xn+y argument ([+-]?\d*n|)
 				5 sign of xn-component
 				6 x of xn-component
 				7 sign of y-component
@@ -1707,7 +1707,7 @@ Expr = jQuery.expr = {
 
 			return first === 1 && last === 0 ?
 
-				// Shortcut for :nth-*(.env)
+				// Shortcut for :nth-*(n)
 				function( elem ) {
 					return !!elem.parentNode;
 				} :
