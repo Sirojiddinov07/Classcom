@@ -76,12 +76,13 @@ class PlanViewSet(viewsets.ModelViewSet):
         ).order_by('id')
 
         plan_serializer = serializers.PlanDetailSerializerForGroupped(related_plans, many=True, context={'request': request})
+        topics = [{"id": plan.id, "name": plan.topic.name, "hour": plan.hour} for plan in related_plans]
 
         grouped_data = {
-            "classes": instance.classes.id,
-            "quarter":  instance.quarter.id,
-            "science": instance.science.id,
-            "plans": plan_serializer.data
+            "classes": instance.classes.name,
+            "quarter":  instance.quarter.choices,
+            "science": instance.science.name,
+            "topics": topics
         }
 
         return Response(grouped_data, status=status.HTTP_200_OK)

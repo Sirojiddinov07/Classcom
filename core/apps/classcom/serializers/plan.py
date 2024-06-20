@@ -88,15 +88,20 @@ class PlanDetailSerializer(serializers.ModelSerializer):
             data['is_author'] = instance.user == request.user
         return data
 
+class PlanTopicSerializerForGroup(serializers.ModelSerializer):
+    class Meta:
+        model = models.Topic
+        fields = ("name", )
+
 class PlanDetailSerializerForGroupped(serializers.ModelSerializer):
-    # topic = PlanTopicSerializer()
+    topic = PlanTopicSerializerForGroup()
 
     class Meta:
         model = models.Plan
         fields = (
-            "id",
+            "id"
             "topic",
-            "hour",
+            "hour"
         )
 
 
