@@ -74,7 +74,7 @@ class GetScheduleDataView(APIView):
             for schedule in morning_schedules:
                 lesson_time_index = int(schedule.lesson_time) - 1
                 morning_schedule[lesson_time_index] = {
-                    "id":schedule.id,
+                    "id": schedule.id,
                     "lesson_time": schedule.lesson_time,
                     "science": {
                         "id": schedule.science.id,
@@ -94,6 +94,7 @@ class GetScheduleDataView(APIView):
             for schedule in evening_schedules:
                 lesson_time_index = int(schedule.lesson_time) - 1
                 evening_schedule[lesson_time_index] = {
+                    "id": schedule.id,
                     "lesson_time": schedule.lesson_time,
                     "science": {
                         "id": schedule.science.id,
