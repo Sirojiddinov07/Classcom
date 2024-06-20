@@ -1,6 +1,6 @@
 import logging
 
-from rest_framework import viewsets, status
+from rest_framework import viewsets, status, serializers as rsr
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.decorators import action
 from rest_framework.pagination import PageNumberPagination
@@ -9,6 +9,10 @@ from rest_framework.response import Response
 from core.apps.classcom import models, serializers, services
 from core.http.serializers import UserSerializer
 from django.utils.translation import gettext as _
+from drf_spectacular.utils import (
+    extend_schema,
+    inline_serializer,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -30,6 +34,14 @@ class PlanViewSet(viewsets.ModelViewSet):
             case _:
                 return serializers.PlanSerializer
 
+    @extend_schema(
+        responses={
+            200: inline_serializer(
+                name="PlanMediaSerializer",
+                fields={"detail": rsr.CharField()},
+            )
+        },
+    )
     @action(detail=True, methods=["POSt"], url_path="set-media")
     def set_media(self, request, pk):
         ser = self.get_serializer_class()(data=request.data)
