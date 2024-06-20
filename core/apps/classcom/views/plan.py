@@ -26,6 +26,8 @@ class PlanViewSet(viewsets.ModelViewSet):
             return serializers.PlanSerializer
         return serializers.PlanCreateSerializer
 
+
+
     @action(detail=False, methods=["post"], url_path="filter-resources")
     def filter_resources(self, request):
         science_id = request.data.get("science")

@@ -20,6 +20,7 @@ class Plan(models.Model):
     topic = models.ForeignKey("Topic", on_delete=models.CASCADE)
     plan_resource = models.ManyToManyField("Media", blank=True, null=True)
 
+
     def __str__(self):
         return self.name
 
