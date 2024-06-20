@@ -62,12 +62,13 @@ class PlanViewSet(viewsets.ModelViewSet):
             }
         )
 
-    def retrieve(self, request, *args, **kwargs):
+
+    @action(detail=True, methods=["get"], url_path="related-plans")
+    def related_plans(self, request, pk=None):
         try:
-            instance = self.get_object()
+            instance = models.Plan.objects.get(pk=pk)
         except models.Plan.DoesNotExist:
             raise NotFound("Plan not found")
-
         related_plans = models.Plan.objects.filter(
             classes=instance.classes,
             quarter=instance.quarter,
