@@ -9,7 +9,7 @@ readme = "README.md"
 line-length = 79
 
 [tool.poetry.dependencies]
-python = "^3.11"
+python = "^3.10"
 cookiecutter = "2.5.0"
 crispy-tailwind = "1.0.1"
 django-ckeditor = "6.7.1"
