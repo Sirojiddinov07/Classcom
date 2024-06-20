@@ -31,7 +31,6 @@ class ScheduleViewSet(viewsets.ModelViewSet):
 
 
 class GetScheduleDataView(APIView):
-
     def get_empty_schedule(self, lesson_time):
         return {
             "lesson_time": str(lesson_time),
@@ -58,17 +57,20 @@ class GetScheduleDataView(APIView):
         if current_quarter is None:
             return Response({"No active quarter found for today's date."})
 
-        quarter_data = {
-            "quarter": current_quarter.choices,
-            "days": []
-        }
+        quarter_data = {"quarter": current_quarter.choices, "days": []}
 
         for day in Weekday.choices:
-            morning_schedule = [self.get_empty_schedule(i) for i in range(1, 7)]
-            evening_schedule = [self.get_empty_schedule(i) for i in range(1, 7)]
+            morning_schedule = [
+                self.get_empty_schedule(i) for i in range(1, 7)
+            ]
+            evening_schedule = [
+                self.get_empty_schedule(i) for i in range(1, 7)
+            ]
 
             morning_schedules = Schedule.objects.filter(
-                shift=ShiftChoice.MORNING, weekday=day[0], quarter=current_quarter
+                shift=ShiftChoice.MORNING,
+                weekday=day[0],
+                quarter=current_quarter,
             ).order_by("lesson_time")
 
             for schedule in morning_schedules:
@@ -89,7 +91,9 @@ class GetScheduleDataView(APIView):
                 }
 
             evening_schedules = Schedule.objects.filter(
-                shift=ShiftChoice.EVENING, weekday=day[0], quarter=current_quarter
+                shift=ShiftChoice.EVENING,
+                weekday=day[0],
+                quarter=current_quarter,
             ).order_by("lesson_time")
             for schedule in evening_schedules:
                 lesson_time_index = int(schedule.lesson_time) - 1
@@ -125,7 +129,6 @@ class GetScheduleDataView(APIView):
 
 @method_decorator(csrf_exempt, name="dispatch")
 class DayScheduleView(APIView):
-
     def post(self, request, *args, **kwargs):
         try:
             data = request.data

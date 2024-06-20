@@ -8,7 +8,6 @@ from core.apps.classcom import (
 from core.apps.classcom.serializers import media
 
 
-
 class PlanScienceSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Science
@@ -43,7 +42,6 @@ class PlanTopicSerializer(serializers.ModelSerializer):
 
 
 class MediaSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = models.Media
         fields = ("id", "name")
@@ -87,6 +85,7 @@ class PlanSerializer(serializers.ModelSerializer):
     classes = PlanClassSerializer()
     quarter = PlanQuarterSerializer()
     science = PlanScienceSerializer()
+
     def get_status(self, obj):
         return "active"
 

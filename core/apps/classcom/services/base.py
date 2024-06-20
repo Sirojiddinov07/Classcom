@@ -1,5 +1,4 @@
 class BaseService:
-
     def list_index_default(self, array, index, default=None):
         try:
             return array[index]
