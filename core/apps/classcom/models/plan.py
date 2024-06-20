@@ -20,8 +20,24 @@ class Plan(models.Model):
     topic = models.ForeignKey("Topic", on_delete=models.CASCADE)
     plan_resource = models.ManyToManyField("Media", blank=True, null=True)
 
+
     def __str__(self):
         return self.name
+
+
+    @staticmethod
+    def get_grouped_plans():
+        plans = Plan.objects.all()
+        grouped_plans = {}
+        for plan in plans:
+            key = (plan.classes, plan.quarter, plan.science)
+            if key not in grouped_plans:
+                grouped_plans[key] = []
+            grouped_plans[key].append(plan)
+        grouped_plans_list = [
+            (key[0], key[1], key[2], plans) for key, plans in grouped_plans.items()
+        ]
+        return grouped_plans_list
 
     class Meta:
         verbose_name = __("Plan")
