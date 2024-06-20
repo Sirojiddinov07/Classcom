@@ -47,9 +47,9 @@ class MediaSerializer(serializers.ModelSerializer):
         fields = ("id", "name")
 
 
-##############################################################################################################
+###############################################################################
 # Plan Detail Serializer
-##############################################################################################################
+###############################################################################
 class PlanDetailSerializer(serializers.ModelSerializer):
     type = TypeSerializer()
     classes = PlanClassSerializer()
@@ -93,22 +93,14 @@ class PlanSerializer(serializers.ModelSerializer):
         model = models.Plan
         fields = (
             "id",
-            # "name",
-            # "description",
-            # "banner",
             "classes",
-            # "topic",
-            # "type",
             "quarter",
             "science",
             "status",
         )
 
 
-###########################################################
-# Plan Create Serializer
-###########################################################
-class PlanCreateSerializer(serializers.ModelSerializer):
+class PlanSetMediaSerializer(serializers.Serializer):
     _media = media.MediaSerializer(
         many=True, read_only=True, source="plan_resource"
     )
@@ -123,6 +115,12 @@ class PlanCreateSerializer(serializers.ModelSerializer):
         child=serializers.CharField(),
         write_only=True,
     )
+
+
+###########################################################
+# Plan Create Serializer
+###########################################################
+class PlanCreateSerializer(serializers.ModelSerializer):
     _topic = class_serializers.TopicMiniSerializer(
         read_only=True, source="topic"
     )
@@ -139,6 +137,7 @@ class PlanCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Plan
         fields = (
+            "id",
             "name",
             "description",
             "banner",
@@ -147,15 +146,11 @@ class PlanCreateSerializer(serializers.ModelSerializer):
             "classes",
             "quarter",
             "science",
-            "media",
-            "names",
-            "descriptions",
             "hour",
             "_topic",
             "_class",
             "_quarter",
             "_science",
-            "_media",
         )
         extra_kwargs = {"classes": {"write_only": True}}
 
@@ -168,25 +163,13 @@ class PlanCreateSerializer(serializers.ModelSerializer):
                 "_class",
                 "_quarter",
                 "_science",
-                "_media",
             ],
         )
 
     def create(self, validated_data):
         validated_data.pop("user", None)
-        media = validated_data.pop("media", [])
-        names = validated_data.pop("names", [])
-        descriptions = validated_data.pop("descriptions", [])
-        service = services.BaseService()
 
         resource = models.Plan.objects.create(
             user=self.context["request"].user, **validated_data
         )
-        for index, media_item in enumerate(media):
-            media = models.Media.objects.create(
-                file=media_item,
-                name=service.list_index_default(names, index),
-                desc=service.list_index_default(descriptions, index),
-            )
-            resource.plan_resource.add(media)
         return resource
