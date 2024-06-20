@@ -13,4 +13,3 @@ from .schedule import *  # noqa
 from .download import *  # noqa
 from .days_off import *  # noqa
 from .plan import *  # noqa
-
