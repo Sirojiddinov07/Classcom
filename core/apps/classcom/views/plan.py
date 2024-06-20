@@ -1,3 +1,5 @@
+import logging
+
 from rest_framework import viewsets, status
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.decorators import action
@@ -8,6 +10,7 @@ from core.apps.classcom import models
 from core.apps.classcom import serializers
 from core.http.serializers import UserSerializer
 
+logger = logging.getLogger(__name__)
 
 class PlanViewSet(viewsets.ModelViewSet):
     queryset = models.Plan.objects.all().order_by("id")
@@ -45,3 +48,14 @@ class PlanViewSet(viewsets.ModelViewSet):
             'plan_resources': resource_serializer.data,
             'creators': creator_serializer.data
         })
+
+    def destroy(self, request, *args, **kwargs):
+        instance = self.get_object()
+        if instance.user != request.user:
+            return Response("you can not delete")
+        self.perform_destroy(instance)
+        logger.info(f"Plan with id {instance.id} deleted successfully by user {request.user}")
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+    def perform_destroy(self, instance):
+        instance.delete()
