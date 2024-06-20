@@ -61,6 +61,27 @@ class PlanViewSet(viewsets.ModelViewSet):
             }
         )
 
+
+    @action(detail=False, methods=["get"], url_path="grouped-plans")
+    def grouped_plans(self, request):
+        grouped_plans = models.Plan.get_grouped_plans()
+        grouped_data = []
+        for classes, quarter, science, plans in grouped_plans:
+            plan_serializer = serializers.PlanDetailSerializerForGroupped(plans, many=True, context={'request': request})
+            grouped_data.append({
+                "classes": {
+                    "id": classes.id,
+                },
+                "quarter": {
+                    "id": quarter.id,
+                },
+                "science": {
+                    "id": science.id,
+                },
+                "plans": plan_serializer.data
+            })
+        return Response(grouped_data, status=status.HTTP_200_OK)
+
     def destroy(self, request, *args, **kwargs):
         instance = self.get_object()
         if instance.user != request.user:
