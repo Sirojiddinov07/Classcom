@@ -24,6 +24,7 @@ router.register("district", views.DistrictViewSet, basename="district")
 
 urlpatterns = [
     path("", include(router.urls)),
+    path("quarters/", views.QuarterListView.as_view(), name="quarter-list"),
     path(
         "download_resource/<int:resource_id>/",
         views.DownloadResourceView.as_view(),
@@ -53,4 +54,5 @@ urlpatterns = [
         views.RangeScheduleView.as_view(),
         name="get_range_schedule",
     ),
+    # path('schedules/<str:date_str>/', views.DateScheduleView.as_view(), name='day_schedule'),
 ]

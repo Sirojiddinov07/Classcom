@@ -60,6 +60,7 @@ class ScheduleCreateSerializer(serializers.ModelSerializer):
             "start_time",
             "end_time",
             "lesson_time",
+            "quarter",
         )
 
     def create(self, validated_data):

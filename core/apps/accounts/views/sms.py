@@ -20,8 +20,14 @@ from rest_framework import (
     response,
     status,
 )
+from rest_framework.response import Response
+from rest_framework.serializers import ModelSerializer
+from rest_framework_simplejwt.views import TokenObtainPairView
 
 from core import enums, exceptions, services
+from core.apps.accounts.serializers.custom_token import (
+    CustomTokenObtainPairSerializer,
+)
 from core.http import serializers, views as http_views
 from core.http.models import User
 from core.apps.accounts import models, serializers as sms_serializers
@@ -59,6 +65,22 @@ class RegisterView(views.APIView, services.UserService):
             {"detail": _(enums.Messages.SEND_MESSAGE) % {"phone": phone}},
             status=status.HTTP_202_ACCEPTED,
         )
+
+
+class CustomTokenObtainPairView(TokenObtainPairView):
+    serializer_class = CustomTokenObtainPairSerializer
+
+    def post(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+
+        try:
+            serializer.is_valid(raise_exception=True)
+        except Exception as e:
+            return Response(
+                {"detail": str(e)}, status=status.HTTP_400_BAD_REQUEST
+            )
+
+        return Response(serializer.validated_data, status=status.HTTP_200_OK)
 
 
 class ConfirmView(views.APIView, services.UserService):
@@ -187,9 +209,9 @@ class ResendView(http_views.AbstractSendSms):
 class ResetPasswordView(http_views.AbstractSendSms):
     """Reset user password"""
 
-    serializer_class: typing.Type[serializers.ResetPasswordSerializer] = (
+    serializer_class: typing.Type[
         serializers.ResetPasswordSerializer
-    )
+    ] = serializers.ResetPasswordSerializer
 
 
 class MeView(viewsets.ViewSet):

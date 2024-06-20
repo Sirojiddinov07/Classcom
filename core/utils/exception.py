@@ -4,7 +4,6 @@ from core import exceptions
 
 
 class ResponseException:
-
     def __init__(
         self,
         message="",

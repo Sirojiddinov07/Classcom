@@ -1,6 +1,10 @@
 from rest_framework import serializers
 
-from core.apps.classcom import models
+from core.apps.classcom import (
+    models,
+    services,
+    serializers as class_serializers,
+)
 from core.apps.classcom.serializers import media
 
 
@@ -13,7 +17,7 @@ class PlanScienceSerializer(serializers.ModelSerializer):
 class PlanQuarterSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Quarter
-        fields = ("id", "name")
+        fields = ("id", "choices", "start_date", "end_date")
 
 
 class TypeSerializer(serializers.ModelSerializer):
@@ -37,6 +41,12 @@ class PlanTopicSerializer(serializers.ModelSerializer):
         fields = ("id", "name", "quarter", "science")
 
 
+class MediaSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Media
+        fields = ("id", "name")
+
+
 ##############################################################################################################
 # Plan Detail Serializer
 ##############################################################################################################
@@ -46,7 +56,8 @@ class PlanDetailSerializer(serializers.ModelSerializer):
     topic = PlanTopicSerializer()
     quarter = PlanQuarterSerializer()
     science = PlanScienceSerializer()
-    media = media.MediaSerializer(many=True, read_only=True)
+    plan_resource = MediaSerializer(many=True, read_only=True)
+    is_author = serializers.SerializerMethodField()
 
     class Meta:
         model = models.Plan
@@ -57,37 +68,87 @@ class PlanDetailSerializer(serializers.ModelSerializer):
             "banner",
             "classes",
             "topic",
-            "media",
             "type",
             "quarter",
             "science",
+            "plan_resource",
+            "is_author"
         )
+
+    def get_is_author(self, obj):
+        request = self.context.get('request')
+        if request and request.user.is_authenticated:
+            return obj.user == request.user
+        return False
+
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+        request = self.context.get('request')
+        if request and request.user.is_authenticated:
+            data['is_author'] = instance.user == request.user
+        return data
+
+class PlanDetailSerializerForGroupped(serializers.ModelSerializer):
+    type = TypeSerializer()
+    topic = PlanTopicSerializer()
+    plan_resource = MediaSerializer(many=True, read_only=True)
+    is_author = serializers.SerializerMethodField()
+
+    class Meta:
+        model = models.Plan
+        fields = (
+            "id",
+            "name",
+            "description",
+            "banner",
+            "topic",
+            "type",
+            "plan_resource",
+            "is_author"
+        )
+
+    def get_is_author(self, obj):
+        request = self.context.get('request')
+        if request and request.user.is_authenticated:
+            return obj.user == request.user
+        return False
+
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+        request = self.context.get('request')
+        if request and request.user.is_authenticated:
+            data['is_author'] = instance.user == request.user
+        return data
 
 
 class PlanSerializer(serializers.ModelSerializer):
     """
-    <<<<<<< HEAD
-        PlanSerializer class
-        note:
-            O'qituvchi uchun tematik plan
-    =======
-        PlanSerializer class for Teachers
-    >>>>>>> origin/dev
+    PlanSerializer class
+    note:
+        O'qituvchi uchun tematik plan
     """
+
+    status = serializers.SerializerMethodField()
+    classes = PlanClassSerializer()
+    quarter = PlanQuarterSerializer()
+    science = PlanScienceSerializer()
+
+    def get_status(self, obj):
+        return "active"
 
     class Meta:
         model = models.Plan
         fields = (
             "id",
-            "name",
-            "description",
-            "banner",
+            # "name",
+            # "description",
+            # "banner",
             "classes",
-            "topic",
-            "media",
-            "type",
+            # "topic",
+            # "type",
             "quarter",
             "science",
+            "status",
         )
 
 
@@ -101,6 +162,26 @@ class PlanCreateSerializer(serializers.ModelSerializer):
     media = serializers.ListField(
         child=serializers.FileField(), write_only=True
     )
+    names = serializers.ListField(
+        child=serializers.CharField(),
+        write_only=True,
+    )
+    descriptions = serializers.ListField(
+        child=serializers.CharField(),
+        write_only=True,
+    )
+    _topic = class_serializers.TopicMiniSerializer(
+        read_only=True, source="topic"
+    )
+    _class = class_serializers.ClassMiniSerializer(
+        read_only=True, source="classes"
+    )
+    _quarter = class_serializers.QuarterMiniSerializer(
+        read_only=True, source="quarter"
+    )
+    _science = class_serializers.ScienceMiniSerializer(
+        read_only=True, source="science"
+    )
 
     class Meta:
         model = models.Plan
@@ -113,18 +194,46 @@ class PlanCreateSerializer(serializers.ModelSerializer):
             "classes",
             "quarter",
             "science",
-            "hour",
             "media",
+            "names",
+            "descriptions",
+            "hour",
+            "_topic",
+            "_class",
+            "_quarter",
+            "_science",
             "_media",
         )
+        extra_kwargs = {"classes": {"write_only": True}}
 
-    def create(self,validated_data):
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+        return services.BaseService().serializer_name_replace(
+            data,
+            [
+                "_topic",
+                "_class",
+                "_quarter",
+                "_science",
+                "_media",
+            ],
+        )
+
+    def create(self, validated_data):
         validated_data.pop("user", None)
         media = validated_data.pop("media", [])
+        names = validated_data.pop("names", [])
+        descriptions = validated_data.pop("descriptions", [])
+        service = services.BaseService()
+
         resource = models.Plan.objects.create(
             user=self.context["request"].user, **validated_data
         )
-        for media_item in media:
-            media = models.Media.objects.create(file=media_item)
+        for index, media_item in enumerate(media):
+            media = models.Media.objects.create(
+                file=media_item,
+                name=service.list_index_default(names, index),
+                desc=service.list_index_default(descriptions, index),
+            )
             resource.plan_resource.add(media)
         return resource

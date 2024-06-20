@@ -7,3 +7,9 @@ class ScienceSerializer(serializers.ModelSerializer):
     class Meta:
         model = Science
         fields = "__all__"
+
+
+class ScienceMiniSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Science
+        fields = ("id", "name")
