@@ -16,4 +16,4 @@ class FeedbackSerializer(serializers.ModelSerializer):
 
 class AnswerSerializer(serializers.Serializer):
     feedback = serializers.CharField(read_only=True)
-    body = serializers.TimeField()
+    body = serializers.CharField()
