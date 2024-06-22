@@ -8,7 +8,7 @@ class Topic(models.Model):
     science = models.ForeignKey("Science", on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.name
+        return f'{self.name}, {self.id}'
 
     class Meta:
         verbose_name = __("Topic")
