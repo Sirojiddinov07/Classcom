@@ -2,6 +2,7 @@ from .resource import *  # noqa
 from .resource_type import *  # noqa
 from .region import *  # noqa
 from .classes import *  # noqa
+from .chat import *  # noqa
 from .quarter import *  # noqa
 from .science import *  # noqa
 from .topic import *  # noqa

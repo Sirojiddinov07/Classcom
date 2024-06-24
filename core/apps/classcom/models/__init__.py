@@ -7,6 +7,7 @@ from .topic import *  # noqa
 from .quarter import *  # noqa
 from .teacher import *  # noqa
 from .classes import *  # noqa
+from .chat import *  # noqa
 from .download import *  # noqa
 from .schedule import *  # noqa
 from .media import *  # noqa

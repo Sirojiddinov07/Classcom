@@ -75,7 +75,6 @@ class PlanViewSet(viewsets.ModelViewSet):
             science=instance.science
         ).order_by('id')
 
-        plan_serializer = serializers.PlanDetailSerializerForGroupped(related_plans, many=True, context={'request': request})
         topics = [{"id": plan.id, "name": plan.topic.name, "hour": plan.hour} for plan in related_plans]
 
         grouped_data = {
@@ -89,7 +88,7 @@ class PlanViewSet(viewsets.ModelViewSet):
     def destroy(self, request, *args, **kwargs):
         instance = self.get_object()
         if instance.user != request.user:
-            return Response("you can not delete")
+            return Response("you can not delete", status=status.HTTP_403_FORBIDDEN)
         self.perform_destroy(instance)
         logger.info(
             f"Plan with id {instance.id} deleted successfully by user {request.user}"

@@ -8,3 +8,4 @@ class RegionViewSet(viewsets.ModelViewSet):
     queryset = models.Region.objects.all()
     permission_classes = [permissions.AllowAny]
     serializer_class = RegionSerializer
+    http_method_names = ["get"]
