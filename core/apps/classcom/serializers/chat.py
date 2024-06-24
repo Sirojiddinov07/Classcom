@@ -11,7 +11,7 @@ class ChatSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Chat
-        fields = ["id", "user", "massage", "time", "responsed", "response"]
+        fields = ["id", "user", "massage", "time", "responsed", "response", "response_time"]
 
     def get_responsed(self, obj):
         return obj.response is not None
