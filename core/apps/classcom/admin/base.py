@@ -26,4 +26,9 @@ admin.site.register(models.Download)
 admin.site.register(models.Moderator)
 admin.site.register(models.Plan, PlanAdmin)
 admin.site.register(models.DaysOff)
-admin.site.register(models.Chat)
+
+
+class ChatAdmin(admin.ModelAdmin):
+    exclude = ('response_time',)
+
+admin.site.register(models.Chat, ChatAdmin)
