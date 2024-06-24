@@ -27,8 +27,6 @@ class PlanViewSet(viewsets.ModelViewSet):
             return serializers.PlanSerializer
         return serializers.PlanCreateSerializer
 
-
-
     @action(detail=False, methods=["post"], url_path="filter-resources")
     def filter_resources(self, request):
         science_id = request.data.get("science")
@@ -40,16 +38,13 @@ class PlanViewSet(viewsets.ModelViewSet):
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
-        # Filter the plans based on science and classes
         plans = models.Plan.objects.filter(
             science_id=science_id, classes_id=classes_id
         )
 
-        # Get the plan_resource items and their creators
         plan_resources = models.Media.objects.filter(plan__in=plans).distinct()
         creators = models.User.objects.filter(plan__in=plans).distinct()
 
-        # Serialize the results
         resource_serializer = serializers.MediaSerializer(
             plan_resources, many=True
         )
@@ -62,7 +57,6 @@ class PlanViewSet(viewsets.ModelViewSet):
             }
         )
 
-
     @action(detail=True, methods=["get"], url_path="related-plans")
     def related_plans(self, request, pk=None):
         try:
@@ -72,26 +66,30 @@ class PlanViewSet(viewsets.ModelViewSet):
         related_plans = models.Plan.objects.filter(
             classes=instance.classes,
             quarter=instance.quarter,
-            science=instance.science
-        ).order_by('id')
+            science=instance.science,
+        ).order_by("id")
 
-        plan_serializer = serializers.PlanDetailSerializerForGroupped(related_plans, many=True, context={'request': request})
+        plan_serializer = serializers.PlanDetailSerializerForGroupped(
+            related_plans, many=True, context={"request": request}
+        )
 
         grouped_data = {
             "classes": instance.classes.id,
-            "quarter":  instance.quarter.id,
+            "quarter": instance.quarter.id,
             "science": instance.science.id,
-            "plans": plan_serializer.data
+            "plans": plan_serializer.data,
         }
 
         return Response(grouped_data, status=status.HTTP_200_OK)
+
     def destroy(self, request, *args, **kwargs):
         instance = self.get_object()
         if instance.user != request.user:
             return Response("you can not delete")
         self.perform_destroy(instance)
         logger.info(
-            f"Plan with id {instance.id} deleted successfully by user {request.user}"
+            f"Plan with id {instance.id} deleted successfully by\
+                  user {request.user}"
         )
         return Response(status=status.HTTP_204_NO_CONTENT)
 

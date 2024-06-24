@@ -20,4 +20,5 @@ env = environ.Env(
     VITE_PORT=(int, 5173),
     VITE_HOST=(str, "vite"),
     NGROK_AUTHTOKEN=(str, "TOKEN"),
+    START_DATE=(str, "04.09.2024"),
 )

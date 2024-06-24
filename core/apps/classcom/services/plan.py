@@ -1,0 +1,6 @@
+class PlanService:
+    def __init__(self) -> None:
+        ...
+
+    def get_topic(self, date):
+        ...
