@@ -5,6 +5,7 @@ from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.decorators import action
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import Response
+from rest_framework.exceptions import NotFound
 
 from core.apps.classcom import models, serializers, services
 from core.http.serializers import UserSerializer
@@ -109,30 +110,32 @@ class PlanViewSet(viewsets.ModelViewSet):
         )
 
 
-    @action(detail=False, methods=["get"], url_path="grouped-plans")
-    def grouped_plans(self, request):
-        grouped_plans = models.Plan.get_grouped_plans()
-        grouped_data = []
-        for classes, quarter, science, plans in grouped_plans:
-            plan_serializer = serializers.PlanDetailSerializerForGroupped(plans, many=True, context={'request': request})
-            grouped_data.append({
-                "classes": {
-                    "id": classes.id,
-                },
-                "quarter": {
-                    "id": quarter.id,
-                },
-                "science": {
-                    "id": science.id,
-                },
-                "plans": plan_serializer.data
-            })
-        return Response(grouped_data, status=status.HTTP_200_OK)
+    @action(detail=True, methods=["get"], url_path="related-plans")
+    def related_plans(self, request, pk=None):
+        try:
+            instance = models.Plan.objects.get(pk=pk)
+        except models.Plan.DoesNotExist:
+            raise NotFound("Plan not found")
+        related_plans = models.Plan.objects.filter(
+            classes=instance.classes,
+            quarter=instance.quarter,
+            science=instance.science
+        ).order_by('id')
 
+        topics = [{"id": plan.id, "name": plan.topic.name, "hour": plan.hour} for plan in related_plans]
+
+        grouped_data = {
+            "classes": instance.classes.name,
+            "quarter":  instance.quarter.choices,
+            "science": instance.science.name,
+            "topics": topics
+        }
+
+        return Response(grouped_data, status=status.HTTP_200_OK)
     def destroy(self, request, *args, **kwargs):
         instance = self.get_object()
         if instance.user != request.user:
-            return Response("you can not delete")
+            return Response("you can not delete", status=status.HTTP_403_FORBIDDEN)
         self.perform_destroy(instance)
         logger.info(
             f"Plan with id {instance.id} deleted\
