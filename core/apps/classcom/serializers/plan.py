@@ -72,22 +72,21 @@ class PlanDetailSerializer(serializers.ModelSerializer):
             "quarter",
             "science",
             "plan_resource",
-            "is_author"
+            "is_author",
         )
 
     def get_is_author(self, obj):
-        request = self.context.get('request')
+        request = self.context.get("request")
         if request and request.user.is_authenticated:
             return obj.user == request.user
         return False
 
     def to_representation(self, instance):
         data = super().to_representation(instance)
-        request = self.context.get('request')
+        request = self.context.get("request")
         if request and request.user.is_authenticated:
-            data['is_author'] = instance.user == request.user
+            data["is_author"] = instance.user == request.user
         return data
-
 
 
 

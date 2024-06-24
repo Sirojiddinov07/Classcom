@@ -74,8 +74,6 @@ class PlanViewSet(viewsets.ModelViewSet):
             status=status.HTTP_201_CREATED,
         )
 
-
-
     @action(detail=False, methods=["post"], url_path="filter-resources")
     def filter_resources(self, request):
         science_id = request.data.get("science")
@@ -87,16 +85,13 @@ class PlanViewSet(viewsets.ModelViewSet):
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
-        # Filter the plans based on science and classes
         plans = models.Plan.objects.filter(
             science_id=science_id, classes_id=classes_id
         )
 
-        # Get the plan_resource items and their creators
         plan_resources = models.Media.objects.filter(plan__in=plans).distinct()
         creators = models.User.objects.filter(plan__in=plans).distinct()
 
-        # Serialize the results
         resource_serializer = serializers.MediaSerializer(
             plan_resources, many=True
         )
@@ -109,7 +104,6 @@ class PlanViewSet(viewsets.ModelViewSet):
             }
         )
 
-
     @action(detail=True, methods=["get"], url_path="related-plans")
     def related_plans(self, request, pk=None):
         try:
@@ -119,8 +113,8 @@ class PlanViewSet(viewsets.ModelViewSet):
         related_plans = models.Plan.objects.filter(
             classes=instance.classes,
             quarter=instance.quarter,
-            science=instance.science
-        ).order_by('id')
+            science=instance.science,
+        ).order_by("id")
 
         topics = [{"id": plan.id, "name": plan.topic.name, "hour": plan.hour} for plan in related_plans]
 
@@ -132,14 +126,15 @@ class PlanViewSet(viewsets.ModelViewSet):
         }
 
         return Response(grouped_data, status=status.HTTP_200_OK)
+
     def destroy(self, request, *args, **kwargs):
         instance = self.get_object()
         if instance.user != request.user:
             return Response("you can not delete", status=status.HTTP_403_FORBIDDEN)
         self.perform_destroy(instance)
         logger.info(
-            f"Plan with id {instance.id} deleted\
-                  successfully by user {request.user}"
+            f"Plan with id {instance.id} deleted successfully by\
+                  user {request.user}"
         )
         return Response(status=status.HTTP_204_NO_CONTENT)
 

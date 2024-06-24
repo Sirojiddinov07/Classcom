@@ -1,0 +1,79 @@
+from core.apps.classcom import models
+from django.db.models.query import QuerySet
+from .date import DateService
+from .days_off import DaysOffService
+from common.env import env
+from typing import Union
+import pandas as pd
+
+
+class TopicService:
+    def __init__(self) -> None:
+        ...
+
+    def get_topic_by_date(
+        self, date: Union[str], science_id: Union[int], class_id: Union[int]
+    ) -> models.Topic:
+        """Get topic by date.
+
+        Args:
+            date (str): _description_
+
+        Returns:
+            _type_: Topic model
+        """
+        topics_count = DateService().weekday_counter(
+            env.str("START_DATE"), date, [0]
+        )
+        days_off = DaysOffService().get_daysoff_from_user(2, weekdays=[0])
+
+        topics = models.Topic.objects.filter(
+            science_id=science_id,
+            _class_id=class_id,
+        )
+
+        if topics.count() < topics_count.size:
+            raise ValueError("No topic found for this date")
+        if topics_count.size == 0:
+            raise ValueError("You don't have class")
+
+        return topics.filter(
+            sequence_number=(topics_count.size - days_off) - 1
+        ).first()
+
+    def all_topics(
+        self, science_id: int, class_id: int
+    ) -> QuerySet[models.Topic]:
+        """Get all topics for a class.
+
+        Args:
+            science_id (int): _description_
+            class_id (int): _description_
+
+        Returns:
+            _type_: Topic model
+        """
+
+        return models.Topic.objects.filter(
+            science_id=science_id, class_id=class_id
+        ).order_by("sequence_number")
+
+    def import_plan(self, file: Union[str]):
+        """Excel import topics list id,name,quarter
+
+        Args:
+            file (Union[str]): Excel file path
+        """
+        data = pd.read_excel(file)
+        for item in data.iloc:
+            try:
+                topic = models.Topic(
+                    sequence_number=item["id"],
+                    name=item["name"],
+                    quarter_id=item["quarter"],
+                    science_id=item["science"],
+                    _class_id=item["class"],
+                )
+                topic.save()
+            except Exception as e:
+                print(e)
