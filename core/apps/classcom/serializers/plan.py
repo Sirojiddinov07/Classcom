@@ -88,37 +88,7 @@ class PlanDetailSerializer(serializers.ModelSerializer):
             data['is_author'] = instance.user == request.user
         return data
 
-class PlanDetailSerializerForGroupped(serializers.ModelSerializer):
-    type = TypeSerializer()
-    topic = PlanTopicSerializer()
-    plan_resource = MediaSerializer(many=True, read_only=True)
-    is_author = serializers.SerializerMethodField()
 
-    class Meta:
-        model = models.Plan
-        fields = (
-            "id",
-            "name",
-            "description",
-            "banner",
-            "topic",
-            "type",
-            "plan_resource",
-            "is_author"
-        )
-
-    def get_is_author(self, obj):
-        request = self.context.get('request')
-        if request and request.user.is_authenticated:
-            return obj.user == request.user
-        return False
-
-    def to_representation(self, instance):
-        data = super().to_representation(instance)
-        request = self.context.get('request')
-        if request and request.user.is_authenticated:
-            data['is_author'] = instance.user == request.user
-        return data
 
 
 class PlanSerializer(serializers.ModelSerializer):
