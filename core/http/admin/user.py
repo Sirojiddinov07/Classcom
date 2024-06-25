@@ -7,7 +7,6 @@ from django.contrib.admin import StackedInline
 from core.apps.classcom.choices import Role
 
 
-
 class CustomUserAdmin(admin.UserAdmin, import_export.ImportExportModelAdmin):
     list_display = (
         "first_name",
@@ -26,8 +25,16 @@ class GroupAdmin(import_export.ImportExportModelAdmin):
 class ModeratorInline(StackedInline):
     model = Moderator
     can_delete = False
-    verbose_name_plural = 'Moderators'
-    fields = ['balance', 'science', 'classes', 'degree', 'docs', 'is_contracted']
+    verbose_name_plural = "Moderators"
+    fields = [
+        "balance",
+        "science",
+        "classes",
+        "degree",
+        "docs",
+        "is_contracted",
+    ]
+
 
 class UserAdmin(admin.UserAdmin, import_export.ImportExportModelAdmin):
     add_form = CustomUserCreationForm
@@ -69,11 +76,12 @@ class UserAdmin(admin.UserAdmin, import_export.ImportExportModelAdmin):
     )
 
     def get_inlines(self, request, obj=None):
-        inlines = list(super(UserAdmin, self).get_inlines(request, obj))  # Convert tuple to list
+        inlines = list(
+            super(UserAdmin, self).get_inlines(request, obj)
+        )  # Convert tuple to list
         if obj and obj.role == Role.MODERATOR:
             inlines.append(ModeratorInline)
         return inlines
-
 
     add_fieldsets = (
         (

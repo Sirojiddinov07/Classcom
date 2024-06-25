@@ -15,9 +15,11 @@ class TopicMiniSerializer(serializers.ModelSerializer):
 
 
 class TopicFilterSerializer(serializers.ModelSerializer):
+    date = serializers.DateField(required=False, format="%d.%m.%Y")
+
     class Meta:
         model = models.Topic
-        fields = ("_class", "science")
+        fields = ("_class", "science", "date")
 
 
 class TopicNowSerializer(serializers.ModelSerializer):

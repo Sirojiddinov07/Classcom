@@ -19,17 +19,18 @@ class TopicViewSet(viewsets.ReadOnlyModelViewSet):
     @decorators.action(
         methods=["GET"],
         detail=False,
-        url_path="now",
-        url_name="now",
+        url_path="calculation",
+        url_name="calculation",
     )
     def get_topic(self, request):
         ser = serializers.TopicFilterSerializer(data=request.GET)
         ser.is_valid(raise_exception=True)
 
         service = services.TopicService()
+        date = ser.data.get("date", None)
         try:
             topic = service.get_topic_by_date(
-                datetime.now().strftime("%d.%m.%Y"),
+                date if date else datetime.now().strftime("%d.%m.%Y"),
                 ser.data.get("science"),
                 ser.data.get("_class"),
                 request.user,
