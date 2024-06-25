@@ -6,7 +6,7 @@ from core.http import models
 
 
 class UserSerializer(serializers.ModelSerializer):
-    avatar = serializers.SerializerMethodField("get_avatar")
+    avatar = serializers.ImageField(max_length=None, use_url=True)
 
     class Meta:
         fields = ["avatar", "first_name", "last_name", "phone", "role"]
@@ -24,13 +24,9 @@ class UserSerializer(serializers.ModelSerializer):
         return None
 
     def update(self, instance, validated_data):
+        print(validated_data)  # Debug line
         instance.avatar = validated_data.get("avatar", instance.avatar)
-        instance.first_name = validated_data.get(
-            "first_name", instance.first_name
-        )
-        instance.last_name = validated_data.get(
-            "last_name", instance.last_name
-        )
-        # instance.phone = validated_data.get("phone", instance.phone)
+        instance.first_name = validated_data.get("first_name", instance.first_name)
+        instance.last_name = validated_data.get("last_name", instance.last_name)
         instance.save()
         return instance
