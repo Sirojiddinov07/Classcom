@@ -1,6 +1,11 @@
 from django.contrib.auth import admin
 from import_export import admin as import_export
+
+from core.apps.classcom.models import Moderator
 from core.http.forms import CustomUserCreationForm
+from django.contrib.admin import StackedInline
+from core.apps.classcom.choices import Role
+
 
 
 class CustomUserAdmin(admin.UserAdmin, import_export.ImportExportModelAdmin):
@@ -17,6 +22,12 @@ class GroupAdmin(import_export.ImportExportModelAdmin):
 
     filter_horizontal = ("permissions",)
 
+
+class ModeratorInline(StackedInline):
+    model = Moderator
+    can_delete = False
+    verbose_name_plural = 'Moderators'
+    fields = ['balance', 'science', 'classes', 'degree', 'docs', 'is_contracted']
 
 class UserAdmin(admin.UserAdmin, import_export.ImportExportModelAdmin):
     add_form = CustomUserCreationForm
@@ -56,6 +67,14 @@ class UserAdmin(admin.UserAdmin, import_export.ImportExportModelAdmin):
         ),
         ("Important dates", {"fields": ("last_login", "date_joined")}),
     )
+
+    def get_inlines(self, request, obj=None):
+        inlines = list(super(UserAdmin, self).get_inlines(request, obj))  # Convert tuple to list
+        if obj and obj.role == Role.MODERATOR:
+            inlines.append(ModeratorInline)
+        return inlines
+
+
     add_fieldsets = (
         (
             None,
