@@ -10,7 +10,7 @@ class Topic(models.Model):
     sequence_number = models.IntegerField(default=1)
 
     def __str__(self):
-        return f'{self.name}, {self.id}'
+        return f"{self.name}, {self.id}"
 
     class Meta:
         verbose_name = __("Topic")

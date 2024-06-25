@@ -67,6 +67,7 @@ admin.site.register(models.DaysOff)
 
 
 class ChatAdmin(admin.ModelAdmin):
-    exclude = ('response_time',)
+    exclude = ("response_time",)
+
 
 admin.site.register(models.Chat, ChatAdmin)

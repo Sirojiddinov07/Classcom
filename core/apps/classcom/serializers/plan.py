@@ -89,7 +89,6 @@ class PlanDetailSerializer(serializers.ModelSerializer):
         return data
 
 
-
 class PlanSerializer(serializers.ModelSerializer):
     """
     PlanSerializer class

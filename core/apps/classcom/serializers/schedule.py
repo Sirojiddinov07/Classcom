@@ -39,7 +39,7 @@ class ScheduleListSerializer(serializers.ModelSerializer):
             "shift",
             "user",
             "science",
-            'topic',
+            "topic",
             "classes",
             "weekday",
             "start_time",
@@ -54,12 +54,13 @@ class ScheduleListSerializer(serializers.ModelSerializer):
 class ScheduleCreateSerializer(serializers.ModelSerializer):
     # topic = serializers.PrimaryKeyRelatedField(queryset=Topic.objects.all(), required=True)
     topic = serializers.CharField(required=True, write_only=True)
+
     class Meta:
         model = Schedule
         fields = (
             "shift",
             "science",
-            'topic',
+            "topic",
             "classes",
             "weekday",
             "start_time",
@@ -68,13 +69,14 @@ class ScheduleCreateSerializer(serializers.ModelSerializer):
             "quarter",
         )
 
-
     def __init__(self, *args, **kwargs):
         super(ScheduleCreateSerializer, self).__init__(*args, **kwargs)
-        initial_data = kwargs.get('data', {})
-        science_id = initial_data.get('science')
+        initial_data = kwargs.get("data", {})
+        science_id = initial_data.get("science")
         if science_id:
-            self.fields['topic'].queryset = Topic.objects.filter(science_id=science_id)
+            self.fields["topic"].queryset = Topic.objects.filter(
+                science_id=science_id
+            )
 
     # def create(self, validated_data):
     #     user = self.context["request"].user
@@ -82,7 +84,7 @@ class ScheduleCreateSerializer(serializers.ModelSerializer):
     #     return Schedule.objects.create(user=user, **validated_data)
     def create(self, validated_data):
         user = self.context["request"].user
-        topic = validated_data.pop('topic') 
+        validated_data.pop("topic")
         schedule = Schedule.objects.create(user=user, **validated_data)
-        
+
         return schedule

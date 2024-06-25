@@ -1,10 +1,12 @@
 from core.apps.classcom import models
 from django.db.models.query import QuerySet
 from .date import DateService
+from .schedule import ScheduleService
 from .days_off import DaysOffService
 from common.env import env
-from typing import Union
+from typing import Union, Type
 import pandas as pd
+from django.utils.translation import gettext as _
 
 
 class TopicService:
@@ -12,7 +14,11 @@ class TopicService:
         ...
 
     def get_topic_by_date(
-        self, date: Union[str], science_id: Union[int], class_id: Union[int]
+        self,
+        date: Union[str],
+        science_id: Union[int],
+        class_id: Union[int],
+        user: Union[Type[models.User]] = None,
     ) -> models.Topic:
         """Get topic by date.
 
@@ -22,10 +28,13 @@ class TopicService:
         Returns:
             _type_: Topic model
         """
+        weekdays = ScheduleService().get_weekdays(user)
         topics_count = DateService().weekday_counter(
-            env.str("START_DATE"), date, [0]
+            env.str("START_DATE"), date, weekdays
         )
-        days_off = DaysOffService().get_daysoff_from_user(2, weekdays=[0])
+        days_off = DaysOffService().get_daysoff_from_user(
+            user.id, weekdays=weekdays
+        )
 
         topics = models.Topic.objects.filter(
             science_id=science_id,
@@ -33,9 +42,9 @@ class TopicService:
         )
 
         if topics.count() < topics_count.size:
-            raise ValueError("No topic found for this date")
+            raise ValueError(_("No topic found for this date"))
         if topics_count.size == 0:
-            raise ValueError("You don't have class")
+            raise ValueError(_("You have no topics"))
 
         return topics.filter(
             sequence_number=(topics_count.size - days_off) - 1
