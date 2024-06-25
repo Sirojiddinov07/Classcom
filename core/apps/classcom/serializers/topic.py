@@ -22,7 +22,7 @@ class TopicFilterSerializer(serializers.ModelSerializer):
         fields = ("_class", "science", "date")
 
 
-class TopicNowSerializer(serializers.ModelSerializer):
+class TopicCalculationSerializer(serializers.ModelSerializer):
     resources = core_serializers.ResourceSerializer(many=True)
 
     class Meta:
