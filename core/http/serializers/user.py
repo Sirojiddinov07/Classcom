@@ -31,6 +31,6 @@ class UserSerializer(serializers.ModelSerializer):
         instance.last_name = validated_data.get(
             "last_name", instance.last_name
         )
-        instance.phone = validated_data.get("phone", instance.phone)
+        # instance.phone = validated_data.get("phone", instance.phone)
         instance.save()
         return instance
