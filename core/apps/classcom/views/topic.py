@@ -2,6 +2,7 @@ from rest_framework import viewsets, decorators, permissions, exceptions
 from rest_framework.response import Response
 from datetime import datetime
 from core.apps.classcom import models, serializers, services
+from drf_spectacular.utils import extend_schema, OpenApiParameter
 
 
 class TopicViewSet(viewsets.ReadOnlyModelViewSet):
@@ -16,6 +17,16 @@ class TopicViewSet(viewsets.ReadOnlyModelViewSet):
         self.permission_classes = perms
         return super().get_permissions()
 
+    @extend_schema(
+        parameters=[
+            OpenApiParameter("_class", type=int, description="Class ID"),
+            OpenApiParameter("science", type=int, description="Science ID"),
+            OpenApiParameter("date", type=str, description="Date in format YYYY-MM-DD"),
+        ],
+        summary="Get topic.",
+        description="Get topic by date.",
+        responses=serializers.TopicCalculationSerializer
+    )
     @decorators.action(
         methods=["GET"],
         detail=False,
@@ -38,4 +49,4 @@ class TopicViewSet(viewsets.ReadOnlyModelViewSet):
         except ValueError as e:
             raise exceptions.APIException(e)
 
-        return Response(data=serializers.TopicNowSerializer(topic).data)
+        return Response(data=serializers.TopicCalculationSerializer(topic).data)
