@@ -27,7 +27,7 @@ class Schedule(models.Model):
         choices=choices.ShiftChoice.choices,
         default=choices.ShiftChoice.MORNING,
     )
-    user = models.ForeignKey(User, models.CASCADE)
+    user = models.ForeignKey(User, models.CASCADE, related_name="schedules")
     science = models.ForeignKey("Science", models.CASCADE)
     classes = models.ForeignKey("Classes", models.CASCADE)
     weekday = models.CharField(max_length=15, choices=choices.Weekday.choices)

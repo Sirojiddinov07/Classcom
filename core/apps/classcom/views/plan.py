@@ -116,13 +116,16 @@ class PlanViewSet(viewsets.ModelViewSet):
             science=instance.science,
         ).order_by("id")
 
-        topics = [{"id": plan.id, "name": plan.topic.name, "hour": plan.hour} for plan in related_plans]
+        topics = [
+            {"id": plan.id, "name": plan.topic.name, "hour": plan.hour}
+            for plan in related_plans
+        ]
 
         grouped_data = {
             "classes": instance.classes.name,
-            "quarter":  instance.quarter.choices,
+            "quarter": instance.quarter.choices,
             "science": instance.science.name,
-            "topics": topics
+            "topics": topics,
         }
 
         return Response(grouped_data, status=status.HTTP_200_OK)
@@ -130,7 +133,9 @@ class PlanViewSet(viewsets.ModelViewSet):
     def destroy(self, request, *args, **kwargs):
         instance = self.get_object()
         if instance.user != request.user:
-            return Response("you can not delete", status=status.HTTP_403_FORBIDDEN)
+            return Response(
+                "you can not delete", status=status.HTTP_403_FORBIDDEN
+            )
         self.perform_destroy(instance)
         logger.info(
             f"Plan with id {instance.id} deleted successfully by\

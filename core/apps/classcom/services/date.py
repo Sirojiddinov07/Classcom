@@ -5,6 +5,7 @@ Service for working with dates
 import pandas as pd
 from typing import List, Union
 from datetime import datetime
+from core.apps.classcom.choices import Weekday
 
 
 class DateService:
@@ -38,19 +39,19 @@ class DateService:
             int: Weekday index.
         """
         match name:
-            case "Monday":
+            case "Monday" | Weekday.monday:
                 return 0
-            case "Tuesday":
+            case "Tuesday" | Weekday.tuesday:
                 return 1
-            case "Wednesday":
+            case "Wednesday" | Weekday.wednesday:
                 return 2
-            case "Thursday":
+            case "Thursday" | Weekday.thursday:
                 return 3
-            case "Friday":
+            case "Friday" | Weekday.friday:
                 return 4
-            case "Saturday":
+            case "Saturday" | Weekday.saturday:
                 return 5
-            case "Sunday":
+            case "Sunday" | Weekday.sunday:
                 return 6
             case _:
                 return -1

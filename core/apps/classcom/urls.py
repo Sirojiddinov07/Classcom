@@ -52,5 +52,7 @@ urlpatterns = [
         views.RangeScheduleView.as_view(),
         name="get_range_schedule",
     ),
-    path('chats/', views.ChatListCreateView.as_view(), name='chat-list-create'),
+    path(
+        "chats/", views.ChatListCreateView.as_view(), name="chat-list-create"
+    ),
 ]
