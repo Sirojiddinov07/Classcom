@@ -35,6 +35,7 @@ class UserAdmin(admin.UserAdmin, import_export.ImportExportModelAdmin):
                     "role",
                     "region",
                     "district",
+                    "avatar",
                     "institution",
                     "science_group",
                     "institution_number",
