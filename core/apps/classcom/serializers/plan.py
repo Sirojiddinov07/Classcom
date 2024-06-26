@@ -58,6 +58,7 @@ class PlanDetailSerializer(serializers.ModelSerializer):
     science = PlanScienceSerializer()
     plan_resource = MediaSerializer(many=True, read_only=True)
     is_author = serializers.SerializerMethodField()
+    status = serializers.SerializerMethodField()
 
     class Meta:
         model = models.Plan
@@ -72,14 +73,21 @@ class PlanDetailSerializer(serializers.ModelSerializer):
             "quarter",
             "science",
             "plan_resource",
-            "is_author",
+            "status",
+            "is_author"
         )
+    def get_status(self, obj):
+        return "active"
+
 
     def get_is_author(self, obj):
         request = self.context.get("request")
         if request and request.user.is_authenticated:
             return obj.user == request.user
         return False
+
+
+
 
     def to_representation(self, instance):
         data = super().to_representation(instance)
@@ -100,9 +108,16 @@ class PlanSerializer(serializers.ModelSerializer):
     classes = PlanClassSerializer()
     quarter = PlanQuarterSerializer()
     science = PlanScienceSerializer()
+    is_author = serializers.SerializerMethodField()
 
     def get_status(self, obj):
         return "active"
+
+    def get_is_author(self, obj):
+        request = self.context.get('request')
+        if request and request.user.is_authenticated:
+            return obj.user == request.user
+        return False
 
     class Meta:
         model = models.Plan
@@ -112,6 +127,7 @@ class PlanSerializer(serializers.ModelSerializer):
             "quarter",
             "science",
             "status",
+            "is_author"
         )
 
 

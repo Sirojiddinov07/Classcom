@@ -116,10 +116,7 @@ class PlanViewSet(viewsets.ModelViewSet):
             science=instance.science,
         ).order_by("id")
 
-        topics = [
-            {"id": plan.id, "name": plan.topic.name, "hour": plan.hour}
-            for plan in related_plans
-        ]
+        topics = [{"id": plan.id, "topic_id": plan.topic.id, "name": plan.topic.name, "hour": plan.hour} for plan in related_plans]
 
         grouped_data = {
             "classes": instance.classes.name,

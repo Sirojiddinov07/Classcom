@@ -17,8 +17,9 @@ class Plan(models.Model):
     classes = models.ForeignKey("Classes", on_delete=models.CASCADE)
     quarter = models.ForeignKey("Quarter", on_delete=models.CASCADE)
     science = models.ForeignKey("Science", on_delete=models.CASCADE)
-    topic = models.ForeignKey("Topic", on_delete=models.CASCADE)
     plan_resource = models.ManyToManyField("Media", blank=True, null=True)
+    topic = models.ForeignKey("Topic", on_delete=models.CASCADE, null=True, blank=True, related_name="plans")  # Added related_name
+
 
     def __str__(self):
         return self.name

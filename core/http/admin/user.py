@@ -76,9 +76,7 @@ class UserAdmin(admin.UserAdmin, import_export.ImportExportModelAdmin):
     )
 
     def get_inlines(self, request, obj=None):
-        inlines = list(
-            super(UserAdmin, self).get_inlines(request, obj)
-        )  # Convert tuple to list
+        inlines = list(super(UserAdmin, self).get_inlines(request, obj))
         if obj and obj.role == Role.MODERATOR:
             inlines.append(ModeratorInline)
         return inlines
