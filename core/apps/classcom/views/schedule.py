@@ -3,8 +3,6 @@ from datetime import datetime, date
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework import viewsets, status
-from rest_framework.generics import GenericAPIView
-from rest_framework.mixins import ListModelMixin
 from rest_framework.response import Response
 from rest_framework.views import APIView
 import json
@@ -155,7 +153,6 @@ class DayScheduleView(APIView):
                     status=status.HTTP_200_OK,
                 )
 
-            # Find the quarter that includes the given date
             try:
                 quarter_instance = Quarter.objects.get(
                     start_date__lte=date, end_date__gte=date
@@ -268,7 +265,8 @@ class RangeScheduleView(APIView):
             if start_index > end_index:
                 return Response(
                     {
-                        "error": "Start day must be before or the same as end day"
+                        "error": "Start day must be before or the same as end \
+                            day"
                     },
                     status=status.HTTP_400_BAD_REQUEST,
                 )

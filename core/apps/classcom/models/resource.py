@@ -13,7 +13,11 @@ class Resource(models.Model):
         "ResourceType", on_delete=models.CASCADE, null=True, blank=True
     )
     topic = models.ForeignKey(
-        "Topic", on_delete=models.CASCADE, null=True, blank=True
+        "Topic",
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True,
+        related_name="resources",
     )
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     classes = models.ForeignKey(

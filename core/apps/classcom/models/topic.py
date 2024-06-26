@@ -12,8 +12,9 @@ class Topic(models.Model):
 
 
     def __str__(self):
-        return self.name
+        return f"{self.name}, {self.id}"
 
     class Meta:
         verbose_name = __("Topic")
         verbose_name_plural = __("Topics")
+        unique_together = ("sequence_number", "science", "_class")

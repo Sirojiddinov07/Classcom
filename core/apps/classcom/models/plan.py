@@ -21,7 +21,6 @@ class Plan(models.Model):
     topic = models.ForeignKey("Topic", on_delete=models.CASCADE, null=True, blank=True, related_name="plans")  # Added related_name
 
 
-
     def __str__(self):
         return self.name
 

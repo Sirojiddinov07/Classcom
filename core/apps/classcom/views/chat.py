@@ -12,7 +12,7 @@ class ChatListCreateView(generics.ListCreateAPIView):
 
     def get_queryset(self):
         user = self.request.user
-        return Chat.objects.filter(user=user).order_by('-time')
+        return Chat.objects.filter(user=user).order_by("-time")
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
