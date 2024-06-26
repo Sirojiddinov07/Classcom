@@ -1,9 +1,5 @@
 from rest_framework import viewsets
-from core.apps.classcom import models
-from core.apps.classcom import choices
-from core.apps.classcom import serializers
-from core.apps.classcom import permissions
-from core.http import permissions as http_permissions
+from core.apps.classcom import models, serializers
 from django.views.decorators.cache import never_cache
 from django.utils.decorators import method_decorator
 
