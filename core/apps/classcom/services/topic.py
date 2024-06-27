@@ -42,15 +42,16 @@ class TopicService:
             science_id=science_id,
             _class_id=class_id,
         )
-
-        if topics.count() < topics_count.size:
+        topic = topics.filter(
+            sequence_number=(topics_count.size - days_off) - 1
+        ).first()
+        
+        if topic is None:
             raise ValueError(_("No topic found for this date"))
         if topics_count.size == 0:
             raise ValueError(_("You have no topics"))
 
-        return topics.filter(
-            sequence_number=(topics_count.size - days_off) - 1
-        ).first()
+        return topic
 
     def all_topics(
         self, science_id: int, class_id: int
