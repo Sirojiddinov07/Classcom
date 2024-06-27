@@ -1,17 +1,19 @@
-from core.apps.classcom import models
-from django.db.models.query import QuerySet
-from .date import DateService
-from .schedule import ScheduleService
-from .days_off import DaysOffService
-from common.env import env
-from typing import Union, Type
+from typing import Type, Union
+
 import pandas as pd
+from django.db.models.query import QuerySet
 from django.utils.translation import gettext as _
+
+from common.env import env
+from core.apps.classcom import models
+
+from .date import DateService
+from .days_off import DaysOffService
+from .schedule import ScheduleService
 
 
 class TopicService:
-    def __init__(self) -> None:
-        ...
+    def __init__(self) -> None: ...
 
     def get_topic_by_date(
         self,

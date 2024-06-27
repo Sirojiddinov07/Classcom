@@ -1,10 +1,10 @@
 from django.utils.translation import gettext as _
 from rest_framework import serializers
 
-from core.services import UserService
 from core.apps.classcom import models
-from core.http.models import Region, District
-from core.apps.classcom.serializers import RegionSerializer, DistrictSerializer
+from core.apps.classcom.serializers import DistrictSerializer, RegionSerializer
+from core.http.models import District, Region
+from core.services import UserService
 
 
 class UserModeratorSerializer(serializers.ModelSerializer):

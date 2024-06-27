@@ -1,13 +1,13 @@
-from rest_framework.viewsets import ModelViewSet
-from rest_framework.permissions import IsAuthenticated, IsAdminUser
-from rest_framework.decorators import action
-
 from django.shortcuts import get_object_or_404
 from django.utils.translation import gettext as __
+from rest_framework.decorators import action
+from rest_framework.permissions import IsAdminUser, IsAuthenticated
+from rest_framework.viewsets import ModelViewSet
 
 from core.http.views import ApiResponse
-from ..models import Feedback, Answer
-from ..serializers import FeedbackSerializer, AnswerSerializer
+
+from ..models import Answer, Feedback
+from ..serializers import AnswerSerializer, FeedbackSerializer
 
 
 class FeedbackCreateViewSet(ModelViewSet):

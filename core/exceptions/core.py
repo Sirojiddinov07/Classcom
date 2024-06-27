@@ -2,6 +2,8 @@
 Raise exception
 """
 
+from typing import Union
+
 from rest_framework import exceptions
 
 
@@ -20,7 +22,7 @@ class BreakException(Exception):
     Break exception
     """
 
-    def __init__(self, *args, message: str = None, data=None):
+    def __init__(self, *args, message: Union[str, None] = None, data=None):
         if data is None:
             data = []
         self.args = args

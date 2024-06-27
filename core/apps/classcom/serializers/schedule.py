@@ -1,5 +1,6 @@
 from rest_framework import serializers
-from core.apps.classcom.models import Schedule, Science, Classes, Topic
+
+from core.apps.classcom.models import Classes, Schedule, Science, Topic
 from core.http.models import User
 
 
@@ -70,7 +71,7 @@ class ScheduleCreateSerializer(serializers.ModelSerializer):
         )
 
     def __init__(self, *args, **kwargs):
-        super(ScheduleCreateSerializer, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         initial_data = kwargs.get("data", {})
         science_id = initial_data.get("science")
         if science_id:

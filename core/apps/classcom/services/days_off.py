@@ -1,14 +1,16 @@
-from core.apps.classcom import models
-from typing import Union, List, Optional
-from django.db.models import Q
-from .date import DateService
-import pandas as pd
 from datetime import datetime
+from typing import List, Optional, Union
+
+import pandas as pd
+from django.db.models import Q
+
+from core.apps.classcom import models
+
+from .date import DateService
 
 
 class DaysOffService:
-    def __init__(self) -> None:
-        ...
+    def __init__(self) -> None: ...
 
     def get_daysoff_from_user(
         self,

@@ -1,6 +1,7 @@
 from django.contrib import admin
 from import_export.admin import ImportExportModelAdmin
-from core.http import resources, models
+
+from core.http import models, resources
 
 
 @admin.register(models.Region)

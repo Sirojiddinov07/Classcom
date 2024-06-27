@@ -1,11 +1,10 @@
 from django.contrib import admin
 from django.db import models as db_model
-from import_export import admin as import_export
 from django_select2 import forms as django_select2
+from import_export import admin as import_export
 from modeltranslation import admin as modeltranslation
 
-from core.http import forms
-from core.http import models
+from core.http import forms, models
 
 
 class PostInline(admin.TabularInline):

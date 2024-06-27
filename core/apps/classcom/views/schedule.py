@@ -1,18 +1,16 @@
-from datetime import datetime, date
+import json
+from datetime import date, datetime
 
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
-from rest_framework import viewsets, status
+from rest_framework import status, viewsets
 from rest_framework.response import Response
 from rest_framework.views import APIView
-import json
 
-from core.apps.classcom.choices import Weekday, ShiftChoice
-from core.apps.classcom.models import Schedule, Quarter
-from core.apps.classcom.serializers import (
-    ScheduleCreateSerializer,
-    ScheduleListSerializer,
-)
+from core.apps.classcom.choices import ShiftChoice, Weekday
+from core.apps.classcom.models import Quarter, Schedule
+from core.apps.classcom.serializers import (ScheduleCreateSerializer,
+                                            ScheduleListSerializer)
 
 
 class ScheduleViewSet(viewsets.ModelViewSet):

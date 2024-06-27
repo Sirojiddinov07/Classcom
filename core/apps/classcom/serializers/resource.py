@@ -4,6 +4,7 @@ from core.apps.classcom import models
 from core.apps.classcom.serializers import media
 from core.apps.classcom.serializers.resource_type import ResourceTypeSerializer
 from core.http import serializers as http_serializers
+
 from .topic import TopicMiniSerializer
 
 

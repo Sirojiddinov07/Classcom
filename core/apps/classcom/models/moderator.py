@@ -1,9 +1,9 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as __
 
+from core.apps.classcom import choices
 from core.apps.classcom.choices import Role
 from core.http.models import User
-from core.apps.classcom import choices
 
 
 class Moderator(models.Model):

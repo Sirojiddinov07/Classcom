@@ -1,7 +1,8 @@
-from rest_framework import viewsets
-from core.apps.classcom import models, serializers
-from django.views.decorators.cache import never_cache
 from django.utils.decorators import method_decorator
+from django.views.decorators.cache import never_cache
+from rest_framework import viewsets
+
+from core.apps.classcom import models, serializers
 
 
 class ResourceViewSet(viewsets.ModelViewSet):

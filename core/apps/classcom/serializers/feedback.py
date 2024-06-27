@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from ..models.feedback import Feedback, Answer
+from ..models.feedback import Answer, Feedback
 
 
 class FeedbackSerializer(serializers.ModelSerializer):
