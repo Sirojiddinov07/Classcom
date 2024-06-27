@@ -2,10 +2,11 @@ from rest_framework import serializers
 
 from core.apps.classcom import models, services
 from core.apps.classcom.serializers.media import MediaSerializer as MSerializer
-from ..serializers.topic import TopicMiniSerializer
-from ..serializers.science import ScienceMiniSerializer
-from ..serializers.quarter import QuarterMiniSerializer
+
 from ..serializers.classes import ClassMiniSerializer
+from ..serializers.quarter import QuarterMiniSerializer
+from ..serializers.science import ScienceMiniSerializer
+from ..serializers.topic import TopicMiniSerializer
 
 
 class PlanScienceSerializer(serializers.ModelSerializer):
@@ -122,9 +123,7 @@ class PlanSerializer(serializers.ModelSerializer):
 
 
 class PlanSetMediaSerializer(serializers.Serializer):
-    _media = MSerializer(
-        many=True, read_only=True, source="plan_resource"
-    )
+    _media = MSerializer(many=True, read_only=True, source="plan_resource")
     media = serializers.ListField(
         child=serializers.FileField(), write_only=True
     )
@@ -142,18 +141,10 @@ class PlanSetMediaSerializer(serializers.Serializer):
 # Plan Create Serializer
 ###########################################################
 class PlanCreateSerializer(serializers.ModelSerializer):
-    _topic = TopicMiniSerializer(
-        read_only=True, source="topic"
-    )
-    _class = ClassMiniSerializer(
-        read_only=True, source="classes"
-    )
-    _quarter = QuarterMiniSerializer(
-        read_only=True, source="quarter"
-    )
-    _science = ScienceMiniSerializer(
-        read_only=True, source="science"
-    )
+    _topic = TopicMiniSerializer(read_only=True, source="topic")
+    _class = ClassMiniSerializer(read_only=True, source="classes")
+    _quarter = QuarterMiniSerializer(read_only=True, source="quarter")
+    _science = ScienceMiniSerializer(read_only=True, source="science")
 
     class Meta:
         model = models.Plan
