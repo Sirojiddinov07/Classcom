@@ -1,19 +1,17 @@
 import logging
 
-from rest_framework import viewsets, status, serializers as rsr
+from django.utils.translation import gettext as _
 from django_filters.rest_framework import DjangoFilterBackend
+from drf_spectacular.utils import extend_schema, inline_serializer
+from rest_framework import serializers as rsr
+from rest_framework import status, viewsets
 from rest_framework.decorators import action
+from rest_framework.exceptions import NotFound
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import Response
-from rest_framework.exceptions import NotFound
 
 from core.apps.classcom import models, serializers, services
 from core.http.serializers import UserSerializer
-from django.utils.translation import gettext as _
-from drf_spectacular.utils import (
-    extend_schema,
-    inline_serializer,
-)
 
 logger = logging.getLogger(__name__)
 
@@ -116,7 +114,15 @@ class PlanViewSet(viewsets.ModelViewSet):
             science=instance.science,
         ).order_by("id")
 
-        topics = [{"id": plan.id, "topic_id": plan.topic.id, "name": plan.topic.name, "hour": plan.hour} for plan in related_plans]
+        topics = [
+            {
+                "id": plan.id,
+                "topic_id": plan.topic.id,
+                "name": plan.topic.name,
+                "hour": plan.hour,
+            }
+            for plan in related_plans
+        ]
 
         grouped_data = {
             "classes": instance.classes.name,

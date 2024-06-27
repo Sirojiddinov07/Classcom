@@ -2,19 +2,20 @@
 Service for working with dates
 """
 
-import pandas as pd
-from typing import List, Union
 from datetime import datetime
+from typing import List, Union
+
+import pandas as pd
+
 from core.apps.classcom.choices import Weekday
 
 
 class DateService:
-    def __init__(self) -> None:
-        ...
+    def __init__(self) -> None: ...
 
     def weekday_counter(
         self, start_date, end_date, weekdays: Union[List[int]] = []
-    ) -> int:
+    ) -> object:
         """Weekdays counter
 
         Args:
