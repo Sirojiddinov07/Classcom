@@ -8,8 +8,13 @@ class Topic(models.Model):
     science = models.ForeignKey("Science", on_delete=models.CASCADE)
     _class = models.ForeignKey("Classes", on_delete=models.CASCADE)
     sequence_number = models.IntegerField(default=1)
-    thematic_plan = models.ForeignKey("Plan", on_delete=models.CASCADE, null=True, blank=True, related_name="topics")  # Added related_name
-
+    thematic_plan = models.ForeignKey(
+        "Plan",
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True,
+        related_name="topics",
+    )  # Added related_name
 
     def __str__(self):
         return f"{self.name}, {self.id}"

@@ -1,5 +1,4 @@
 from django.conf import settings
-
 from rest_framework import serializers
 
 from core.http import models
@@ -26,7 +25,11 @@ class UserSerializer(serializers.ModelSerializer):
     def update(self, instance, validated_data):
         print(validated_data)  # Debug line
         instance.avatar = validated_data.get("avatar", instance.avatar)
-        instance.first_name = validated_data.get("first_name", instance.first_name)
-        instance.last_name = validated_data.get("last_name", instance.last_name)
+        instance.first_name = validated_data.get(
+            "first_name", instance.first_name
+        )
+        instance.last_name = validated_data.get(
+            "last_name", instance.last_name
+        )
         instance.save()
         return instance

@@ -1,18 +1,18 @@
-from django_filters.rest_framework import DjangoFilterBackend
-from rest_framework import viewsets, permissions, decorators, exceptions
-from rest_framework.response import Response
-from core.apps.classcom import services
 from datetime import datetime
 
-from core.apps.classcom import models, serializers
-from drf_spectacular.utils import extend_schema, OpenApiParameter
+from django_filters.rest_framework import DjangoFilterBackend
+from drf_spectacular.utils import OpenApiParameter, extend_schema
+from rest_framework import decorators, exceptions, permissions, viewsets
+from rest_framework.response import Response
+
+from core.apps.classcom import models, serializers, services
 
 
 class TopicViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = models.Topic.objects.all()
     serializer_class = serializers.TopicSerializer
     filter_backends = [DjangoFilterBackend]
-    filterset_fields = ['_class', 'quarter', 'science']
+    filterset_fields = ["_class", "quarter", "science"]
 
     def get_permissions(self):
         perms = []

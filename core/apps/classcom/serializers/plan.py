@@ -1,10 +1,8 @@
 from rest_framework import serializers
 
-from core.apps.classcom import (
-    models,
-    services,
-    serializers as class_serializers,
-)
+from core.apps.classcom import models
+from core.apps.classcom import serializers as class_serializers
+from core.apps.classcom import services
 from core.apps.classcom.serializers import media
 
 
@@ -74,20 +72,17 @@ class PlanDetailSerializer(serializers.ModelSerializer):
             "science",
             "plan_resource",
             "status",
-            "is_author"
+            "is_author",
         )
+
     def get_status(self, obj):
         return "active"
-
 
     def get_is_author(self, obj):
         request = self.context.get("request")
         if request and request.user.is_authenticated:
             return obj.user == request.user
         return False
-
-
-
 
     def to_representation(self, instance):
         data = super().to_representation(instance)
@@ -114,21 +109,14 @@ class PlanSerializer(serializers.ModelSerializer):
         return "active"
 
     def get_is_author(self, obj):
-        request = self.context.get('request')
+        request = self.context.get("request")
         if request and request.user.is_authenticated:
             return obj.user == request.user
         return False
 
     class Meta:
         model = models.Plan
-        fields = (
-            "id",
-            "classes",
-            "quarter",
-            "science",
-            "status",
-            "is_author"
-        )
+        fields = ("id", "classes", "quarter", "science", "status", "is_author")
 
 
 class PlanSetMediaSerializer(serializers.Serializer):
