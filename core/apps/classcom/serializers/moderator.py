@@ -2,7 +2,10 @@ from django.utils.translation import gettext as _
 from rest_framework import serializers
 
 from core.apps.classcom import models
-from core.apps.classcom.serializers import DistrictSerializer, RegionSerializer
+from ..serializers.district import DistrictSerializer
+from ..serializers.region import RegionSerializer
+
+
 from core.http.models import District, Region
 from core.services import UserService
 
