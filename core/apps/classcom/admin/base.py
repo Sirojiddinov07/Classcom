@@ -1,8 +1,7 @@
 from django.contrib import admin
 from import_export.admin import ImportExportModelAdmin
 
-from core.apps.classcom import models
-from core.apps.classcom import resources
+from core.apps.classcom import models, resources
 
 
 class PlanAdmin(ImportExportModelAdmin):

@@ -1,4 +1,5 @@
-from rest_framework import viewsets, mixins
+from rest_framework import mixins, viewsets
+
 from core.apps.classcom import models, serializers
 
 

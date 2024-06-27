@@ -1,7 +1,6 @@
 from common.env import env
 from config.settings.common import *  # noqa
-from config.settings.common import MIDDLEWARE, ALLOWED_HOSTS, REST_FRAMEWORK
-
+from config.settings.common import ALLOWED_HOSTS, MIDDLEWARE, REST_FRAMEWORK
 
 DATABASES = {
     "default": {

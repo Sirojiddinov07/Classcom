@@ -40,7 +40,7 @@ class BaseMake(management.BaseCommand):
     def handle(self, *args, **options):
         name = options.get("name")
         with open(
-            os.path.join(settings.BASE_DIR, f"stub/{self.path}.stub"), "r"
+            os.path.join(settings.BASE_DIR, f"stub/{self.path}.stub")
         ) as stub:  # noqa
             data = stub.read()
             stub.close()

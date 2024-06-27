@@ -1,11 +1,9 @@
+from django.core.exceptions import ValidationError
 from django.db import models
-from core.apps.classcom import choices
 from django.utils.translation import gettext_lazy as __
 
+from core.apps.classcom import choices
 from core.http.models import User
-
-
-from django.core.exceptions import ValidationError
 
 
 def validate_lesson_time(value):

@@ -1,6 +1,7 @@
 from rest_framework import serializers
-from core.http import models
+
 from core.apps.classcom.serializers.district import DistrictSerializer
+from core.http import models
 
 
 class RegionSerializer(serializers.ModelSerializer):

@@ -1,6 +1,5 @@
-from rest_framework import status
-from rest_framework import generics
-from rest_framework import response
+from rest_framework import generics, response, status
+
 from core import exceptions as ex
 
 

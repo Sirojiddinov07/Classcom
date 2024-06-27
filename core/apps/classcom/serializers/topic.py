@@ -1,5 +1,7 @@
 from rest_framework import serializers
+
 from core.apps.classcom import models
+
 from .classes import ClassMiniSerializer
 from .quarter import QuarterMiniSerializer
 from .science import ScienceMiniSerializer
@@ -8,7 +10,7 @@ from .science import ScienceMiniSerializer
 class TopicSerializer(serializers.ModelSerializer):
     _class = ClassMiniSerializer(read_only=True)
     quarter = QuarterMiniSerializer(read_only=True)
-    _science = ScienceMiniSerializer(read_only=True)
+    science = ScienceMiniSerializer(read_only=True)
 
     class Meta:
         model = models.Topic
@@ -43,4 +45,5 @@ class TopicCalculationSerializer(serializers.ModelSerializer):
 
     def get_resources(self, obj):
         from .resource import ResourceSerializer  # Lazy import here
+
         return ResourceSerializer(obj.resources.all(), many=True).data

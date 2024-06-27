@@ -1,5 +1,4 @@
-from django import views
-from django import shortcuts
+from django import shortcuts, views
 
 
 class HomeView(views.View):

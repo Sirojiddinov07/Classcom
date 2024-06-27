@@ -1,5 +1,6 @@
 from django.db import models
-from . import science, classes
+
+from . import classes, science
 
 
 class DaysOff(models.Model):

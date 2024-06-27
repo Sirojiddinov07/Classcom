@@ -1,8 +1,7 @@
-from rest_framework import generics
+from rest_framework import generics, permissions
 
 from core.apps.classcom.models.chat import Chat
 from core.apps.classcom.serializers.chat import ChatSerializer
-from rest_framework import permissions
 
 
 class ChatListCreateView(generics.ListCreateAPIView):

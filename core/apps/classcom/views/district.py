@@ -1,8 +1,7 @@
-from rest_framework import viewsets, permissions
+from rest_framework import mixins, permissions, viewsets
 
 from core.apps.classcom.serializers import RegionDetailSerializer
 from core.http import models
-from rest_framework import mixins
 
 
 class DistrictViewSet(mixins.RetrieveModelMixin, viewsets.GenericViewSet):

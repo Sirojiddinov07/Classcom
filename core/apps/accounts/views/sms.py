@@ -1,37 +1,23 @@
 import typing
 import uuid
 
-
 from django.utils.translation import gettext_lazy as _
-from rest_framework import (
-    permissions,
-    request as rest_request,
-    throttling,
-    views,
-)
-
-from rest_framework import (
-    permissions,
-    request as rest_request,
-    throttling,
-    views,
-    generics,
-    viewsets,
-    response,
-    status,
-)
+from drf_spectacular.utils import extend_schema
+from rest_framework import generics, permissions
+from rest_framework import request as rest_request
+from rest_framework import response, status, throttling, views, viewsets
 from rest_framework.response import Response
 from rest_framework.serializers import ModelSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
 
 from core import enums, exceptions, services
-from core.apps.accounts.serializers.custom_token import (
-    CustomTokenObtainPairSerializer,
-)
-from core.http import serializers, views as http_views
+from core.apps.accounts import models
+from core.apps.accounts import serializers as sms_serializers
+from core.apps.accounts.serializers.custom_token import \
+    CustomTokenObtainPairSerializer
+from core.http import serializers
+from core.http import views as http_views
 from core.http.models import User
-from core.apps.accounts import models, serializers as sms_serializers
-from drf_spectacular.utils import extend_schema
 
 
 class RegisterView(views.APIView, services.UserService):
@@ -209,9 +195,9 @@ class ResendView(http_views.AbstractSendSms):
 class ResetPasswordView(http_views.AbstractSendSms):
     """Reset user password"""
 
-    serializer_class: typing.Type[
+    serializer_class: typing.Type[serializers.ResetPasswordSerializer] = (
         serializers.ResetPasswordSerializer
-    ] = serializers.ResetPasswordSerializer
+    )
 
 
 class MeView(viewsets.ViewSet):

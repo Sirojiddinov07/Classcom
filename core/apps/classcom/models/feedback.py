@@ -1,9 +1,9 @@
 from django.core.validators import MaxLengthValidator
 from django.db import models
-from core.http.models.base import AbstractBaseModel
 
-from core.http.models.user import User
 from core.http.choices.feedback import FeedbackType
+from core.http.models.base import AbstractBaseModel
+from core.http.models.user import User
 
 
 class Feedback(AbstractBaseModel):

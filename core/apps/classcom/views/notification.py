@@ -1,7 +1,7 @@
 from rest_framework import viewsets
 
-from ..serializers.notification import NotificationSerializer
 from ..models.notification import Notification
+from ..serializers.notification import NotificationSerializer
 
 
 class NotificationListView(viewsets.ModelViewSet):
