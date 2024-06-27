@@ -7,4 +7,4 @@ class ClassComConfig(AppConfig):
     name = "core.apps.classcom"
 
     def ready(self):
-        from .signals import signals
+        from .signals import signals  # noqa
