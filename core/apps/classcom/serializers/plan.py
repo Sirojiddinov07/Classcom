@@ -1,7 +1,7 @@
 from rest_framework import serializers
 
 from core.apps.classcom import models, services
-from core.apps.classcom.serializers.media import MediaSerializer as MSerializer
+from core.apps.classcom.serializers.media import MediaSerializer
 
 from ..serializers.classes import ClassMiniSerializer
 from ..serializers.quarter import QuarterMiniSerializer
@@ -40,12 +40,6 @@ class PlanTopicSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Topic
         fields = ("id", "name", "quarter", "science")
-
-
-class MediaSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = models.Media
-        fields = ("id", "name")
 
 
 ###############################################################################
@@ -123,7 +117,7 @@ class PlanSerializer(serializers.ModelSerializer):
 
 
 class PlanSetMediaSerializer(serializers.Serializer):
-    _media = MSerializer(many=True, read_only=True, source="plan_resource")
+    _media = MediaSerializer(many=True, read_only=True, source="plan_resource")
     media = serializers.ListField(
         child=serializers.FileField(), write_only=True
     )
