@@ -23,7 +23,7 @@ class Resource(models.Model):
     classes = models.ForeignKey(
         "Classes", on_delete=models.CASCADE, null=True, blank=True
     )
-    media = models.ManyToManyField("Media", blank=True)
+    media = models.ManyToManyField("Media", blank=True, related_name="resources")
 
     def __str__(self):
         return self.name
