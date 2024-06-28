@@ -45,7 +45,7 @@ class TopicService:
         topic = topics.filter(
             sequence_number=(topics_count.size - days_off) - 1
         ).first()
-        
+
         if topic is None:
             raise ValueError(_("No topic found for this date"))
         if topics_count.size == 0:

@@ -11,7 +11,10 @@ from .topic import TopicMiniSerializer
 class ClassesSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Classes
-        fields = ("id", "name",)
+        fields = (
+            "id",
+            "name",
+        )
 
 
 class ResourceSerializer(serializers.ModelSerializer):
