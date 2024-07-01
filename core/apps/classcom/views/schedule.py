@@ -9,8 +9,10 @@ from rest_framework.views import APIView
 
 from core.apps.classcom.choices import ShiftChoice, Weekday
 from core.apps.classcom.models import Quarter, Schedule
-from core.apps.classcom.serializers import (ScheduleCreateSerializer,
-                                            ScheduleListSerializer)
+from core.apps.classcom.serializers import (
+    ScheduleCreateSerializer,
+    ScheduleListSerializer,
+)
 
 
 class ScheduleViewSet(viewsets.ModelViewSet):

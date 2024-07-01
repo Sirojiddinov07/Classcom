@@ -11,7 +11,8 @@ from core.apps.classcom.choices import Weekday
 
 
 class DateService:
-    def __init__(self) -> None: ...
+    def __init__(self) -> None:
+        ...
 
     def weekday_counter(
         self, start_date, end_date, weekdays: Union[List[int]] = []

@@ -5,7 +5,8 @@ from core.http.models import User
 
 
 class ScheduleService:
-    def __init__(self) -> None: ...
+    def __init__(self) -> None:
+        ...
 
     def get_weekdays(self, user: Union[Type[User]]) -> List[int]:
         """Get weekdays for a user.
