@@ -4,14 +4,22 @@ from .classes import ClassMiniSerializer
 from .quarter import QuarterMiniSerializer
 from .science import ScienceMiniSerializer
 
+
 class TopicSerializer(serializers.ModelSerializer):
     _class = ClassMiniSerializer(read_only=True)
     quarter = QuarterMiniSerializer(read_only=True)
     science = ScienceMiniSerializer(read_only=True)
+
     class Meta:
         model = models.Topic
-        fields = ["id", "name", "_class", "quarter", "science", "thematic_plan"]
-
+        fields = [
+            "id",
+            "name",
+            "_class",
+            "quarter",
+            "science",
+            "thematic_plan",
+        ]
 
 
 class TopicMiniSerializer(serializers.ModelSerializer):

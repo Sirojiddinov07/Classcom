@@ -13,8 +13,9 @@ from rest_framework_simplejwt.views import TokenObtainPairView
 from core import enums, exceptions, services
 from core.apps.accounts import models
 from core.apps.accounts import serializers as sms_serializers
-from core.apps.accounts.serializers.custom_token import \
-    CustomTokenObtainPairSerializer
+from core.apps.accounts.serializers.custom_token import (
+    CustomTokenObtainPairSerializer,
+)
 from core.http import serializers
 from core.http import views as http_views
 from core.http.models import User
@@ -195,9 +196,9 @@ class ResendView(http_views.AbstractSendSms):
 class ResetPasswordView(http_views.AbstractSendSms):
     """Reset user password"""
 
-    serializer_class: typing.Type[serializers.ResetPasswordSerializer] = (
+    serializer_class: typing.Type[
         serializers.ResetPasswordSerializer
-    )
+    ] = serializers.ResetPasswordSerializer
 
 
 class MeView(viewsets.ViewSet):

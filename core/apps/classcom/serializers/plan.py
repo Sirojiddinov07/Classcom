@@ -137,7 +137,6 @@ class PlanSerializer(serializers.ModelSerializer):
         return data
 
 
-
 ###########################################################
 # Plan Create Serializer
 ###########################################################
@@ -186,3 +185,18 @@ class PlanCreateSerializer(serializers.ModelSerializer):
             user=self.context["request"].user, **validated_data
         )
         return resource
+
+
+class PlanSetMediaSerializer(serializers.Serializer):
+    _media = MediaSerializer(many=True, read_only=True, source="plan_resource")
+    media = serializers.ListField(
+        child=serializers.FileField(), write_only=True
+    )
+    names = serializers.ListField(
+        child=serializers.CharField(),
+        write_only=True,
+    )
+    descriptions = serializers.ListField(
+        child=serializers.CharField(),
+        write_only=True,
+    )

@@ -1,12 +1,13 @@
 from django.utils.decorators import method_decorator
 from django.views.decorators.cache import never_cache
-from rest_framework import viewsets
+from rest_framework import viewsets, permissions
 
 from core.apps.classcom import models, serializers
 
 
 class ResourceViewSet(viewsets.ModelViewSet):
     queryset = models.Resource.objects.all()
+    permission_classes = [permissions.IsAuthenticated]
 
     @method_decorator(never_cache)
     def dispatch(self, request, *args, **kwargs):

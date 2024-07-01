@@ -30,7 +30,7 @@ class MediaSerializer(serializers.ModelSerializer):
         if data is not None:
             return ClassMiniSerializer(obj.resources.first().classes).data
         return None
-    
+
     def get_user(self, obj):
         data = obj.resources.first()
         if data is not None:
@@ -47,7 +47,7 @@ class MediaSerializer(serializers.ModelSerializer):
             "topic",
             "science",
             "_class",
-            'user',
+            "user",
             "size",
             "created_at",
             "updated_at",
