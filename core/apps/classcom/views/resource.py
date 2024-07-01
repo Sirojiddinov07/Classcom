@@ -12,7 +12,6 @@ class ResourceViewSet(viewsets.ModelViewSet):
     def dispatch(self, request, *args, **kwargs):
         return super().dispatch(request, *args, **kwargs)
 
-
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
 
