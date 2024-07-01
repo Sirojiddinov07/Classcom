@@ -15,7 +15,7 @@ class MediaSerializer(serializers.ModelSerializer):
 
     def get_science(self, obj):
         data = obj.resources.first()
-        if data is not None:
+        if data is not None and data.topic is not None:
             return ScienceMiniSerializer(data.topic.science).data
         return None
 
