@@ -1,5 +1,9 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as __
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+
+from core.apps.classcom.models import Plan
 
 
 class Topic(models.Model):
@@ -8,9 +12,8 @@ class Topic(models.Model):
     science = models.ForeignKey("Science", on_delete=models.CASCADE)
     _class = models.ForeignKey("Classes", on_delete=models.CASCADE)
     sequence_number = models.IntegerField(default=1)
-    thematic_plan = models.ForeignKey(
+    thematic_plan = models.ManyToManyField(
         "Plan",
-        on_delete=models.CASCADE,
         null=True,
         blank=True,
         related_name="topics",
@@ -23,3 +26,9 @@ class Topic(models.Model):
         verbose_name = __("Topic")
         verbose_name_plural = __("Topics")
         unique_together = ("sequence_number", "science", "_class")
+
+
+@receiver(post_save, sender=Plan)
+def add_plan_to_thematic_plan(sender, instance, created, **kwargs):
+    if instance.topic and created:
+        instance.topic.thematic_plan.add(instance)
