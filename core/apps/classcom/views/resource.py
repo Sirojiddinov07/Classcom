@@ -12,20 +12,6 @@ class ResourceViewSet(viewsets.ModelViewSet):
     def dispatch(self, request, *args, **kwargs):
         return super().dispatch(request, *args, **kwargs)
 
-    def get_queryset(self):
-        queryset = self.queryset.filter(user=self.request.user)
-
-        class_id = self.request.query_params.get("class_id")
-        if class_id:
-            queryset = queryset.filter(classes__id=class_id)
-
-        search_term = self.request.query_params.get("search", None)
-        if search_term:
-            queryset = queryset.filter(
-                name__icontains=search_term
-            ) | queryset.filter(media__description__icontains=search_term)
-
-        return queryset
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
