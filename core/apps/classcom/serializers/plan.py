@@ -1,7 +1,8 @@
 from rest_framework import serializers
 
 from core.apps.classcom import models, services
-from core.apps.classcom.serializers.media import MediaSerializer
+from core.http.serializers import UserSerializer
+from ..serializers.media import MediaSerializer
 
 from ..serializers.classes import ClassMiniSerializer
 from ..serializers.quarter import QuarterMiniSerializer
@@ -90,17 +91,34 @@ class PlanDetailSerializer(serializers.ModelSerializer):
 
 
 class PlanSerializer(serializers.ModelSerializer):
-    """
-    PlanSerializer class
-    note:
-        O'qituvchi uchun tematik plan
-    """
-
-    status = serializers.SerializerMethodField()
+    type = TypeSerializer()
     classes = PlanClassSerializer()
+    topic = PlanTopicSerializer()
     quarter = PlanQuarterSerializer()
     science = PlanScienceSerializer()
+    plan_resource = MediaSerializer(many=True, read_only=True)
     is_author = serializers.SerializerMethodField()
+    status = serializers.SerializerMethodField()
+    user = UserSerializer(read_only=True)
+
+    class Meta:
+        model = models.Plan
+        fields = (
+            "id",
+            "name",
+            "description",
+            "banner",
+            "classes",
+            "topic",
+            "type",
+            "quarter",
+            "science",
+            "hour",
+            "plan_resource",
+            "status",
+            "user",
+            "is_author",
+        )
 
     def get_status(self, obj):
         return "active"
@@ -111,24 +129,13 @@ class PlanSerializer(serializers.ModelSerializer):
             return obj.user == request.user
         return False
 
-    class Meta:
-        model = models.Plan
-        fields = ("id", "classes", "quarter", "science", "status", "is_author")
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+        request = self.context.get("request")
+        if request and request.user.is_authenticated:
+            data["is_author"] = instance.user == request.user
+        return data
 
-
-class PlanSetMediaSerializer(serializers.Serializer):
-    _media = MediaSerializer(many=True, read_only=True, source="plan_resource")
-    media = serializers.ListField(
-        child=serializers.FileField(), write_only=True
-    )
-    names = serializers.ListField(
-        child=serializers.CharField(),
-        write_only=True,
-    )
-    descriptions = serializers.ListField(
-        child=serializers.CharField(),
-        write_only=True,
-    )
 
 
 ###########################################################
