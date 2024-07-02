@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from core.apps.classcom.models import Classes, Schedule, Science, Topic
+from core.apps.classcom.models import Classes, Schedule, Science
 from core.http.models import User
 
 
@@ -31,7 +31,6 @@ class ScheduleListSerializer(serializers.ModelSerializer):
     user = ScheduleUserSerializer()
     science = ScheduleScienceSerializer()
     classes = ScheduleClassSerializer()
-    topic = serializers.CharField(read_only=True)
 
     class Meta:
         model = Schedule
@@ -40,7 +39,6 @@ class ScheduleListSerializer(serializers.ModelSerializer):
             "shift",
             "user",
             "science",
-            "topic",
             "classes",
             "weekday",
             "start_time",
@@ -53,15 +51,12 @@ class ScheduleListSerializer(serializers.ModelSerializer):
 # Schedule Create Serializer
 ############################################
 class ScheduleCreateSerializer(serializers.ModelSerializer):
-    # topic = serializers.PrimaryKeyRelatedField(queryset=Topic.objects.all(), required=True)
-    topic = serializers.CharField(required=True, write_only=True)
 
     class Meta:
         model = Schedule
         fields = (
             "shift",
             "science",
-            "topic",
             "classes",
             "weekday",
             "start_time",
@@ -70,22 +65,9 @@ class ScheduleCreateSerializer(serializers.ModelSerializer):
             "quarter",
         )
 
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        initial_data = kwargs.get("data", {})
-        science_id = initial_data.get("science")
-        if science_id:
-            self.fields["topic"].queryset = Topic.objects.filter(
-                science_id=science_id
-            )
 
-    # def create(self, validated_data):
-    #     user = self.context["request"].user
-    #     topic = validated_data.pop('topic', None)
-    #     return Schedule.objects.create(user=user, **validated_data)
     def create(self, validated_data):
         user = self.context["request"].user
-        validated_data.pop("topic")
         schedule = Schedule.objects.create(user=user, **validated_data)
 
         return schedule
