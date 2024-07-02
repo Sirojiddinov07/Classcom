@@ -5,7 +5,6 @@ from core.apps.classcom.serializers import media
 from core.apps.classcom.serializers.resource_type import ResourceTypeSerializer
 from core.http import serializers as http_serializers
 
-from .topic import TopicMiniSerializer
 
 
 class ClassesSerializer(serializers.ModelSerializer):
@@ -24,7 +23,6 @@ class ResourceSerializer(serializers.ModelSerializer):
 
     user = http_serializers.UserSerializer()
     media = media.MediaSerializer(many=True, read_only=True)
-    topic = TopicMiniSerializer(read_only=True)
     type = ResourceTypeSerializer(read_only=True)
     classes = ClassesSerializer(read_only=True)
 
@@ -34,7 +32,6 @@ class ResourceSerializer(serializers.ModelSerializer):
             "id",
             "name",
             "classes",
-            "topic",
             "media",
             "type",
             "user",
@@ -71,7 +68,6 @@ class ResourceCreateSerializer(serializers.ModelSerializer):
             "description",
             "banner",
             "type",
-            "topic",
             "classes",
             "media_file",
             "_media",
