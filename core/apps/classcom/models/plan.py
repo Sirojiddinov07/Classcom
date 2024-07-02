@@ -24,7 +24,8 @@ class Plan(models.Model):
         null=True,
         blank=True,
         related_name="plans",
-    )  # Added related_name
+    )
+    created_at = models.DateField(auto_now_add=True)
 
     def __str__(self):
         return self.name

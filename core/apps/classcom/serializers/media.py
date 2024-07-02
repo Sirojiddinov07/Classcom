@@ -1,10 +1,7 @@
 from rest_framework import serializers
-from .science import ScienceMiniSerializer
-from .classes import ClassMiniSerializer
-from .topic import TopicMiniSerializer
-from core.http.serializers import UserSerializer
 
 from core.apps.classcom import models
+from ..models import Plan, Media
 
 
 class MediaSerializer(serializers.ModelSerializer):
@@ -13,32 +10,8 @@ class MediaSerializer(serializers.ModelSerializer):
     _class = serializers.SerializerMethodField()
     user = serializers.SerializerMethodField()
 
-    def get_science(self, obj):
-        data = obj.resources.first()
-        if data is not None and data.topic is not None:
-            return ScienceMiniSerializer(data.topic.science).data
-        return None
-
-    def get_topic(self, obj):
-        data = obj.resources.first()
-        if data is not None:
-            return TopicMiniSerializer(obj.resources.first().topic).data
-        return None
-
-    def get__class(self, obj):
-        data = obj.resources.first()
-        if data is not None:
-            return ClassMiniSerializer(obj.resources.first().classes).data
-        return None
-
-    def get_user(self, obj):
-        data = obj.resources.first()
-        if data is not None:
-            return UserSerializer(obj.resources.first().user).data
-        return None
-
     class Meta:
-        model = models.Media
+        model = Media
         fields = (
             "id",
             "name",
@@ -52,6 +25,24 @@ class MediaSerializer(serializers.ModelSerializer):
             "created_at",
             "updated_at",
         )
+
+    def get_science(self, obj):
+        plan = Plan.objects.filter(plan_resource=obj).first()
+        return plan.science.name if plan and plan.science else None
+
+    def get_topic(self, obj):
+        plan = Plan.objects.filter(plan_resource=obj).first()
+        return plan.topic.name if plan and plan.topic else None
+
+    def get__class(self, obj):
+        plan = Plan.objects.filter(plan_resource=obj).first()
+        return plan.classes.name if plan and plan.classes else None
+
+    def get_user(self, obj):
+        plan = Plan.objects.filter(plan_resource=obj).first()
+        user = plan.user if plan else None
+        return {"id": user.id, "first_name": user.first_name, "last_name": user.last_name} if user else None
+
 
 
 class MediaMiniSerializer(serializers.ModelSerializer):
