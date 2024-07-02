@@ -18,6 +18,7 @@ class TopicSerializer(serializers.ModelSerializer):
             "_class",
             "quarter",
             "science",
+            "sequence_number",
             "thematic_plan",
         ]
 
