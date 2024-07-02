@@ -1,13 +1,15 @@
 from rest_framework import serializers
 
 from core.apps.classcom import models, services
-from core.http.serializers import UserSerializer
+from core.http.models import User
 from ..serializers.media import MediaSerializer
 
 from ..serializers.classes import ClassMiniSerializer
 from ..serializers.quarter import QuarterMiniSerializer
 from ..serializers.science import ScienceMiniSerializer
 from ..serializers.topic import TopicMiniSerializer
+
+
 
 
 class PlanScienceSerializer(serializers.ModelSerializer):
@@ -46,6 +48,13 @@ class PlanTopicSerializer(serializers.ModelSerializer):
 ###############################################################################
 # Plan Detail Serializer
 ###############################################################################
+class UserMiniSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = User
+        fields = ["first_name", "last_name"]
+
+
 class PlanDetailSerializer(serializers.ModelSerializer):
     type = TypeSerializer()
     classes = PlanClassSerializer()
@@ -55,6 +64,7 @@ class PlanDetailSerializer(serializers.ModelSerializer):
     plan_resource = MediaSerializer(many=True, read_only=True)
     is_author = serializers.SerializerMethodField()
     status = serializers.SerializerMethodField()
+    user = UserMiniSerializer()
 
     class Meta:
         model = models.Plan
@@ -70,7 +80,9 @@ class PlanDetailSerializer(serializers.ModelSerializer):
             "science",
             "plan_resource",
             "status",
+            "user",
             "is_author",
+            "created_at"
         )
 
     def get_status(self, obj):
@@ -99,7 +111,7 @@ class PlanSerializer(serializers.ModelSerializer):
     plan_resource = MediaSerializer(many=True, read_only=True)
     is_author = serializers.SerializerMethodField()
     status = serializers.SerializerMethodField()
-    user = UserSerializer(read_only=True)
+    user = UserMiniSerializer()
 
     class Meta:
         model = models.Plan
@@ -118,6 +130,7 @@ class PlanSerializer(serializers.ModelSerializer):
             "status",
             "user",
             "is_author",
+            "created_at"
         )
 
     def get_status(self, obj):
