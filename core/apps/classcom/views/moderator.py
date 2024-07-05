@@ -18,5 +18,10 @@ class ModeratorCreateViewSet(views.APIView):
 
     def get(self, request):
         moderators = Moderator.objects.filter(user=request.user)
+        if not moderators.exists():
+            return Response(
+                {"detail": "You are not a moderator."},
+                status=status.HTTP_403_FORBIDDEN,
+            )
         serializer = self.serializer_class(moderators, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)

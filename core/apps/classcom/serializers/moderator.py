@@ -87,6 +87,7 @@ class ModeratorCreateSerializer(serializers.ModelSerializer):
             "classes",
             "degree",
             "docs",
+            "is_contracted",
         ]
 
     def create(self, validated_data):
