@@ -22,7 +22,9 @@ class DownloadResourceView(APIView):
 
     def get(self, request, resource_id, format=None):
         resource = get_object_or_404(Resource, id=resource_id)
-        media = get_object_or_404(Media, resource=resource)
+        media = resource.media.first()
+        if not media:
+            raise Http404("Media not found for this resource")
         teacher = get_object_or_404(Teacher, user=request.user)
         download = Download.objects.create(
             teacher=teacher, resource=resource, date=datetime.date.today()
@@ -65,3 +67,21 @@ class DownloadFileView(APIView):
         download_token.delete()
 
         return response
+
+class DownloadHistoryView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request, format=None):
+        teacher = get_object_or_404(Teacher, user=request.user)
+        downloads = Download.objects.filter(teacher=teacher).order_by('-date')
+
+        download_history = [
+            {
+                "resource_id": download.resource.id,
+                "resource_name": download.resource.name,  # Assuming Resource has a name field
+                "download_date": download.date,
+            }
+            for download in downloads
+        ]
+
+        return Response({"download_history": download_history})
