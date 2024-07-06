@@ -26,7 +26,6 @@ class UserModeratorSerializer(serializers.ModelSerializer):
             "district",
             "institution",
             "institution_number",
-            "is_contracted"
         ]
 
     extra_kwargs = {
