@@ -22,10 +22,10 @@ class User(auth_models.AbstractUser):
     )
 
     region = models.ForeignKey(
-        "Region", on_delete=models.CASCADE, null=True, blank=True
+        "Region", on_delete=models.SET_NULL, null=True, blank=True
     )
     district = models.ForeignKey(
-        "District", on_delete=models.CASCADE, null=True, blank=True
+        "District", on_delete=models.SET_NULL, null=True, blank=True
     )
     institution = models.CharField(
         max_length=255,
@@ -34,7 +34,7 @@ class User(auth_models.AbstractUser):
         blank=True,
     )
     science_group = models.ForeignKey(
-        "ScienceGroups", on_delete=models.CASCADE, null=True, blank=True
+        "ScienceGroups", on_delete=models.SET_NULL, null=True, blank=True
     )
     institution_number = models.CharField(
         max_length=255, null=True, blank=True

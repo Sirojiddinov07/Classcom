@@ -24,7 +24,6 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
             except Moderator.DoesNotExist:
                 data["user"]["is_contracted"] = False
         else:
-            # If user is not a moderator, do not include is_contracted field
             data["user"].pop("is_contracted", None)
 
         return data
