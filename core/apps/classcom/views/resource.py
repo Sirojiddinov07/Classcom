@@ -1,5 +1,6 @@
 from django.utils.decorators import method_decorator
 from django.views.decorators.cache import never_cache
+from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import viewsets, permissions
 
 from core.apps.classcom import models, serializers
@@ -8,7 +9,8 @@ from core.apps.classcom import models, serializers
 class ResourceViewSet(viewsets.ModelViewSet):
     queryset = models.Resource.objects.all()
     permission_classes = [permissions.IsAuthenticated]
-
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ["name", "type", "classes"]
     @method_decorator(never_cache)
     def dispatch(self, request, *args, **kwargs):
         return super().dispatch(request, *args, **kwargs)
