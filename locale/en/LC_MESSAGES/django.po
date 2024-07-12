@@ -8,42 +8,142 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-02-15 16:40+0500\n"
-"PO-Revision-Date: 2024-02-09 15:09+0500\n"
-"Last-Translator:   <admin@gmail.com>\n"
+"POT-Creation-Date: 2024-07-12 16:12+0500\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(.env != 1);\.env"
-"X-Translated-Using: django-rosetta 0.10.0\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: config/settings/common.py:148
+#: config/settings/common.py:120
 msgid "Russia"
 msgstr ""
 
-#: config/settings/common.py:149
+#: config/settings/common.py:121
 msgid "English"
 msgstr ""
 
-#: config/settings/common.py:150
+#: config/settings/common.py:122
 msgid "Uzbek"
 msgstr ""
 
-#: core/http/admin/index.py:20
-msgid "Custom Field"
+#: core/apps/accounts/serializers/auth.py:7
+msgid "No active account found with the given credentials."
 msgstr ""
 
-#: core/http/tasks/index.py:13
+#: core/apps/accounts/views/change_password.py:39
+msgid "invalida password"
+msgstr ""
+
+#: core/apps/accounts/views/sms.py:179
+msgid "Invalid token"
+msgstr ""
+
+#: core/apps/accounts/views/sms.py:186
+msgid "password updated"
+msgstr ""
+
+#: core/apps/classcom/choices/weekday.py:6
+msgid "Monday"
+msgstr ""
+
+#: core/apps/classcom/choices/weekday.py:7
+msgid "Tuesday"
+msgstr ""
+
+#: core/apps/classcom/choices/weekday.py:8
+msgid "Wednesday"
+msgstr ""
+
+#: core/apps/classcom/choices/weekday.py:9
+msgid "Thursday"
+msgstr ""
+
+#: core/apps/classcom/choices/weekday.py:10
+msgid "Friday"
+msgstr ""
+
+#: core/apps/classcom/choices/weekday.py:11
+msgid "Saturday"
+msgstr ""
+
+#: core/apps/classcom/serializers/moderator.py:45
+#: core/http/serializers/auth.py:21
+msgid "Phone number already registered."
+msgstr ""
+
+#: core/apps/classcom/services/topic.py:51
+msgid "No topic found for this date"
+msgstr ""
+
+#: core/apps/classcom/services/topic.py:53
+msgid "You have no topics"
+msgstr ""
+
+#: core/apps/classcom/views/plan.py:51
+msgid "Plan not found"
+msgstr ""
+
+#: core/apps/classcom/views/plan.py:71
+msgid "Media files uploaded"
+msgstr ""
+
+#: core/http/choices/location.py:6
+msgid "Oliy"
+msgstr ""
+
+#: core/http/choices/location.py:7
+msgid "O'rta maxsus"
+msgstr ""
+
+#: core/http/choices/location.py:8
+msgid "O'rta"
+msgstr ""
+
+#: core/http/choices/user.py:10
+msgid "Superuser"
+msgstr ""
+
+#: core/http/choices/user.py:11
+msgid "Admin"
+msgstr ""
+
+#: core/http/choices/user.py:12
+msgid "User"
+msgstr ""
+
+#: core/http/models/another.py:13
+msgid "Tag"
+msgstr ""
+
+#: core/http/models/another.py:14
+msgid "Tags"
+msgstr ""
+
+#: core/http/models/another.py:46
+msgid "Frontend Translation"
+msgstr ""
+
+#: core/http/models/another.py:47
+msgid "Frontend Translations"
+msgstr ""
+
+#: core/http/serializers/auth.py:60 core/http/serializers/auth.py:71
+msgid "User does not exist"
+msgstr ""
+
+#: core/http/tasks/sms.py:17
 #, python-format
 msgid "Sizning Tasdiqlash ko'dingiz: %(code)s"
 msgstr ""
 
-#: resources/templates/user/home.html:18
+#: resources/templates/user/home.html:19
 msgid "Django"
 msgstr ""
 
-#: resources/templates/user/home.html:19
+#: resources/templates/user/home.html:20
 msgid "Assalomu aleykum"
 msgstr ""
