@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "django-blueprint"
+name = "classcom"
 version = "0.1.0"
 description = ""
 authors = ["A'zamov Samandar <azamov.samandar.programmer@gmail.com>"]
