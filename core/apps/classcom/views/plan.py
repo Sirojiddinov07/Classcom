@@ -19,7 +19,7 @@ logger = logging.getLogger(__name__)
 class PlanViewSet(viewsets.ModelViewSet):
     queryset = models.Plan.objects.all().order_by("id")
     filter_backends = [DjangoFilterBackend]
-    filterset_fields = ["classes", "topic", "hour", "quarter"]
+    filterset_fields = ["classes", "topic", "hour", "quarter", "science"]
     pagination_class = PageNumberPagination
 
     def get_serializer_class(self):
