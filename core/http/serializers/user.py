@@ -8,7 +8,16 @@ class UserSerializer(serializers.ModelSerializer):
     avatar = serializers.ImageField(max_length=None, use_url=True)
 
     class Meta:
-        fields = ["avatar", "first_name", "last_name", "phone", "role", "region", "district", "science_group"]
+        fields = [
+            "avatar",
+            "first_name",
+            "last_name",
+            "phone",
+            "role",
+            "region",
+            "district",
+            "science_group",
+        ]
         extra_kwargs = {
             "role": {"read_only": True},
         }

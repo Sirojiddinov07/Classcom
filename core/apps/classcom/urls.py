@@ -33,8 +33,11 @@ urlpatterns = [
         views.DownloadFileView.as_view(),
         name="download_file",
     ),
-    path('download/history/', views.DownloadHistoryView.as_view(), name='download_history'),
-
+    path(
+        "download/history/",
+        views.DownloadHistoryView.as_view(),
+        name="download_history",
+    ),
     path(
         "moderator/", views.ModeratorCreateViewSet.as_view(), name="moderator"
     ),

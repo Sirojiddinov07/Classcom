@@ -10,8 +10,7 @@ from .date import DateService
 
 
 class DaysOffService:
-    def __init__(self) -> None:
-        ...
+    def __init__(self) -> None: ...
 
     def get_daysoff_from_user(
         self,
