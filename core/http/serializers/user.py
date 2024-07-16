@@ -1,6 +1,7 @@
 from django.conf import settings
 from rest_framework import serializers
 
+from core.apps.classcom.choices import Role
 from core.http import models
 
 
@@ -36,3 +37,11 @@ class UserSerializer(serializers.ModelSerializer):
         )
         instance.save()
         return instance
+
+
+class UserRoleChangeSerializer(serializers.ModelSerializer):
+    role = serializers.ChoiceField(choices=Role)
+
+    class Meta:
+        model = models.User
+        fields = ["role"]

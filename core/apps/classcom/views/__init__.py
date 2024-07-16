@@ -14,3 +14,4 @@ from .resource import *  # noqa
 from .schedule import *  # noqa
 from .science import *  # noqa
 from .topic import *  # noqa
+from .change_role import *  # noqa
