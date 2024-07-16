@@ -7,7 +7,6 @@ from rest_framework import generics, permissions
 from rest_framework import request as rest_request
 from rest_framework import response, status, throttling, views, viewsets
 from rest_framework.response import Response
-from rest_framework.serializers import ModelSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
 
 from core import enums, exceptions, services

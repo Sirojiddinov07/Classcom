@@ -1,6 +1,6 @@
-from modeltranslation.translator import register, TranslationOptions
+from modeltranslation.translator import TranslationOptions, register
 
-from core.http.models.locations import Region, District
+from core.http.models.locations import District, Region
 
 
 @register(Region)

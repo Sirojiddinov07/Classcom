@@ -1,7 +1,8 @@
 from rest_framework import serializers
 
 from core.apps.classcom import models
-from ..models import Plan, Media
+
+from ..models import Media, Plan
 
 
 class MediaSerializer(serializers.ModelSerializer):

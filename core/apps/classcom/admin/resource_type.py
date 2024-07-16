@@ -1,7 +1,7 @@
 from django.contrib import admin
+from modeltranslation.admin import TabbedTranslationAdmin
 
 from core.apps.classcom import models
-from modeltranslation.admin import TabbedTranslationAdmin
 
 
 @admin.register(models.ResourceType)

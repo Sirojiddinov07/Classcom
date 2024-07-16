@@ -1,9 +1,8 @@
 from django.contrib import admin
 from import_export.admin import ImportExportModelAdmin
-
-from core.apps.classcom import resources
 from modeltranslation.admin import TabbedTranslationAdmin
 
+from core.apps.classcom import resources
 from core.apps.classcom.models import Plan
 
 

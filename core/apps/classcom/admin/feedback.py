@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from ..models.feedback import *
+from core.apps.classcom.models import Answer, Feedback
 
 
 class InlineAnswer(admin.TabularInline):

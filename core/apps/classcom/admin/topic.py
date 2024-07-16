@@ -32,6 +32,3 @@ class TopicAdmin(ImportExportModelAdmin, TabbedTranslationAdmin):
         "science",
         "_class",
     )
-
-
-

@@ -1,6 +1,7 @@
 from django.contrib import admin
-from core.apps.classcom.models import Resource
 from modeltranslation.admin import TabbedTranslationAdmin
+
+from core.apps.classcom.models import Resource
 
 
 @admin.register(Resource)
@@ -9,6 +10,4 @@ class ResourceAdmin(TabbedTranslationAdmin):
         "name",
         "description",
     )
-    search_fields = (
-        "name",
-    )
+    search_fields = ("name",)
