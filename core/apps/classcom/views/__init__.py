@@ -14,3 +14,4 @@ from .resource import *  # noqa
 from .schedule import *  # noqa
 from .science import *  # noqa
 from .topic import *  # noqa
+from .using_science_count import *  # noqa

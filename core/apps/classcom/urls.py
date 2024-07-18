@@ -3,6 +3,8 @@ from rest_framework import routers
 
 from core.apps.classcom import views
 
+# from core.apps.classcom.views import science_info
+
 router = routers.DefaultRouter()
 router.register("plan", views.PlanViewSet, basename="plan")
 router.register("topic", views.TopicViewSet, basename="topic")
@@ -58,5 +60,10 @@ urlpatterns = [
     ),
     path(
         "chats/", views.ChatListCreateView.as_view(), name="chat-list-create"
+    ),
+    path(
+        "science-info/<int:science_id>/",
+        views.ModeratorCountsByScienceAndClassAPIView.as_view(),
+        name="science-info",
     ),
 ]
