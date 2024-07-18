@@ -1,5 +1,7 @@
 from django.conf import settings
 from rest_framework import serializers
+from core.utils import Role
+
 
 from core.http import models
 
@@ -45,14 +47,7 @@ class UserSerializer(serializers.ModelSerializer):
         if request:
             user = request.user
 
-        groups = user.groups.all()
-        permissions = []
-        for group in groups:
-            for permission in group.permissions.all():
-                permissions.append(permission.name)
-        for permission in user.get_user_permissions():
-            permissions.append(permission)
-        return permissions
+        return Role(user).get_permissions()
 
     def update(self, instance, validated_data):
         print(validated_data)  # Debug line
