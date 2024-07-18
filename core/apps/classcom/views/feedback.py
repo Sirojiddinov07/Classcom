@@ -1,4 +1,3 @@
-from django.shortcuts import get_object_or_404
 from django.utils.translation import gettext as __
 from rest_framework.decorators import action
 from rest_framework.permissions import IsAdminUser, IsAuthenticated

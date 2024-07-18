@@ -9,6 +9,7 @@ from core.http import models
 from core.http.admin import another, user
 
 admin.site.unregister(db_models.Group)
+admin.site.register(db_models.Permission)
 admin.site.register(db_models.Group, user.GroupAdmin)
 
 admin.site.register(models.Tags, another.TagsAdmin)

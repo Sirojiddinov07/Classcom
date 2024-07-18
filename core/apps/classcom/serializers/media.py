@@ -41,8 +41,15 @@ class MediaSerializer(serializers.ModelSerializer):
     def get_user(self, obj):
         plan = Plan.objects.filter(plan_resource=obj).first()
         user = plan.user if plan else None
-        return {"id": user.id, "first_name": user.first_name, "last_name": user.last_name} if user else None
-
+        return (
+            {
+                "id": user.id,
+                "first_name": user.first_name,
+                "last_name": user.last_name,
+            }
+            if user
+            else None
+        )
 
 
 class MediaMiniSerializer(serializers.ModelSerializer):

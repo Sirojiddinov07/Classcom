@@ -13,8 +13,7 @@ from .schedule import ScheduleService
 
 
 class TopicService:
-    def __init__(self) -> None:
-        ...
+    def __init__(self) -> None: ...
 
     def get_topic_by_date(
         self,
