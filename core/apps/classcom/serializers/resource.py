@@ -6,7 +6,6 @@ from core.apps.classcom.serializers.resource_type import ResourceTypeSerializer
 from core.http import serializers as http_serializers
 
 
-
 class ClassesSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Classes

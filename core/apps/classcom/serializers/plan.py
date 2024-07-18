@@ -10,8 +10,6 @@ from ..serializers.science import ScienceMiniSerializer
 from ..serializers.topic import TopicMiniSerializer
 
 
-
-
 class PlanScienceSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Science
@@ -82,7 +80,7 @@ class PlanDetailSerializer(serializers.ModelSerializer):
             "status",
             "user",
             "is_author",
-            "created_at"
+            "created_at",
         )
 
     def get_status(self, obj):
@@ -130,7 +128,7 @@ class PlanSerializer(serializers.ModelSerializer):
             "status",
             "user",
             "is_author",
-            "created_at"
+            "created_at",
         )
 
     def get_status(self, obj):

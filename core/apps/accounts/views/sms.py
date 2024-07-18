@@ -7,7 +7,6 @@ from rest_framework import generics, permissions
 from rest_framework import request as rest_request
 from rest_framework import response, status, throttling, views, viewsets
 from rest_framework.response import Response
-from rest_framework.serializers import ModelSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
 
 from core import enums, exceptions, services
@@ -56,6 +55,11 @@ class RegisterView(views.APIView, services.UserService):
 
 class CustomTokenObtainPairView(TokenObtainPairView):
     serializer_class = CustomTokenObtainPairSerializer
+
+    def get_serializer_context(self):
+        return {
+            "request": self.request
+        }
 
     def post(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
@@ -196,9 +200,9 @@ class ResendView(http_views.AbstractSendSms):
 class ResetPasswordView(http_views.AbstractSendSms):
     """Reset user password"""
 
-    serializer_class: typing.Type[
+    serializer_class: typing.Type[serializers.ResetPasswordSerializer] = (
         serializers.ResetPasswordSerializer
-    ] = serializers.ResetPasswordSerializer
+    )
 
 
 class MeView(viewsets.ViewSet):
@@ -213,7 +217,9 @@ class MeView(viewsets.ViewSet):
     )
     def get(self, request: rest_request.Request):
         user = request.user
-        return response.Response(serializers.UserSerializer(user).data)
+        return response.Response(serializers.UserSerializer(user, context={
+            "request": request
+        }).data)
 
 
 class MeUpdateView(generics.UpdateAPIView):

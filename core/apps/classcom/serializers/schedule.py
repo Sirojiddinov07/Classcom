@@ -65,7 +65,6 @@ class ScheduleCreateSerializer(serializers.ModelSerializer):
             "quarter",
         )
 
-
     def create(self, validated_data):
         user = self.context["request"].user
         schedule = Schedule.objects.create(user=user, **validated_data)
