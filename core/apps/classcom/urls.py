@@ -59,4 +59,5 @@ urlpatterns = [
     path(
         "chats/", views.ChatListCreateView.as_view(), name="chat-list-create"
     ),
+    path('search/', views.UnifiedSearchView.as_view(), name='unified-search'),
 ]
