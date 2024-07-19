@@ -12,8 +12,9 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
         data["refresh"] = str(refresh)
         data["access"] = str(refresh.access_token)
 
-        # Get user information
-        user_serializer = UserSerializer(self.user)
+        user_serializer = UserSerializer(self.user, context={
+            "user": self.user
+        })
         data["user"] = user_serializer.data
 
         # Check if the user is a moderator

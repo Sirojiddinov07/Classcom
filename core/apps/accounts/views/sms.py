@@ -56,6 +56,11 @@ class RegisterView(views.APIView, services.UserService):
 class CustomTokenObtainPairView(TokenObtainPairView):
     serializer_class = CustomTokenObtainPairSerializer
 
+    def get_serializer_context(self):
+        return {
+            "request": self.request
+        }
+
     def post(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
 
@@ -212,7 +217,9 @@ class MeView(viewsets.ViewSet):
     )
     def get(self, request: rest_request.Request):
         user = request.user
-        return response.Response(serializers.UserSerializer(user).data)
+        return response.Response(serializers.UserSerializer(user, context={
+            "request": request
+        }).data)
 
 
 class MeUpdateView(generics.UpdateAPIView):
