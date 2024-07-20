@@ -66,4 +66,5 @@ urlpatterns = [
         views.ModeratorCountsByScienceAndClassAPIView.as_view(),
         name="science-info",
     ),
+    path('search/', views.UnifiedSearchView.as_view(), name='unified-search'),
 ]
