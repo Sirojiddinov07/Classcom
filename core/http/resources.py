@@ -1,4 +1,4 @@
-from import_export import fields, resources
+from import_export import resources
 
 from core.http.models import District, Region, ScienceGroups
 

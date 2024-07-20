@@ -1,6 +1,11 @@
-from common.env import env
+from common.env import env  # noqa
 from config.settings.common import *  # noqa
-from config.settings.common import ALLOWED_HOSTS, INSTALLED_APPS, MIDDLEWARE
+from config.settings.common import (
+    ALLOWED_HOSTS,
+    INSTALLED_APPS,
+    MIDDLEWARE,
+    REST_FRAMEWORK,
+)
 
 DATABASES = {
     "default": {
@@ -16,7 +21,6 @@ DATABASES = {
 MIDDLEWARE += [
     "core.middlewares.ExceptionMiddleware",
 ]
-
 
 INSTALLED_APPS += ["django_extensions"]
 
