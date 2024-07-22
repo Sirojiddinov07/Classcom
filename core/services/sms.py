@@ -2,13 +2,14 @@ from datetime import datetime, timedelta
 
 from core import exceptions
 from core.http import models, tasks
+import random
 
 
 class SmsService:
     @staticmethod
     def send_confirm(phone):
         # TODO: Deploy this change when deploying -> code = random.randint(1000, 9999) # noqa
-        code = 1111
+        code = random.randint(1000, 9999)
 
         sms_confirm, status = models.SmsConfirm.objects.get_or_create(
             phone=phone, defaults={"code": code}
