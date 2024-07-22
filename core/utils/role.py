@@ -18,7 +18,7 @@ class Role:
         permissions = []
         for group in self.groups:
             for permission in group.permissions.all():
-                permissions.appen    d(permission.name)
+                permissions.append(permission.name)
         for permission in self.user.get_user_permissions():
             permissions.append(permission)
         return permissions
