@@ -3,7 +3,6 @@ from django.db import models
 
 from core.http.choices.feedback import FeedbackType
 from core.http.models.base import AbstractBaseModel
-from core.http.models.user import User
 
 
 class Feedback(AbstractBaseModel):
@@ -15,7 +14,7 @@ class Feedback(AbstractBaseModel):
     answered = models.BooleanField(default=False)
 
     user = models.ForeignKey(
-        User, on_delete=models.CASCADE, related_name="feedbacks"
+        "http.User", on_delete=models.CASCADE, related_name="feedbacks"
     )
 
     def __str__(self) -> str:

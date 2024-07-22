@@ -3,11 +3,10 @@ from django.utils.translation import gettext_lazy as __
 
 from core.apps.classcom import choices
 from core.apps.classcom.choices import Role
-from core.http.models import User
 
 
 class Moderator(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField("http.User", on_delete=models.CASCADE)
     balance = models.BigIntegerField(default=0)
     science = models.ForeignKey(
         to="Science", on_delete=models.SET_NULL, null=True

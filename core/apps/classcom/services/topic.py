@@ -6,10 +6,9 @@ from django.utils.translation import gettext as _
 
 from common.env import env
 from core.apps.classcom import models
-
-from .date import DateService
-from .days_off import DaysOffService
-from .schedule import ScheduleService
+from core.apps.classcom.services import ScheduleService, DateService
+from core.apps.classcom.services.days_off import DaysOffService
+from core.http.models import User
 
 
 class TopicService:
@@ -20,7 +19,7 @@ class TopicService:
         date: Union[str],
         science_id: Union[int],
         class_id: Union[int],
-        user: Union[Type[models.User]] = None,
+        user: Union[Type[User]] = None,
     ) -> models.Topic:
         """Get topic by date.
 
