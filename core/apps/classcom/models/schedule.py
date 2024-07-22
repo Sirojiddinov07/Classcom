@@ -3,7 +3,6 @@ from django.db import models
 from django.utils.translation import gettext_lazy as __
 
 from core.apps.classcom import choices
-from core.http.models import User
 
 
 def validate_lesson_time(value):
@@ -25,7 +24,9 @@ class Schedule(models.Model):
         choices=choices.ShiftChoice.choices,
         default=choices.ShiftChoice.MORNING,
     )
-    user = models.ForeignKey(User, models.CASCADE, related_name="schedules")
+    user = models.ForeignKey(
+        "http.User", models.CASCADE, related_name="schedules"
+    )
     science = models.ForeignKey("Science", models.CASCADE)
     classes = models.ForeignKey("Classes", models.CASCADE)
     weekday = models.CharField(max_length=15, choices=choices.Weekday.choices)

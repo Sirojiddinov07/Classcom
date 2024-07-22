@@ -1,11 +1,9 @@
 from django.db import models
 from django.utils import timezone
 
-from core.http.models import User
-
 
 class Chat(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey("http.User", on_delete=models.CASCADE)
     massage = models.TextField()
     time = models.DateTimeField(auto_now_add=True)
     response = models.TextField(null=True, blank=True)

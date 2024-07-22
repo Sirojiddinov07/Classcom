@@ -31,6 +31,6 @@ class Roles:
                 permission, _ = Permission.objects.get_or_create(
                     name=permissions,
                     content_type=ContentType.objects.get_for_model(Permission),
-                    codename=permissions
+                    codename=permissions,
                 )
                 group.permissions.add(permission)

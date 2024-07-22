@@ -14,7 +14,6 @@ class Topic(models.Model):
     sequence_number = models.IntegerField(default=1)
     thematic_plan = models.ManyToManyField(
         "Plan",
-        null=True,
         blank=True,
         related_name="topics",
     )  # Added related_name

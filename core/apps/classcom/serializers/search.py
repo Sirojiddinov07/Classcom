@@ -1,6 +1,7 @@
 """
 Search serializer
 """
+
 from rest_framework import serializers
 
 

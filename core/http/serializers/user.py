@@ -20,7 +20,9 @@ class UserSerializer(serializers.ModelSerializer):
             "region",
             "district",
             "science_group",
-            "permissions"
+            "science",
+            "classes",
+            "permissions",
         ]
         extra_kwargs = {
             "role": {"read_only": True},
@@ -39,7 +41,7 @@ class UserSerializer(serializers.ModelSerializer):
         return None
 
     def get_permissions(self, obj):
-        request = self.context.get('request', None)
+        request = self.context.get("request", None)
         user = self.context.get("user", None)
         if request is None and user is None:
             return []
@@ -58,5 +60,12 @@ class UserSerializer(serializers.ModelSerializer):
         instance.last_name = validated_data.get(
             "last_name", instance.last_name
         )
+        instance.region = validated_data.get("region", instance.region)
+        instance.district = validated_data.get("district", instance.district)
+        instance.science_group = validated_data.get(
+            "science_group", instance.science_group
+        )
+        instance.science = validated_data.get("science", instance.science)
+        instance.classes = validated_data.get("classes", instance.classes)
         instance.save()
         return instance

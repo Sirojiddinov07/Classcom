@@ -10,4 +10,3 @@ class ModeratorAdmin(admin.ModelAdmin):
         "is_contracted",
     )
     search_fields = ("user",)
-    autocomplete_fields = ("user",)
