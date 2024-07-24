@@ -1,10 +1,9 @@
 from django.utils.translation import gettext as _
 from rest_framework import serializers
 
-from core.apps.classcom import models
-from core.http.models import District, Region
+from core.apps.classcom.models import Moderator
+from core.http.models import District, Region, User
 from core.services import UserService
-
 from ..serializers.district import DistrictSerializer
 from ..serializers.region import RegionSerializer
 
@@ -13,8 +12,29 @@ class UserModeratorSerializer(serializers.ModelSerializer):
     _region = RegionSerializer(read_only=True, source="region")
     _district = DistrictSerializer(read_only=True, source="district")
 
+    # Delayed import inside the class
+    def __init__(self, *args, **kwargs):
+        from core.apps.classcom.serializers import (
+            RegionSerializer,
+            DistrictSerializer,
+        )
+
+        self.RegionSerializer = RegionSerializer
+        self.DistrictSerializer = DistrictSerializer
+        super().__init__(*args, **kwargs)
+
+    def to_representation(self, instance):
+        ret = super().to_representation(instance)
+        ret["_region"] = self.RegionSerializer(
+            instance.region, read_only=True
+        ).data
+        ret["_district"] = self.DistrictSerializer(
+            instance.district, read_only=True
+        ).data
+        return ret
+
     class Meta:
-        model = models.User
+        model = User
         fields = [
             "first_name",
             "last_name",
@@ -38,7 +58,7 @@ class UserModeratorSerializer(serializers.ModelSerializer):
     }
 
     def validate_phone(self, value):
-        if models.User.objects.filter(
+        if User.objects.filter(
             phone=value, validated_at__isnull=False
         ).exists():
             raise serializers.ValidationError(
@@ -48,7 +68,7 @@ class UserModeratorSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         password = validated_data.pop("password")
-        user = models.User.objects.create(**validated_data)
+        user = User.objects.create(**validated_data)
         user.set_password(password)
         user.save()
         return user
@@ -73,7 +93,7 @@ class ModeratorCreateSerializer(serializers.ModelSerializer):
     )
 
     class Meta:
-        model = models.Moderator
+        model = Moderator
         fields = [
             "first_name",
             "last_name",
@@ -106,7 +126,5 @@ class ModeratorCreateSerializer(serializers.ModelSerializer):
         sms_service = UserService()
         sms_service.send_confirmation(user.phone)
 
-        moderator = models.Moderator.objects.create(
-            user=user, **validated_data
-        )
+        moderator = Moderator.objects.create(user=user, **validated_data)
         return moderator

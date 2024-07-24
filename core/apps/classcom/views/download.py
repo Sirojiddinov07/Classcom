@@ -68,12 +68,13 @@ class DownloadFileView(APIView):
 
         return response
 
+
 class DownloadHistoryView(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request, format=None):
         teacher = get_object_or_404(Teacher, user=request.user)
-        downloads = Download.objects.filter(teacher=teacher).order_by('-date')
+        downloads = Download.objects.filter(teacher=teacher).order_by("-date")
 
         download_history = [
             {

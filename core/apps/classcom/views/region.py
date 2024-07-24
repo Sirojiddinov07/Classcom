@@ -7,8 +7,9 @@ from core.http import models
 
 class CustomPagination(PageNumberPagination):
     page_size = 100
-    page_size_query_param = 'page_size'
+    page_size_query_param = "page_size"
     max_page_size = 100
+
 
 class RegionViewSet(viewsets.ModelViewSet):
     queryset = models.Region.objects.all()

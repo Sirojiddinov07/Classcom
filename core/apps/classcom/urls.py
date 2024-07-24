@@ -3,6 +3,8 @@ from rest_framework import routers
 
 from core.apps.classcom import views
 
+# from core.apps.classcom.views import science_info
+
 router = routers.DefaultRouter()
 router.register("plan", views.PlanViewSet, basename="plan")
 router.register("topic", views.TopicViewSet, basename="topic")
@@ -35,8 +37,11 @@ urlpatterns = [
         views.DownloadFileView.as_view(),
         name="download_file",
     ),
-    path('download/history/', views.DownloadHistoryView.as_view(), name='download_history'),
-
+    path(
+        "download/history/",
+        views.DownloadHistoryView.as_view(),
+        name="download_history",
+    ),
     path(
         "moderator/", views.ModeratorCreateViewSet.as_view(), name="moderator"
     ),
@@ -58,4 +63,10 @@ urlpatterns = [
     path(
         "chats/", views.ChatListCreateView.as_view(), name="chat-list-create"
     ),
+    path(
+        "science-info/<int:science_id>/",
+        views.ModeratorCountsByScienceAndClassAPIView.as_view(),
+        name="science-info",
+    ),
+    path("search/", views.UnifiedSearchView.as_view(), name="unified-search"),
 ]

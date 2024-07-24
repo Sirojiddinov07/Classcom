@@ -1,8 +1,6 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as __
 
-from core.http.models import User
-
 
 class Plan(models.Model):
     name = models.CharField(max_length=255)
@@ -13,11 +11,11 @@ class Plan(models.Model):
         "ResourceType", on_delete=models.CASCADE, null=True, blank=True
     )
     hour = models.IntegerField(default=0, null=True, blank=True)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey("http.User", on_delete=models.CASCADE)
     classes = models.ForeignKey("Classes", on_delete=models.CASCADE)
     quarter = models.ForeignKey("Quarter", on_delete=models.CASCADE)
     science = models.ForeignKey("Science", on_delete=models.CASCADE)
-    plan_resource = models.ManyToManyField("Media", blank=True, null=True)
+    plan_resource = models.ManyToManyField("Media", blank=True)
     topic = models.ForeignKey(
         "Topic",
         on_delete=models.CASCADE,

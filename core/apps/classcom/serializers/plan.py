@@ -2,14 +2,12 @@ from rest_framework import serializers
 
 from core.apps.classcom import models, services
 from core.http.models import User
-from ..serializers.media import MediaSerializer
 
 from ..serializers.classes import ClassMiniSerializer
+from ..serializers.media import MediaSerializer
 from ..serializers.quarter import QuarterMiniSerializer
 from ..serializers.science import ScienceMiniSerializer
 from ..serializers.topic import TopicMiniSerializer
-
-
 
 
 class PlanScienceSerializer(serializers.ModelSerializer):
@@ -82,7 +80,7 @@ class PlanDetailSerializer(serializers.ModelSerializer):
             "status",
             "user",
             "is_author",
-            "created_at"
+            "created_at",
         )
 
     def get_status(self, obj):
@@ -130,7 +128,7 @@ class PlanSerializer(serializers.ModelSerializer):
             "status",
             "user",
             "is_author",
-            "created_at"
+            "created_at",
         )
 
     def get_status(self, obj):

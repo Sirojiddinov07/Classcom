@@ -5,6 +5,7 @@ from django.contrib.auth import models as auth_models
 from django.db import models
 
 from core.apps.classcom.choices import Role
+from core.apps.classcom.models import Science, Classes
 from core.http import choices, managers
 
 
@@ -38,6 +39,12 @@ class User(auth_models.AbstractUser):
     )
     institution_number = models.CharField(
         max_length=255, null=True, blank=True
+    )
+    classes = models.ForeignKey(
+        Classes, on_delete=models.SET_NULL, null=True, blank=True
+    )
+    science = models.ForeignKey(
+        Science, on_delete=models.SET_NULL, null=True, blank=True
     )
 
     USERNAME_FIELD = "phone"
