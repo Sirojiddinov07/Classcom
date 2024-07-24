@@ -7,12 +7,12 @@ from core.apps.classcom.models import Moderator
 from core.http.forms import CustomUserCreationForm
 
 
-class CustomUserAdmin(admin.UserAdmin, import_export.ImportExportModelAdmin):
-    list_display = (
-        "first_name",
-        "last_name",
-        "phone",
-    )
+# class CustomUserAdmin(admin.UserAdmin, import_export.ImportExportModelAdmin):
+#     list_display = (
+#         "first_name",
+#         "last_name",
+#         "phone",
+#     )
 
 
 class GroupAdmin(import_export.ImportExportModelAdmin):

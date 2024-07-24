@@ -13,4 +13,5 @@ from .resource import *  # noqa
 from .resource_type import *  # noqa
 from .schedule import *  # noqa
 from .science import *  # noqa
+from .search import *  # noqa
 from .topic import *  # noqa

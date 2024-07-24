@@ -1,5 +1,7 @@
 from rest_framework import serializers
+
 from core.apps.classcom import models
+
 from .classes import ClassMiniSerializer
 from .quarter import QuarterMiniSerializer
 from .science import ScienceMiniSerializer

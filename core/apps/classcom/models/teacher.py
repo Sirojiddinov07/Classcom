@@ -1,11 +1,9 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as __
 
-from core.http.models import User
-
 
 class Teacher(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey("http.User", on_delete=models.CASCADE)
     science = models.ManyToManyField("Science", blank=True)
     payment_status = models.BooleanField(default=False)
 

@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from ..models.feedback import *
+from core.apps.classcom.models import Answer, Feedback
 
 
 class InlineAnswer(admin.TabularInline):
@@ -9,10 +9,14 @@ class InlineAnswer(admin.TabularInline):
     extra = 1
 
 
+@admin.register(Feedback)
 class FeedbackAdmin(admin.ModelAdmin):
     inlines = [InlineAnswer]
     list_display = ("user", "id", "feedback_type", "answered")
 
 
-admin.site.register(Answer)
-admin.site.register(Feedback, FeedbackAdmin)
+@admin.register(Answer)
+class AnswerAdmin(admin.ModelAdmin):
+    list_display = ("id", "feedback", "body")
+    search_fields = ("feedback", "body")
+    list_filter = ("feedback",)
