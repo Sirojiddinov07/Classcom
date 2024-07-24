@@ -4,9 +4,14 @@ from rest_framework import serializers
 from core.apps.classcom.models import Moderator
 from core.http.models import District, Region, User
 from core.services import UserService
+from ..serializers.district import DistrictSerializer
+from ..serializers.region import RegionSerializer
 
 
 class UserModeratorSerializer(serializers.ModelSerializer):
+    _region = RegionSerializer(read_only=True, source="region")
+    _district = DistrictSerializer(read_only=True, source="district")
+
     # Delayed import inside the class
     def __init__(self, *args, **kwargs):
         from core.apps.classcom.serializers import (
