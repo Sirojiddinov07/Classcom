@@ -17,7 +17,6 @@ class SendService:
         self.password = password or env("SMS_PASSWORD")
         self.callback_url = callback_url
         self.headers = {}
-
         self.methods = {
             "auth_user": "auth/user",
             "auth_login": "auth/login",
@@ -35,7 +34,9 @@ class SendService:
                 data=data,
                 headers=headers,
             )
-
+            print(response.content)
+            print(response.status_code)
+            print(data)
             if api_path == self.methods["auth_refresh"]:
                 if response.status_code == 200:
                     incoming_data["status"] = "success"
@@ -43,12 +44,10 @@ class SendService:
                 incoming_data = response.json()
         except requests.RequestException as error:
             raise Exception(str(error))
-
         return incoming_data
 
     def auth(self):
         data = {"email": self.email, "password": self.password}
-
         return self.request(
             self.methods["auth_login"], data=data, method=self.POST
         )
