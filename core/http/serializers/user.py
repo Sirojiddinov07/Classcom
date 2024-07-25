@@ -1,7 +1,5 @@
 from django.conf import settings
 from rest_framework import serializers
-from core.utils import Role
-
 
 from core.apps.classcom.choices import Role
 from core.http import models
@@ -9,7 +7,8 @@ from core.http import models
 
 class UserSerializer(serializers.ModelSerializer):
     avatar = serializers.ImageField(max_length=None, use_url=True)
-    permissions = serializers.SerializerMethodField()
+
+    # permissions = serializers.SerializerMethodField()
 
     class Meta:
         fields = [
@@ -23,7 +22,7 @@ class UserSerializer(serializers.ModelSerializer):
             "science_group",
             "science",
             "classes",
-            "permissions",
+            # "permissions",
         ]
         extra_kwargs = {
             "role": {"read_only": True},
@@ -41,16 +40,16 @@ class UserSerializer(serializers.ModelSerializer):
             return media_url + avatar_url
         return None
 
-    def get_permissions(self, obj):
-        request = self.context.get("request", None)
-        user = self.context.get("user", None)
-        if request is None and user is None:
-            return []
-
-        if request:
-            user = request.user
-
-        return Role(user).get_permissions()
+    # def get_permissions(self, obj):
+    #     request = self.context.get("request", None)
+    #     user = self.context.get("user", None)
+    #     if request is None and user is None:
+    #         return []
+    #
+    #     if request:
+    #         user = request.user
+    #
+    #     return Role(user).get_permissions()
 
     def update(self, instance, validated_data):
         print(validated_data)  # Debug line

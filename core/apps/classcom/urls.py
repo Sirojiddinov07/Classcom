@@ -30,8 +30,11 @@ urlpatterns = [
         views.DownloadResourceView.as_view(),
         name="download_resource",
     ),
-    path("users/<int:pk>/change-role/", views.UserRoleChangeView.as_view(), name="change-user-role"),
-
+    path(
+        "users/<int:pk>/change-role/",
+        views.UserRoleChangeView.as_view(),
+        name="change-user-role",
+    ),
     path(
         "download_file/<uuid:download_token>/",
         views.DownloadFileView.as_view(),
