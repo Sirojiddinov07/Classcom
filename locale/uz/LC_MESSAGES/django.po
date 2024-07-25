@@ -8,16 +8,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-07-22 10:45+0500\n"
-"PO-Revision-Date: 2024-07-22 11:47+0500\n"
-"Last-Translator:   <admin@gmail.com>\n"
+"POT-Creation-Date: 2024-07-12 16:12+0500\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Translated-Using: django-rosetta 0.10.0\n"
 
 #: config/settings/common.py:120
 msgid "Russia"
@@ -31,7 +30,7 @@ msgstr ""
 msgid "Uzbek"
 msgstr ""
 
-#: core/apps/accounts/serializers/auth.py:8
+#: core/apps/accounts/serializers/auth.py:7
 msgid "No active account found with the given credentials."
 msgstr ""
 
@@ -39,11 +38,11 @@ msgstr ""
 msgid "invalida password"
 msgstr ""
 
-#: core/apps/accounts/views/sms.py:183
+#: core/apps/accounts/views/sms.py:179
 msgid "Invalid token"
 msgstr ""
 
-#: core/apps/accounts/views/sms.py:190
+#: core/apps/accounts/views/sms.py:186
 msgid "password updated"
 msgstr ""
 
@@ -76,11 +75,11 @@ msgstr ""
 msgid "Phone number already registered."
 msgstr ""
 
-#: core/apps/classcom/services/topic.py:50
+#: core/apps/classcom/services/topic.py:51
 msgid "No topic found for this date"
 msgstr ""
 
-#: core/apps/classcom/services/topic.py:52
+#: core/apps/classcom/services/topic.py:53
 msgid "You have no topics"
 msgstr ""
 
@@ -140,8 +139,6 @@ msgstr ""
 #, python-format
 msgid "Sizning Tasdiqlash ko'dingiz: %(code)s"
 msgstr ""
-"Classcom.uz sayti va mobil ilovasiga ro'yxatdan o'tishingingiz uchun "
-"tasdiqlash kodi: %(code)s"
 
 #: resources/templates/user/home.html:19
 msgid "Django"
