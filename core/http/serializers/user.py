@@ -3,6 +3,7 @@ from rest_framework import serializers
 from core.utils import Role
 
 
+from core.apps.classcom.choices import Role
 from core.http import models
 
 
@@ -69,3 +70,11 @@ class UserSerializer(serializers.ModelSerializer):
         instance.classes = validated_data.get("classes", instance.classes)
         instance.save()
         return instance
+
+
+class UserRoleChangeSerializer(serializers.ModelSerializer):
+    role = serializers.ChoiceField(choices=Role)
+
+    class Meta:
+        model = models.User
+        fields = ["role"]
