@@ -1,12 +1,12 @@
 """
 Search view
 """
-
 from rest_framework import views
 from rest_framework import response
 
 from core.apps.classcom import models
 from core.apps.classcom import serializers
+from django.db.models import Q
 
 
 class UnifiedSearchView(views.APIView):
@@ -15,23 +15,32 @@ class UnifiedSearchView(views.APIView):
         serializer.is_valid(raise_exception=True)
         query = serializer.validated_data.get("query", "")
 
+        # Searching Plans
         plan_results = models.Plan.objects.filter(
-            name__icontains=query
-        ) | models.Plan.objects.filter(description__icontains=query)
+            Q(name__icontains=query) |
+            Q(description__icontains=query) |
+            Q(user__first_name__icontains=query) |
+            Q(user__last_name__icontains=query)
+        )
         plan_serializer = serializers.PlanSerializer(plan_results, many=True)
 
-        schedule_results = (
-            models.Schedule.objects.filter(shift__icontains=query)
-            | models.Schedule.objects.filter(weekday__icontains=query)
-            | models.Schedule.objects.filter(lesson_time__icontains=query)
+        # Searching Schedules
+        schedule_results = models.Schedule.objects.filter(
+            Q(shift__icontains=query) |
+            Q(weekday__icontains=query) |
+            Q(lesson_time__icontains=query)
         )
         schedule_serializer = serializers.ScheduleListSerializer(
             schedule_results, many=True
         )
 
+        # Searching Resources
         resource_results = models.Resource.objects.filter(
-            name__icontains=query
-        ) | models.Resource.objects.filter(description__icontains=query)
+            Q(name__icontains=query) |
+            Q(description__icontains=query) |
+            Q(user__first_name__icontains=query) |
+            Q(user__last_name__icontains=query)
+        )
         resource_serializer = serializers.ResourceSerializer(
             resource_results, many=True
         )

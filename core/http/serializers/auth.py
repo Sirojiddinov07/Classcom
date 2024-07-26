@@ -35,6 +35,7 @@ class RegisterSerializer(serializers.ModelSerializer):
             "institution",
             "institution_number",
             "science_group",
+            "science",
         ]
         extra_kwargs = {
             "first_name": {
