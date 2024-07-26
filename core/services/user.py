@@ -2,13 +2,14 @@ import typing
 from datetime import datetime
 
 from django.contrib.auth import hashers
+from rest_framework.generics import get_object_or_404
 from rest_framework_simplejwt import tokens
 
 from core import exceptions
 from core.http import models
 from core.services import base_service, sms
 from core.utils import exception
-
+from core.http.models import ScienceGroups
 
 class UserService(base_service.BaseService, sms.SmsService):
     def get_token(self, user):
@@ -19,7 +20,14 @@ class UserService(base_service.BaseService, sms.SmsService):
             "access": str(refresh.access_token),
         }
 
-    def create_user(self, phone, first_name, last_name, password):
+    def create_user(self, phone, first_name, last_name, password, role, region_id, district_id, institution,
+                    institution_number, science_group_id, science_id):
+        # Retrieve instances of related models
+        region = get_object_or_404(models.Region, id=region_id)
+        district = get_object_or_404(models.District, id=district_id)
+        science_group = get_object_or_404(ScienceGroups, id=science_group_id)
+        science = get_object_or_404(models.Science, id=science_id)
+
         models.User.objects.update_or_create(
             phone=phone,
             defaults={
@@ -27,6 +35,13 @@ class UserService(base_service.BaseService, sms.SmsService):
                 "first_name": first_name,
                 "last_name": last_name,
                 "password": hashers.make_password(password),
+                "role": role,
+                "region": region,
+                "district": district,
+                "institution": institution,
+                "institution_number": institution_number,
+                "science_group": science_group,
+                "science": science,
             },
         )
 

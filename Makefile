@@ -57,6 +57,13 @@ pull:
 seed:
 	docker compose exec web poetry run python manage.py seed
 
+import_region:
+	docker compose exec web poetry run python manage.py import_region
+
+import_district:
+	docker compose exec web poetry run python manage.py import_district
+
+
 push:
 	git add . && git commit -m "$(comment)" && git push
 
