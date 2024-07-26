@@ -6,7 +6,7 @@ from core.apps.classcom.models import Science
 class ScienceSerializer(serializers.ModelSerializer):
     class Meta:
         model = Science
-        fields = "__all__"
+        fields = ["id", "name", "science_grp", "created_at"]
 
 
 class ScienceMiniSerializer(serializers.ModelSerializer):
