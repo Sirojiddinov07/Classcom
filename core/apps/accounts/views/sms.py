@@ -32,23 +32,16 @@ class RegisterView(views.APIView, services.UserService):
         summary="Register new user",
         description="Yangi user ro'yhatdan o'tish uchun",
     )
-    def post(self, request: rest_request.Request):
+    def post(self, request):
         ser = self.serializer_class(data=request.data)
         ser.is_valid(raise_exception=True)
-        data = ser.data
-        phone = data.get("phone")
-        # Create pending user
-        self.create_user(
-            phone,
-            data.get("first_name"),
-            data.get("last_name"),
-            data.get("password"),
-        )
-        self.send_confirmation(
-            phone
-        )  # Send confirmation code for sms eskiz.uz
+        user = ser.save()
+
+        # Send confirmation code for sms eskiz.uz
+        self.send_confirmation(user.phone)
+
         return response.Response(
-            {"detail": _(enums.Messages.SEND_MESSAGE) % {"phone": phone}},
+            {"detail": _("Confirmation code sent to %(phone)s") % {"phone": user.phone}},
             status=status.HTTP_202_ACCEPTED,
         )
 
