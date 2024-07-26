@@ -23,12 +23,44 @@ class Command(base.BaseCommand):
             with open(csv_path, newline='', encoding='utf-8') as csvfile:
                 reader = csv.DictReader(csvfile)
                 for row in reader:
-                    Region.objects.create(
-                        region_uz=row['name_uz'],
-                        region_ru=row['name_oz'],
-                        region_en=row['name_ru']
-                    )
-                    self.stdout.write(self.style.SUCCESS(f"Region {row['name_uz']} added"))
+                    region_uz = row.get('name_uz', None)
+                    region_ru = row.get('name_oz', None)
+                    region_en = row.get('name_ru', None)
+
+                    if not region_uz and not region_ru and not region_en:
+                        self.stdout.write(self.style.ERROR(f"Skipping row with missing region names: {row}"))
+                        continue
+
+                    region = None
+                    try:
+                        if region_uz:
+                            region = Region.objects.get(region_uz=region_uz)
+                        elif region_ru:
+                            region = Region.objects.get(region_ru=region_ru)
+                        elif region_en:
+                            region = Region.objects.get(region_en=region_en)
+                    except Region.DoesNotExist:
+                        pass
+                    except Region.MultipleObjectsReturned:
+                        self.stdout.write(self.style.ERROR(f"Multiple regions found for {row}"))
+                        continue
+
+                    if region:
+                        if region_uz:
+                            region.region_uz = region_uz
+                        if region_ru:
+                            region.region_ru = region_ru
+                        if region_en:
+                            region.region_en = region_en
+                        region.save()
+                        self.stdout.write(self.style.SUCCESS(f"Region updated: {row}"))
+                    else:
+                        Region.objects.create(
+                            region_uz=region_uz,
+                            region_ru=region_ru,
+                            region_en=region_en
+                        )
+                        self.stdout.write(self.style.SUCCESS(f"Region created: {row}"))
 
         except Exception as e:
             self.stdout.write(self.style.ERROR(f"Error: {e}"))

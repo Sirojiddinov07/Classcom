@@ -19,17 +19,47 @@ class Command(base.BaseCommand):
             with open(csv_path, newline='', encoding='utf-8') as csvfile:
                 reader = csv.DictReader(csvfile)
                 for row in reader:
+                    region_id = row.get("region_id")
+                    district_uz = row.get('name_uz')
+                    district_ru = row.get('name_oz')
+                    district_en = row.get('name_ru')
+
+                    if not region_id or not district_uz:
+                        self.stdout.write(self.style.ERROR(f"Skipping row with missing data: {row}"))
+                        continue
+
                     try:
-                        region = Region.objects.get(id=int(row["region_id"]))
-                        District.objects.create(
+                        region = Region.objects.filter(id=int(region_id)).first()
+                        if not region:
+                            self.stdout.write(self.style.ERROR(f"Region with id {region_id} does not exist"))
+                            continue
+
+                        district, created = District.objects.get_or_create(
                             region=region,
-                            district_uz=row['name_uz'],
-                            district_ru=row['name_oz'],
-                            district_en=row['name_ru']
+                            district_uz=district_uz,
+                            defaults={
+                                'district_ru': district_ru,
+                                'district_en': district_en
+                            }
                         )
-                        self.stdout.write(self.style.SUCCESS(f"District {row['name_uz']} added"))
-                    except Region.DoesNotExist:
-                        self.stdout.write(self.style.ERROR(f"Region with id {row['region_id']} does not exist"))
+
+                        if created:
+                            self.stdout.write(self.style.SUCCESS(f"District {district_uz} added"))
+                        else:
+                            # Update existing district if other names are provided and not already set
+                            updated = False
+                            if district_ru and district.district_ru != district_ru:
+                                district.district_ru = district_ru
+                                updated = True
+                            if district_en and district.district_en != district_en:
+                                district.district_en = district_en
+                                updated = True
+                            if updated:
+                                district.save()
+                                self.stdout.write(self.style.SUCCESS(f"District {district_uz} updated"))
+
+                    except Exception as e:
+                        self.stdout.write(self.style.ERROR(f"Error while processing row {row}: {e}"))
 
         except Exception as e:
             self.stdout.write(self.style.ERROR(f"Error: {e}"))
