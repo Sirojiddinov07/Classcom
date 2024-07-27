@@ -22,7 +22,6 @@ class UserService(base_service.BaseService, sms.SmsService):
 
     def create_user(self, phone, first_name, last_name, password, role, region_id, district_id, institution,
                     institution_number, science_group_id, science_id):
-        # Retrieve instances of related models
         region = get_object_or_404(models.Region, id=region_id)
         district = get_object_or_404(models.District, id=district_id)
         science_group = get_object_or_404(ScienceGroups, id=science_group_id)
