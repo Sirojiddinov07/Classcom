@@ -3,7 +3,7 @@ import csv
 from django.conf import settings
 from django.core.management import base
 
-from core.http.models import District, Region
+from core.http.models import Region, District
 
 
 class Command(base.BaseCommand):
@@ -34,25 +34,36 @@ class Command(base.BaseCommand):
                             self.stdout.write(self.style.ERROR(f"Region with id {region_id} does not exist"))
                             continue
 
-                        district, created = District.objects.get_or_create(
-                            region=region,
-                            district_uz=district_uz,
-                            defaults={
-                                'district_ru': district_ru,
-                                'district_en': district_en
-                            }
-                        )
+                        # Try to find an existing district by region and district_uz
+                        district = District.objects.filter(region=region, district_uz=district_uz).first()
+                        if not district:
+                            # If not found by district_uz, try finding by district_ru
+                            if district_ru:
+                                district = District.objects.filter(region=region, district_ru=district_ru).first()
+                            # If still not found, try finding by district_en
+                            if not district and district_en:
+                                district = District.objects.filter(region=region, district_en=district_en).first()
 
-                        if created:
+                        if not district:
+                            # If no existing district is found, create a new one
+                            district = District.objects.create(
+                                region=region,
+                                district_uz=district_uz,
+                                district_ru=district_ru,
+                                district_en=district_en
+                            )
                             self.stdout.write(self.style.SUCCESS(f"District {district_uz} added"))
                         else:
-                            # Update existing district if other names are provided and not already set
+                            # Update existing district with new names if provided and different
                             updated = False
                             if district_ru and district.district_ru != district_ru:
                                 district.district_ru = district_ru
                                 updated = True
                             if district_en and district.district_en != district_en:
                                 district.district_en = district_en
+                                updated = True
+                            if district_uz and district.district_uz != district_uz:
+                                district.district_uz = district_uz
                                 updated = True
                             if updated:
                                 district.save()
