@@ -31,8 +31,8 @@ urlpatterns = [
         name="download_resource",
     ),
     path(
-        "users/<int:pk>/change-role/",
-        views.UserRoleChangeView.as_view(),
+        "change-role/",
+        views.ChangeRoleView.as_view(),
         name="change-user-role",
     ),
     path(
