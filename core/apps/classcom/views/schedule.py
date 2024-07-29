@@ -69,6 +69,7 @@ class GetScheduleDataView(APIView):
                 shift=ShiftChoice.MORNING,
                 weekday=day[0],
                 quarter=current_quarter,
+                user=request.user,
             ).order_by("lesson_time")
 
             for schedule in morning_schedules:
@@ -92,6 +93,7 @@ class GetScheduleDataView(APIView):
                 shift=ShiftChoice.EVENING,
                 weekday=day[0],
                 quarter=current_quarter,
+                user=request.user
             ).order_by("lesson_time")
             for schedule in evening_schedules:
                 lesson_time_index = int(schedule.lesson_time) - 1
@@ -177,6 +179,7 @@ class DayScheduleView(APIView):
                 shift=ShiftChoice.MORNING,
                 weekday=weekday,
                 quarter=quarter_instance,
+                user=request.user,
             ).order_by("lesson_time")
             for schedule in morning_schedules:
                 lesson_time_index = int(schedule.lesson_time) - 1
@@ -198,6 +201,7 @@ class DayScheduleView(APIView):
                 shift=ShiftChoice.EVENING,
                 weekday=weekday,
                 quarter=quarter_instance,
+                user=request.user
             ).order_by("lesson_time")
             for schedule in evening_schedules:
                 lesson_time_index = int(schedule.lesson_time) - 1
@@ -288,7 +292,7 @@ class RangeScheduleView(APIView):
                 evening_schedule = [get_empty_schedule(i) for i in range(1, 7)]
 
                 morning_schedules = Schedule.objects.filter(
-                    shift=ShiftChoice.MORNING, weekday=day, quarter=quarter
+                    shift=ShiftChoice.MORNING, weekday=day, quarter=quarter, user=request.user
                 ).order_by("lesson_time")
                 for schedule in morning_schedules:
                     lesson_time_index = int(schedule.lesson_time) - 1
@@ -307,7 +311,7 @@ class RangeScheduleView(APIView):
                     }
 
                 evening_schedules = Schedule.objects.filter(
-                    shift=ShiftChoice.EVENING, weekday=day, quarter=quarter
+                    shift=ShiftChoice.EVENING, weekday=day, quarter=quarter, user=request.user
                 ).order_by("lesson_time")
                 for schedule in evening_schedules:
                     lesson_time_index = int(schedule.lesson_time) - 1

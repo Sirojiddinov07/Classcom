@@ -12,6 +12,7 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         fields = [
+            "id",
             "avatar",
             "first_name",
             "last_name",
