@@ -65,7 +65,7 @@ class SmsConfirm(models.Model):
     code = models.IntegerField()
     try_count = models.IntegerField(default=0)
     resend_count = models.IntegerField(default=0)
-    phone = models.CharField(max_length=20)
+    phone = models.CharField(max_length=255)
     expire_time = models.DateTimeField(null=True, blank=True)
     unlock_time = models.DateTimeField(null=True, blank=True)
     resend_unlock_time = models.DateTimeField(null=True, blank=True)
