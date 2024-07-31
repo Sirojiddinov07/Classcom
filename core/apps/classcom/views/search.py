@@ -16,13 +16,13 @@ class UnifiedSearchView(views.APIView):
         query = serializer.validated_data.get("query", "")
 
         # Searching Plans
-        plan_results = models.Plan.objects.filter(
-            Q(name__icontains=query) |
-            Q(description__icontains=query) |
-            Q(user__first_name__icontains=query) |
-            Q(user__last_name__icontains=query)
-        )
-        plan_serializer = serializers.PlanSerializer(plan_results, many=True)
+        # plan_results = models.Plan.objects.filter(
+        #     Q(name__icontains=query) |
+        #     Q(description__icontains=query) |
+        #     Q(user__first_name__icontains=query) |
+        #     Q(user__last_name__icontains=query)
+        # )
+        # plan_serializer = serializers.PlanSerializer(plan_results, many=True)
 
         # Searching Schedules
         # user = request.user
@@ -40,6 +40,8 @@ class UnifiedSearchView(views.APIView):
         resource_results = models.Resource.objects.filter(
             Q(name__icontains=query) |
             Q(description__icontains=query) |
+            Q(type__name__icontains=query) |
+            Q(classes__name__icontains=query) |
             Q(user__first_name__icontains=query) |
             Q(user__last_name__icontains=query)
         )
@@ -48,7 +50,7 @@ class UnifiedSearchView(views.APIView):
         )
 
         results = {
-            "plans": plan_serializer.data,
+            # "plans": plan_serializer.data,
             # "schedules": schedule_serializer.data,
             "resources": resource_serializer.data,
         }
