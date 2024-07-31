@@ -21,7 +21,7 @@ class Resource(models.Model):
     )
 
     def __str__(self):
-        return str(self.name)
+        return str(self.name) or "Unnamed Resource"
 
     class Meta:
         verbose_name = __("Resource")
