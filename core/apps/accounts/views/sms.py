@@ -43,7 +43,6 @@ class RegisterView(views.APIView, services.UserService):
             data.get("first_name"),
             data.get("last_name"),
             data.get("password"),
-            data.get("role"),
             data.get("region"),
             data.get("district"),
             data.get("institution"),
@@ -54,7 +53,6 @@ class RegisterView(views.APIView, services.UserService):
         self.send_confirmation(
             phone
         )  # Send confirmation code for sms eskiz.uz
-
 
         return response.Response(
             {"detail": _(enums.Messages.SEND_MESSAGE) % {"phone": phone}},

@@ -4,6 +4,7 @@ from datetime import datetime
 from django.contrib.auth import hashers
 from rest_framework.generics import get_object_or_404
 from rest_framework_simplejwt import tokens
+from core.apps.classcom.choices import Role
 
 from core import exceptions
 from core.http import models
@@ -21,14 +22,15 @@ class UserService(base_service.BaseService, sms.SmsService):
             "access": str(refresh.access_token),
         }
 
-    def create_user(self, phone, first_name, last_name, password, role, region_id, district_id, institution,
-                    institution_number, science_group_id, science_id):
+    def create_user(self, phone, first_name, last_name, password, region_id, district_id, institution,
+                    institution_number, science_group_id=None, science_id=None, role=Role.USER):
         region = get_object_or_404(models.Region, id=region_id)
         district = get_object_or_404(models.District, id=district_id)
-        science_group = get_object_or_404(ScienceGroups, id=science_group_id)
-        science = get_object_or_404(models.Science, id=science_id)
 
-        models.User.objects.update_or_create(
+        science_group = None if science_group_id is None else get_object_or_404(ScienceGroups, id=science_group_id)
+        science = None if science_id is None else get_object_or_404(models.Science, id=science_id)
+
+        user, _ = models.User.objects.update_or_create(
             phone=phone,
             defaults={
                 "phone": phone,
@@ -44,6 +46,7 @@ class UserService(base_service.BaseService, sms.SmsService):
                 "science": science,
             },
         )
+        return user
 
     def send_confirmation(self, phone) -> bool:
         try:
