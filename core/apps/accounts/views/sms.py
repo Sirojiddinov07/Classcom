@@ -18,6 +18,7 @@ from core.apps.accounts.serializers.custom_token import (
 from core.http import serializers
 from core.http import views as http_views
 from core.http.models import User
+from core.apps.classcom.models import Orders
 
 
 class RegisterView(views.APIView, services.UserService):
@@ -38,7 +39,7 @@ class RegisterView(views.APIView, services.UserService):
         data = ser.data
         phone = data.get("phone")
         # Create pending user
-        self.create_user(
+        user = self.create_user(
             phone,
             data.get("first_name"),
             data.get("last_name"),
@@ -53,7 +54,10 @@ class RegisterView(views.APIView, services.UserService):
         self.send_confirmation(
             phone
         )  # Send confirmation code for sms eskiz.uz
-
+        Orders.objects.create(
+            user=user,
+            science_id=data.get("science"),
+        ).types.set(data.get("science_types"))
         return response.Response(
             {"detail": _(enums.Messages.SEND_MESSAGE) % {"phone": phone}},
             status=status.HTTP_202_ACCEPTED,

@@ -26,12 +26,13 @@ class ResourceSerializer(serializers.ModelSerializer):
     type = ResourceTypeSerializer(read_only=True)
     classes = ClassesSerializer(read_only=True)
     category = CategorySerializer()
+    
     class Meta:
         model = models.Resource
         fields = (
             "id",
             "name",
-            "category"
+            "category",
             "classes",
             "media",
             "type",
@@ -66,7 +67,7 @@ class ResourceCreateSerializer(serializers.ModelSerializer):
         model = models.Resource
         fields = (
             "name",
-            "category"
+            "category",
             "description",
             "banner",
             "type",

@@ -51,8 +51,8 @@ class User(auth_models.AbstractUser):
 
     objects = managers.UserManager()
 
-    def __str__(self):
-        return self.phone
+    def __str__(self) -> str:
+        return str(self.phone)
 
 
 class SmsConfirm(models.Model):
