@@ -11,6 +11,7 @@ from core.services import base_service, sms
 from core.utils import exception
 from core.http.models import ScienceGroups
 
+
 class UserService(base_service.BaseService, sms.SmsService):
     def get_token(self, user):
         refresh = tokens.RefreshToken.for_user(user)

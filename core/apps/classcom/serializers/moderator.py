@@ -74,6 +74,16 @@ class UserModeratorSerializer(serializers.ModelSerializer):
         return user
 
 
+class ModeratorManualCreateSerializer(serializers.Serializer):
+    first_name = serializers.CharField()
+    last_name = serializers.CharField()
+    phone = serializers.IntegerField()
+    region = serializers.PrimaryKeyRelatedField(queryset=Region.objects.all())
+    district = serializers.PrimaryKeyRelatedField(queryset=District.objects.all())
+    institution = serializers.CharField()
+    institution_number = serializers.CharField()
+
+
 class ModeratorCreateSerializer(serializers.ModelSerializer):
     first_name = serializers.CharField(source="user.first_name")
     last_name = serializers.CharField(source="user.last_name")
@@ -87,7 +97,6 @@ class ModeratorCreateSerializer(serializers.ModelSerializer):
     district = serializers.PrimaryKeyRelatedField(
         queryset=District.objects.all(), source="user.district"
     )
-    institution = serializers.CharField(source="user.institution")
     institution_number = serializers.CharField(
         source="user.institution_number"
     )
