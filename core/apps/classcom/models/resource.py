@@ -3,6 +3,7 @@ from django.utils.translation import gettext_lazy as __
 
 
 class Resource(models.Model):
+    category = models.ForeignKey("Category", on_delete=models.CASCADE, null=True, blank=True)
     name = models.CharField(max_length=255)
     description = models.TextField()
 
@@ -20,7 +21,7 @@ class Resource(models.Model):
     )
 
     def __str__(self):
-        return self.name
+        return str(self.name) or "Unnamed Resource"
 
     class Meta:
         verbose_name = __("Resource")

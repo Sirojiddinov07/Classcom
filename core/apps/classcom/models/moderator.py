@@ -34,3 +34,21 @@ class Moderator(models.Model):
             self.user.role = Role.MODERATOR
             self.user.save()
         super().save(*args, **kwargs)
+
+
+class TempModerator(models.Model):
+    user = models.OneToOneField("http.User", on_delete=models.CASCADE)
+    balance = models.BigIntegerField(default=0)
+    science = models.ForeignKey(
+        to="Science", on_delete=models.SET_NULL, null=True
+    )
+    classes = models.ForeignKey(
+        to="Classes", on_delete=models.SET_NULL, null=True
+    )
+    degree = models.CharField(
+        max_length=15,
+        choices=choices.Degree.choices,
+        default=choices.Degree.AUTHOR,
+    )
+    docs = models.FileField(upload_to="documents/", null=True, blank=True)
+    is_contracted = models.BooleanField(default=False)

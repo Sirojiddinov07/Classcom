@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from core.apps.classcom.models import Moderator, choices
+from core.apps.classcom.models import TempModerator, choices
 from core.http.models import User
 
 
@@ -7,7 +7,7 @@ class ChangeRoleSerializer(serializers.ModelSerializer):
     user_id = serializers.IntegerField()
 
     class Meta:
-        model = Moderator
+        model = TempModerator
         fields = ["user_id", "balance", "degree", "docs", "is_contracted"]
 
     def validate_user_id(self, value):
@@ -22,7 +22,5 @@ class ChangeRoleSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         user_id = validated_data.pop('user_id')
         user = User.objects.get(id=user_id)
-        moderator = Moderator.objects.create(user=user, **validated_data)
-        user.role = choices.Role.MODERATOR
-        user.save()
+        moderator = TempModerator.objects.create(user=user, **validated_data)
         return moderator

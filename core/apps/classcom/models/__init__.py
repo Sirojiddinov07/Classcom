@@ -1,3 +1,5 @@
+from .category import *  # noqa
+from .category_type import *  # noqa
 from .chat import *  # noqa
 from .classes import *  # noqa
 from .days_off import *  # noqa
