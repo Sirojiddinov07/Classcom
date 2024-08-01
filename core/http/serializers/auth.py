@@ -1,6 +1,5 @@
 from django.utils.translation import gettext as _
 from rest_framework import exceptions, serializers
-
 from core.http import models
 
 
@@ -17,9 +16,7 @@ class RegisterSerializer(serializers.ModelSerializer):
             phone=value, validated_at__isnull=False
         )
         if user.exists():
-            raise exceptions.ValidationError(
-                _("Phone number already registered."), code="unique"
-            )
+            raise exceptions.ValidationError(_("Phone number already registered."), code="unique")
         return value
 
     class Meta:
@@ -39,7 +36,13 @@ class RegisterSerializer(serializers.ModelSerializer):
         ]
         extra_kwargs = {
             "first_name": {
-                "required": True,
+                "required": True
+            },
+            "role": {
+                "read_only": True
+            },
+            "password": {
+                "write_only": True
             },
             "last_name": {"required": True},
         }

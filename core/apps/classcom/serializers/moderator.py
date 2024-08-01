@@ -87,10 +87,10 @@ class ModeratorCreateSerializer(serializers.ModelSerializer):
     district = serializers.PrimaryKeyRelatedField(
         queryset=District.objects.all(), source="user.district"
     )
-    institution = serializers.CharField(source="user.institution")
     institution_number = serializers.CharField(
         source="user.institution_number"
     )
+    institution = serializers.CharField()
 
     class Meta:
         model = Moderator

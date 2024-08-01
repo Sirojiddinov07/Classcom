@@ -2,10 +2,13 @@
 Accounts app urls
 """
 
-from django.urls import path
+from django.urls import path, include
 from rest_framework_simplejwt import views as jwt_views
-
+from rest_framework.routers import DefaultRouter
 from core.apps.accounts import views
+
+router = DefaultRouter()
+router.register("register", views.RegisterViewset, basename="moderator")
 
 urlpatterns = [
     path("auth/confirm/", views.ConfirmView.as_view(), name="confirm"),
@@ -13,6 +16,7 @@ urlpatterns = [
     path("auth/resend/", views.ResendView.as_view(), name="resend"),
     path("auth/me/", views.MeView.as_view({"get": "get"}), name="me"),
     path("auth/me/update/", views.MeUpdateView.as_view(), name="me-update"),
+    path("auth/", include(router.urls)),
     path(
         "auth/token/",
         views.CustomTokenObtainPairView.as_view(),
