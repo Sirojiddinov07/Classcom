@@ -16,6 +16,8 @@ class RegisterViewset(ViewSet):
     @action(detail=False, methods=['POST'], url_path="moderator")
     def register_moderator(self, request):
         """Moderator registratsiya qilish uchun api
+
+            - science_types: fan turlari uchun example tanlov, majburiy, ...
         """
         ser = self.serializer_class(data=request.data)
         ser.is_valid(raise_exception=True)
