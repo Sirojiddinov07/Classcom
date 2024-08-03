@@ -12,7 +12,7 @@ class Media(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self) -> str:
-        return str(self.name) if self.name is not None else self.id
+        return str(self.name) if self.name is not None else f"Media {self.id}"
 
     def save(self, *args, **kwargs):
         self.size = self.file.size
