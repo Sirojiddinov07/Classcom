@@ -1,50 +1,38 @@
 from rest_framework import serializers
-
 from core.apps.classcom import models
 from core.apps.classcom.serializers import media
-from core.apps.classcom.serializers import CategorySerializer
+from core.apps.classcom.serializers import CategorySerializer, CategoryTypeSerializer
 from core.apps.classcom.serializers.resource_type import ResourceTypeSerializer
 from core.http import serializers as http_serializers
-
 
 class ClassesSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Classes
-        fields = (
-            "id",
-            "name",
-        )
-
+        fields = ("id", "name")
 
 class ResourceSerializer(serializers.ModelSerializer):
-    """
-    Serializer for the Resource model
-    """
-
     user = http_serializers.UserSerializer()
     media = media.MediaSerializer(many=True, read_only=True)
     type = ResourceTypeSerializer(read_only=True)
     classes = ClassesSerializer(read_only=True)
     category = CategorySerializer()
+    category_type = CategoryTypeSerializer()
+
     class Meta:
         model = models.Resource
         fields = (
             "id",
             "name",
-            "category"
+            "category",
             "classes",
             "media",
             "type",
+            "category_type",
             "user",
         )
         extra_kwargs = {"media": {"write_only": True}}
 
-
 class ResourceDetailSerializer(ResourceSerializer):
-    """
-    Serializer for resource detail page
-    """
-
     class Meta:
         model = models.Resource
         fields = ResourceSerializer.Meta.fields + (
@@ -53,7 +41,6 @@ class ResourceDetailSerializer(ResourceSerializer):
             "user",
         )
         extra_kwargs = ResourceSerializer.Meta.extra_kwargs
-
 
 class ResourceCreateSerializer(serializers.ModelSerializer):
     media_file = serializers.FileField(write_only=True)
@@ -66,7 +53,8 @@ class ResourceCreateSerializer(serializers.ModelSerializer):
         model = models.Resource
         fields = (
             "name",
-            "category"
+            "category",
+            "category_type",
             "description",
             "banner",
             "type",

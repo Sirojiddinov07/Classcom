@@ -7,7 +7,7 @@ from core.apps.classcom.models import Category, CategoryType
 
 @admin.register(Category)
 class CategoryAdmin(ImportExportModelAdmin, TabbedTranslationAdmin):
-    list_display = ("id", "name", "category_type")
+    list_display = ("id", "name")
     search_fields = ("name",)
 
 

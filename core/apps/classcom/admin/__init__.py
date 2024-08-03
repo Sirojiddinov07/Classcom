@@ -1,5 +1,6 @@
 from .chat import *  # noqa
 from .classes import *  # noqa
+from .category import *  # noqa
 from .daysoff import *  # noqa
 from .download import *  # noqa
 from .feedback import *  # noqa
