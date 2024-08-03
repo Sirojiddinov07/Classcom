@@ -14,14 +14,9 @@ class ChangeRoleSerializer(serializers.ModelSerializer):
         try:
             user = User.objects.get(id=value)
         except User.DoesNotExist:
-            raise serializers.ValidationError(
-                {"detail": "User not found", "code": "user_not_found"}
-
-            )
+            raise serializers.ValidationError({"detail": "User not found", "code": "user_not_found"})
         if user.role == choices.Role.MODERATOR:
-            raise serializers.ValidationError(
-                {"detail": "User is already a moderator", "code": "already_moderator"}
-            )
+            raise serializers.ValidationError({"detail": "User is already a moderator", "code": "already_moderator"})
         return value
 
     def create(self, validated_data):
