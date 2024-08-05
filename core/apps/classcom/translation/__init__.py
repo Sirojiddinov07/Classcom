@@ -1,4 +1,5 @@
 from .classes import *  # noqa
+from .category import *  # noqa
 from .media import *  # noqa
 from .notification import *  # noqa
 from .plan import *  # noqa

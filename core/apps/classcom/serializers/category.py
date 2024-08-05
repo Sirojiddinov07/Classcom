@@ -7,8 +7,7 @@ class CategoryTypeSerializer(serializers.ModelSerializer):
         fields = ['id', 'name']
 
 class CategorySerializer(serializers.ModelSerializer):
-    category_type = CategoryTypeSerializer( read_only=True)
 
     class Meta:
         model = Category
-        fields = ['id', 'name', 'category_type']
+        fields = ['id', 'name']
