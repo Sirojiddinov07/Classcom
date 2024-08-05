@@ -7,6 +7,9 @@ from core.http.models import ScienceGroups
 class ScienceTypes(models.Model):
     name = models.CharField()
 
+    def __str__(self) -> str:
+        return self.name
+
 
 class Science(models.Model):
     name = models.CharField()
