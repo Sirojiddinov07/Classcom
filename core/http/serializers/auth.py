@@ -2,6 +2,7 @@ from django.utils.translation import gettext as _
 from rest_framework import exceptions, serializers
 from core.http import models
 from core.apps.classcom.models import ScienceTypes
+from core.apps.classcom.choices import Degree
 
 
 class LoginSerializer(serializers.Serializer):
@@ -12,6 +13,7 @@ class LoginSerializer(serializers.Serializer):
 class RegisterSerializer(serializers.ModelSerializer):
     phone = serializers.CharField(max_length=255)
     science_types = serializers.ListField(child=serializers.PrimaryKeyRelatedField(queryset=ScienceTypes.objects.all()))
+    degree = serializers.ChoiceField(choices=Degree.choices, required=False)
 
     def validate_phone(self, value):
         user = models.User.objects.filter(
@@ -35,7 +37,8 @@ class RegisterSerializer(serializers.ModelSerializer):
             "institution_number",
             "science_group",
             "science",
-            "science_types"
+            "science_types",
+            "degree"
         ]
         extra_kwargs = {
             "first_name": {
@@ -46,6 +49,9 @@ class RegisterSerializer(serializers.ModelSerializer):
             },
             "password": {
                 "write_only": True
+            },
+            "degree":{
+                "required": False
             },
             "science": {
                 "required": True
