@@ -1,6 +1,5 @@
 from rest_framework import serializers
-from core.apps.classcom.models import Science, Classes, Moderator
-from core.apps.classcom.choices import Degree
+from core.apps.classcom.models import Moderator
 from core.http.serializers import RegisterSerializer
 from core.services import UserService
 from django.utils.translation import gettext as _
@@ -8,9 +7,6 @@ from django.utils.translation import gettext as _
 
 class ModeratorSerializer(serializers.Serializer):
     user = RegisterSerializer()
-    science = serializers.PrimaryKeyRelatedField(queryset=Science.objects.all())
-    classes = serializers.PrimaryKeyRelatedField(queryset=Classes.objects.all())
-    degree = serializers.ChoiceField(choices=Degree.choices)
 
     def validate_user(self, value):
         phone = value.get("phone")
@@ -20,6 +16,7 @@ class ModeratorSerializer(serializers.Serializer):
 
     def create(self, validated_data):
         user = validated_data.pop("user")
+        degree = user.pop("degree")
         user = UserService().create_user(
             phone=user.get("phone"),
             password=user.get("password"),
@@ -33,8 +30,6 @@ class ModeratorSerializer(serializers.Serializer):
         return Moderator.objects.update_or_create(
             user=user,
             defaults={
-                "science": validated_data.get("science"),
-                "classes": validated_data.get("classes"),
-                "degree": validated_data.get("degree")
+                "degree": degree
             }
         )
