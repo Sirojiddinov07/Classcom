@@ -16,7 +16,7 @@ class ModeratorSerializer(serializers.ModelSerializer):
             queryset=ScienceTypes.objects.all()
         )
     )
-    degree = serializers.ChoiceField(choices=Degree.choices, required=False)
+    degree = serializers.ChoiceField(choices=Degree.choices)
     docs = serializers.FileField()
 
     def validate_phone(self, value):
