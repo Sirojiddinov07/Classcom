@@ -17,6 +17,7 @@ def notify_user_on_answer(sender, instance, created, **kwargs):
         feedback.answered = True
         feedback.save()
 
+
 @receiver(post_save, sender=TempModerator)
 def create_moderator(sender, instance, created, **kwargs):
     if instance.is_contracted:
@@ -27,6 +28,6 @@ def create_moderator(sender, instance, created, **kwargs):
             classes=instance.classes,
             degree=instance.degree,
             docs=instance.docs,
-            is_contracted=instance.is_contracted
+            is_contracted=instance.is_contracted,
         )
         instance.delete()

@@ -21,5 +21,5 @@ INSTALLED_APPS = [
     "core.apps.accounts.apps.AccountsConfig",
     "core.console.ConsoleConfig",
     "core.apps.classcom.apps.ClassComConfig",
-    "core.apps.payments.apps.PaymentsConfig"
+    "core.apps.payments.apps.PaymentsConfig",
 ]

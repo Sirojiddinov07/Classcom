@@ -7,10 +7,7 @@ class ScienceTypesSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = ScienceTypes
-        fields = (
-            "id",
-            "name"
-        )
+        fields = ("id", "name")
 
 
 class ScienceSerializer(serializers.ModelSerializer):

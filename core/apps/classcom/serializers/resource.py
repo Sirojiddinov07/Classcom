@@ -1,14 +1,19 @@
 from rest_framework import serializers
 from core.apps.classcom import models
 from core.apps.classcom.serializers import media
-from core.apps.classcom.serializers import CategorySerializer, CategoryTypeSerializer
+from core.apps.classcom.serializers import (
+    CategorySerializer,
+    CategoryTypeSerializer,
+)
 from core.apps.classcom.serializers.resource_type import ResourceTypeSerializer
 from core.http import serializers as http_serializers
+
 
 class ClassesSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Classes
         fields = ("id", "name")
+
 
 class ResourceSerializer(serializers.ModelSerializer):
     user = http_serializers.UserSerializer()
@@ -32,6 +37,7 @@ class ResourceSerializer(serializers.ModelSerializer):
         )
         extra_kwargs = {"media": {"write_only": True}}
 
+
 class ResourceDetailSerializer(ResourceSerializer):
     class Meta:
         model = models.Resource
@@ -41,6 +47,7 @@ class ResourceDetailSerializer(ResourceSerializer):
             "user",
         )
         extra_kwargs = ResourceSerializer.Meta.extra_kwargs
+
 
 class ResourceCreateSerializer(serializers.ModelSerializer):
     media_file = serializers.FileField(write_only=True)

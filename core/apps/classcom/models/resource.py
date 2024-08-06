@@ -3,8 +3,12 @@ from django.utils.translation import gettext_lazy as __
 
 
 class Resource(models.Model):
-    category = models.ForeignKey("Category", on_delete=models.CASCADE, null=True, blank=True)
-    category_type = models.ForeignKey("CategoryType", on_delete=models.CASCADE, null=True, blank=True)
+    category = models.ForeignKey(
+        "Category", on_delete=models.CASCADE, null=True, blank=True
+    )
+    category_type = models.ForeignKey(
+        "CategoryType", on_delete=models.CASCADE, null=True, blank=True
+    )
     name = models.CharField(max_length=255)
     description = models.TextField()
 

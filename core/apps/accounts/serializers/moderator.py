@@ -1,35 +1,77 @@
-from rest_framework import serializers
+from rest_framework import serializers, exceptions
 from core.apps.classcom.models import Moderator
-from core.http.serializers import RegisterSerializer
 from core.services import UserService
 from django.utils.translation import gettext as _
+from django.core.files.base import ContentFile
+from django.core.files.storage import default_storage
+from core.http import models
+from core.apps.classcom.models import ScienceTypes
+from core.apps.classcom.choices import Degree
 
 
-class ModeratorSerializer(serializers.Serializer):
-    user = RegisterSerializer()
+class ModeratorSerializer(serializers.ModelSerializer):
+    phone = serializers.CharField(max_length=255)
+    science_types = serializers.ListField(
+        child=serializers.PrimaryKeyRelatedField(
+            queryset=ScienceTypes.objects.all()
+        )
+    )
+    degree = serializers.ChoiceField(choices=Degree.choices, required=False)
+    docs = serializers.FileField()
 
-    def validate_user(self, value):
-        phone = value.get("phone")
-        if Moderator.objects.filter(user__phone=phone, user__validated_at__isnull=False):
-            raise serializers.ValidationError(_("Moderator Already This user"))
+    def validate_phone(self, value):
+        user = models.User.objects.filter(
+            phone=value, validated_at__isnull=False
+        )
+        if user.exists():
+            raise exceptions.ValidationError(
+                _("Phone number already registered."), code="unique"
+            )
         return value
 
-    def create(self, validated_data):
-        user = validated_data.pop("user")
-        degree = user.pop("degree")
+    def create(self, data):
+        docs = self.context.get("request").FILES.get("docs")
+        file = default_storage.save(docs.name, ContentFile(docs.read()))
         user = UserService().create_user(
-            phone=user.get("phone"),
-            password=user.get("password"),
-            last_name=user.get("last_name"),
-            first_name=user.get("first_name"),
-            district_id=user.get("district").id,
-            region_id=user.get("region").id,
-            institution=user.get("institution"),
-            institution_number=user.get("institution_number"),
+            phone=data.get("phone"),
+            password=data.get("password"),
+            last_name=data.get("last_name"),
+            first_name=data.get("first_name"),
+            district_id=data.get("district").id,
+            region_id=data.get("region").id,
+            institution=data.get("institution"),
+            institution_number=data.get("institution_number"),
         )
         return Moderator.objects.update_or_create(
-            user=user,
-            defaults={
-                "degree": degree
-            }
+            user=user, defaults={"degree": data.get("degree"), "docs": file}
         )
+
+    class Meta:
+        model = models.User
+        fields = [
+            "first_name",
+            "last_name",
+            "phone",
+            "password",
+            "role",
+            "region",
+            "district",
+            "institution",
+            "institution_number",
+            "science_group",
+            "science",
+            "science_types",
+            "degree",
+            "docs"
+        ]
+        extra_kwargs = {
+            "first_name": {"required": True},
+            "role": {"read_only": True},
+            "password": {"write_only": True},
+            "degree": {"required": False},
+            "science": {"required": True},
+            "last_name": {"required": True},
+            "district": {"required": True},
+            "region": {"required": True},
+            "institution_number": {"required": True},
+        }

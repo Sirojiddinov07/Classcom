@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from core.apps.classcom.models import Moderator,  TempModerator
+from core.apps.classcom.models import Moderator, TempModerator
 
 
 @admin.register(Moderator)
