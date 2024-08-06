@@ -18,6 +18,7 @@ urlpatterns = [
     path("accounts/", include("django.contrib.auth.urls")),
     path("schema/", SpectacularAPIView.as_view(), name="schema"),
     path("i18n/", include("django.conf.urls.i18n")),
+    path("", include("core.apps.payments.urls")),
     path("", include("core.apps.accounts.urls")),
     path("", include("core.apps.home.urls")),
     path("", include("core.apps.classcom.urls")),

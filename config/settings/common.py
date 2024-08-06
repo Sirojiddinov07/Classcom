@@ -98,9 +98,9 @@ FACTORYS = [
 ]
 
 SEEDERS = [
-        "core.http.database.seeder.Roles",
-        "core.http.database.seeder.UserSeeder"
-    ]
+    "core.http.database.seeder.Roles",
+    "core.http.database.seeder.UserSeeder",
+]
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "resources/static"),

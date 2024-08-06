@@ -8,11 +8,6 @@ class CategoryTranslationOptions(TranslationOptions):
     fields = ("name",)
 
 
-
-
 @register(CategoryType)
 class CategoryTypeTranslationOptions(TranslationOptions):
     fields = ("name",)
-
-
-

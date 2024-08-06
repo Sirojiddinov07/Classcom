@@ -11,7 +11,6 @@ class CategoryAdmin(ImportExportModelAdmin, TabbedTranslationAdmin):
     search_fields = ("name",)
 
 
-
 @admin.register(CategoryType)
 class CategoryTypeAdmin(ImportExportModelAdmin, TabbedTranslationAdmin):
     list_display = ("id", "name")

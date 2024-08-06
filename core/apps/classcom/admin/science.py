@@ -7,10 +7,7 @@ from core.apps.classcom.models import Science, ScienceTypes
 
 @admin.register(ScienceTypes)
 class ScienceTypesAdmin(ImportExportModelAdmin, TabbedTranslationAdmin):
-    list_display = (
-        "id",
-        "name"
-    )
+    list_display = ("id", "name")
 
 
 @admin.register(Science)

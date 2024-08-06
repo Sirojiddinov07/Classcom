@@ -12,15 +12,22 @@ class LoginSerializer(serializers.Serializer):
 
 class RegisterSerializer(serializers.ModelSerializer):
     phone = serializers.CharField(max_length=255)
-    science_types = serializers.ListField(child=serializers.PrimaryKeyRelatedField(queryset=ScienceTypes.objects.all()))
+    science_types = serializers.ListField(
+        child=serializers.PrimaryKeyRelatedField(
+            queryset=ScienceTypes.objects.all()
+        )
+    )
     degree = serializers.ChoiceField(choices=Degree.choices, required=False)
+    docs = serializers.FileField()
 
     def validate_phone(self, value):
         user = models.User.objects.filter(
             phone=value, validated_at__isnull=False
         )
         if user.exists():
-            raise exceptions.ValidationError(_("Phone number already registered."), code="unique")
+            raise exceptions.ValidationError(
+                _("Phone number already registered."), code="unique"
+            )
         return value
 
     class Meta:
@@ -38,24 +45,15 @@ class RegisterSerializer(serializers.ModelSerializer):
             "science_group",
             "science",
             "science_types",
-            "degree"
+            "degree",
+            "docs"
         ]
         extra_kwargs = {
-            "first_name": {
-                "required": True
-            },
-            "role": {
-                "read_only": True
-            },
-            "password": {
-                "write_only": True
-            },
-            "degree":{
-                "required": False
-            },
-            "science": {
-                "required": True
-            },
+            "first_name": {"required": True},
+            "role": {"read_only": True},
+            "password": {"write_only": True},
+            "degree": {"required": False},
+            "science": {"required": True},
             "last_name": {"required": True},
         }
 
