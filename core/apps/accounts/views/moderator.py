@@ -23,7 +23,7 @@ class RegisterViewset(ViewSet):
         })
         ser.is_valid(raise_exception=True)
         ser.save()
-        phone = request.data.get("user").get("phone")
+        phone = request.data.get("phone")
         try:
             UserService().send_confirm(phone)
         except Exception as e:

@@ -3,6 +3,7 @@ from .models import Orders
 
 
 class OrderSerializer(serializers.ModelSerializer):
+
     class Meta:
         fields = (
             "id",

@@ -30,7 +30,7 @@ class ModeratorSerializer(serializers.ModelSerializer):
         return value
 
     def create(self, data):
-        docs = self.context.get("request").FILES.get("docs")
+        docs = self.context.get("request").FILES['docs']
         file = default_storage.save(docs.name, ContentFile(docs.read()))
         user = UserService().create_user(
             phone=data.get("phone"),
