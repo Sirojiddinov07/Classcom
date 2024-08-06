@@ -15,3 +15,6 @@ class OrderViewSet(
 
     def get_queryset(self):
         return Orders.objects.filter(user=self.request.user)
+
+    def create(self, request, *args, **kwargs):
+        return super().create(request, *args, **kwargs)
