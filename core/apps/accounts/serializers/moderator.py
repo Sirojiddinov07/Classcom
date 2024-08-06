@@ -41,6 +41,8 @@ class ModeratorSerializer(serializers.ModelSerializer):
             region_id=data.get("region").id,
             institution=data.get("institution"),
             institution_number=data.get("institution_number"),
+            science_id=data.get("science").id,
+            science_group_id=data.get("science_group").id
         )
         return Moderator.objects.update_or_create(
             user=user, defaults={"degree": data.get("degree"), "docs": file}
