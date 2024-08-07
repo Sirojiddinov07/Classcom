@@ -90,7 +90,7 @@ class ModeratorCreateSerializer(serializers.ModelSerializer):
     institution_number = serializers.CharField(
         source="user.institution_number"
     )
-    institution = serializers.CharField()
+    institution = serializers.CharField(source="user.institution")
 
     class Meta:
         model = Moderator
