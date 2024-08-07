@@ -104,7 +104,7 @@ class ModeratorCreateSerializer(serializers.ModelSerializer):
             "institution",
             "institution_number",
             "science",
-            "science_group",
+            "science_type",
             "degree",
             "docs",
             "is_contracted",
