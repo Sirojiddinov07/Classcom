@@ -30,8 +30,8 @@ class Command(base.BaseCommand):
                 reader = csv.DictReader(csvfile)
                 for row in reader:
                     region_uz = row.get("name_uz", None)
-                    region_ru = row.get("name_oz", None)
-                    region_en = row.get("name_ru", None)
+                    region_ru = row.get("name_ru", None)
+                    region_en = row.get("name_oz", None)
 
                     if not region_uz and not region_ru and not region_en:
                         self.stdout.write(
@@ -71,7 +71,7 @@ class Command(base.BaseCommand):
                             self.style.SUCCESS(f"Region updated: {row}")
                         )
                     else:
-                        Region.objects.create(
+                        Region.objects.update_or_create(
                             region_uz=region_uz,
                             region_ru=region_ru,
                             region_en=region_en,
