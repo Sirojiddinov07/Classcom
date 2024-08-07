@@ -3,7 +3,7 @@ from django.utils.translation import gettext_lazy as __
 
 from core.apps.classcom import choices
 from core.apps.classcom.choices import Role
-from core.http.models import ScienceGroups
+from core.apps.classcom.models.science import ScienceTypes
 
 
 class Moderator(models.Model):
@@ -12,8 +12,8 @@ class Moderator(models.Model):
     science = models.ForeignKey(
         to="Science", on_delete=models.SET_NULL, null=True
     )
-    science_group = models.ForeignKey(
-        ScienceGroups, on_delete=models.SET_NULL, null=True, blank=True
+    science_type = models.ForeignKey(
+        ScienceTypes, on_delete=models.SET_NULL, null=True, blank=True
     )
     degree = models.CharField(
         max_length=15,
@@ -43,8 +43,8 @@ class TempModerator(models.Model):
     science = models.ForeignKey(
         to="Science", on_delete=models.SET_NULL, null=True
     )
-    science_group = models.ForeignKey(
-        ScienceGroups, on_delete=models.SET_NULL, null=True, blank=True
+    science_type = models.ForeignKey(
+        ScienceTypes, on_delete=models.SET_NULL, null=True, blank=True
     )
     degree = models.CharField(
         max_length=15,

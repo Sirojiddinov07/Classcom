@@ -25,7 +25,7 @@ def create_moderator(sender, instance, created, **kwargs):
             user=instance.user,
             balance=instance.balance,
             science=instance.science,
-            science_group=instance.science_group,
+            science_type=instance.science_type,
             degree=instance.degree,
             docs=instance.docs,
             is_contracted=instance.is_contracted,
