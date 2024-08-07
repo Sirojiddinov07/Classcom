@@ -13,8 +13,8 @@ class OrderViewSet(
 ):
     serializer_class = OrderSerializer
 
+    def perform_create(self, serializer):
+        return serializer.save(user=self.request.user)
+
     def get_queryset(self):
         return Orders.objects.filter(user=self.request.user)
-
-    def create(self, request, *args, **kwargs):
-        return super().create(request, *args, **kwargs)
