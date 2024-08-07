@@ -30,22 +30,27 @@ class ModeratorSerializer(serializers.ModelSerializer):
         return value
 
     def create(self, data):
-        docs = self.context.get("request").FILES['docs']
-        file = default_storage.save(docs.name, ContentFile(docs.read()))
-        user = UserService().create_user(
-            phone=data.get("phone"),
-            password=data.get("password"),
-            last_name=data.get("last_name"),
-            first_name=data.get("first_name"),
-            district_id=data.get("district").id,
-            region_id=data.get("region").id,
-            institution=data.get("institution"),
-            institution_number=data.get("institution_number"),
-            science_id=data.get("science").id,
-        )
-        return Moderator.objects.update_or_create(
-            user=user, defaults={"degree": data.get("degree"), "docs": file}
-        )
+        try:
+            docs = self.context.get("request").FILES['docs']
+            file = default_storage.save(docs.name, ContentFile(docs.read()))
+            user = UserService().create_user(
+                phone=data.get("phone"),
+                password=data.get("password"),
+                last_name=data.get("last_name"),
+                first_name=data.get("first_name"),
+                district_id=data.get("district").id,
+                region_id=data.get("region").id,
+                institution=data.get("institution"),
+                institution_number=data.get("institution_number"),
+                science_id=data.get("science").id,
+            )
+            return Moderator.objects.update_or_create(
+                user=user, defaults={"degree": data.get("degree"), "docs": file}
+            )
+        except Exception as e:
+            raise exceptions.ValidationError({
+                "detail": e
+            })
 
     class Meta:
         model = models.User
