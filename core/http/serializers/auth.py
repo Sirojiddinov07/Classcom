@@ -18,7 +18,6 @@ class RegisterSerializer(serializers.ModelSerializer):
         )
     )
     degree = serializers.ChoiceField(choices=Degree.choices, required=False)
-    docs = serializers.FileField()
 
     def validate_phone(self, value):
         user = models.User.objects.filter(
@@ -46,7 +45,6 @@ class RegisterSerializer(serializers.ModelSerializer):
             "science",
             "science_types",
             "degree",
-            "docs"
         ]
         extra_kwargs = {
             "first_name": {"required": True},
