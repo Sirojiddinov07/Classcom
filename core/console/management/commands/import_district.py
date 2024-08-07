@@ -23,8 +23,8 @@ class Command(base.BaseCommand):
                 for row in reader:
                     region_id = row.get("region_id")
                     district_uz = row.get("name_uz")
-                    district_ru = row.get("name_oz")
-                    district_en = row.get("name_ru")
+                    district_ru = row.get("name_ru")
+                    district_en = row.get("name_oz")
 
                     if not region_id or not district_uz:
                         self.stdout.write(
@@ -64,7 +64,7 @@ class Command(base.BaseCommand):
 
                         if not district:
                             # If no existing district is found, create a new one
-                            district = District.objects.create(
+                            district = District.objects.update_or_create(
                                 region=region,
                                 district_uz=district_uz,
                                 district_ru=district_ru,
