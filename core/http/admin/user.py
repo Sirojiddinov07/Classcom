@@ -28,7 +28,6 @@ class ModeratorInline(StackedInline):
     verbose_name_plural = "Moderators"
     fields = [
         "balance",
-        "classes",
         "degree",
         "docs",
         "is_contracted",
