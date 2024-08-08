@@ -29,6 +29,7 @@ class ModeratorInline(StackedInline):
     fields = [
         "balance",
         "classes",
+        "science_type",
         "degree",
         "docs",
         "is_contracted",
