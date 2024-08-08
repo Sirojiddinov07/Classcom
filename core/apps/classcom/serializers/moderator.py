@@ -90,7 +90,7 @@ class ModeratorCreateSerializer(serializers.ModelSerializer):
     institution_number = serializers.CharField(
         source="user.institution_number"
     )
-    institution = serializers.CharField()
+    institution = serializers.CharField(source="user.institution")
 
     class Meta:
         model = Moderator
@@ -104,7 +104,7 @@ class ModeratorCreateSerializer(serializers.ModelSerializer):
             "institution",
             "institution_number",
             "science",
-            "classes",
+            "science_type",
             "degree",
             "docs",
             "is_contracted",
