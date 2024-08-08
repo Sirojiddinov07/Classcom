@@ -28,7 +28,6 @@ class ModeratorInline(StackedInline):
     verbose_name_plural = "Moderators"
     fields = [
         "balance",
-        "science",
         "classes",
         "degree",
         "docs",
@@ -54,6 +53,7 @@ class UserAdmin(admin.UserAdmin, import_export.ImportExportModelAdmin):
                     "region",
                     "district",
                     "avatar",
+                    "science",
                     "institution",
                     "science_group",
                     "institution_number",
