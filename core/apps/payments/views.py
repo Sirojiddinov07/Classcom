@@ -3,13 +3,14 @@ from rest_framework.mixins import (
     RetrieveModelMixin,
     CreateModelMixin,
     ListModelMixin,
+    DestroyModelMixin
 )
 from .models import Orders
 from .serializers import OrderSerializer
 
 
 class OrderViewSet(
-    RetrieveModelMixin, ListModelMixin, CreateModelMixin, GenericViewSet
+    RetrieveModelMixin, ListModelMixin, CreateModelMixin, DestroyModelMixin, GenericViewSet
 ):
     serializer_class = OrderSerializer
 
