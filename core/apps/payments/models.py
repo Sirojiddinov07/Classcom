@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils.translation import gettext as _
 from core.apps.classcom.models.science import Science, ScienceTypes
+from core.apps.classcom.models import Quarter
 
 
 class Orders(models.Model):
@@ -16,12 +17,21 @@ class Orders(models.Model):
         verbose_name = _("Orders")
         verbose_name_plural = _("Orderss")
 
-    def __str__(self):
-        return self.user.first_name or self.id
+    def __str__(self) -> str:
+        return f"{self.id} {self.user.first_name}"
 
 
 class Payments(models.Model):
     order = models.ForeignKey(Orders, on_delete=models.CASCADE)
     price = models.BigIntegerField(default=0)
+    trans_id = models.CharField(max_length=255, unique=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+
+class Plans(models.Model):
+    quarter = models.ForeignKey(Quarter, on_delete=models.CASCADE)
+    price = models.BigIntegerField(default=0)
+
+    def __str__(self):
+        return f"{self.price}"

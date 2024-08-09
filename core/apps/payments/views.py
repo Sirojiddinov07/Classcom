@@ -7,8 +7,10 @@ from rest_framework.mixins import (
 )
 from rest_framework.decorators import action
 from rest_framework.response import Response
-from .models import Orders
-from .serializers import OrderSerializer
+from .models import Orders, Payments
+from uuid import uuid4
+from .serializers import OrderSerializer, PaymentCreateSerializer
+from django.utils.translation import gettext as _
 
 
 class OrderViewSet(
@@ -24,9 +26,22 @@ class OrderViewSet(
 
 
 class PaymentViewSet(ViewSet):
+    serializer_class = PaymentCreateSerializer
 
-    @action(detail=False, methods=['POST'], url_path="create-payment")
+    @action(detail=False, methods=['POST'], url_path="create")
     def create_payment(self, request):
+        ser = self.serializer_class(data=request.data)
+        ser.is_valid(raise_exception=True)
+        data = ser.validated_data
+        order = data.get("order")
+        payment = Payments.objects.create(
+            order=order,
+            price=order.price,
+            trans_id=str(uuid4())
+        )
         return Response({
-            "success": True
+            "detail": _("Payment created"),
+            "data": {
+                "url": "https://uzumbank.uz/payment/{}".format(payment.trans_id)
+            }
         })
