@@ -15,7 +15,7 @@ class Orders(models.Model):
 
     class Meta:
         verbose_name = _("Orders")
-        verbose_name_plural = _("Orderss")
+        verbose_name_plural = _("Orders")
 
     def __str__(self) -> str:
         return f"{self.id} {self.user.first_name}"
@@ -29,10 +29,21 @@ class Payments(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    class Meta:
+        verbose_name = _("Payments")
+        verbose_name_plural = _("Payments")
+
+    def __str__(self) -> str:
+        return f"{self.id} {self.order.id}" 
+
 
 class Plans(models.Model):
     quarter = models.ForeignKey(Quarter, on_delete=models.CASCADE)
     price = models.BigIntegerField(default=0)
+
+    class Meta:
+        verbose_name = _("Plans")
+        verbose_name_plural = _("Plans")
 
     def __str__(self):
         return f"{self.price}"
