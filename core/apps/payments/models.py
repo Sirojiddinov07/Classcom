@@ -6,8 +6,8 @@ from core.apps.classcom.models import Quarter
 
 class Orders(models.Model):
     user = models.ForeignKey("http.User", on_delete=models.CASCADE)
-    start_date = models.DateTimeField(auto_now_add=True, blank=True, null=True)
-    end_date = models.DateTimeField(blank=True, null=True)
+    start_date = models.DateField(auto_now_add=True, blank=True, null=True)
+    end_date = models.DateField(blank=True, null=True)
     science = models.ForeignKey(Science, on_delete=models.CASCADE)
     types = models.ManyToManyField(ScienceTypes)
     price = models.BigIntegerField(default=0)
@@ -24,6 +24,7 @@ class Orders(models.Model):
 class Payments(models.Model):
     order = models.ForeignKey(Orders, on_delete=models.CASCADE)
     price = models.BigIntegerField(default=0)
+    status = models.BooleanField(default=False)
     trans_id = models.CharField(max_length=255, unique=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

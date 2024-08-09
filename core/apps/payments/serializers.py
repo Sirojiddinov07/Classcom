@@ -1,11 +1,14 @@
 from rest_framework import serializers
 from .models import Orders
+from core.apps.classcom.serializers import ScienceTypesSerializer
 
 
 class OrderSerializer(serializers.ModelSerializer):
 
     def to_representation(self, instance):
-        return super().to_representation(instance)
+        data = super().to_representation(instance)
+        data['types'] = ScienceTypesSerializer(instance=instance.types, many=True).data
+        return data
 
     class Meta:
         fields = (
@@ -36,3 +39,4 @@ class OrderSerializer(serializers.ModelSerializer):
 
 class PaymentCreateSerializer(serializers.Serializer):
     order = serializers.PrimaryKeyRelatedField(queryset=Orders.objects.all())
+    status = serializers.BooleanField()
