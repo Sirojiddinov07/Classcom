@@ -22,3 +22,6 @@ class Orders(models.Model):
 
 class Payments(models.Model):
     order = models.ForeignKey(Orders, on_delete=models.CASCADE)
+    price = models.BigIntegerField(default=0)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)

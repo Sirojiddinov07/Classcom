@@ -1,12 +1,10 @@
 from rest_framework import serializers
 from .models import Orders
-from ..classcom.serializers import ScienceTypesSerializer
 
 
 class OrderSerializer(serializers.ModelSerializer):
 
     def to_representation(self, instance):
-        # instance.types = ScienceTypesSerializer(instance.types.all(), many=True).data
         return super().to_representation(instance)
 
     class Meta:
@@ -34,3 +32,7 @@ class OrderSerializer(serializers.ModelSerializer):
                 "read_only": True
             }
         }
+
+
+class PaymentCreateSerializer(serializers.Serializer):
+    order = serializers.PrimaryKeyRelatedField(queryset=Orders.objects.all())
