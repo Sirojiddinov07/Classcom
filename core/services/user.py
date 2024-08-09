@@ -56,7 +56,6 @@ class UserService(base_service.BaseService, sms.SmsService):
                 "phone": phone,
                 "first_name": first_name,
                 "last_name": last_name,
-                "password": hashers.make_password(password),
                 "role": role,
                 "region": region,
                 "district": district,
@@ -66,6 +65,8 @@ class UserService(base_service.BaseService, sms.SmsService):
                 "science": science,
             },
         )
+        user.set_password(password)
+        user.save()
         return user
 
     def send_confirmation(self, phone) -> bool:
