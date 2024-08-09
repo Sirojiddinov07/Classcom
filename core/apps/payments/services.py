@@ -1,8 +1,14 @@
 from .models import Plans
+from rest_framework.exceptions import APIException
+from django.utils.translation import gettext as _
 
 
 class PlanService:
 
     def get_plan(self):
         # TODO: Hozirgi oydagi planni olish logikasini yozish kerak
-        return Plans.objects.first()
+        plan = Plans.objects.all()
+        if plan.exists():
+            return plan.first()
+        else:
+            raise APIException(_("Serverda plan topilmadi bu texnik xatolik iltimos adminga murojat qiling"))
