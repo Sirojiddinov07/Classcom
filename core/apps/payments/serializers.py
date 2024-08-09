@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from .models import Orders
-from core.apps.classcom.serializers import ScienceTypesSerializer
+from core.apps.classcom.serializers import ScienceTypesSerializer, ScienceSerializer
 
 
 class OrderSerializer(serializers.ModelSerializer):
@@ -8,6 +8,7 @@ class OrderSerializer(serializers.ModelSerializer):
     def to_representation(self, instance):
         data = super().to_representation(instance)
         data['types'] = ScienceTypesSerializer(instance=instance.types, many=True).data
+        data['science'] = ScienceSerializer(instance=instance.science).data
         return data
 
     class Meta:
