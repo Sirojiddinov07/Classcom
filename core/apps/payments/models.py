@@ -5,6 +5,8 @@ from core.apps.classcom.models import Quarter
 
 
 class Orders(models.Model):
+    """Order Model"""
+
     user = models.ForeignKey("http.User", on_delete=models.CASCADE)
     start_date = models.DateField(auto_now_add=True, blank=True, null=True)
     end_date = models.DateField(blank=True, null=True)
@@ -34,7 +36,7 @@ class Payments(models.Model):
         verbose_name_plural = _("Payments")
 
     def __str__(self) -> str:
-        return f"{self.id} {self.order.id}" 
+        return f"{self.id} {self.order.id}"
 
 
 class Plans(models.Model):

@@ -4,8 +4,7 @@ from .models import Orders
 
 
 def order_create(sender, instance, created, **kwargs):
-    """Order post save signal
-    """
+    """Order post save signal"""
     if created:
         plan = PlanService().get_plan()
         instance.price = plan.price

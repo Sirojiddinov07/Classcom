@@ -2,9 +2,8 @@ from django.utils.decorators import method_decorator
 from django.views.decorators.cache import never_cache
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import permissions, viewsets
-from django_filters import rest_framework as filters
 from rest_framework.response import Response
-
+from rest_framework.decorators import action
 from core.apps.classcom import models, serializers
 
 # class ResourceFilter(filters.FilterSet):
@@ -14,6 +13,21 @@ from core.apps.classcom import models, serializers
 #     class Meta:
 #         model = models.Resource
 #         fields = ['name', 'type', 'classes', 'category', 'category_type']
+
+
+class ResourceTypesViewSet(viewsets.ViewSet):
+    permission_classes = [permissions.AllowAny]
+
+    @action(detail=False, methods=["GET"], url_path="resource-types")
+    def get(self, request):
+        """
+        Resource Turlarini olish uchun GET request
+        """
+        resource_types = models.ResourceType.objects.all()
+        serializer = serializers.ResourceTypeSerializer(
+            resource_types, many=True
+        )
+        return Response(serializer.data)
 
 
 class ResourceViewSet(viewsets.ModelViewSet):
@@ -63,14 +77,14 @@ class ResourceViewSet(viewsets.ModelViewSet):
         queryset = self.filter_queryset(self.get_queryset())
         serializer = self.get_serializer(queryset, many=True)
 
-        classes_serializer = serializers.ClassesSerializer(
-            self.extra_context.get("classes_not_in_filtered_resources", []),
-            many=True,
-        )
+        # classes_serializer = serializers.ClassesSerializer(
+        #     self.extra_context.get("classes_not_in_filtered_resources", []),
+        #     many=True,
+        # )
 
         response_data = {
             "resources": serializer.data,
-            "classes_not_in_filtered_resources": classes_serializer.data,
+            # "classes_not_in_filtered_resources": classes_serializer.data,
         }
 
         return Response(response_data)

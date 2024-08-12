@@ -1,22 +1,44 @@
 from rest_framework import serializers
-from core.apps.classcom.models import TempModerator, choices, Science, ScienceTypes
+from core.apps.classcom.models import (
+    TempModerator,
+    choices,
+    Science,
+    ScienceTypes,
+)
 from core.http.models import User
 
 
 class ChangeRoleSerializer(serializers.ModelSerializer):
     user_id = serializers.IntegerField()
-    science_id = serializers.PrimaryKeyRelatedField(queryset=Science.objects.all(), source='science', allow_null=True)
-    science_type_id = serializers.PrimaryKeyRelatedField(queryset=ScienceTypes.objects.all(), source='science_type', allow_null=True)
+    science_id = serializers.PrimaryKeyRelatedField(
+        queryset=Science.objects.all(), source="science", allow_null=True
+    )
+    science_type_id = serializers.PrimaryKeyRelatedField(
+        queryset=ScienceTypes.objects.all(),
+        source="science_type",
+        allow_null=True,
+    )
 
     class Meta:
         model = TempModerator
-        fields = ["user_id", "balance", "degree", "docs", "is_contracted", "science_id", "science_type_id"]
+        fields = [
+            "user_id",
+            "balance",
+            "degree",
+            "docs",
+            "is_contracted",
+            "science_id",
+            "science_type_id",
+        ]
 
     def validate_user_id(self, value):
-        request = self.context.get('request')
+        request = self.context.get("request")
         if not request or not request.user:
             raise serializers.ValidationError(
-                {"detail": "Request user is not available", "code": "no_request_user"}
+                {
+                    "detail": "Request user is not available",
+                    "code": "no_request_user",
+                }
             )
 
         try:
