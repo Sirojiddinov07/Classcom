@@ -14,7 +14,7 @@ class ResourceTypeSerializer(serializers.ModelSerializer):
         response = []
         match obj.type:
             case Types.BYCLASS | Types.BYCLASSANDUNIT:
-                response = Classes.objects.all().values_list("id", "name")
+                response = Classes.objects.all().values("id", "name")
             case Types.BYDEPARTMENT:
                 response = [{"id": i.name, "name": str(i.label)} for i in Departments]
             case Types.BYSCHOOL:

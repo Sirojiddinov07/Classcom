@@ -6,14 +6,6 @@ from rest_framework.response import Response
 from rest_framework.decorators import action
 from core.apps.classcom import models, serializers
 
-# class ResourceFilter(filters.FilterSet):
-#     # category_name = filters.CharFilter(field_name='category__name', lookup_expr='icontains')
-#     # category_type_name = filters.CharFilter(field_name='category__category_type__name', lookup_expr='icontains')
-#
-#     class Meta:
-#         model = models.Resource
-#         fields = ['name', 'type', 'classes', 'category', 'category_type']
-
 
 class ResourceTypesViewSet(viewsets.ViewSet):
     permission_classes = [permissions.AllowAny]
@@ -70,21 +62,22 @@ class ResourceViewSet(viewsets.ModelViewSet):
                 "resources": filtered_resources,
                 "classes_not_in_filtered_resources": classes_not_in_filtered_resources,
             }
-
+        else:
+            self.extra_context = {}
         return queryset
 
     def list(self, request, *args, **kwargs):
         queryset = self.filter_queryset(self.get_queryset())
         serializer = self.get_serializer(queryset, many=True)
 
-        # classes_serializer = serializers.ClassesSerializer(
-        #     self.extra_context.get("classes_not_in_filtered_resources", []),
-        #     many=True,
-        # )
+        classes_serializer = serializers.ClassesSerializer(
+            self.extra_context.get("classes_not_in_filtered_resources", []),
+            many=True,
+        )
 
         response_data = {
             "resources": serializer.data,
-            # "classes_not_in_filtered_resources": classes_serializer.data,
+            "classes_not_in_filtered_resources": classes_serializer.data,
         }
 
         return Response(response_data)
