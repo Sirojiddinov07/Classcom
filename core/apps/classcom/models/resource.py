@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as __
+from ..choices import Types
 
 
 class Resource(models.Model):
@@ -16,6 +17,7 @@ class Resource(models.Model):
     type = models.ForeignKey(
         "ResourceType", on_delete=models.CASCADE, null=True, blank=True
     )
+    subtype = models.CharField(max_length=255, null=True, blank=True)
 
     user = models.ForeignKey("http.User", on_delete=models.CASCADE)
     classes = models.ForeignKey(
@@ -31,3 +33,8 @@ class Resource(models.Model):
     class Meta:
         verbose_name = __("Resource")
         verbose_name_plural = __("Resources")
+
+
+class ResourceTypes(models.Model):
+    name = models.CharField()
+    type = models.CharField(choices=Types.choices)

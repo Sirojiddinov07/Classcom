@@ -1,14 +1,19 @@
 from rest_framework import serializers
 from .models import Orders
-from core.apps.classcom.serializers import ScienceTypesSerializer, ScienceMiniSerializer
+from core.apps.classcom.serializers import (
+    ScienceTypesSerializer,
+    ScienceMiniSerializer,
+)
 
 
 class OrderSerializer(serializers.ModelSerializer):
 
     def to_representation(self, instance):
         data = super().to_representation(instance)
-        data['types'] = ScienceTypesSerializer(instance=instance.types, many=True).data
-        data['science'] = ScienceMiniSerializer(instance=instance.science).data
+        data["types"] = ScienceTypesSerializer(
+            instance=instance.types, many=True
+        ).data
+        data["science"] = ScienceMiniSerializer(instance=instance.science).data
         return data
 
     class Meta:
@@ -23,18 +28,10 @@ class OrderSerializer(serializers.ModelSerializer):
         )
         model = Orders
         extra_kwargs = {
-            "start_date": {
-                "read_only": True
-            },
-            "end_date": {
-                "read_only": True
-            },
-            "price": {
-                "read_only": True
-            },
-            "status": {
-                "read_only": True
-            }
+            "start_date": {"read_only": True},
+            "end_date": {"read_only": True},
+            "price": {"read_only": True},
+            "status": {"read_only": True},
         }
 
 

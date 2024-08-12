@@ -18,9 +18,9 @@ class RegisterViewset(ViewSet):
 
         - science_types: fan turlari uchun example tanlov, majburiy, ...
         """
-        ser = ModeratorSerializer(data=request.data, context={
-            "request": self.request
-        })
+        ser = ModeratorSerializer(
+            data=request.data, context={"request": self.request}
+        )
         ser.is_valid(raise_exception=True)
         ser.save()
         phone = request.data.get("phone")

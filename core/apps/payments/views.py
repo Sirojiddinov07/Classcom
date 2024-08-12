@@ -3,7 +3,7 @@ from rest_framework.mixins import (
     RetrieveModelMixin,
     CreateModelMixin,
     ListModelMixin,
-    DestroyModelMixin
+    DestroyModelMixin,
 )
 from rest_framework.decorators import action
 from rest_framework.response import Response
@@ -14,7 +14,11 @@ from django.utils.translation import gettext as _
 
 
 class OrderViewSet(
-    RetrieveModelMixin, ListModelMixin, CreateModelMixin, DestroyModelMixin, GenericViewSet
+    RetrieveModelMixin,
+    ListModelMixin,
+    CreateModelMixin,
+    DestroyModelMixin,
+    GenericViewSet,
 ):
     serializer_class = OrderSerializer
 
@@ -28,20 +32,22 @@ class OrderViewSet(
 class PaymentViewSet(ViewSet):
     serializer_class = PaymentCreateSerializer
 
-    @action(detail=False, methods=['POST'], url_path="create")
+    @action(detail=False, methods=["POST"], url_path="create")
     def create_payment(self, request):
         ser = self.serializer_class(data=request.data)
         ser.is_valid(raise_exception=True)
         data = ser.validated_data
         order = data.get("order")
         payment = Payments.objects.create(
-            order=order,
-            price=order.price,
-            trans_id=str(uuid4())
+            order=order, price=order.price, trans_id=str(uuid4())
         )
-        return Response({
-            "detail": _("Payment created"),
-            "data": {
-                "url": "https://uzumbank.uz/payment/{}".format(payment.trans_id)
+        return Response(
+            {
+                "detail": _("Payment created"),
+                "data": {
+                    "url": "https://uzumbank.uz/payment/{}".format(
+                        payment.trans_id
+                    )
+                },
             }
-        })
+        )

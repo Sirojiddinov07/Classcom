@@ -11,4 +11,8 @@ class PlanService:
         if plan.exists():
             return plan.first()
         else:
-            raise APIException(_("Serverda plan topilmadi bu texnik xatolik iltimos adminga murojat qiling"))
+            raise APIException(
+                _(
+                    "Serverda plan topilmadi bu texnik xatolik iltimos adminga murojat qiling"
+                )
+            )

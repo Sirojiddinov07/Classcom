@@ -21,6 +21,7 @@ router.register("days_off", views.DaysOffViewSet, basename="days_off")
 router.register("resource", views.ResourceViewSet, basename="resource")
 router.register("region", views.RegionViewSet, basename="region")
 router.register("district", views.DistrictViewSet, basename="district")
+router.register("types", views.ResourceTypesViewSet, basename="types")
 
 urlpatterns = [
     path("", include(router.urls)),

@@ -31,7 +31,7 @@ class ModeratorSerializer(serializers.ModelSerializer):
 
     def create(self, data):
         try:
-            docs = self.context.get("request").FILES['docs']
+            docs = self.context.get("request").FILES["docs"]
             file = default_storage.save(docs.name, ContentFile(docs.read()))
             user = UserService().create_user(
                 phone=data.get("phone"),
@@ -45,12 +45,11 @@ class ModeratorSerializer(serializers.ModelSerializer):
                 science_id=data.get("science").id,
             )
             return Moderator.objects.update_or_create(
-                user=user, defaults={"degree": data.get("degree"), "docs": file}
+                user=user,
+                defaults={"degree": data.get("degree"), "docs": file},
             )
         except Exception as e:
-            raise exceptions.ValidationError({
-                "detail": e
-            })
+            raise exceptions.ValidationError({"detail": e})
 
     class Meta:
         model = models.User
@@ -67,7 +66,7 @@ class ModeratorSerializer(serializers.ModelSerializer):
             "science",
             "science_types",
             "degree",
-            "docs"
+            "docs",
         ]
         extra_kwargs = {
             "first_name": {"required": True},

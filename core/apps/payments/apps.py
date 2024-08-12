@@ -6,4 +6,4 @@ class PaymentsConfig(AppConfig):
     name = "core.apps.payments"
 
     def ready(self) -> None:
-        import core.apps.payments.signals # noqa
+        import core.apps.payments.signals  # noqa
