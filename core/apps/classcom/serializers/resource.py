@@ -4,9 +4,11 @@ from core.apps.classcom.serializers import media
 from core.apps.classcom.serializers import (
     CategorySerializer,
     CategoryTypeSerializer,
+    ClassesSerializer
 )
 from core.apps.classcom.serializers.resource_type import ResourceTypeMiniSerializer
 from core.http import serializers as http_serializers
+from ..choices import Types, Departments, Schools, Docs
 
 
 class ClassesSerializer(serializers.ModelSerializer):
@@ -20,8 +22,25 @@ class ResourceSerializer(serializers.ModelSerializer):
     media = media.MediaSerializer(many=True, read_only=True)
     type = ResourceTypeMiniSerializer(read_only=True)
     classes = ClassesSerializer(read_only=True)
+    subtype = serializers.SerializerMethodField()
     category = CategorySerializer()
     category_type = CategoryTypeSerializer()
+
+    def get_subtype(self, obj):
+        match obj.type:
+            case Types.BYCLASS | Types.BYCLASSANDUNIT:
+                return ClassesSerializer(models.Classes.objects.get(id=obj.subtype)).data
+            case Types.BYDEPARTMENT:
+                with getattr(Departments, obj.subtype) as obj:
+                    return {"id": obj.namee, "name": obj.label}
+            case Types.BYSCHOOL:
+                with getattr(Schools, obj.subtype) as obj:
+                    return {"id": obj.namee, "name": obj.label}
+            case Types.BYDOCS:
+                with getattr(Docs, obj.subtype) as obj:
+                    return {"id": obj.namee, "name": obj.label}
+            case _:
+                return None
 
     class Meta:
         model = models.Resource
@@ -32,6 +51,7 @@ class ResourceSerializer(serializers.ModelSerializer):
             "classes",
             "media",
             "type",
+            "subtype",
             "category_type",
             "user",
         )
