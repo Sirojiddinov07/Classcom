@@ -32,14 +32,14 @@ class ResourceSerializer(serializers.ModelSerializer):
                 case Types.BYCLASS | Types.BYCLASSANDUNIT:
                     return ClassesSerializer(models.Classes.objects.get(id=obj.subtype)).data
                 case Types.BYDEPARTMENT:
-                    with Departments(obj.subtype) as obj:
-                        return {"id": obj.namee, "name": obj.label}
+                    data = Departments(obj.subtype)
+                    return {"id": data.name, "name": data.label}
                 case Types.BYSCHOOL:
-                    with Schools(obj.subtype) as obj:
-                        return {"id": obj.namee, "name": obj.label}
+                    data = Schools(obj.subtype)
+                    return {"id": data.name, "name": data.label}
                 case Types.BYDOCS:
-                    with Docs(obj.subtype) as obj:
-                        return {"id": obj.namee, "name": obj.label}
+                    data = Docs(obj.subtype)
+                    return {"id": data.name, "name": data.label}
                 case _:
                     return None
         except Exception as e:
