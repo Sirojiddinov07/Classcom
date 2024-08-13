@@ -5,6 +5,7 @@ from rest_framework import permissions, viewsets
 from rest_framework.response import Response
 from rest_framework.decorators import action
 from core.apps.classcom import models, serializers
+from ..filters import ResourceFilter
 
 
 class ResourceTypesViewSet(viewsets.ViewSet):
@@ -26,7 +27,8 @@ class ResourceViewSet(viewsets.ModelViewSet):
     queryset = models.Resource.objects.all()
     permission_classes = [permissions.IsAuthenticated]
     filter_backends = [DjangoFilterBackend]
-    fields = ["name", "type", "classes", "subtype", "category", "category_type"]
+    filterset_class = ResourceFilter
+    # fields = ["name", "type", "classes", "subtype", "category", "category_type"]
 
     @method_decorator(never_cache)
     def dispatch(self, request, *args, **kwargs):
