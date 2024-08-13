@@ -9,7 +9,7 @@ from core.apps.classcom.serializers import (
 from core.apps.classcom.serializers.resource_type import ResourceTypeMiniSerializer
 from core.http import serializers as http_serializers
 from ..choices import Types, Departments, Schools, Docs
-
+from rest_framework.exceptions import APIException
 
 class ClassesSerializer(serializers.ModelSerializer):
     class Meta:
@@ -27,20 +27,23 @@ class ResourceSerializer(serializers.ModelSerializer):
     category_type = CategoryTypeSerializer()
 
     def get_subtype(self, obj):
-        match obj.type:
-            case Types.BYCLASS | Types.BYCLASSANDUNIT:
-                return ClassesSerializer(models.Classes.objects.get(id=obj.subtype)).data
-            case Types.BYDEPARTMENT:
-                with getattr(Departments, obj.subtype) as obj:
-                    return {"id": obj.namee, "name": obj.label}
-            case Types.BYSCHOOL:
-                with getattr(Schools, obj.subtype) as obj:
-                    return {"id": obj.namee, "name": obj.label}
-            case Types.BYDOCS:
-                with getattr(Docs, obj.subtype) as obj:
-                    return {"id": obj.namee, "name": obj.label}
-            case _:
-                return None
+        try:
+            match obj.type.type:
+                case Types.BYCLASS | Types.BYCLASSANDUNIT:
+                    return ClassesSerializer(models.Classes.objects.get(id=obj.subtype)).data
+                case Types.BYDEPARTMENT:
+                    with getattr(Departments, obj.subtype) as obj:
+                        return {"id": obj.namee, "name": obj.label}
+                case Types.BYSCHOOL:
+                    with getattr(Schools, obj.subtype) as obj:
+                        return {"id": obj.namee, "name": obj.label}
+                case Types.BYDOCS:
+                    with getattr(Docs, obj.subtype) as obj:
+                        return {"id": obj.namee, "name": obj.label}
+                case _:
+                    return None
+        except Exception as e:
+            raise APIException(e)
 
     class Meta:
         model = models.Resource
