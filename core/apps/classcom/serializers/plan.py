@@ -161,8 +161,12 @@ class PlanCreateSerializer(serializers.ModelSerializer):
         model = models.Plan
         fields = (
             "id",
-            "name",
-            "description",
+            "name_uz",
+            "name_en",
+            "name_ru",
+            "description_uz",
+            "description_en",
+            "description_ru",
             "banner",
             "type",
             "topic",
