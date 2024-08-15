@@ -9,3 +9,9 @@ class Degree(models.TextChoices):
         "\"Eng yaxshi o'qituvchi\" konkursi g'olibi"
     )  # noqa
     AUTHOR = "AUTHOR", __("Darslik muallifi")
+
+
+class ResourceDegree(models.TextChoices):
+    LOW = "LOW", __("Past")
+    MEDIUM = "MEDIUM", __("O'rta")
+    HIGH = "HIGH", __("Yuqori")

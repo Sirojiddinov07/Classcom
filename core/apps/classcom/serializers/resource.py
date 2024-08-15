@@ -11,6 +11,7 @@ from core.http import serializers as http_serializers
 from ..choices import Types, Departments, Schools, Docs
 from rest_framework.exceptions import APIException
 
+
 class ClassesSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Classes
@@ -56,6 +57,8 @@ class ResourceSerializer(serializers.ModelSerializer):
             "type",
             "subtype",
             "category_type",
+            "source",
+            "degree",
             "user",
         )
         extra_kwargs = {"media": {"write_only": True}}
@@ -94,6 +97,8 @@ class ResourceCreateSerializer(serializers.ModelSerializer):
             "banner",
             "type",
             "subtype",
+            "source",
+            "degree",
             "classes",
             "media_file",
             "_media",
