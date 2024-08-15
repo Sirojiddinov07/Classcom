@@ -1,6 +1,6 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as __
-from ..choices import Types
+from ..choices import Types, ResourceDegree
 
 
 class Resource(models.Model):
@@ -26,6 +26,11 @@ class Resource(models.Model):
     media = models.ManyToManyField(
         "Media", blank=True, related_name="resources"
     )
+    source = models.CharField(max_length=255, null=True, blank=True)
+    degree = models.CharField(choices=ResourceDegree.choices, default=ResourceDegree.MEDIUM)
+
+    created_at = models.DateField(auto_now_add=True)
+    updated_at = models.DateField(auto_now=True)
 
     def __str__(self):
         return str(self.name) or "Unnamed Resource"
