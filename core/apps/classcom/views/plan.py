@@ -1,7 +1,7 @@
 import logging
 
-from django.db.models import CharField, IntegerField
 from django.db.models import F, Subquery
+from django.db.models import IntegerField
 from django.db.models.functions import Cast
 from django.utils.translation import gettext as _
 from django_filters.rest_framework import DjangoFilterBackend
@@ -23,9 +23,9 @@ class PlanViewSet(viewsets.ModelViewSet):
     queryset = models.Plan.objects.filter(
         id__in=Subquery(
             models.Plan.objects.filter(
-                name=Cast(F("classes"), output_field=CharField()),
-                science=Cast(F("science"), output_field=CharField()),
-                quarter=Cast(F("quarter"), output_field=IntegerField()),
+                name=Cast(F("classes__id"), output_field=IntegerField()),
+                science=Cast(F("science__id"), output_field=IntegerField()),
+                quarter=Cast(F("quarter__id"), output_field=IntegerField()),
             )
             .order_by("id")
             .values("id")[:1]
