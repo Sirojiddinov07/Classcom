@@ -8,6 +8,7 @@ from core.apps.classcom.models import Plan
 
 @admin.register(Plan)
 class PlanAdmin(ImportExportModelAdmin, TabbedTranslationAdmin):
+    list_display = ("id", "name", "description")
     """
     Cosutimize the plan model in admin panel interface
     """
