@@ -27,7 +27,9 @@ class Resource(models.Model):
         "Media", blank=True, related_name="resources"
     )
     source = models.CharField(max_length=255, null=True, blank=True)
-    degree = models.CharField(choices=ResourceDegree.choices, default=ResourceDegree.MEDIUM)
+    degree = models.CharField(
+        choices=ResourceDegree.choices, default=ResourceDegree.MEDIUM
+    )
 
     created_at = models.DateField(auto_now_add=True)
     updated_at = models.DateField(auto_now=True)

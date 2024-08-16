@@ -25,4 +25,6 @@ class Schools(TextChoices):
 
 class Docs(TextChoices):
     DOCS = "DOCS", _("Hujjatlar, testlar ")
-    MULTIMEDIA = "MULTIMEDIA", _("O‘qituvchining o‘z-o‘zini tarbiyalashi uchun multimedia resurslari")
+    MULTIMEDIA = "MULTIMEDIA", _(
+        "O‘qituvchining o‘z-o‘zini tarbiyalashi uchun multimedia resurslari"
+    )

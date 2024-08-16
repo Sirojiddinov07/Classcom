@@ -44,4 +44,3 @@ class ResourceViewSet(viewsets.ModelViewSet):
             case "retrieve":
                 return serializers.ResourceDetailSerializer
         return serializers.ResourceSerializer
-

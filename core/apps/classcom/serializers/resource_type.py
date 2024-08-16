@@ -16,9 +16,13 @@ class ResourceTypeSerializer(serializers.ModelSerializer):
             case Types.BYCLASS | Types.BYCLASSANDUNIT:
                 response = Classes.objects.all().values("id", "name")
             case Types.BYDEPARTMENT:
-                response = [{"id": i.name, "name": str(i.label)} for i in Departments]
+                response = [
+                    {"id": i.name, "name": str(i.label)} for i in Departments
+                ]
             case Types.BYSCHOOL:
-                response = [{"id": i.name, "name": str(i.label)} for i in Schools]
+                response = [
+                    {"id": i.name, "name": str(i.label)} for i in Schools
+                ]
             case Types.BYDOCS:
                 response = [{"id": i.name, "name": str(i.label)} for i in Docs]
         return response
