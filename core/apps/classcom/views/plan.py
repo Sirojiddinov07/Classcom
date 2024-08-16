@@ -21,7 +21,7 @@ class PlanViewSet(viewsets.ModelViewSet):
     queryset = models.Plan.objects.filter(
         id__in=Subquery(
             models.Plan.objects.filter(
-                name=OuterRef("name"),
+                name=OuterRef("classes"),
                 science=OuterRef("science"),
                 quarter=OuterRef("quarter"),
             )
@@ -120,15 +120,11 @@ class PlanViewSet(viewsets.ModelViewSet):
         except models.Plan.DoesNotExist:
             raise NotFound("Plan not found")
 
-        related_plans = (
-            models.Plan.objects.filter(
-                classes=instance.classes,
-                quarter=instance.quarter,
-                science=instance.science,
-            )
-            .order_by("id")
-            .distinct("name", "science", "quarter")
-        )
+        related_plans = models.Plan.objects.filter(
+            classes=instance.classes,
+            quarter=instance.quarter,
+            science=instance.science,
+        ).order_by("id")
 
         topics = [
             {
