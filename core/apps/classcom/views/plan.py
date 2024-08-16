@@ -41,7 +41,7 @@ class PlanViewSet(viewsets.ModelViewSet):
             )
         },
     )
-    @action(detail=True, methods=["POSt"], url_path="set-media")
+    @action(detail=True, methods=["POST"], url_path="set-media")
     def set_media(self, request, pk):
         ser = self.get_serializer_class()(data=request.data)
         ser.is_valid(raise_exception=True)
@@ -108,11 +108,16 @@ class PlanViewSet(viewsets.ModelViewSet):
             instance = models.Plan.objects.get(pk=pk)
         except models.Plan.DoesNotExist:
             raise NotFound("Plan not found")
-        related_plans = models.Plan.objects.filter(
-            classes=instance.classes,
-            quarter=instance.quarter,
-            science=instance.science,
-        ).order_by("id")
+
+        related_plans = (
+            models.Plan.objects.filter(
+                classes=instance.classes,
+                quarter=instance.quarter,
+                science=instance.science,
+            )
+            .order_by("id")
+            .distinct("name", "science", "quarter")
+        )
 
         topics = [
             {

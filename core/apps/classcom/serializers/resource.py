@@ -1,15 +1,17 @@
 from rest_framework import serializers
+from rest_framework.exceptions import APIException
+
 from core.apps.classcom import models
-from core.apps.classcom.serializers import media
 from core.apps.classcom.serializers import (
     CategorySerializer,
     CategoryTypeSerializer,
-    ClassesSerializer
 )
-from core.apps.classcom.serializers.resource_type import ResourceTypeMiniSerializer
+from core.apps.classcom.serializers import media
+from core.apps.classcom.serializers.resource_type import (
+    ResourceTypeMiniSerializer,
+)
 from core.http import serializers as http_serializers
 from ..choices import Types, Departments, Schools, Docs
-from rest_framework.exceptions import APIException
 
 
 class ClassesSerializer(serializers.ModelSerializer):
@@ -31,7 +33,9 @@ class ResourceSerializer(serializers.ModelSerializer):
         try:
             match obj.type.type:
                 case Types.BYCLASS | Types.BYCLASSANDUNIT:
-                    return ClassesSerializer(models.Classes.objects.get(id=obj.subtype)).data
+                    return ClassesSerializer(
+                        models.Classes.objects.get(id=obj.subtype)
+                    ).data
                 case Types.BYDEPARTMENT:
                     data = Departments(obj.subtype)
                     return {"id": data.name, "name": data.label}
@@ -84,7 +88,7 @@ class ResourceCreateSerializer(serializers.ModelSerializer):
 
     def to_representation(self, instance):
         data = super().to_representation(instance)
-        data['type'] = ResourceTypeMiniSerializer(instance.type).data
+        data["type"] = ResourceTypeMiniSerializer(instance.type).data
         return data
 
     class Meta:
