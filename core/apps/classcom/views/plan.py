@@ -1,7 +1,8 @@
 import logging
 
-from django.db.models import F, Func, Value
-from django.db.models import Subquery
+from django.db.models import CharField
+from django.db.models import F, Subquery
+from django.db.models.functions import Cast
 from django.utils.translation import gettext as _
 from django_filters.rest_framework import DjangoFilterBackend
 from drf_spectacular.utils import extend_schema, inline_serializer
@@ -22,9 +23,9 @@ class PlanViewSet(viewsets.ModelViewSet):
     queryset = models.Plan.objects.filter(
         id__in=Subquery(
             models.Plan.objects.filter(
-                name=Func(F("classes"), Value("::text")),
-                science=Func(F("science"), Value("::text")),
-                quarter=Func(F("quarter"), Value("::text")),
+                name=Cast(F("classes"), output_field=CharField()),
+                science=Cast(F("science"), output_field=CharField()),
+                quarter=Cast(F("quarter"), output_field=CharField()),
             )
             .order_by("id")
             .values("id")[:1]
