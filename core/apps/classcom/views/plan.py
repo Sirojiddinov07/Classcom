@@ -1,8 +1,5 @@
 import logging
 
-from django.db.models import F, Subquery, CharField
-from django.db.models import IntegerField
-from django.db.models.functions import Cast
 from django.utils.translation import gettext as _
 from django_filters.rest_framework import DjangoFilterBackend
 from drf_spectacular.utils import extend_schema, inline_serializer
@@ -20,17 +17,9 @@ logger = logging.getLogger(__name__)
 
 
 class PlanViewSet(viewsets.ModelViewSet):
-    queryset = models.Plan.objects.filter(
-        id__in=Subquery(
-            models.Plan.objects.filter(
-                name=Cast(F("classes__name"), output_field=CharField()),
-                science=Cast(F("science__name"), output_field=CharField()),
-                quarter=Cast(F("quarter__id"), output_field=CharField()),
-            )
-            .order_by("id")
-            .values("id")[:1]
-        )
-    ).order_by("id")
+    queryset = models.Plan.objects.order_by(
+        "classes", "science", "quarter"
+    ).distinct("classes", "science", "quarter")
     filter_backends = [DjangoFilterBackend]
     filterset_fields = ["classes", "topic", "hour", "quarter", "science"]
     pagination_class = PageNumberPagination
