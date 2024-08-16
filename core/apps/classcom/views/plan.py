@@ -1,5 +1,6 @@
 import logging
 
+from django.db.models import Subquery, OuterRef
 from django.utils.translation import gettext as _
 from django_filters.rest_framework import DjangoFilterBackend
 from drf_spectacular.utils import extend_schema, inline_serializer
@@ -17,7 +18,17 @@ logger = logging.getLogger(__name__)
 
 
 class PlanViewSet(viewsets.ModelViewSet):
-    queryset = models.Plan.objects.all().order_by("id")
+    queryset = models.Plan.objects.filter(
+        id__in=Subquery(
+            models.Plan.objects.filter(
+                name=OuterRef("name"),
+                science=OuterRef("science"),
+                quarter=OuterRef("quarter"),
+            )
+            .order_by("id")
+            .values("id")[:1]
+        )
+    ).order_by("id")
     filter_backends = [DjangoFilterBackend]
     filterset_fields = ["classes", "topic", "hour", "quarter", "science"]
     pagination_class = PageNumberPagination
