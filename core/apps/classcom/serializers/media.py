@@ -23,6 +23,8 @@ class MediaSerializer(serializers.ModelSerializer):
             "_class",
             "user",
             "size",
+            "count",
+            "statistics",
             "created_at",
             "updated_at",
         )
