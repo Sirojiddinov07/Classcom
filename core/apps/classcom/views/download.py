@@ -25,9 +25,10 @@ class DownloadMediaView(APIView):
         media = get_object_or_404(Media, id=media_id)
         teacher = (
             get_object_or_404(Teacher, user=request.user)
-            if request.user.is_authenticated
+            if Teacher.objects.filter(user=request.user).exists()
             else None
         )
+
         plan = Plan.objects.filter(plan_resource=media).first()
         moderator = (
             get_object_or_404(Moderator, user=plan.user) if plan else None
