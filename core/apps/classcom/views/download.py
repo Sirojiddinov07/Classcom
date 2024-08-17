@@ -13,6 +13,7 @@ from core.apps.classcom.models import (
     Media,
     Teacher,
     Plan,
+    Moderator,
 )
 from core.apps.payments.models import Orders
 
@@ -25,7 +26,10 @@ class DownloadMediaView(APIView):
         if not media:
             raise Http404("Media not found for this resource")
         teacher = get_object_or_404(Teacher, user=request.user)
-        moderator = Plan.objects.filter(plan_resource=media).first().user
+        plan = Plan.objects.filter(plan_resource=media).first()
+        if not plan:
+            raise Http404("Plan not found for this media")
+        moderator = get_object_or_404(Moderator, user=plan.user)
         download = Download.objects.create(
             teacher=teacher,
             media=media,
