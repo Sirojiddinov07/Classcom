@@ -16,6 +16,7 @@ class MediaSerializer(serializers.ModelSerializer):
         fields = (
             "id",
             "name",
+            "file_type",
             "desc",
             "topic",
             "science",
