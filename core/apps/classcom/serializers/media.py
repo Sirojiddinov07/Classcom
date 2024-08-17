@@ -17,7 +17,6 @@ class MediaSerializer(serializers.ModelSerializer):
             "id",
             "name",
             "desc",
-            "file",
             "topic",
             "science",
             "_class",
