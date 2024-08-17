@@ -39,9 +39,10 @@ class DownloadMediaView(APIView):
 
         if download.media.download_users.filter(id=request.user.id).exists():
             pass
-        download.media.download_users.add(request.user)
-        download.media.count += 1
-        download.media.save()
+        else:
+            download.media.download_users.add(request.user)
+            download.media.count += 1
+            download.media.save()
 
         science = Plan.objects.filter(plan_resource=media).first().science
         users_count = (
