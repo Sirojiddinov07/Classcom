@@ -23,13 +23,12 @@ class DownloadMediaView(APIView):
 
     def get(self, request, media_id, format=None):
         media = get_object_or_404(Media, id=media_id)
-        if not media:
-            raise Http404("Media not found for this resource")
         teacher = get_object_or_404(Teacher, user=request.user)
         plan = Plan.objects.filter(plan_resource=media).first()
-        if not plan:
-            raise Http404("Plan not found for this media")
-        moderator = get_object_or_404(Moderator, user=plan.user)
+        moderator = (
+            get_object_or_404(Moderator, user=plan.user) if plan else None
+        )
+
         download = Download.objects.create(
             teacher=teacher,
             media=media,
@@ -37,26 +36,32 @@ class DownloadMediaView(APIView):
             moderator=moderator,
         )
 
-        if download.media.download_users.filter(id=request.user.id).exists():
-            pass
-        else:
+        if not download.media.download_users.filter(
+            id=request.user.id
+        ).exists():
             download.media.download_users.add(request.user)
             download.media.count += 1
             download.media.save()
 
-        science = Plan.objects.filter(plan_resource=media).first().science
+        science = plan.science if plan else None
         users_count = (
-            Orders.objects.filter(science=science)
-            .values("user")
-            .distinct()
-            .count()
+            (
+                Orders.objects.filter(science=science)
+                .values("user")
+                .distinct()
+                .count()
+            )
+            if science
+            else 0
         )
 
         users_count = min(users_count, 1)
         download_users_count = download.media.download_users.count()
 
         download.media.statistics = (
-            f"{(users_count / download_users_count) * 100}%"
+            (f"{(users_count / download_users_count) * 100}%")
+            if download_users_count > 0
+            else "0%"
         )
         download.media.save()
 
