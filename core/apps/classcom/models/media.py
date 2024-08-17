@@ -23,7 +23,11 @@ class Media(models.Model):
     def save(self, *args, **kwargs):
         self.size = self.file.size
         if self.name is None:
-            self.name = self.file.name
+            self.name = (
+                self.file.name
+                if self.file.name is not None
+                else f"Media {self.id}"
+            )
         super().save(*args, **kwargs)
 
     class Meta:
