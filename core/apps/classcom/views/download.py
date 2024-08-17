@@ -2,7 +2,6 @@ import datetime
 
 from django.http import FileResponse, Http404
 from django.shortcuts import get_object_or_404
-from django.urls import reverse
 from django.utils import timezone
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
@@ -12,34 +11,56 @@ from core.apps.classcom.models import (
     Download,
     DownloadToken,
     Media,
-    Resource,
     Teacher,
+    Plan,
 )
+from core.apps.payments.models import Orders
 
 
-class DownloadResourceView(APIView):
+class DownloadMediaView(APIView):
     permission_classes = [IsAuthenticated]
 
-    def get(self, request, resource_id, format=None):
-        resource = get_object_or_404(Resource, id=resource_id)
-        media = resource.media.first()
+    def get(self, request, media_id, format=None):
+        media = get_object_or_404(Media, id=media_id)
         if not media:
             raise Http404("Media not found for this resource")
         teacher = get_object_or_404(Teacher, user=request.user)
+        moderator = Plan.objects.filter(plan_resource=media).first().user
         download = Download.objects.create(
-            teacher=teacher, resource=resource, date=datetime.date.today()
+            teacher=teacher,
+            media=media,
+            date=datetime.date.today(),
+            moderator=moderator,
         )
+
+        if download.media.download_users.filter(id=request.user.id).exists():
+            pass
+        download.media.download_users.add(request.user)
+        download.media.count += 1
+        download.media.save()
+
+        science = Plan.objects.filter(plan_resource=media).first().science
+        users_count = (
+            Orders.objects.filter(science=science)
+            .values("user")
+            .distinct()
+            .count()
+        )
+        download_users_count = download.media.download_users.count()
+
+        download.media.statistics = (
+            f"{(users_count / download_users_count) * 100}%"
+        )
+        download.media.save()
 
         download_token = DownloadToken.objects.create(
             download=download,
             expires_at=timezone.now() + datetime.timedelta(minutes=5),
         )
 
-        download_url = request.build_absolute_uri(
-            reverse("download_file", args=[download_token.token])
-        )
+        download_url = download_token.token
 
-        return Response({"download_url": download_url})
+        return Response({"download_token": download_url})
 
 
 class DownloadFileView(APIView):
@@ -59,7 +80,7 @@ class DownloadFileView(APIView):
                 status=403,
             )
 
-        media = get_object_or_404(Media, resource=download.resource)
+        media = get_object_or_404(Media, resources=download.media)
 
         file_path = media.file.path
         response = FileResponse(open(file_path, "rb"))
@@ -74,12 +95,16 @@ class DownloadHistoryView(APIView):
 
     def get(self, request, format=None):
         teacher = get_object_or_404(Teacher, user=request.user)
-        downloads = Download.objects.filter(teacher=teacher).order_by("-date")
+        downloads = (
+            Download.objects.filter(teacher=teacher)
+            .order_by("-date")
+            .distinct()
+        )
 
         download_history = [
             {
-                "resource_id": download.resource.id,
-                "resource_name": download.resource.name,  # Assuming Resource has a name field
+                "media_id": download.media.id,
+                "media_name": download.media.name,
                 "download_date": download.date,
             }
             for download in downloads
