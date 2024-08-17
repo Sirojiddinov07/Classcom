@@ -51,6 +51,8 @@ class DownloadMediaView(APIView):
             .distinct()
             .count()
         )
+
+        users_count = min(users_count, 1)
         download_users_count = download.media.download_users.count()
 
         download.media.statistics = (
