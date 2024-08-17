@@ -27,8 +27,8 @@ urlpatterns = [
     path("", include(router.urls)),
     path("quarters/", views.QuarterListView.as_view(), name="quarter-list"),
     path(
-        "download_resource/<int:resource_id>/",
-        views.DownloadResourceView.as_view(),
+        "download/media/<int:media_id>/",
+        views.DownloadMediaView.as_view(),
         name="download_resource",
     ),
     path(
@@ -37,7 +37,7 @@ urlpatterns = [
         name="change-user-role",
     ),
     path(
-        "download_file/<uuid:download_token>/",
+        "download/file/<uuid:download_token>/",
         views.DownloadFileView.as_view(),
         name="download_file",
     ),

@@ -11,6 +11,12 @@ class Media(models.Model):
     created_at = models.DateTimeField(auto_now=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    download_users = models.ManyToManyField(
+        "http.User", related_name="downloaded_media", blank=True
+    )
+    count = models.IntegerField(default=0)
+    statistics = models.CharField(max_length=255, blank=True, null=True)
+
     def __str__(self) -> str:
         return str(self.name) if self.name is not None else f"Media {self.id}"
 

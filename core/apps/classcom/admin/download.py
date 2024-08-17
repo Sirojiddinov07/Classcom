@@ -7,6 +7,7 @@ from core.apps.classcom.models import Download
 class DownloadAdmin(admin.ModelAdmin):
     list_display = (
         "teacher",
+        "moderator",
         "date",
-        "resource",
+        "media",
     )

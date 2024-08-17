@@ -4,8 +4,9 @@ from django.utils.translation import gettext_lazy as __
 
 class Download(models.Model):
     teacher = models.ForeignKey("Teacher", on_delete=models.CASCADE)
+    moderator = models.ForeignKey("Moderator", on_delete=models.CASCADE)
     date = models.DateField()
-    resource = models.ForeignKey("Resource", on_delete=models.CASCADE)
+    media = models.ForeignKey("Media", on_delete=models.CASCADE)
 
     def __str__(self):
         return super().__str__()
