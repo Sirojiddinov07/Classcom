@@ -28,6 +28,18 @@ class Media(models.Model):
                 if self.file.name is not None
                 else f"Media {self.id}"
             )
+        if self.name_uz is None:
+            self.name_uz = (
+                self.file.name
+                if self.file.name is not None
+                else f"Media {self.id}"
+            )
+        if self.name_ru is None:
+            self.name_ru = (
+                self.file.name
+                if self.file.name is not None
+                else f"Media {self.id}"
+            )
         super().save(*args, **kwargs)
 
     class Meta:
