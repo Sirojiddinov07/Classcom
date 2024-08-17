@@ -84,7 +84,7 @@ class DownloadFileView(APIView):
                 status=403,
             )
 
-        media = get_object_or_404(Media, resources=download.media)
+        media = get_object_or_404(Media, id=download.media.id)
 
         file_path = media.file.path
         response = FileResponse(open(file_path, "rb"))
