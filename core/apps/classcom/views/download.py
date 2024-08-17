@@ -23,7 +23,11 @@ class DownloadMediaView(APIView):
 
     def get(self, request, media_id, format=None):
         media = get_object_or_404(Media, id=media_id)
-        teacher = get_object_or_404(Teacher, user=request.user)
+        teacher = (
+            get_object_or_404(Teacher, user=request.user)
+            if request.user.is_authenticated
+            else None
+        )
         plan = Plan.objects.filter(plan_resource=media).first()
         moderator = (
             get_object_or_404(Moderator, user=plan.user) if plan else None
@@ -85,12 +89,6 @@ class DownloadFileView(APIView):
             raise Http404("Download link not found or expired")
 
         download = download_token.download
-
-        if download.teacher.user != request.user:
-            return Response(
-                {"detail": "You are not authorized to download this file"},
-                status=403,
-            )
 
         media = get_object_or_404(Media, id=download.media.id)
 

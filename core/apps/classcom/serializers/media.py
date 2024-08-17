@@ -1,7 +1,6 @@
 from rest_framework import serializers
 
 from core.apps.classcom import models
-
 from ..models import Media, Plan
 
 
@@ -10,6 +9,7 @@ class MediaSerializer(serializers.ModelSerializer):
     topic = serializers.SerializerMethodField()
     _class = serializers.SerializerMethodField()
     user = serializers.SerializerMethodField()
+    is_author = serializers.SerializerMethodField()
 
     class Meta:
         model = Media
@@ -26,7 +26,12 @@ class MediaSerializer(serializers.ModelSerializer):
             "statistics",
             "created_at",
             "updated_at",
+            "is_author",
         )
+
+    def get_is_author(self, obj):
+        plan = Plan.objects.filter(plan_resource=obj).first()
+        return plan.user == self.context["request"].user if plan else False
 
     def get_science(self, obj):
         plan = Plan.objects.filter(plan_resource=obj).first()

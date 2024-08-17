@@ -3,7 +3,9 @@ from django.utils.translation import gettext_lazy as __
 
 
 class Download(models.Model):
-    teacher = models.ForeignKey("Teacher", on_delete=models.CASCADE)
+    teacher = models.ForeignKey(
+        "Teacher", on_delete=models.CASCADE, blank=True, null=True
+    )
     moderator = models.ForeignKey(
         "Moderator", on_delete=models.CASCADE, blank=True, null=True
     )
