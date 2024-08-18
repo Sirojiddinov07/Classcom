@@ -4,7 +4,7 @@ from django.http import FileResponse, Http404
 from django.shortcuts import get_object_or_404
 from django.utils import timezone
 from rest_framework.decorators import api_view, permission_classes
-from rest_framework.permissions import IsAuthenticated, AllowAny
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -19,7 +19,7 @@ from core.apps.payments.models import Orders
 
 
 class DownloadMediaView(APIView):
-    permission_classes = [AllowAny]
+    permission_classes = [IsAuthenticated]
 
     def get(self, request, media_id, format=None):
         media = get_object_or_404(Media, id=media_id)
@@ -82,7 +82,7 @@ class DownloadMediaView(APIView):
 
 
 class DownloadFileView(APIView):
-    permission_classes = [AllowAny]
+    permission_classes = [IsAuthenticated]
 
     def get(self, request, download_token, format=None):
         download_token = get_object_or_404(DownloadToken, token=download_token)
