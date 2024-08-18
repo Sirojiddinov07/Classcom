@@ -97,7 +97,13 @@ class DownloadFileView(APIView):
         file_path = media.file.path
 
         try:
-            response = FileResponse(open(file_path, "rb"))
+            response = FileResponse(
+                {
+                    "file": open(file_path, "rb"),
+                    "content_type": "application/octet-stream",
+                    "message": "File downloaded successfully",
+                }
+            )
         except FileNotFoundError:
             raise Http404("File not found")
         print(response)
