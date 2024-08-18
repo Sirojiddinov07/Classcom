@@ -95,7 +95,12 @@ class DownloadFileView(APIView):
         media = get_object_or_404(Media, id=download.media.id)
 
         file_path = media.file.path
-        response = FileResponse(open(file_path, "rb"))
+
+        try:
+            response = FileResponse(open(file_path, "rb"))
+        except FileNotFoundError:
+            raise Http404("File not found")
+        print(response)
 
         download_token.delete()
 

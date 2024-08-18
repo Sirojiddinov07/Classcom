@@ -1,16 +1,15 @@
 import typing
 from datetime import datetime
 
-from django.contrib.auth import hashers
 from rest_framework.generics import get_object_or_404
 from rest_framework_simplejwt import tokens
-from core.apps.classcom.choices import Role
 
 from core import exceptions
+from core.apps.classcom.choices import Role
 from core.http import models
+from core.http.models import ScienceGroups
 from core.services import base_service, sms
 from core.utils import exception
-from core.http.models import ScienceGroups
 
 
 class UserService(base_service.BaseService, sms.SmsService):
@@ -35,6 +34,7 @@ class UserService(base_service.BaseService, sms.SmsService):
         science_group_id=None,
         science_id=None,
         role=Role.USER,
+        school_type_id=None,
     ):
         region = get_object_or_404(models.Region, id=region_id)
         district = get_object_or_404(models.District, id=district_id)
@@ -48,6 +48,11 @@ class UserService(base_service.BaseService, sms.SmsService):
             None
             if science_id is None
             else get_object_or_404(models.Science, id=science_id)
+        )
+        school_type = (
+            None
+            if school_type_id is None
+            else get_object_or_404(models.SchoolType, id=school_type_id)
         )
 
         user, _ = models.User.objects.update_or_create(
@@ -63,6 +68,7 @@ class UserService(base_service.BaseService, sms.SmsService):
                 "institution_number": institution_number,
                 "science_group": science_group,
                 "science": science,
+                "school_type": school_type,
             },
         )
         user.set_password(password)
