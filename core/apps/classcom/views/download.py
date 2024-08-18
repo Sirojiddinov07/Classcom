@@ -1,6 +1,6 @@
 import datetime
 
-from django.http import FileResponse, Http404
+from django.http import Http404
 from django.shortcuts import get_object_or_404
 from django.utils import timezone
 from rest_framework.decorators import api_view, permission_classes
@@ -91,25 +91,22 @@ class DownloadFileView(APIView):
             raise Http404("Download token not found or expired")
 
         download = download_token.download
-
         media = get_object_or_404(Media, id=download.media.id)
-
         file_path = media.file.path
 
         try:
-            response = FileResponse(
-                {
-                    "file": open(file_path, "rb"),
-                    "content_type": "application/octet-stream",
-                    "message": "File downloaded successfully",
-                }
-            )
+            with open(file_path, "rb") as file:
+                response = Response(
+                    {
+                        "file": file.read(),
+                        "content_type": "application/octet-stream",
+                        "message": "File downloaded successfully",
+                    }
+                )
         except FileNotFoundError:
             raise Http404("File not found")
-        print(response)
 
         download_token.delete()
-
         return response
 
 
