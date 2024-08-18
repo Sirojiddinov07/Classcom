@@ -1,3 +1,4 @@
+import base64
 import datetime
 
 from django.http import Http404
@@ -96,9 +97,11 @@ class DownloadFileView(APIView):
 
         try:
             with open(file_path, "rb") as file:
+                file_content = file.read()
+                encoded_file = base64.b64encode(file_content).decode("utf-8")
                 response = Response(
                     {
-                        "file": file.read(),
+                        "file": encoded_file,
                         "content_type": "application/octet-stream",
                         "message": "File downloaded successfully",
                     }
