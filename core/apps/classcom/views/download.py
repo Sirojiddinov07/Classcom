@@ -94,6 +94,8 @@ class DownloadFileView(APIView):
         download = download_token.download
         media = get_object_or_404(Media, id=download.media.id)
         file_path = media.file.path
+        file_name = media.file.name
+        file_format = media.file_type
 
         try:
             with open(file_path, "rb") as file:
@@ -102,6 +104,8 @@ class DownloadFileView(APIView):
                 response = Response(
                     {
                         "file": encoded_file,
+                        "file_name": file_name,
+                        "file_format": file_format,
                         "content_type": "application/octet-stream",
                         "message": "File downloaded successfully",
                     }
