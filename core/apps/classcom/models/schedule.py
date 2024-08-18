@@ -40,7 +40,7 @@ class Schedule(models.Model):
         max_length=25, validators=[validate_lesson_time]
     )
     quarter = models.ForeignKey("Quarter", models.CASCADE)
-    date = models.DateField()
+    # date = models.DateField()
 
     def __str__(self):
         return f"{self.user} {self.science} {self.start_time} {self.end_time}"
