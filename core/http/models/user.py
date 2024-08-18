@@ -37,6 +37,9 @@ class User(auth_models.AbstractUser):
     science_group = models.ForeignKey(
         "ScienceGroups", on_delete=models.SET_NULL, null=True, blank=True
     )
+    school_type = models.ForeignKey(
+        "SchoolType", on_delete=models.SET_NULL, null=True, blank=True
+    )
     institution_number = models.CharField(
         max_length=255, null=True, blank=True
     )

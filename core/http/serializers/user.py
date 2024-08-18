@@ -3,12 +3,12 @@ from rest_framework import serializers
 
 from core.apps.classcom.choices import Role
 from core.http import models
+from core.http.serializers import SchoolTypeSerializer
 
 
 class UserSerializer(serializers.ModelSerializer):
     avatar = serializers.ImageField(max_length=None, use_url=True)
-
-    # permissions = serializers.SerializerMethodField()
+    school_type = SchoolTypeSerializer()
 
     class Meta:
         fields = [
@@ -23,6 +23,7 @@ class UserSerializer(serializers.ModelSerializer):
             "science_group",
             "science",
             "classes",
+            "school_type",
             # "permissions",
         ]
         extra_kwargs = {
