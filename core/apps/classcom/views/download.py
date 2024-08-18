@@ -103,11 +103,11 @@ class DownloadFileView(APIView):
                 encoded_file = base64.b64encode(file_content).decode("utf-8")
                 response = Response(
                     {
-                        "file": encoded_file,
-                        "file_name": file_name,
-                        "file_format": file_format,
                         "content_type": "application/octet-stream",
                         "message": "File downloaded successfully",
+                        "file_format": file_format,
+                        "file_name": file_name,
+                        "file": encoded_file,
                     }
                 )
         except FileNotFoundError:
