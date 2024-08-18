@@ -1,11 +1,10 @@
-import base64
 import datetime
 
-from django.http import Http404
+from django.http import FileResponse, Http404
 from django.shortcuts import get_object_or_404
 from django.utils import timezone
 from rest_framework.decorators import api_view, permission_classes
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -20,7 +19,7 @@ from core.apps.payments.models import Orders
 
 
 class DownloadMediaView(APIView):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [AllowAny]
 
     def get(self, request, media_id, format=None):
         media = get_object_or_404(Media, id=media_id)
@@ -83,7 +82,7 @@ class DownloadMediaView(APIView):
 
 
 class DownloadFileView(APIView):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [AllowAny]
 
     def get(self, request, download_token, format=None):
         download_token = get_object_or_404(DownloadToken, token=download_token)
@@ -92,28 +91,19 @@ class DownloadFileView(APIView):
             raise Http404("Download token not found or expired")
 
         download = download_token.download
+
         media = get_object_or_404(Media, id=download.media.id)
+
         file_path = media.file.path
-        file_name = media.file.name
-        file_format = media.file_type
 
         try:
-            with open(file_path, "rb") as file:
-                file_content = file.read()
-                encoded_file = base64.b64encode(file_content).decode("utf-8")
-                response = Response(
-                    {
-                        "content_type": "application/octet-stream",
-                        "message": "File downloaded successfully",
-                        "file_format": file_format,
-                        "file_name": file_name,
-                        "file": encoded_file,
-                    }
-                )
+            response = FileResponse(open(file_path, "rb"))
         except FileNotFoundError:
             raise Http404("File not found")
+        print(response)
 
         download_token.delete()
+
         return response
 
 
