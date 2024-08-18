@@ -3,6 +3,7 @@ import datetime
 from django.http import FileResponse, Http404
 from django.shortcuts import get_object_or_404
 from django.utils import timezone
+from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -10,11 +11,10 @@ from rest_framework.views import APIView
 from core.apps.classcom.models import (
     Download,
     DownloadToken,
-    Media,
     Teacher,
-    Plan,
-    Moderator,
 )
+from core.apps.classcom.models import Media, Plan, Moderator
+from core.apps.classcom.views import CustomPagination
 from core.apps.payments.models import Orders
 
 
@@ -41,12 +41,13 @@ class DownloadMediaView(APIView):
             moderator=moderator,
         )
 
-        if not download.media.download_users.filter(
-            id=request.user.id
-        ).exists():
-            download.media.download_users.add(request.user)
-            download.media.count += 1
-            download.media.save()
+        if not Moderator.objects.filter(user=request.user).exists():
+            if not download.media.download_users.filter(
+                id=request.user.id
+            ).exists():
+                download.media.download_users.add(request.user)
+                download.media.count += 1
+                download.media.save()
 
         science = plan.science if plan else None
         users_count = (
@@ -87,7 +88,7 @@ class DownloadFileView(APIView):
         download_token = get_object_or_404(DownloadToken, token=download_token)
 
         if download_token.is_expired():
-            raise Http404("Download link not found or expired")
+            raise Http404("Download token not found or expired")
 
         download = download_token.download
 
@@ -122,3 +123,44 @@ class DownloadHistoryView(APIView):
         ]
 
         return Response({"download_history": download_history})
+
+
+############################################################################################################
+# Moderator yuklagan resurs media fayllarini ro'yxatini olish
+############################################################################################################
+@api_view(["GET"])
+@permission_classes([IsAuthenticated])
+def moderator_media_list(request):
+    if not Moderator.objects.filter(user=request.user).exists():
+        return Response({"detail": "User is not a moderator"}, status=403)
+
+    moderator = Moderator.objects.get(user=request.user)
+    plans = Plan.objects.filter(user=moderator.user)
+    media_files = Media.objects.filter(plan__in=plans).distinct()
+
+    paginator = CustomPagination()
+    paginated_media = paginator.paginate_queryset(media_files, request)
+
+    media_list = [
+        {
+            "id": media.id,
+            "name": media.name,
+            "file_type": media.file_type,
+            "desc": media.desc,
+            "size": media.size,
+            "count": media.count,
+            "statistics": media.statistics,
+            "created_at": media.created_at,
+            "updated_at": media.updated_at,
+        }
+        for media in paginated_media
+    ]
+
+    total_media_count = media_files.count()
+
+    response_data = {
+        "total_media_count": total_media_count,
+        "media_files": media_list,
+    }
+
+    return paginator.get_paginated_response(response_data)

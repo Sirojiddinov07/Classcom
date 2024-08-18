@@ -3,8 +3,6 @@ from rest_framework import routers
 
 from core.apps.classcom import views
 
-# from core.apps.classcom.views import science_info
-
 router = routers.DefaultRouter()
 router.register("plan", views.PlanViewSet, basename="plan")
 router.register("topic", views.TopicViewSet, basename="topic")
@@ -55,16 +53,6 @@ urlpatterns = [
         name="get_schedule_data",
     ),
     path(
-        "get-day-schedule/",
-        views.DayScheduleView.as_view(),
-        name="get_day_schedule",
-    ),
-    path(
-        "get-days-schedule/",
-        views.RangeScheduleView.as_view(),
-        name="get_range_schedule",
-    ),
-    path(
         "chats/", views.ChatListCreateView.as_view(), name="chat-list-create"
     ),
     path(
@@ -73,4 +61,9 @@ urlpatterns = [
         name="science-info",
     ),
     path("search/", views.UnifiedSearchView.as_view(), name="unified-search"),
+    path(
+        "moderator/media/",
+        views.moderator_media_list,
+        name="moderator-media-list",
+    ),
 ]

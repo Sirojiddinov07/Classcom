@@ -1,36 +1,18 @@
 from rest_framework import serializers
 
-from core.apps.classcom.models import Classes, Schedule, Science
-from core.http.models import User
-
-
-class ScheduleUserSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = User
-        fields = ("first_name", "last_name")
-
-
-class ScheduleScienceSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Science
-        fields = ("name",)
-
-
-class ScheduleClassSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Classes
-        fields = ("name",)
+from core.apps.classcom.models import Schedule
+from core.apps.classcom.serializers.classes import ClassesSerializer
+from core.apps.classcom.serializers.science import ScienceSerializer
+from core.http.serializers import UserSerializer
 
 
 ############################################
 # Schedule List Serializer
 ############################################
-
-
 class ScheduleListSerializer(serializers.ModelSerializer):
-    user = ScheduleUserSerializer()
-    science = ScheduleScienceSerializer()
-    classes = ScheduleClassSerializer()
+    user = UserSerializer()
+    science = ScienceSerializer()
+    classes = ClassesSerializer()
 
     class Meta:
         model = Schedule
@@ -51,7 +33,6 @@ class ScheduleListSerializer(serializers.ModelSerializer):
 # Schedule Create Serializer
 ############################################
 class ScheduleCreateSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = Schedule
         fields = (
@@ -63,6 +44,7 @@ class ScheduleCreateSerializer(serializers.ModelSerializer):
             "end_time",
             "lesson_time",
             "quarter",
+            "date",
         )
 
     def create(self, validated_data):
