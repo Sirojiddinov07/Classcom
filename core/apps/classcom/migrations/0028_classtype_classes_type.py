@@ -37,7 +37,7 @@ class Migration(migrations.Migration):
             model_name="classes",
             name="type",
             field=models.ForeignKey(
-                default=None,
+                default=1,
                 on_delete=django.db.models.deletion.CASCADE,
                 to="classcom.classtype",
             ),
