@@ -37,15 +37,16 @@ class ModeratorSerializer(serializers.ModelSerializer):
             file = default_storage.save(docs.name, ContentFile(docs.read()))
             user = UserService().create_user(
                 phone=data.get("phone"),
-                password=data.get("password"),
-                last_name=data.get("last_name"),
                 first_name=data.get("first_name"),
-                district_id=data.get("district").id,
+                last_name=data.get("last_name"),
+                password=data.get("password"),
                 region_id=data.get("region").id,
+                district_id=data.get("district").id,
                 institution=data.get("institution"),
                 institution_number=data.get("institution_number"),
-                role=data.get("role"),
                 science_id=data.get("science").id,
+                role=data.get("role"),
+                school_type_id=data.get("school_type").id,
             )
             return Moderator.objects.update_or_create(
                 user=user,
@@ -70,6 +71,7 @@ class ModeratorSerializer(serializers.ModelSerializer):
             "science_types",
             "degree",
             "docs",
+            "school_type",
         ]
         extra_kwargs = {
             "first_name": {"required": True},
