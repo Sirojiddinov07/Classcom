@@ -45,6 +45,7 @@ class ModeratorSerializer(serializers.ModelSerializer):
                 institution_number=data.get("institution_number"),
                 science_id=data.get("science").id,
                 school_type_id=data.get("school_type").id,
+                role="user",
             )
             return Moderator.objects.update_or_create(
                 user=user,

@@ -54,6 +54,7 @@ class UserService(base_service.BaseService, sms.SmsService):
             if school_type_id is None
             else get_object_or_404(models.SchoolType, id=school_type_id)
         )
+        print(role)
 
         user, _ = models.User.objects.update_or_create(
             phone=phone,
