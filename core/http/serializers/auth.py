@@ -19,6 +19,7 @@ class RegisterSerializer(serializers.ModelSerializer):
         )
     )
     degree = serializers.ChoiceField(choices=Degree.choices, required=False)
+    role = serializers.CharField(read_only=True, default="user")
 
     def validate_phone(self, value):
         user = models.User.objects.filter(
