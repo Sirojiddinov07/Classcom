@@ -8,17 +8,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-08-19 14:49+0500\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2024-08-19 14:24+0500\n"
+"PO-Revision-Date: 2024-08-19 14:43+0500\n"
+"Last-Translator: Jahongir Hakimjonov <jahongirhakimjonov@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
-"n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || "
-"(n%100>=11 && n%100<=14)? 2 : 3);\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);\n"
+"X-Translated-Using: django-rosetta 0.10.0\n"
 
 #: config/settings/common.py:123
 msgid "Russia"
@@ -73,8 +72,8 @@ msgid ""
 "o’qituvchining virtual kаbinetida muallif sifatida tasdiqlanganingiz bilan "
 "tabriklaymiz!!!"
 msgstr ""
-"Здравствуйте, %(first_name)s %(last_name)s, поздравляем вас с подтверждением "
-"вашего статуса автора в виртуальном кабинете учителя на classcom.uz!!!"
+"Здравствуйте, %(first_name)s %(last_name)s, поздравляем вас с подтверждением"
+" вашего статуса автора в виртуальном кабинете учителя на classcom.uz!!!"
 
 #: core/apps/accounts/views/change_password.py:21
 msgid "Foydalanuvchi parolini o'zgartiring."
@@ -314,7 +313,8 @@ msgstr "Уведомление"
 msgid "Bildirishnomalar"
 msgstr "Уведомления"
 
-#: core/apps/classcom/models/plan.py:8 core/apps/classcom/models/resource.py:23
+#: core/apps/classcom/models/plan.py:8
+#: core/apps/classcom/models/resource.py:23
 #: core/apps/classcom/models/resource.py:74
 #: core/apps/classcom/models/resource_type.py:9
 #: core/apps/classcom/models/science.py:8
@@ -322,8 +322,8 @@ msgstr "Уведомления"
 msgid "Nomi"
 msgstr "Название"
 
-#: core/apps/classcom/models/plan.py:9 core/apps/classcom/models/resource.py:24
-#: core/http/models/another.py:34
+#: core/apps/classcom/models/plan.py:9
+#: core/apps/classcom/models/resource.py:24 core/http/models/another.py:34
 msgid "Tavsif"
 msgstr "Описание"
 
@@ -342,7 +342,8 @@ msgstr "Тип ресурса"
 msgid "Soat"
 msgstr "Час"
 
-#: core/apps/classcom/models/plan.py:31 core/apps/classcom/models/quarter.py:25
+#: core/apps/classcom/models/plan.py:31
+#: core/apps/classcom/models/quarter.py:25
 #: core/apps/classcom/models/quarter.py:38
 #: core/apps/classcom/models/schedule.py:58 core/apps/payments/models.py:65
 msgid "Chorak"
