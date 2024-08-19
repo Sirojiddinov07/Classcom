@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-08-19 12:04+0500\n"
+"POT-Creation-Date: 2024-08-19 12:36+0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -54,7 +54,7 @@ msgstr ""
 msgid "Berilgan hisob maʼlumotlari bilan faol hisob topilmadi."
 msgstr ""
 
-#: core/apps/accounts/serializers/change_password.py:13
+#: core/apps/accounts/serializers/change_password.py:14
 msgid "Foydalanuvchi topilmadi. Iltimos, qayta kirishni urinib ko'ring."
 msgstr ""
 
@@ -67,15 +67,15 @@ msgstr ""
 msgid "Foydalanuvchi parolini o'zgartiring."
 msgstr ""
 
-#: core/apps/accounts/views/change_password.py:22
+#: core/apps/accounts/views/change_password.py:23
 msgid "Autentifikatsiya qilingan foydalanuvchi parolini o'zgartiring."
 msgstr ""
 
-#: core/apps/accounts/views/change_password.py:33
+#: core/apps/accounts/views/change_password.py:35
 msgid "parol muvaffaqiyatli o'zgartirildi"
 msgstr ""
 
-#: core/apps/accounts/views/change_password.py:38
+#: core/apps/accounts/views/change_password.py:40
 msgid "Eski parol noto'g'ri kiritildi."
 msgstr ""
 
@@ -433,15 +433,15 @@ msgstr ""
 msgid "Foydalanuvchi soʻrovi mavjud emas"
 msgstr ""
 
-#: core/apps/classcom/serializers/change_role.py:50
+#: core/apps/classcom/serializers/change_role.py:51
 msgid "Foydalanuvchi topilmadi"
 msgstr ""
 
-#: core/apps/classcom/serializers/change_role.py:56
+#: core/apps/classcom/serializers/change_role.py:59
 msgid "Foydaluvchi allaqachon moderator"
 msgstr ""
 
-#: core/apps/classcom/serializers/change_role.py:65
+#: core/apps/classcom/serializers/change_role.py:69
 msgid "Siz faqat o'zingizning ro'lingizni o'zgartirishingiz mumkin"
 msgstr ""
 

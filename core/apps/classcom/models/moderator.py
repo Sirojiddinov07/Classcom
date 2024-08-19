@@ -44,7 +44,7 @@ class Moderator(AbstractBaseModel):
         default=True, verbose_name=__("Tematik Reja yarata olishi")
     )
     resource_creatable = models.BooleanField(
-        default=True, verbose_name=__("Resurs yarata olishi")
+        default=True, verbose_name=__("Resurs yarata olishi.")
     )
 
     def __str__(self) -> str:
