@@ -60,6 +60,18 @@ class Moderator(AbstractBaseModel):
             self.user.save()
         super().save(*args, **kwargs)
 
+    def get_dirty_fields(self):
+        dirty_fields = {}
+        if not self.pk:
+            return dirty_fields
+
+        db_instance = type(self).objects.get(pk=self.pk)
+        for field in self._meta.fields:
+            field_name = field.name
+            if getattr(db_instance, field_name) != getattr(self, field_name):
+                dirty_fields[field_name] = getattr(self, field_name)
+        return dirty_fields
+
 
 class TempModerator(AbstractBaseModel):
     user = models.OneToOneField(
