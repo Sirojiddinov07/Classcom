@@ -1,8 +1,9 @@
 from django.utils.translation import gettext as _
 from rest_framework import exceptions, serializers
-from core.http import models
-from core.apps.classcom.models import ScienceTypes
+
 from core.apps.classcom.choices import Degree
+from core.apps.classcom.models import ScienceTypes
+from core.http import models
 
 
 class LoginSerializer(serializers.Serializer):

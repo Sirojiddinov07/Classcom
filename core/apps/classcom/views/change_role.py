@@ -1,6 +1,7 @@
 from rest_framework import status, generics
-from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
+
 from core.apps.classcom.models import Moderator
 from core.apps.classcom.serializers.change_role import ChangeRoleSerializer
 

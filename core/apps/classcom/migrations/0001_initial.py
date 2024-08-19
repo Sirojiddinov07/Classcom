@@ -12,7 +12,6 @@ import core.apps.classcom.models.schedule
 
 
 class Migration(migrations.Migration):
-
     initial = True
 
     dependencies = [

@@ -1,6 +1,7 @@
 from rest_framework import serializers
-from ..models import ResourceType, Classes
+
 from ..choices import Types, Departments, Schools, Docs
+from ..models import ResourceType, Classes
 
 
 class ResourceTypeSerializer(serializers.ModelSerializer):

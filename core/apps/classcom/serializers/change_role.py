@@ -1,4 +1,6 @@
 from rest_framework import serializers
+from django.utils.translation import gettext_lazy as _
+
 from core.apps.classcom.models import (
     TempModerator,
     choices,
@@ -36,7 +38,7 @@ class ChangeRoleSerializer(serializers.ModelSerializer):
         if not request or not request.user:
             raise serializers.ValidationError(
                 {
-                    "detail": "Request user is not available",
+                    "detail": _("Foydalanuvchi soʻrovi mavjud emas"),
                     "code": "no_request_user",
                 }
             )
@@ -45,13 +47,16 @@ class ChangeRoleSerializer(serializers.ModelSerializer):
             user = User.objects.get(id=value)
         except User.DoesNotExist:
             raise serializers.ValidationError(
-                {"detail": "User not found", "code": "user_not_found"}
+                {
+                    "detail": _("Foydalanuvchi topilmadi"),
+                    "code": "user_not_found",
+                }
             )
 
         if user.role == choices.Role.MODERATOR:
             raise serializers.ValidationError(
                 {
-                    "detail": "User is already a moderator",
+                    "detail": _("Foydaluvchi allaqachon moderator"),
                     "code": "already_moderator",
                 }
             )
@@ -60,7 +65,9 @@ class ChangeRoleSerializer(serializers.ModelSerializer):
         if user != request.user:
             raise serializers.ValidationError(
                 {
-                    "detail": "You do not have permission to change this user's role",
+                    "detail": _(
+                        "Siz faqat o'zingizning ro'lingizni o'zgartirishingiz mumkin"
+                    ),
                     "code": "permission_denied",
                 }
             )

@@ -2,6 +2,7 @@ from rest_framework import serializers
 from rest_framework.exceptions import APIException
 
 from core.apps.classcom import models
+from core.apps.classcom.models import Moderator
 from core.apps.classcom.serializers import (
     CategorySerializer,
     CategoryTypeSerializer,
@@ -110,11 +111,17 @@ class ResourceCreateSerializer(serializers.ModelSerializer):
         extra_kwargs = {"type": {"required": True}}
 
     def create(self, validated_data):
+        user = self.context["request"].user
+        try:
+            moderator = Moderator.objects.get(user=user)
+            if not moderator.resource_creatable:
+                raise APIException("User is not allowed to create resources.")
+        except Moderator.DoesNotExist:
+            raise APIException("User is not a moderator.")
+
         media_file = validated_data.pop("media_file")
         validated_data.pop("user", None)
-        resource = models.Resource.objects.create(
-            user=self.context["request"].user, **validated_data
-        )
+        resource = models.Resource.objects.create(user=user, **validated_data)
 
         resource.media.create(
             file=media_file, name=media_file.name, size=media_file.size

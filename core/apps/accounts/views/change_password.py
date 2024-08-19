@@ -6,7 +6,6 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
 
 from core.http import views as http_views
-
 from ..serializers import ChangePasswordSerializer
 
 
@@ -19,8 +18,10 @@ class ChangePasswordView(APIView, http_views.ApiResponse):
     @extend_schema(
         request=serializer_class,
         responses={200: OpenApiResponse(ChangePasswordSerializer)},
-        summary="Change user password.",
-        description="Change password of the authenticated user.",
+        summary=_("Foydalanuvchi parolini o'zgartiring."),
+        description=_(
+            "Autentifikatsiya qilingan foydalanuvchi parolini o'zgartiring."
+        ),
     )
     def post(self, request, *args, **kwargs):
         user = self.request.user
@@ -31,10 +32,10 @@ class ChangePasswordView(APIView, http_views.ApiResponse):
             user.password = make_password(request.data["new_password"])
             user.save()
             return response.Response(
-                data={"detail": "password changed successfully"},
+                data={"detail": _("parol muvaffaqiyatli o'zgartirildi")},
                 status=status.HTTP_200_OK,
             )
         return response.Response(
             status=status.HTTP_400_BAD_REQUEST,
-            data={"detail": _("invalida password")},
+            data={"detail": _("Eski parol noto'g'ri kiritildi.")},
         )
