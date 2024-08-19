@@ -3,9 +3,9 @@ from django.utils.translation import gettext_lazy as _
 
 
 class Weekday(models.TextChoices):
-    monday = "monday", _("Monday")
-    tuesday = "tuesday", _("Tuesday")
-    wednesday = "wednesday", _("Wednesday")
-    thursday = "thursday", _("Thursday")
-    friday = "friday", _("Friday")
-    saturday = "saturday", _("Saturday")
+    monday = "monday", _("Dushanba")
+    tuesday = "tuesday", _("Seshanba")
+    wednesday = "wednesday", _("Chorshanba")
+    thursday = "thursday", _("Payshanba")
+    friday = "friday", _("Juma")
+    saturday = "saturday", _("Shanba")

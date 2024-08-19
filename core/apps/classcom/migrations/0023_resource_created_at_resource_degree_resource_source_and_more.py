@@ -5,7 +5,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("classcom", "0022_resource_subtype_alter_resourcetype_type_and_more"),
     ]

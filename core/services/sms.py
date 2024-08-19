@@ -1,8 +1,8 @@
+import random
 from datetime import datetime, timedelta
 
 from core import exceptions
 from core.http import models, tasks
-import random
 
 
 class SmsService:

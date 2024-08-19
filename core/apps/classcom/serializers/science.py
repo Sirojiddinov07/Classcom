@@ -4,7 +4,6 @@ from core.apps.classcom.models import Science, ScienceTypes
 
 
 class ScienceTypesSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = ScienceTypes
         fields = ("id", "name")

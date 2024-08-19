@@ -15,10 +15,10 @@ from core.apps.accounts import serializers as sms_serializers
 from core.apps.accounts.serializers.custom_token import (
     CustomTokenObtainPairSerializer,
 )
+from core.apps.classcom.models import Orders
 from core.http import serializers
 from core.http import views as http_views
 from core.http.models import User
-from core.apps.classcom.models import Orders
 
 
 class RegisterView(views.APIView, services.UserService):
@@ -30,8 +30,8 @@ class RegisterView(views.APIView, services.UserService):
 
     @extend_schema(
         request=serializer_class,
-        summary="Register new user",
-        description="Yangi user ro'yhatdan o'tish uchun",
+        summary=_("Register new user"),
+        description=_("Yangi user ro'yhatdan o'tish uchun"),
     )
     def post(self, request: rest_request.Request):
         ser = self.serializer_class(data=request.data)
@@ -92,8 +92,8 @@ class ConfirmView(views.APIView, services.UserService):
 
     @extend_schema(
         request=serializer_class,
-        summary="Auth confirm.",
-        description="Auth confirm user.",
+        summary=_("Confirm otp code."),
+        description=_("Auth confirm."),
     )
     def post(self, request: rest_request.Request):
         ser = self.serializer_class(data=request.data)
@@ -190,14 +190,14 @@ class ResetSetPasswordView(views.APIView, services.UserService):
         token = models.ResetToken.objects.filter(token=token)
         if not token.exists():
             return response.Response(
-                {"detail": _("Invalid token")},
+                {"detail": _("Token xato")},
                 status=status.HTTP_400_BAD_REQUEST,
             )
         phone = token.first().user.phone
         token.delete()
         self.change_password(phone, password)
         return response.Response(
-            {"detail": _("password updated")}, status=status.HTTP_200_OK
+            {"detail": _("Parol yangilandi")}, status=status.HTTP_200_OK
         )
 
 

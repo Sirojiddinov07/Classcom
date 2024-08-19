@@ -2,8 +2,9 @@ from django.utils.decorators import method_decorator
 from django.views.decorators.cache import never_cache
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import permissions, viewsets
-from rest_framework.response import Response
 from rest_framework.decorators import action
+from rest_framework.response import Response
+
 from core.apps.classcom import models, serializers
 from ..filters import ResourceFilter
 
@@ -28,6 +29,7 @@ class ResourceViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticated]
     filter_backends = [DjangoFilterBackend]
     filterset_class = ResourceFilter
+
     # fields = ["name", "type", "classes", "subtype", "category", "category_type"]
 
     @method_decorator(never_cache)

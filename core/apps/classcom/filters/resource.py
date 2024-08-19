@@ -1,4 +1,5 @@
 from django_filters import FilterSet, NumberFilter
+
 from ..models import Resource
 
 

@@ -16,7 +16,6 @@ class UnifiedSearchView(views.APIView):
         serializer.is_valid(raise_exception=True)
         query = serializer.validated_data.get("query", "")
 
-        # Searching Resources
         resource_results = models.Resource.objects.filter(
             Q(name__icontains=query)
             | Q(description__icontains=query)

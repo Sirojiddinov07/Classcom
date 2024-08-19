@@ -1,12 +1,13 @@
-from rest_framework import serializers, exceptions
-from core.apps.classcom.models import Moderator
-from core.services import UserService
-from django.utils.translation import gettext as _
 from django.core.files.base import ContentFile
 from django.core.files.storage import default_storage
-from core.http import models
-from core.apps.classcom.models import ScienceTypes
+from django.utils.translation import gettext as _
+from rest_framework import serializers, exceptions
+
 from core.apps.classcom.choices import Degree
+from core.apps.classcom.models import Moderator
+from core.apps.classcom.models import ScienceTypes
+from core.http import models
+from core.services import UserService
 
 
 class ModeratorSerializer(serializers.ModelSerializer):

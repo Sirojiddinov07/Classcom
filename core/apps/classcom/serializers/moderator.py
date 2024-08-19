@@ -62,7 +62,7 @@ class UserModeratorSerializer(serializers.ModelSerializer):
             phone=value, validated_at__isnull=False
         ).exists():
             raise serializers.ValidationError(
-                _("Phone number already registered."), code="unique"
+                _("Telfon raqam allaqachon ro'yxatdan o'tgan."), code="unique"
             )
         return value
 

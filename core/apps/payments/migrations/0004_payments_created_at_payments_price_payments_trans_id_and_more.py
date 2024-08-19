@@ -6,7 +6,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("classcom", "0020_remove_moderator_science_group_and_more"),
         ("payments", "0003_payments_order"),

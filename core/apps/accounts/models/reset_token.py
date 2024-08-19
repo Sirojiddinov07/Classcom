@@ -1,18 +1,20 @@
 from django.db import models
+from django.utils.translation import gettext_lazy as _
 
-from core.http.models import User
+from core.http.models import User, AbstractBaseModel
 
 
-class ResetToken(models.Model):
-    token = models.CharField(max_length=255, unique=True)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
+class ResetToken(AbstractBaseModel):
+    token = models.CharField(
+        max_length=255, unique=True, verbose_name=_("Token")
+    )
+    user = models.ForeignKey(
+        User, on_delete=models.CASCADE, verbose_name=_("Foydalanuvchi")
+    )
 
     def __str__(self):
         return self.token
 
     class Meta:
-        verbose_name = "Reset Token"
-        verbose_name_plural = "Reset Tokens"
+        verbose_name = _("Tokenni tiklash")
+        verbose_name_plural = _("Tokenni tiklash")

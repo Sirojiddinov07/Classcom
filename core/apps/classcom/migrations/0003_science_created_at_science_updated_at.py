@@ -4,7 +4,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("classcom", "0002_remove_topic_thematic_plan_topic_thematic_plan"),
     ]

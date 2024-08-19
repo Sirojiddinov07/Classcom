@@ -1,10 +1,12 @@
 from datetime import datetime
 
 from django.db import models
-from django.utils.translation import gettext_lazy as __
+from django.utils.translation import gettext_lazy as _
+
+from core.http.models import AbstractBaseModel
 
 
-class Quarter(models.Model):
+class Quarter(AbstractBaseModel):
     Q1 = 1
     Q2 = 2
     Q3 = 3
@@ -20,13 +22,18 @@ class Quarter(models.Model):
     choices = models.IntegerField(
         choices=QUARTER_CHOICES,
         default=Q1,
+        verbose_name=_("Chorak"),
     )
-    start_date = models.DateField(default=datetime.today, blank=True)
-    end_date = models.DateField(default=datetime.today, blank=True)
+    start_date = models.DateField(
+        default=datetime.today, blank=True, verbose_name=_("Boshlang'ich sana")
+    )
+    end_date = models.DateField(
+        default=datetime.today, blank=True, verbose_name=_("Oxirgi sana")
+    )
 
     def __str__(self):
         return f" {self.choices} ({self.start_date} - {self.end_date})"
 
     class Meta:
-        verbose_name = __("Quarter")
-        verbose_name_plural = __("Quarters")
+        verbose_name = _("Chorak")
+        verbose_name_plural = _("Choraklar")

@@ -4,7 +4,6 @@ from django.db import migrations
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("classcom", "0017_delete_orders"),
         ("classcom", "0017_merge_20240805_1753"),

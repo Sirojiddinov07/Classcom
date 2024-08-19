@@ -1,22 +1,35 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as __
 
+from core.http.models import AbstractBaseModel
 
-class Media(models.Model):
-    name = models.CharField(max_length=255, blank=True, null=True)
-    desc = models.TextField(blank=True, null=True)
-    file = models.FileField(upload_to="media/")
-    type = models.CharField(max_length=255, blank=True, null=True)
-    file_type = models.CharField(max_length=255, blank=True, null=True)
-    size = models.BigIntegerField(blank=True, null=True, default=0)
-    created_at = models.DateTimeField(auto_now=True)
-    updated_at = models.DateTimeField(auto_now=True)
+
+class Media(AbstractBaseModel):
+    name = models.CharField(
+        max_length=255, blank=True, null=True, verbose_name=__("Nomi")
+    )
+    desc = models.TextField(blank=True, null=True, verbose_name=__("Tavsif"))
+    file = models.FileField(upload_to="media/", verbose_name=__("Fayl"))
+    type = models.CharField(
+        max_length=255, blank=True, null=True, verbose_name=__("Turi")
+    )
+    file_type = models.CharField(
+        max_length=255, blank=True, null=True, verbose_name=__("Fayl turi")
+    )
+    size = models.BigIntegerField(
+        blank=True, null=True, default=0, verbose_name=__("Hajmi")
+    )
 
     download_users = models.ManyToManyField(
-        "http.User", related_name="downloaded_media", blank=True
+        "http.User",
+        related_name="downloaded_media",
+        blank=True,
+        verbose_name=__("Yuklab olganlar"),
     )
-    count = models.IntegerField(default=0)
-    statistics = models.CharField(max_length=255, blank=True, null=True)
+    count = models.IntegerField(default=0, verbose_name=__("Yuklashlar soni"))
+    statistics = models.CharField(
+        max_length=255, blank=True, null=True, verbose_name=__("Statistika")
+    )
 
     def __str__(self) -> str:
         return str(self.name) if self.name is not None else f"Media {self.id}"
@@ -46,4 +59,4 @@ class Media(models.Model):
 
     class Meta:
         verbose_name = __("Media")
-        verbose_name_plural = __("Medias")
+        verbose_name_plural = __("Medialar")

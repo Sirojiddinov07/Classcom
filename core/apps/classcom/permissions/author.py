@@ -1,8 +1,9 @@
+from django.utils.translation import gettext_lazy as _
 from rest_framework import permissions
 
 
 class IsAuthor(permissions.BasePermission):
-    message = "You do not have permission to perform this operation."
+    message = _("Sizda bu amalni bajarish uchun ruxsat yo‘q.")
 
     def __init__(self, model, pk):
         super().__init__()
