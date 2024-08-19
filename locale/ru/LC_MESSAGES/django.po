@@ -241,6 +241,7 @@ msgid "Sababi"
 msgstr "Причина"
 
 #: core/apps/classcom/models/days_off.py:12
+#: core/apps/classcom/models/science.py:34
 msgid "Fanlar"
 msgstr "Предметы"
 
@@ -315,7 +316,9 @@ msgstr "Уведомления"
 #: core/apps/classcom/models/plan.py:8
 #: core/apps/classcom/models/resource.py:23
 #: core/apps/classcom/models/resource.py:74
-#: core/apps/classcom/models/resource_type.py:9 core/http/models/another.py:9
+#: core/apps/classcom/models/resource_type.py:9
+#: core/apps/classcom/models/science.py:8
+#: core/apps/classcom/models/science.py:19 core/http/models/another.py:9
 msgid "Nomi"
 msgstr "Название"
 
@@ -347,7 +350,8 @@ msgid "Chorak"
 msgstr "Четверть"
 
 #: core/apps/classcom/models/plan.py:34
-#: core/apps/classcom/models/schedule.py:38 core/apps/payments/models.py:28
+#: core/apps/classcom/models/schedule.py:38
+#: core/apps/classcom/models/science.py:33 core/apps/payments/models.py:28
 #: core/http/models/user.py:90
 msgid "Fan"
 msgstr "Предмет"
@@ -439,6 +443,23 @@ msgstr "Дата"
 msgid "Dars jadvali"
 msgstr "Расписание уроков"
 
+#: core/apps/classcom/models/science.py:14
+#: core/apps/classcom/models/science.py:27 core/apps/payments/models.py:30
+msgid "Fan turi"
+msgstr "Тип предмета"
+
+#: core/apps/classcom/models/science.py:15
+#, fuzzy
+#| msgid "Fan turi"
+msgid "Fan turlari"
+msgstr "Тип предмета"
+
+#: core/apps/classcom/models/science.py:25 core/http/models/science.py:8
+#: core/http/models/science.py:14 core/http/models/science.py:15
+#: core/http/models/user.py:63
+msgid "Fan guruhi"
+msgstr "Группа предметов"
+
 #: core/apps/classcom/permissions/author.py:6
 msgid "Sizda bu amalni bajarish uchun ruxsat yo‘q."
 msgstr "У вас нет разрешения на выполнение этого действия."
@@ -486,10 +507,6 @@ msgstr "Дата начала"
 #: core/apps/payments/models.py:25
 msgid "Tugash sanasi"
 msgstr "Дата окончания"
-
-#: core/apps/payments/models.py:30
-msgid "Fan turi"
-msgstr "Тип предмета"
 
 #: core/apps/payments/models.py:31 core/apps/payments/models.py:49
 #: core/apps/payments/models.py:67
@@ -637,11 +654,6 @@ msgstr "Тип школы"
 #: core/http/models/school_type.py:15
 msgid "Maktab turlari"
 msgstr "Типы школ"
-
-#: core/http/models/science.py:8 core/http/models/science.py:14
-#: core/http/models/science.py:15 core/http/models/user.py:63
-msgid "Fan guruhi"
-msgstr "Группа предметов"
 
 #: core/http/models/user.py:16
 msgid "Telefon"

@@ -1,6 +1,7 @@
 from rest_framework import serializers
 
 from core.apps.classcom.models import Schedule
+from core.apps.classcom.serializers import ClassTypeSerializer
 from core.apps.classcom.serializers.classes import ClassesSerializer
 from core.apps.classcom.serializers.science import ScienceSerializer
 from core.http.serializers import UserSerializer
@@ -13,6 +14,7 @@ class ScheduleListSerializer(serializers.ModelSerializer):
     user = UserSerializer()
     science = ScienceSerializer()
     classes = ClassesSerializer()
+    class_type = ClassTypeSerializer()
 
     class Meta:
         model = Schedule
@@ -22,10 +24,12 @@ class ScheduleListSerializer(serializers.ModelSerializer):
             "user",
             "science",
             "classes",
+            "class_type",
             "weekday",
             "start_time",
             "end_time",
             "lesson_time",
+            "date",
         )
 
 
@@ -39,6 +43,7 @@ class ScheduleCreateSerializer(serializers.ModelSerializer):
             "shift",
             "science",
             "classes",
+            "class_type",
             "weekday",
             "start_time",
             "end_time",

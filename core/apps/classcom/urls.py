@@ -2,6 +2,7 @@ from django.urls import include, path
 from rest_framework import routers
 
 from core.apps.classcom import views
+from core.http.views import SchoolTypeViewSet
 
 router = routers.DefaultRouter()
 router.register("plan", views.PlanViewSet, basename="plan")
@@ -20,6 +21,10 @@ router.register("resource", views.ResourceViewSet, basename="resource")
 router.register("region", views.RegionViewSet, basename="region")
 router.register("district", views.DistrictViewSet, basename="district")
 router.register("types", views.ResourceTypesViewSet, basename="types")
+router.register(
+    "science-types", views.ScienceTypesViewSet, basename="science-types"
+)
+router.register("school-type", SchoolTypeViewSet, basename="school-type")
 
 urlpatterns = [
     path("", include(router.urls)),
