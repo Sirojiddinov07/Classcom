@@ -11,3 +11,12 @@ class ScienceViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = serializers.ScienceSerializer
     filter_backends = [DjangoFilterBackend]
     filterset_fields = ["science_grp", "name"]
+
+
+class ScienceTypesViewSet(viewsets.ReadOnlyModelViewSet):
+    permission_classes = [AllowAny]
+    queryset = models.ScienceTypes.objects.all()
+    serializer_class = serializers.ScienceTypesSerializer
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ["name"]
+    http_method_names = ["get"]

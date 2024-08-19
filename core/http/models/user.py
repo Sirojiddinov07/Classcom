@@ -29,7 +29,7 @@ class User(auth_models.AbstractUser, AbstractBaseModel):
     )
     role = models.CharField(
         max_length=255,
-        choices=Role,
+        choices=Role.choices,
         default=Role.USER,
         verbose_name=_("Rol"),
     )

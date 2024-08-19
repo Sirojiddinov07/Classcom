@@ -26,6 +26,7 @@ class ScheduleListSerializer(serializers.ModelSerializer):
             "start_time",
             "end_time",
             "lesson_time",
+            "date",
         )
 
 
