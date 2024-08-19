@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-07-12 16:12+0500\n"
+"POT-Creation-Date: 2024-08-17 17:53+0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,32 +18,98 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: config/settings/common.py:120
+#: config/settings/common.py:123
 msgid "Russia"
 msgstr ""
 
-#: config/settings/common.py:121
+#: config/settings/common.py:124
 msgid "English"
 msgstr ""
 
-#: config/settings/common.py:122
+#: config/settings/common.py:125
 msgid "Uzbek"
 msgstr ""
 
-#: core/apps/accounts/serializers/auth.py:7
+#: core/apps/accounts/serializers/auth.py:8
 msgid "No active account found with the given credentials."
+msgstr ""
+
+#: core/apps/accounts/serializers/moderator.py:28
+#: core/apps/classcom/serializers/moderator.py:65
+#: core/http/serializers/auth.py:28
+msgid "Phone number already registered."
 msgstr ""
 
 #: core/apps/accounts/views/change_password.py:39
 msgid "invalida password"
 msgstr ""
 
-#: core/apps/accounts/views/sms.py:179
+#: core/apps/accounts/views/moderator.py:33
+msgid "Tasdiqlash ko'di yuborildi"
+msgstr ""
+
+#: core/apps/accounts/views/sms.py:192
 msgid "Invalid token"
 msgstr ""
 
-#: core/apps/accounts/views/sms.py:186
+#: core/apps/accounts/views/sms.py:199
 msgid "password updated"
+msgstr ""
+
+#: core/apps/classcom/choices/types.py:6
+msgid "By list"
+msgstr ""
+
+#: core/apps/classcom/choices/types.py:7
+msgid "By class"
+msgstr ""
+
+#: core/apps/classcom/choices/types.py:8
+msgid "By class and unit"
+msgstr ""
+
+#: core/apps/classcom/choices/types.py:9
+msgid "By Department"
+msgstr ""
+
+#: core/apps/classcom/choices/types.py:10
+msgid "By docs"
+msgstr ""
+
+#: core/apps/classcom/choices/types.py:11
+msgid "By school"
+msgstr ""
+
+#: core/apps/classcom/choices/types.py:15
+msgid "Darslik"
+msgstr ""
+
+#: core/apps/classcom/choices/types.py:16
+msgid "O‘qituvchi kitobi"
+msgstr ""
+
+#: core/apps/classcom/choices/types.py:17
+msgid "Daftar"
+msgstr ""
+
+#: core/apps/classcom/choices/types.py:21
+msgid "Boshlang‘ich maktab."
+msgstr ""
+
+#: core/apps/classcom/choices/types.py:22
+msgid "O‘rta maktab"
+msgstr ""
+
+#: core/apps/classcom/choices/types.py:23
+msgid "Katta maktab"
+msgstr ""
+
+#: core/apps/classcom/choices/types.py:27
+msgid "Hujjatlar, testlar "
+msgstr ""
+
+#: core/apps/classcom/choices/types.py:29
+msgid "O‘qituvchining o‘z-o‘zini tarbiyalashi uchun multimedia resurslari"
 msgstr ""
 
 #: core/apps/classcom/choices/weekday.py:6
@@ -70,25 +136,41 @@ msgstr ""
 msgid "Saturday"
 msgstr ""
 
-#: core/apps/classcom/serializers/moderator.py:45
-#: core/http/serializers/auth.py:21
-msgid "Phone number already registered."
-msgstr ""
-
-#: core/apps/classcom/services/topic.py:51
+#: core/apps/classcom/services/topic.py:49
 msgid "No topic found for this date"
 msgstr ""
 
-#: core/apps/classcom/services/topic.py:53
+#: core/apps/classcom/services/topic.py:51
 msgid "You have no topics"
 msgstr ""
 
-#: core/apps/classcom/views/plan.py:51
+#: core/apps/classcom/views/plan.py:53
 msgid "Plan not found"
 msgstr ""
 
-#: core/apps/classcom/views/plan.py:71
+#: core/apps/classcom/views/plan.py:73
 msgid "Media files uploaded"
+msgstr ""
+
+#: core/apps/payments/models.py:19 core/apps/payments/models.py:20
+msgid "Orders"
+msgstr ""
+
+#: core/apps/payments/models.py:35 core/apps/payments/models.py:36
+msgid "Payments"
+msgstr ""
+
+#: core/apps/payments/models.py:47 core/apps/payments/models.py:48
+msgid "Plans"
+msgstr ""
+
+#: core/apps/payments/services.py:16
+msgid ""
+"Serverda plan topilmadi bu texnik xatolik iltimos adminga murojat qiling"
+msgstr ""
+
+#: core/apps/payments/views.py:46
+msgid "Payment created"
 msgstr ""
 
 #: core/http/choices/location.py:6
@@ -131,7 +213,7 @@ msgstr ""
 msgid "Frontend Translations"
 msgstr ""
 
-#: core/http/serializers/auth.py:60 core/http/serializers/auth.py:71
+#: core/http/serializers/auth.py:72 core/http/serializers/auth.py:83
 msgid "User does not exist"
 msgstr ""
 
