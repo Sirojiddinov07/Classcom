@@ -32,6 +32,8 @@ class User(auth_models.AbstractUser, AbstractBaseModel):
         choices=Role.choices,
         default=Role.USER,
         verbose_name=_("Rol"),
+        null=True,
+        blank=True,
     )
 
     region = models.ForeignKey(
