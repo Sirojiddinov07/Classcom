@@ -35,33 +35,18 @@ class ModeratorSerializer(serializers.ModelSerializer):
         try:
             docs = self.context.get("request").FILES["docs"]
             file = default_storage.save(docs.name, ContentFile(docs.read()))
-
-            district = data.get("district")
-            region = data.get("region")
-            science = data.get("science")
-            school_type = data.get("school_type")
-
-            if not district or not region or not science or not school_type:
-                raise exceptions.ValidationError(
-                    {
-                        "detail": "District, region, science, and school type must be provided."
-                    }
-                )
-
             user = UserService().create_user(
                 phone=data.get("phone"),
                 password=data.get("password"),
                 last_name=data.get("last_name"),
                 first_name=data.get("first_name"),
-                district_id=district.id,
-                region_id=region.id,
+                district_id=data.get("district").id,
+                region_id=data.get("region").id,
                 institution=data.get("institution"),
                 institution_number=data.get("institution_number"),
-                science_id=science.id,
                 role=data.get("role"),
-                school_type_id=school_type.id,
+                science_id=data.get("science").id,
             )
-
             return Moderator.objects.update_or_create(
                 user=user,
                 defaults={"degree": data.get("degree"), "docs": file},
@@ -85,7 +70,6 @@ class ModeratorSerializer(serializers.ModelSerializer):
             "science_types",
             "degree",
             "docs",
-            "school_type",
         ]
         extra_kwargs = {
             "first_name": {"required": True},
@@ -97,5 +81,4 @@ class ModeratorSerializer(serializers.ModelSerializer):
             "district": {"required": True},
             "region": {"required": True},
             "institution_number": {"required": True},
-            "school_type": {"required": False},
         }
