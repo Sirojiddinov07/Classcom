@@ -40,6 +40,9 @@ class Schedule(AbstractBaseModel):
     classes = models.ForeignKey(
         "Classes", models.CASCADE, verbose_name=_("Sinflar")
     )
+    class_type = models.ForeignKey(
+        "ClassType", models.CASCADE, verbose_name=_("Sinflar turi")
+    )
     weekday = models.CharField(
         max_length=15,
         choices=choices.Weekday.choices,
