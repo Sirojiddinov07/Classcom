@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-08-19 14:24+0500\n"
+"POT-Creation-Date: 2024-08-19 14:49+0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -44,8 +44,7 @@ msgstr "Токен"
 #: core/apps/classcom/models/notification.py:12
 #: core/apps/classcom/models/plan.py:25
 #: core/apps/classcom/models/resource.py:44
-#: core/apps/classcom/models/schedule.py:35
-#: core/apps/payments/models.py:16
+#: core/apps/classcom/models/schedule.py:35 core/apps/payments/models.py:16
 msgid "Foydalanuvchi"
 msgstr "Пользователь"
 
@@ -74,9 +73,8 @@ msgid ""
 "o’qituvchining virtual kаbinetida muallif sifatida tasdiqlanganingiz bilan "
 "tabriklaymiz!!!"
 msgstr ""
-"Здравствуйте, %(first_name)s %(last_name)s, поздравляем вас с "
-"подтверждением вашего статуса автора в виртуальном кабинете учителя на "
-"classcom.uz!!!"
+"Здравствуйте, %(first_name)s %(last_name)s, поздравляем вас с подтверждением "
+"вашего статуса автора в виртуальном кабинете учителя на classcom.uz!!!"
 
 #: core/apps/accounts/views/change_password.py:21
 msgid "Foydalanuvchi parolini o'zgartiring."
@@ -244,14 +242,14 @@ msgid "Sababi"
 msgstr "Причина"
 
 #: core/apps/classcom/models/days_off.py:12
+#: core/apps/classcom/models/science.py:34
 msgid "Fanlar"
 msgstr "Предметы"
 
 #: core/apps/classcom/models/days_off.py:13
 #: core/apps/classcom/models/plan.py:28
 #: core/apps/classcom/models/resource.py:51
-#: core/apps/classcom/models/schedule.py:41
-#: core/http/models/user.py:83
+#: core/apps/classcom/models/schedule.py:41 core/http/models/user.py:83
 msgid "Sinflar"
 msgstr "Классы"
 
@@ -267,8 +265,7 @@ msgstr "Выходные дни"
 msgid "Yuklama"
 msgstr "Загрузка"
 
-#: core/apps/classcom/models/download_token.py:20
-#: core/http/models/user.py:126
+#: core/apps/classcom/models/download_token.py:20 core/http/models/user.py:126
 msgid "Muddati"
 msgstr "Срок действия"
 
@@ -319,7 +316,9 @@ msgstr "Уведомления"
 
 #: core/apps/classcom/models/plan.py:8 core/apps/classcom/models/resource.py:23
 #: core/apps/classcom/models/resource.py:74
-#: core/apps/classcom/models/resource_type.py:9 core/http/models/another.py:9
+#: core/apps/classcom/models/resource_type.py:9
+#: core/apps/classcom/models/science.py:8
+#: core/apps/classcom/models/science.py:19 core/http/models/another.py:9
 msgid "Nomi"
 msgstr "Название"
 
@@ -350,7 +349,8 @@ msgid "Chorak"
 msgstr "Четверть"
 
 #: core/apps/classcom/models/plan.py:34
-#: core/apps/classcom/models/schedule.py:38 core/apps/payments/models.py:28
+#: core/apps/classcom/models/schedule.py:38
+#: core/apps/classcom/models/science.py:33 core/apps/payments/models.py:28
 #: core/http/models/user.py:90
 msgid "Fan"
 msgstr "Предмет"
@@ -442,6 +442,23 @@ msgstr "Дата"
 msgid "Dars jadvali"
 msgstr "Расписание уроков"
 
+#: core/apps/classcom/models/science.py:14
+#: core/apps/classcom/models/science.py:27 core/apps/payments/models.py:30
+msgid "Fan turi"
+msgstr "Тип предмета"
+
+#: core/apps/classcom/models/science.py:15
+#, fuzzy
+#| msgid "Fan turi"
+msgid "Fan turlari"
+msgstr "Тип предмета"
+
+#: core/apps/classcom/models/science.py:25 core/http/models/science.py:8
+#: core/http/models/science.py:14 core/http/models/science.py:15
+#: core/http/models/user.py:63
+msgid "Fan guruhi"
+msgstr "Группа предметов"
+
 #: core/apps/classcom/permissions/author.py:6
 msgid "Sizda bu amalni bajarish uchun ruxsat yo‘q."
 msgstr "У вас нет разрешения на выполнение этого действия."
@@ -490,10 +507,6 @@ msgstr "Дата начала"
 msgid "Tugash sanasi"
 msgstr "Дата окончания"
 
-#: core/apps/payments/models.py:30
-msgid "Fan turi"
-msgstr "Тип предмета"
-
 #: core/apps/payments/models.py:31 core/apps/payments/models.py:49
 #: core/apps/payments/models.py:67
 msgid "Narxi"
@@ -531,7 +544,8 @@ msgstr "Планы"
 msgid ""
 "Serverda plan topilmadi bu texnik xatolik iltimos adminga murojat qiling"
 msgstr ""
-"План на сервере не найден, это техническая ошибка, пожалуйста, обратитесь к администратору"
+"План на сервере не найден, это техническая ошибка, пожалуйста, обратитесь к "
+"администратору"
 
 #: core/apps/payments/views.py:48
 msgid "Payment created"
@@ -639,11 +653,6 @@ msgstr "Тип школы"
 #: core/http/models/school_type.py:15
 msgid "Maktab turlari"
 msgstr "Типы школ"
-
-#: core/http/models/science.py:8 core/http/models/science.py:14
-#: core/http/models/science.py:15 core/http/models/user.py:63
-msgid "Fan guruhi"
-msgstr "Группа предметов"
 
 #: core/http/models/user.py:16
 msgid "Telefon"

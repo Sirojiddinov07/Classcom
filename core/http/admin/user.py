@@ -56,6 +56,7 @@ class UserAdmin(admin.UserAdmin, import_export.ImportExportModelAdmin):
                     "institution",
                     "science_group",
                     "institution_number",
+                    "school_type",
                 )
             },
         ),
