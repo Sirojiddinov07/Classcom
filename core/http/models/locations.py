@@ -10,6 +10,10 @@ class Region(AbstractBaseModel):
     def __str__(self):
         return self.region
 
+    class Meta:
+        verbose_name = _("Viloyat")
+        verbose_name_plural = _("Viloyatlar")
+
 
 class District(AbstractBaseModel):
     district = models.CharField(max_length=255, verbose_name=_("Tuman"))
@@ -22,3 +26,7 @@ class District(AbstractBaseModel):
 
     def __str__(self):
         return self.district
+
+    class Meta:
+        verbose_name = _("Tuman")
+        verbose_name_plural = _("Tumanlar")

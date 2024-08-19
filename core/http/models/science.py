@@ -9,3 +9,7 @@ class ScienceGroups(AbstractBaseModel):
 
     def __str__(self):
         return self.name
+
+    class Meta:
+        verbose_name = _("Fan guruhi")
+        verbose_name_plural = _("Fan guruhi")

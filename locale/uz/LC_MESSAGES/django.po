@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-08-19 12:36+0500\n"
+"POT-Creation-Date: 2024-08-19 14:24+0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,6 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+
 #: config/settings/common.py:123
 msgid "Russia"
 msgstr ""
@@ -61,6 +62,14 @@ msgstr ""
 #: core/apps/accounts/serializers/moderator.py:29
 #: core/http/serializers/auth.py:29
 msgid "Phone number already registered."
+msgstr ""
+
+#: core/apps/accounts/tasks/moderator_confirmed.py:19
+#, python-format
+msgid ""
+"Assalomu alaykum %(first_name)s %(last_name)s sizni classcom.uz "
+"o’qituvchining virtual kаbinetida muallif sifatida tasdiqlanganingiz bilan "
+"tabriklaymiz!!!"
 msgstr ""
 
 #: core/apps/accounts/views/change_password.py:21
@@ -595,13 +604,22 @@ msgstr ""
 msgid "Yangilangan vaqti"
 msgstr ""
 
-#: core/http/models/locations.py:8 core/http/models/locations.py:20
-#: core/http/models/user.py:42
+#: core/http/models/locations.py:8 core/http/models/locations.py:14
+#: core/http/models/locations.py:24 core/http/models/user.py:42
 msgid "Viloyat"
 msgstr ""
 
-#: core/http/models/locations.py:15 core/http/models/user.py:49
+#: core/http/models/locations.py:15
+msgid "Viloyatlar"
+msgstr ""
+
+#: core/http/models/locations.py:19 core/http/models/locations.py:31
+#: core/http/models/user.py:49
 msgid "Tuman"
+msgstr ""
+
+#: core/http/models/locations.py:32
+msgid "Tumanlar"
 msgstr ""
 
 #: core/http/models/school_type.py:8 core/http/models/school_type.py:14
@@ -613,7 +631,8 @@ msgstr ""
 msgid "Maktab turlari"
 msgstr ""
 
-#: core/http/models/science.py:8 core/http/models/user.py:63
+#: core/http/models/science.py:8 core/http/models/science.py:14
+#: core/http/models/science.py:15 core/http/models/user.py:63
 msgid "Fan guruhi"
 msgstr ""
 
