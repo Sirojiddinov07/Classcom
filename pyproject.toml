@@ -65,6 +65,7 @@ pytest-django = "^4.8.0"
 coverage = "^7.5.4"
 pytest-cov = "^5.0.0"
 uzum-payments = "^0.0.6"
+django-unfold = "^0.36.0"
 
 
 [build-system]

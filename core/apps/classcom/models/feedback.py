@@ -1,5 +1,6 @@
 from django.core.validators import MaxLengthValidator
 from django.db import models
+from django.utils.translation import gettext_lazy as _
 
 from core.http.choices.feedback import FeedbackType
 from core.http.models.base import AbstractBaseModel
@@ -7,14 +8,23 @@ from core.http.models.base import AbstractBaseModel
 
 class Feedback(AbstractBaseModel):
     feedback_type = models.CharField(
-        max_length=10, choices=FeedbackType.choices
+        max_length=10,
+        choices=FeedbackType.choices,
+        verbose_name=_("Feedback turi"),
     )
-    body = models.TextField(validators=[MaxLengthValidator(1000)])
+    body = models.TextField(
+        validators=[MaxLengthValidator(1000)], verbose_name=_("Mazmuni")
+    )
 
-    answered = models.BooleanField(default=False)
+    answered = models.BooleanField(
+        default=False, verbose_name=_("Javob berildimi")
+    )
 
     user = models.ForeignKey(
-        "http.User", on_delete=models.CASCADE, related_name="feedbacks"
+        "http.User",
+        on_delete=models.CASCADE,
+        related_name="feedbacks",
+        verbose_name=_("Foydalanuvchi"),
     )
 
     def __str__(self) -> str:
@@ -22,20 +32,25 @@ class Feedback(AbstractBaseModel):
 
     class Meta:
         db_table = "feedback"
-        verbose_name = "Feedback"
-        verbose_name_plural = "Feedbacks"
+        verbose_name = _("Fikr-mulohaza")
+        verbose_name_plural = _("Fikr-mulohazalar")
 
 
 class Answer(AbstractBaseModel):
     feedback = models.ForeignKey(
-        Feedback, on_delete=models.CASCADE, related_name="answers"
+        Feedback,
+        on_delete=models.CASCADE,
+        related_name="answers",
+        verbose_name=_("Fikr-mulohaza"),
     )
-    body = models.TextField(validators=[MaxLengthValidator(1000)])
+    body = models.TextField(
+        validators=[MaxLengthValidator(1000)], verbose_name=_("Javob")
+    )
 
     def __str__(self) -> str:
         return f"{self.feedback.user} | {self.feedback}"
 
     class Meta:
-        db_table = "naswer"
-        verbose_name = "Answer"
-        verbose_name_plural = "Answers"
+        db_table = "answer"
+        verbose_name = _("Javob")
+        verbose_name_plural = _("Javoblar")

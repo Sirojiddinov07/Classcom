@@ -5,7 +5,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("http", "0003_district_sciencegroups_user_institution_and_more"),
     ]

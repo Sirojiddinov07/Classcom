@@ -5,7 +5,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("classcom", "0019_remove_moderator_classes_and_more"),
     ]

@@ -1,3 +1,4 @@
+from .change_role import *  # noqa
 from .chat import *  # noqa
 from .classes import *  # noqa
 from .days_off import *  # noqa
@@ -15,5 +16,4 @@ from .schedule import *  # noqa
 from .science import *  # noqa
 from .search import *  # noqa
 from .topic import *  # noqa
-from .change_role import *  # noqa
 from .using_science_count import *  # noqa

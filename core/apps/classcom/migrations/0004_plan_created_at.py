@@ -5,7 +5,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("classcom", "0003_science_created_at_science_updated_at"),
     ]

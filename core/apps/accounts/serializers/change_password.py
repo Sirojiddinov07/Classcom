@@ -1,4 +1,5 @@
 from rest_framework import serializers
+from django.utils.translation import gettext_lazy as _
 
 
 class ChangePasswordSerializer(serializers.Serializer):
@@ -9,6 +10,8 @@ class ChangePasswordSerializer(serializers.Serializer):
         if self.context.get("request").user is None:
             raise serializers.ValidationError(
                 {
-                    "detail": "User not found.",
+                    "detail": _(
+                        "Foydalanuvchi topilmadi. Iltimos, qayta kirishni urinib ko'ring."
+                    ),
                 }
             )

@@ -6,7 +6,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("classcom", "0010_category_categorytype_resource_category_and_more"),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),

@@ -1,8 +1,8 @@
 from rest_framework import serializers
+from rest_framework.exceptions import ValidationError
 
 from core.apps.classcom import models, services
 from core.http.models import User
-
 from ..serializers.classes import ClassMiniSerializer
 from ..serializers.media import MediaSerializer
 from ..serializers.quarter import QuarterMiniSerializer
@@ -47,7 +47,6 @@ class PlanTopicSerializer(serializers.ModelSerializer):
 # Plan Detail Serializer
 ###############################################################################
 class UserMiniSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = User
         fields = ["first_name", "last_name"]
@@ -194,11 +193,18 @@ class PlanCreateSerializer(serializers.ModelSerializer):
         )
 
     def create(self, validated_data):
+        user = self.context["request"].user
         validated_data.pop("user", None)
 
-        resource = models.Plan.objects.create(
-            user=self.context["request"].user, **validated_data
-        )
+        # Check if the user is a Moderator and if plan_creatable is True
+        try:
+            moderator = models.Moderator.objects.get(user=user)
+            if not moderator.plan_creatable:
+                raise ValidationError("User is not allowed to create a plan.")
+        except models.Moderator.DoesNotExist:
+            raise ValidationError("User is not a Moderator.")
+
+        resource = models.Plan.objects.create(user=user, **validated_data)
         return resource
 
 

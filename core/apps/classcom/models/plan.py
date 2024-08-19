@@ -1,33 +1,53 @@
 from django.db import models
-from django.utils.translation import gettext_lazy as __
+from django.utils.translation import gettext_lazy as _
+
+from core.http.models import AbstractBaseModel
 
 
-class Plan(models.Model):
-    name = models.CharField(max_length=255)
-    description = models.TextField()
+class Plan(AbstractBaseModel):
+    name = models.CharField(max_length=255, verbose_name=_("Nomi"))
+    description = models.TextField(verbose_name=_("Tavsif"))
 
-    banner = models.ImageField(upload_to="plan/banner/")
-    type = models.ForeignKey(
-        "ResourceType", on_delete=models.CASCADE, null=True, blank=True
+    banner = models.ImageField(
+        upload_to="plan/banner/", verbose_name=_("Banner")
     )
-    hour = models.IntegerField(default=0, null=True, blank=True)
-    user = models.ForeignKey("http.User", on_delete=models.CASCADE)
-    classes = models.ForeignKey("Classes", on_delete=models.CASCADE)
-    quarter = models.ForeignKey("Quarter", on_delete=models.CASCADE)
-    science = models.ForeignKey("Science", on_delete=models.CASCADE)
-    plan_resource = models.ManyToManyField("Media", blank=True)
+    type = models.ForeignKey(
+        "ResourceType",
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True,
+        verbose_name=_("Resurs turi"),
+    )
+    hour = models.IntegerField(
+        default=0, null=True, blank=True, verbose_name=_("Soat")
+    )
+    user = models.ForeignKey(
+        "http.User", on_delete=models.CASCADE, verbose_name=_("Foydalanuvchi")
+    )
+    classes = models.ForeignKey(
+        "Classes", on_delete=models.CASCADE, verbose_name=_("Sinflar")
+    )
+    quarter = models.ForeignKey(
+        "Quarter", on_delete=models.CASCADE, verbose_name=_("Chorak")
+    )
+    science = models.ForeignKey(
+        "Science", on_delete=models.CASCADE, verbose_name=_("Fan")
+    )
+    plan_resource = models.ManyToManyField(
+        "Media", blank=True, verbose_name=_("Resurslar")
+    )
     topic = models.ForeignKey(
         "Topic",
         on_delete=models.CASCADE,
         null=True,
         blank=True,
         related_name="plans",
+        verbose_name=_("Mavzu"),
     )
-    created_at = models.DateField(auto_now_add=True)
 
     def __str__(self):
         return self.name
 
     class Meta:
-        verbose_name = __("Plan")
-        verbose_name_plural = __("Plan")
+        verbose_name = _("Tematik reja")
+        verbose_name_plural = _("Tematik rejalar")

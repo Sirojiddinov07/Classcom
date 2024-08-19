@@ -5,7 +5,6 @@ import pandas as pd
 from django.db.models import Q
 
 from core.apps.classcom import models
-
 from .date import DateService
 
 

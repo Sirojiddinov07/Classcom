@@ -5,7 +5,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("classcom", "0018_merge_0017_delete_orders_0017_merge_20240805_1753"),
         ("http", "0014_alter_smsconfirm_phone"),
