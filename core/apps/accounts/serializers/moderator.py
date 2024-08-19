@@ -19,6 +19,7 @@ class ModeratorSerializer(serializers.ModelSerializer):
     )
     degree = serializers.ChoiceField(choices=Degree.choices)
     docs = serializers.FileField()
+    role = serializers.CharField(read_only=True, default="moderator")
 
     def validate_phone(self, value):
         user = models.User.objects.filter(
@@ -44,7 +45,7 @@ class ModeratorSerializer(serializers.ModelSerializer):
                 institution=data.get("institution"),
                 institution_number=data.get("institution_number"),
                 science_id=data.get("science").id,
-                role="moderator",
+                role=data.get("role"),
                 school_type_id=data.get("school_type").id,
             )
             return Moderator.objects.update_or_create(
