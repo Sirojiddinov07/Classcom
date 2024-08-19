@@ -85,6 +85,7 @@ class ModeratorSerializer(serializers.ModelSerializer):
             "science_types",
             "degree",
             "docs",
+            "school_type",
         ]
         extra_kwargs = {
             "first_name": {"required": True},
@@ -96,4 +97,5 @@ class ModeratorSerializer(serializers.ModelSerializer):
             "district": {"required": True},
             "region": {"required": True},
             "institution_number": {"required": True},
+            "school_type": {"required": False},
         }
