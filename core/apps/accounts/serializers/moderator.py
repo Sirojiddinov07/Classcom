@@ -35,19 +35,33 @@ class ModeratorSerializer(serializers.ModelSerializer):
         try:
             docs = self.context.get("request").FILES["docs"]
             file = default_storage.save(docs.name, ContentFile(docs.read()))
+
+            district = data.get("district")
+            region = data.get("region")
+            science = data.get("science")
+            school_type = data.get("school_type")
+
+            if not district or not region or not science or not school_type:
+                raise exceptions.ValidationError(
+                    {
+                        "detail": "District, region, science, and school type must be provided."
+                    }
+                )
+
             user = UserService().create_user(
                 phone=data.get("phone"),
                 password=data.get("password"),
                 last_name=data.get("last_name"),
                 first_name=data.get("first_name"),
-                district_id=data.get("district").id,
-                region_id=data.get("region").id,
+                district_id=district.id,
+                region_id=region.id,
                 institution=data.get("institution"),
                 institution_number=data.get("institution_number"),
-                science_id=data.get("science").id,
+                science_id=science.id,
                 role=data.get("role"),
-                school_type_id=data.get("school_type").id,
+                school_type_id=school_type.id,
             )
+
             return Moderator.objects.update_or_create(
                 user=user,
                 defaults={"degree": data.get("degree"), "docs": file},
