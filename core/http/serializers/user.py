@@ -2,7 +2,7 @@ from django.conf import settings
 from rest_framework import serializers
 
 from core.apps.classcom.choices import Role
-from core.apps.classcom.models import Moderator  # noqa
+from core.apps.classcom.models import Moderator
 from core.http import models
 from core.http.serializers import SchoolTypeSerializer
 
@@ -10,8 +10,8 @@ from core.http.serializers import SchoolTypeSerializer
 class UserSerializer(serializers.ModelSerializer):
     avatar = serializers.ImageField(max_length=None, use_url=True)
     school_type = SchoolTypeSerializer()
-    # resource_creatable = serializers.SerializerMethodField(read_only=True)
-    # plan_creatable = serializers.SerializerMethodField(read_only=True)
+    resource_creatable = serializers.SerializerMethodField(read_only=True)
+    plan_creatable = serializers.SerializerMethodField(read_only=True)
 
     class Meta:
         fields = [
@@ -27,14 +27,13 @@ class UserSerializer(serializers.ModelSerializer):
             "science",
             "classes",
             "school_type",
-            # "resource_creatable",
-            # "plan_creatable",
-            # "permissions",
+            "resource_creatable",
+            "plan_creatable",
         ]
         extra_kwargs = {
             "role": {"read_only": True},
-            # "resource_creatable": {"read_only": True},
-            # "plan_creatable": {"read_only": True},
+            "resource_creatable": {"read_only": True},
+            "plan_creatable": {"read_only": True},
         }
         model = models.User
 
@@ -49,24 +48,26 @@ class UserSerializer(serializers.ModelSerializer):
             return media_url + avatar_url
         return None
 
-    # def is_moderator(self, obj):
-    #     user = self.context.get("request").user
-    #     moderator = Moderator.objects.filter(user=user).last()
-    #     if moderator:
-    #         return moderator
-    #     return None
-    #
-    # def get_resource_creatable(self, obj):
-    #     moderator = self.is_moderator(obj)
-    #     if moderator:
-    #         return moderator.resource_creatable
-    #     return False
-    #
-    # def get_plan_creatable(self, obj):
-    #     moderator = self.is_moderator(obj)
-    #     if moderator:
-    #         return moderator.plan_creatable
-    #     return False
+    def is_moderator(self, obj):
+        return obj.role == Role.MODERATOR
+
+    def get_resource_creatable(self, obj):
+        if self.is_moderator(obj):
+            try:
+                moderator = Moderator.objects.get(user=obj)
+                return moderator.resource_creatable
+            except Moderator.DoesNotExist:
+                return False
+        return False
+
+    def get_plan_creatable(self, obj):
+        if self.is_moderator(obj):
+            try:
+                moderator = Moderator.objects.get(user=obj)
+                return moderator.plan_creatable
+            except Moderator.DoesNotExist:
+                return False
+        return False
 
     def update(self, instance, validated_data):
         print(validated_data)  # Debug line
