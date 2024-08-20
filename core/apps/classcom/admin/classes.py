@@ -7,7 +7,7 @@ from core.apps.classcom.models import Classes, ClassType
 
 @admin.register(Classes)
 class ClassesAdmin(ImportExportModelAdmin, TabbedTranslationAdmin):
-    list_display = ("id", "name")
+    list_display = ("id", "name", "type")
     search_fields = ("name",)
 
 

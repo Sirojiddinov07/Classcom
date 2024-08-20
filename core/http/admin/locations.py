@@ -22,5 +22,5 @@ class DistrictAdmin(ImportExportModelAdmin, TabbedTranslationAdmin):
 @admin.register(models.ScienceGroups)
 class ScienceGroupsAdmin(ImportExportModelAdmin, TabbedTranslationAdmin):
     resource_class = resources.ScienceGroupsResource
-    list_display = ["name"]
+    list_display = ["id", "name"]
     search_fields = ["name"]

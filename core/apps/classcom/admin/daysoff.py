@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.utils.translation import gettext_lazy as _
 
 from core.apps.classcom.models import DaysOff
 
@@ -6,7 +7,20 @@ from core.apps.classcom.models import DaysOff
 @admin.register(DaysOff)
 class DaysOffAdmin(admin.ModelAdmin):
     list_display = (
+        "id",
+        "full_name",
         "from_date",
         "to_date",
         "reason",
     )
+    search_fields = (
+        "user__first_name",
+        "user__last_name",
+        "user__phone",
+        "reason",
+    )
+
+    def full_name(self, obj):
+        return f"{obj.user.first_name} {obj.user.last_name}"
+
+    full_name.short_description = _("Ism Familiya")

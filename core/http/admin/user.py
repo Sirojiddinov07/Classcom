@@ -36,7 +36,7 @@ class ModeratorInline(StackedInline):
 
 class UserAdmin(admin.UserAdmin, import_export.ImportExportModelAdmin):
     add_form = CustomUserCreationForm
-    list_display = ["phone", "first_name", "last_name", "role"]
+    list_display = ["id", "phone", "first_name", "last_name", "role"]
     search_fields = ["phone", "first_name", "last_name"]
     list_filter = ["role"]
     fieldsets = (

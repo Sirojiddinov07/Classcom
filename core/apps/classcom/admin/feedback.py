@@ -1,6 +1,7 @@
 from django.contrib import admin
 
 from core.apps.classcom.models import Answer, Feedback
+from django.utils.translation import gettext_lazy as _
 
 
 class InlineAnswer(admin.TabularInline):
@@ -12,7 +13,12 @@ class InlineAnswer(admin.TabularInline):
 @admin.register(Feedback)
 class FeedbackAdmin(admin.ModelAdmin):
     inlines = [InlineAnswer]
-    list_display = ("user", "id", "feedback_type", "answered")
+    list_display = ("id", "full_name", "feedback_type", "answered")
+
+    def full_name(self, obj):
+        return f"{obj.user.first_name} {obj.user.last_name}"
+
+    full_name.short_description = _("Ism Familiya")
 
 
 @admin.register(Answer)

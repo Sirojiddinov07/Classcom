@@ -7,7 +7,7 @@ from core.apps.classcom import models, serializers
 
 class ScienceViewSet(viewsets.ReadOnlyModelViewSet):
     permission_classes = [AllowAny]
-    queryset = models.Science.objects.all()
+    queryset = models.Science.objects.all().order_by("order_number")
     serializer_class = serializers.ScienceSerializer
     filter_backends = [DjangoFilterBackend]
     filterset_fields = ["science_grp", "name"]
