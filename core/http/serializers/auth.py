@@ -72,7 +72,7 @@ class ResetPasswordSerializer(serializers.Serializer):
         if user.exists():
             return value
 
-        raise serializers.ValidationError(_("User does not exist"))
+        raise serializers.ValidationError(_("Foydalanuvchi topilmadi"))
 
 
 class ResetConfirmationSerializer(serializers.Serializer):

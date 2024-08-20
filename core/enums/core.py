@@ -1,3 +1,6 @@
+from django.utils.translation import gettext as _
+
+
 class Codes:
     # Database errors
     DB_CONNECTION_ERROR = 1001
@@ -35,8 +38,8 @@ class Codes:
 
 
 class Messages:
-    SEND_MESSAGE = "Sms %(phone)s raqamiga yuborildi"
-    USER_ALREADY_EXISTS = "User already exists"
-    OTP_CONFIRMED = "Tasdiqlash ko'di qabul qilindi"
-    INVALID_OTP = "Tasdiqlash ko'di xato"
-    CHANGED_PASSWORD = "Parol o'zgartirildi"
+    SEND_MESSAGE = _("Sms %(phone)s raqamiga yuborildi")
+    USER_ALREADY_EXISTS = _("User already exists")
+    OTP_CONFIRMED = _("Tasdiqlash ko'di qabul qilindi")
+    INVALID_OTP = _("Tasdiqlash ko'di xato")
+    CHANGED_PASSWORD = _("Parol o'zgartirildi")
