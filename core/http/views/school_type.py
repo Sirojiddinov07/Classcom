@@ -7,6 +7,12 @@ from core.http.serializers import SchoolTypeSerializer
 
 class SchoolTypeViewSet(viewsets.ModelViewSet):
     permission_classes = [AllowAny]
-    queryset = SchoolType.objects.all()
     serializer_class = SchoolTypeSerializer
     http_method_names = ["get"]
+
+    def get_queryset(self):
+        queryset = SchoolType.objects.all()
+        institution = self.request.query_params.get("institution", None)
+        if institution is not None:
+            queryset = queryset.filter(institution=institution)
+        return queryset
