@@ -50,7 +50,10 @@ class Science(AbstractBaseModel):
         else:
             # Yangi tartibga o'zgartirish (eski va yangi order_numberni solishtirib, qatorlarni surish)
             old_instance = Science.objects.get(pk=self.pk)
-            if old_instance.order_number != self.order_number:
+            if (
+                self.order_number is not None
+                and old_instance.order_number is not None
+            ):
                 if self.order_number < old_instance.order_number:
                     Science.objects.filter(
                         order_number__gte=self.order_number,
