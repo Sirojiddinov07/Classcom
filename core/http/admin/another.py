@@ -47,8 +47,9 @@ class FrontendTranslationAdmin(import_export.ImportExportModelAdmin):  # noqa
 
 
 class SmsConfirmAdmin(admin.ModelAdmin):
-    list_display = ["phone", "code", "resend_count", "try_count"]
+    list_display = ["id", "phone", "code", "resend_count", "try_count"]
     search_fields = ["phone", "code"]
+    ordering = ["-created_at"]
 
 
 class CommentAdmin(import_export.ImportExportModelAdmin):
