@@ -25,11 +25,11 @@ class UnifiedSearchView(views.APIView):
 
     async def get(self, request, *args, **kwargs):
         serializer = serializers.SearchSerializer(data=request.query_params)
-        serializer.is_valid(raise_exception=True)
+        await sync_to_async(serializer.is_valid)(raise_exception=True)
         query = await sync_to_async(serializer.validated_data.get)("query", "")
 
         cache_key = f"search_results_{query}"
-        cached_results = cache.get(cache_key)
+        cached_results = await sync_to_async(cache.get)(cache_key)
 
         if cached_results:
             return Response(cached_results)
@@ -80,6 +80,6 @@ class UnifiedSearchView(views.APIView):
             "schedules": schedule_serializer.data,
         }
 
-        cache.set(cache_key, results, timeout=60 * 15)
+        await sync_to_async(cache.set)(cache_key, results, timeout=60 * 15)
 
         return Response(results)
