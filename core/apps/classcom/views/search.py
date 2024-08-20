@@ -4,6 +4,7 @@ from django.core.cache import cache
 from django.db.models import Q
 from rest_framework import views
 from rest_framework.pagination import PageNumberPagination
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
 from core.apps.classcom import models
@@ -21,6 +22,7 @@ class UnifiedSearchPagination(PageNumberPagination):
 
 class UnifiedSearchView(views.APIView):
     pagination_class = UnifiedSearchPagination
+    permission_classes = [IsAuthenticated]
 
     def get(self, request, *args, **kwargs):
         serializer = serializers.SearchSerializer(data=request.query_params)
@@ -28,6 +30,9 @@ class UnifiedSearchView(views.APIView):
         query = serializer.validated_data.get("query", "")
 
         logger.debug(f"Received search query: {query}")
+
+        if not query:
+            return Response({"resources": [], "plans": [], "schedules": []})
 
         cache_key = f"search_results_{query}"
         cached_results = cache.get(cache_key)
@@ -48,18 +53,26 @@ class UnifiedSearchView(views.APIView):
                 | Q(classes__name__icontains=word)
                 | Q(user__first_name__icontains=word)
                 | Q(user__last_name__icontains=word)
+                | Q(name__translations__icontains=word)
+                | Q(description__translations__icontains=word)
+                | Q(type__name__translations__icontains=word)
+                | Q(classes__name__translations__icontains=word)
             )
             plan_query &= (
                 Q(name__icontains=word)
                 | Q(description__icontains=word)
                 | Q(user__first_name__icontains=word)
                 | Q(user__last_name__icontains=word)
+                | Q(name__translations__icontains=word)
+                | Q(description__translations__icontains=word)
             )
             schedule_query &= (
                 Q(science__name__icontains=word)
                 | Q(classes__name__icontains=word)
                 | Q(user__first_name__icontains=word)
                 | Q(user__last_name__icontains=word)
+                | Q(science__name__translations__icontains=word)
+                | Q(classes__name__translations__icontains=word)
             )
 
         resource_results = (
