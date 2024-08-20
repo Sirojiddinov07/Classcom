@@ -2,6 +2,7 @@ from django.urls import include, path
 from rest_framework import routers
 
 from core.apps.classcom import views
+from core.apps.classcom.views import UnifiedSearchView
 from core.http.views import SchoolTypeViewSet
 
 router = routers.DefaultRouter()
@@ -65,7 +66,7 @@ urlpatterns = [
         views.ModeratorCountsByScienceAndClassAPIView.as_view(),
         name="science-info",
     ),
-    path("search/", views.UnifiedSearchView.as_view(), name="unified-search"),
+    path("search/", UnifiedSearchView.as_view(), name="unified-search"),
     path(
         "moderator/media/",
         views.moderator_media_list,

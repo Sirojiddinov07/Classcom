@@ -1,16 +1,16 @@
 from typing import Any
 
 JAZZMIN_SETTINGS: dict[str | Any, str | None | Any] = {
-    "site_title": "Django",
-    "site_header": "Django",
-    "site_brand": "Django",
-    "site_logo": "/images/logo.png",
+    "site_title": "classcom.uz",
+    "site_header": "classcom.uz",
+    "site_brand": "classcom.uz",
+    "site_logo": "/images/classcom.png",
     "login_logo": None,
     "login_logo_dark": None,
     "site_logo_classes": "img-circle",
     "site_icon": None,
-    "welcome_sign": "Welcome to the library",
-    "copyright": "Acme Library Ltd",
+    "welcome_sign": "Welcome to the classcom.uz admin",
+    "copyright": "classcom.uz Ltd",
     "search_model": ["auth.User"],
     "user_avatar": None,
     "topmenu_links": [
@@ -20,19 +20,19 @@ JAZZMIN_SETTINGS: dict[str | Any, str | None | Any] = {
             "permissions": ["auth.view_user"],
         },
         {
-            "name": "Support",
-            "url": "https://github.com/farridav/django-jazzmin/issues",
+            "name": "classcom.uz",
+            "url": "https://classcom.uz",
             "new_window": True,
         },
         {"model": "auth.User"},
         {"app": "books"},
     ],
     "usermenu_links": [
-        {
-            "name": "Support",
-            "url": "https://github.com/farridav/django-jazzmin/issues",
-            "new_window": True,
-        },
+        # {
+        #     "name": "Support",
+        #     "url": "https://github.com/farridav/django-jazzmin/issues",
+        #     "new_window": True,
+        # },
         {"model": "auth.user"},
     ],
     "show_sidebar": True,
