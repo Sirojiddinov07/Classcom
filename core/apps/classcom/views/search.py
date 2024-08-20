@@ -62,11 +62,17 @@ class UnifiedSearchView(views.APIView):
         schedule_results = (
             models.Schedule.objects.filter(
                 Q(science__name__icontains=query)
+                | Q(classes__name__icontains=query)
                 | Q(user__first_name__icontains=query)
                 | Q(user__last_name__icontains=query)
             )
             .select_related("user")
-            .only("science__name", "user__first_name", "user__last_name")
+            .only(
+                "science__name",
+                "classes__name",
+                "user__first_name",
+                "user__last_name",
+            )
         )
 
         resource_serializer = serializers.ResourceSerializer(
