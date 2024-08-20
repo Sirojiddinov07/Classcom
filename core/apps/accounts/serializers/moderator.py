@@ -44,6 +44,7 @@ class ModeratorSerializer(serializers.ModelSerializer):
                 district_id=data.get("district").id,
                 institution=data.get("institution"),
                 institution_number=data.get("institution_number"),
+                science_group_id=data.get("science_group"),
                 science_id=data.get("science").id,
                 role=data.get("role"),
                 school_type_id=data.get("school_type"),
