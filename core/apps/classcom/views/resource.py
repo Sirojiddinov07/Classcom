@@ -25,7 +25,7 @@ class ResourceTypesViewSet(viewsets.ViewSet):
 
 
 class ResourceViewSet(viewsets.ModelViewSet):
-    queryset = models.Resource.objects.all()
+    queryset = models.Resource.objects.all().order_by("order_number")
     permission_classes = [permissions.IsAuthenticated]
     filter_backends = [DjangoFilterBackend]
     filterset_class = ResourceFilter
