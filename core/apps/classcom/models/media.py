@@ -1,34 +1,34 @@
 from django.db import models
-from django.utils.translation import gettext_lazy as __
+from django.utils.translation import gettext_lazy as _
 
 from core.http.models import AbstractBaseModel
 
 
 class Media(AbstractBaseModel):
     name = models.CharField(
-        max_length=255, blank=True, null=True, verbose_name=__("Nomi")
+        max_length=255, blank=True, null=True, verbose_name=_("Nomi")
     )
-    desc = models.TextField(blank=True, null=True, verbose_name=__("Tavsif"))
-    file = models.FileField(upload_to="media/", verbose_name=__("Fayl"))
+    desc = models.TextField(blank=True, null=True, verbose_name=_("Tavsif"))
+    file = models.FileField(upload_to="media/", verbose_name=_("Fayl"))
     type = models.CharField(
-        max_length=255, blank=True, null=True, verbose_name=__("Turi")
+        max_length=255, blank=True, null=True, verbose_name=_("Turi")
     )
     file_type = models.CharField(
-        max_length=255, blank=True, null=True, verbose_name=__("Fayl turi")
+        max_length=255, blank=True, null=True, verbose_name=_("Fayl turi")
     )
     size = models.BigIntegerField(
-        blank=True, null=True, default=0, verbose_name=__("Hajmi")
+        blank=True, null=True, default=0, verbose_name=_("Hajmi")
     )
 
     download_users = models.ManyToManyField(
         "http.User",
         related_name="downloaded_media",
         blank=True,
-        verbose_name=__("Yuklab olganlar"),
+        verbose_name=_("Yuklab olganlar"),
     )
-    count = models.IntegerField(default=0, verbose_name=__("Yuklashlar soni"))
+    count = models.IntegerField(default=0, verbose_name=_("Yuklashlar soni"))
     statistics = models.CharField(
-        max_length=255, blank=True, null=True, verbose_name=__("Statistika")
+        max_length=255, blank=True, null=True, verbose_name=_("Statistika")
     )
 
     def __str__(self) -> str:
@@ -58,5 +58,5 @@ class Media(AbstractBaseModel):
         super().save(*args, **kwargs)
 
     class Meta:
-        verbose_name = __("Media")
-        verbose_name_plural = __("Medialar")
+        verbose_name = _("Media")
+        verbose_name_plural = _("Medialar")
