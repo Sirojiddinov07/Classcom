@@ -13,6 +13,6 @@ class SchoolTypeViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         queryset = SchoolType.objects.all()
         institution = self.request.query_params.get("institution", None)
-        if institution is not None:
+        if institution:
             queryset = queryset.filter(institution=institution)
         return queryset

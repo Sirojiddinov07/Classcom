@@ -1,4 +1,3 @@
-from asgiref.sync import sync_to_async
 from django.core.cache import cache
 from django.db.models import Q
 from rest_framework import views
@@ -7,11 +6,6 @@ from rest_framework.response import Response
 
 from core.apps.classcom import models
 from core.apps.classcom import serializers
-from core.apps.classcom.serializers import (
-    ScheduleListSerializer,
-    PlanSerializer,
-    ResourceSerializer,
-)
 
 
 class UnifiedSearchPagination(PageNumberPagination):
@@ -23,18 +17,18 @@ class UnifiedSearchPagination(PageNumberPagination):
 class UnifiedSearchView(views.APIView):
     pagination_class = UnifiedSearchPagination
 
-    async def get(self, request, *args, **kwargs):
+    def get(self, request, *args, **kwargs):
         serializer = serializers.SearchSerializer(data=request.query_params)
-        await sync_to_async(serializer.is_valid)(raise_exception=True)
-        query = await sync_to_async(serializer.validated_data.get)("query", "")
+        serializer.is_valid(raise_exception=True)
+        query = serializer.validated_data.get("query", "")
 
         cache_key = f"search_results_{query}"
-        cached_results = await sync_to_async(cache.get)(cache_key)
+        cached_results = cache.get(cache_key)
 
         if cached_results:
             return Response(cached_results)
 
-        resource_results = await sync_to_async(list)(
+        resource_results = (
             models.Resource.objects.filter(
                 Q(name__icontains=query)
                 | Q(description__icontains=query)
@@ -45,32 +39,49 @@ class UnifiedSearchView(views.APIView):
             )
             .select_related("type", "user")
             .prefetch_related("classes")
-        )
-        resource_serializer = ResourceSerializer(
-            resource_results, many=True, context={"request": request}
+            .only(
+                "name",
+                "description",
+                "type__name",
+                "user__first_name",
+                "user__last_name",
+            )
         )
 
-        plan_results = await sync_to_async(list)(
+        plan_results = (
             models.Plan.objects.filter(
                 Q(name__icontains=query)
                 | Q(description__icontains=query)
                 | Q(user__first_name__icontains=query)
                 | Q(user__last_name__icontains=query)
-            ).select_related("user")
-        )
-        plan_serializer = PlanSerializer(
-            plan_results, many=True, context={"request": request}
+            )
+            .select_related("user")
+            .only("name", "description", "user__first_name", "user__last_name")
         )
 
-        schedule_results = await sync_to_async(list)(
+        schedule_results = (
             models.Schedule.objects.filter(
-                Q(name__icontains=query)
-                | Q(description__icontains=query)
+                Q(science__name__icontains=query)
+                | Q(classes__name__icontains=query)
                 | Q(user__first_name__icontains=query)
                 | Q(user__last_name__icontains=query)
-            ).select_related("user")
+            )
+            .select_related("user")
+            .only(
+                "science__name",
+                "classes__name",
+                "user__first_name",
+                "user__last_name",
+            )
         )
-        schedule_serializer = ScheduleListSerializer(
+
+        resource_serializer = serializers.ResourceSerializer(
+            resource_results, many=True, context={"request": request}
+        )
+        plan_serializer = serializers.PlanSerializer(
+            plan_results, many=True, context={"request": request}
+        )
+        schedule_serializer = serializers.ScheduleListSerializer(
             schedule_results, many=True, context={"request": request}
         )
 
@@ -80,6 +91,6 @@ class UnifiedSearchView(views.APIView):
             "schedules": schedule_serializer.data,
         }
 
-        await sync_to_async(cache.set)(cache_key, results, timeout=60 * 15)
+        cache.set(cache_key, results, timeout=60 * 15)
 
         return Response(results)
