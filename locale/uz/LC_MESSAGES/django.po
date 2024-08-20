@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-08-20 12:34+0500\n"
+"POT-Creation-Date: 2024-08-20 12:48+0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -117,16 +117,13 @@ msgstr ""
 msgid "Parol yangilandi"
 msgstr ""
 
-#: core/apps/classcom/admin/chat.py:16 core/apps/classcom/admin/daysoff.py:21
+#: core/apps/classcom/admin/chat.py:23 core/apps/classcom/admin/daysoff.py:26
 #: core/apps/classcom/admin/feedback.py:21
-#: core/apps/classcom/admin/moderator.py:48
-#: core/apps/classcom/admin/notification.py:16
-#: core/apps/classcom/admin/plan.py:24 core/apps/classcom/admin/recource.py:22
-msgid "Ism Familiya"
-msgstr ""
-
 #: core/apps/classcom/admin/moderator.py:21
-msgid "Fan o'qituvchisi"
+#: core/apps/classcom/admin/moderator.py:48
+#: core/apps/classcom/admin/notification.py:21
+#: core/apps/classcom/admin/plan.py:29 core/apps/classcom/admin/recource.py:27
+msgid "Ism Familiya"
 msgstr ""
 
 #: core/apps/classcom/admin/moderator.py:26
@@ -507,6 +504,7 @@ msgid "Foydalanuvchi soʻrovi mavjud emas"
 msgstr ""
 
 #: core/apps/classcom/serializers/change_role.py:51
+#: core/http/serializers/auth.py:75
 msgid "Foydalanuvchi topilmadi"
 msgstr ""
 
@@ -586,6 +584,27 @@ msgstr ""
 
 #: core/apps/payments/views.py:48
 msgid "Payment created"
+msgstr ""
+
+#: core/enums/core.py:41
+#, python-format
+msgid "Sms %(phone)s raqamiga yuborildi"
+msgstr ""
+
+#: core/enums/core.py:42
+msgid "User already exists"
+msgstr ""
+
+#: core/enums/core.py:43
+msgid "Tasdiqlash ko'di qabul qilindi"
+msgstr ""
+
+#: core/enums/core.py:44
+msgid "Tasdiqlash ko'di xato"
+msgstr ""
+
+#: core/enums/core.py:45
+msgid "Parol o'zgartirildi"
 msgstr ""
 
 #: core/http/choices/location.py:6
@@ -747,13 +766,18 @@ msgstr ""
 msgid "Qayta yuborish bloklanish vaqti"
 msgstr ""
 
-#: core/http/serializers/auth.py:75 core/http/serializers/auth.py:86
+#: core/http/serializers/auth.py:86
 msgid "User does not exist"
 msgstr ""
 
 #: core/http/tasks/sms.py:17
 #, python-format
 msgid "Sizning Tasdiqlash ko'dingiz: %(code)s"
+msgstr ""
+
+#: core/services/sms.py:25
+#, python-brace-format
+msgid "Qayta yuborish bloklandi, qayta urunib ko'ring {expired}"
 msgstr ""
 
 #: resources/templates/user/home.html:19

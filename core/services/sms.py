@@ -1,6 +1,8 @@
 import random
 from datetime import datetime, timedelta
 
+from django.utils.translation import gettext_lazy as _
+
 from core import exceptions
 from core.http import models, tasks
 
@@ -20,7 +22,10 @@ class SmsService:
         if sms_confirm.resend_unlock_time is not None:
             expired = sms_confirm.interval(sms_confirm.resend_unlock_time)
             exception = exceptions.SmsException(
-                f"Resend blocked, try again in {expired}", expired=expired
+                _(
+                    "Qayta yuborish bloklandi, qayta urunib ko'ring {expired}"
+                ).format(expired=expired),
+                expired=expired,
             )
             raise exception
 

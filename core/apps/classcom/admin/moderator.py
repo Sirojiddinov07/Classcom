@@ -18,7 +18,7 @@ class ModeratorAdmin(admin.ModelAdmin):
     def full_name(self, obj):
         return f"{obj.user.first_name} {obj.user.last_name}"
 
-    full_name.short_description = _("Fan o'qituvchisi")
+    full_name.short_description = _("Ism Familiya")
 
     def science(self, obj):
         return obj.user.science
