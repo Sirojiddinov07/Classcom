@@ -33,18 +33,34 @@ class Science(AbstractBaseModel):
         return self.name
 
     def save(self, *args, **kwargs):
-        if not self.order_number:
-            max_order = Science.objects.aggregate(
-                max_order_number=models.Max("order_number")
-            )["max_order_number"]
-            if max_order:
-                self.order_number = max_order + 1
+        if not self.pk:  # Yangi qator qo'shilayotgan bo'lsa
+            if self.order_number is None:
+                max_order_number = (
+                    Science.objects.aggregate(models.Max("order_number"))[
+                        "order_number__max"
+                    ]
+                    or 0
+                )
+                self.order_number = max_order_number + 1
             else:
-                self.order_number = 1
+                # Order_number ga yangi tartib raqami kiritilgan bo'lsa
+                Science.objects.filter(
+                    order_number__gte=self.order_number
+                ).update(order_number=models.F("order_number") + 1)
         else:
-            Science.objects.filter(order_number__gte=self.order_number).update(
-                order_number=models.F("order_number") + 1
-            )
+            # Yangi tartibga o'zgartirish (eski va yangi order_numberni solishtirib, qatorlarni surish)
+            old_instance = Science.objects.get(pk=self.pk)
+            if old_instance.order_number != self.order_number:
+                if self.order_number < old_instance.order_number:
+                    Science.objects.filter(
+                        order_number__gte=self.order_number,
+                        order_number__lt=old_instance.order_number,
+                    ).update(order_number=models.F("order_number") + 1)
+                else:
+                    Science.objects.filter(
+                        order_number__gt=old_instance.order_number,
+                        order_number__lte=self.order_number,
+                    ).update(order_number=models.F("order_number") - 1)
 
         super().save(*args, **kwargs)
 
