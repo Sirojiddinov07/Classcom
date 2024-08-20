@@ -26,7 +26,7 @@ class UnifiedSearchView(views.APIView):
     async def get(self, request, *args, **kwargs):
         serializer = serializers.SearchSerializer(data=request.query_params)
         serializer.is_valid(raise_exception=True)
-        query = serializer.validated_data.get("query", "")
+        query = await sync_to_async(serializer.validated_data.get)("query", "")
 
         cache_key = f"search_results_{query}"
         cached_results = cache.get(cache_key)
