@@ -142,8 +142,25 @@ class PlanSerializer(serializers.ModelSerializer):
     def to_representation(self, instance):
         data = super().to_representation(instance)
         request = self.context.get("request")
-        if request and request.user.is_authenticated:
-            data["is_author"] = instance.user == request.user
+
+        if request:
+            lang = request.headers.get("Accept-Language", "ru")
+            if lang == "uz":
+                data["name"] = (
+                    instance.name_uz or instance.name or instance.name_ru
+                )
+            elif lang == "ru":
+                data["name"] = (
+                    instance.name_ru or instance.name or instance.name_uz
+                )
+            else:
+                data["name"] = (
+                    instance.name or instance.name_uz or instance.name_ru
+                )
+
+            if request.user.is_authenticated:
+                data["is_author"] = instance.user == request.user
+
         return data
 
 

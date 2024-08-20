@@ -12,5 +12,6 @@ class ScienceTypesAdmin(ImportExportModelAdmin, TabbedTranslationAdmin):
 
 @admin.register(Science)
 class ScienceAdmin(ImportExportModelAdmin, TabbedTranslationAdmin):
-    list_display = ("id", "name")
+    list_display = ("id", "order_number", "name")
     search_fields = ("name",)
+    ordering = ("order_number",)

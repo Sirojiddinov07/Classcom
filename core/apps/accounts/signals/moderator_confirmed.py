@@ -15,3 +15,4 @@ def moderator_confirmed_handler(sender, instance, **kwargs):
         last_name = instance.user.last_name
         phone = instance.user.phone
         send_congratulation_sms.delay(phone, first_name, last_name)
+        print("SMS sent")
