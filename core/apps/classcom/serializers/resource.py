@@ -51,6 +51,25 @@ class ResourceSerializer(serializers.ModelSerializer):
         except Exception as e:
             raise APIException(e)
 
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+        request = self.context.get("request")
+        if request:
+            lang = request.headers.get("Accept-Language", "ru")
+            if lang == "uz":
+                data["name"] = (
+                    instance.name_uz or instance.name or instance.name_ru
+                )
+            elif lang == "ru":
+                data["name"] = (
+                    instance.name_ru or instance.name or instance.name_uz
+                )
+            else:
+                data["name"] = (
+                    instance.name or instance.name_uz or instance.name_ru
+                )
+        return data
+
     class Meta:
         model = models.Resource
         fields = (
