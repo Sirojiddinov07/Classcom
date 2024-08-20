@@ -14,6 +14,7 @@ class TopicAdmin(ImportExportModelAdmin, TabbedTranslationAdmin):
     """
 
     list_display = (
+        "id",
         "name",
         "science",
         "_class",

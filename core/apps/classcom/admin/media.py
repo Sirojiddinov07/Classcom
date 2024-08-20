@@ -7,10 +7,13 @@ from core.apps.classcom.models import Media
 @admin.register(Media)
 class MediaAdmin(TabbedTranslationAdmin):
     list_display = (
+        "id",
         "name",
-        "desc",
         "file",
+        "file_type",
+        "count",
+        "statistics",
     )
     search_fields = ("name",)
-    list_filter = ("type",)
+    list_filter = ("file_type",)
     readonly_fields = ("created_at", "updated_at")

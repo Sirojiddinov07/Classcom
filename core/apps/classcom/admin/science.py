@@ -8,6 +8,7 @@ from core.apps.classcom.models import Science, ScienceTypes
 @admin.register(ScienceTypes)
 class ScienceTypesAdmin(ImportExportModelAdmin, TabbedTranslationAdmin):
     list_display = ("id", "name")
+    search_fields = ("name",)
 
 
 @admin.register(Science)
@@ -15,3 +16,4 @@ class ScienceAdmin(ImportExportModelAdmin, TabbedTranslationAdmin):
     list_display = ("id", "order_number", "name")
     search_fields = ("name",)
     ordering = ("order_number",)
+    list_filter = ("types",)
