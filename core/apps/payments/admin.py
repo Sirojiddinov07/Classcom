@@ -2,9 +2,49 @@ from django.contrib import admin
 
 from .models import Plans, Payments, Orders
 
-# Register your models here.
+
+@admin.register(Orders)
+class OrdersAdmin(admin.ModelAdmin):
+    list_display = (
+        "id",
+        "user",
+        "status",
+        "created_at",
+        "updated_at",
+    )
+    search_fields = (
+        "user__first_name",
+        "user__last_name",
+        "user__phone",
+    )
 
 
-admin.site.register(Payments)
-admin.site.register(Plans)
-admin.site.register(Orders)
+@admin.register(Payments)
+class PaymentsAdmin(admin.ModelAdmin):
+    list_display = (
+        "id",
+        "order",
+        "price",
+        "status",
+        "trans_id",
+    )
+    search_fields = (
+        "order__user__first_name",
+        "order__user__last_name",
+        "order__user__phone",
+        "order__plan__name",
+    )
+
+
+@admin.register(Plans)
+class PlansAdmin(admin.ModelAdmin):
+    list_display = (
+        "id",
+        "quarter",
+        "price",
+    )
+    search_fields = (
+        "quarter__name",
+        "price",
+    )
+    ordering = ("quarter",)
