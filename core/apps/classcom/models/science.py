@@ -34,18 +34,18 @@ class Science(AbstractBaseModel):
 
     def save(self, *args, **kwargs):
         if not self.order_number:
-            max = Science.objects.all().order_by("-order_number").first()
-            if max:
-                self.order_number = max.order_number + 1
+            max_order = Science.objects.aggregate(
+                max_order_number=models.Max("order_number")
+            )["max_order_number"]
+            if max_order:
+                self.order_number = max_order + 1
             else:
                 self.order_number = 1
         else:
-            self.order_number = self.order_number
-            for i in Science.objects.filter(
-                order_number__gte=self.order_number
-            ):
-                i.order_number += 1
-                i.save()
+            Science.objects.filter(order_number__gte=self.order_number).update(
+                order_number=models.F("order_number") + 1
+            )
+
         super().save(*args, **kwargs)
 
     class Meta:
