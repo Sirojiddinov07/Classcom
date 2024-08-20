@@ -1,3 +1,5 @@
+import logging
+
 from django.core.cache import cache
 from django.db.models import Q
 from rest_framework import views
@@ -6,6 +8,9 @@ from rest_framework.response import Response
 
 from core.apps.classcom import models
 from core.apps.classcom import serializers
+
+logging.basicConfig(level=logging.DEBUG)
+logger = logging.getLogger(__name__)
 
 
 class UnifiedSearchPagination(PageNumberPagination):
@@ -22,21 +27,43 @@ class UnifiedSearchView(views.APIView):
         serializer.is_valid(raise_exception=True)
         query = serializer.validated_data.get("query", "")
 
+        logger.debug(f"Received search query: {query}")
+
         cache_key = f"search_results_{query}"
         cached_results = cache.get(cache_key)
 
         if cached_results:
             return Response(cached_results)
 
-        resource_results = (
-            models.Resource.objects.filter(
-                Q(name__icontains=query)
-                | Q(description__icontains=query)
-                | Q(type__name__icontains=query)
-                | Q(classes__name__icontains=query)
-                | Q(user__first_name__icontains=query)
-                | Q(user__last_name__icontains=query)
+        query_words = query.split()
+        resource_query = Q()
+        plan_query = Q()
+        schedule_query = Q()
+
+        for word in query_words:
+            resource_query &= (
+                Q(name__icontains=word)
+                | Q(description__icontains=word)
+                | Q(type__name__icontains=word)
+                | Q(classes__name__icontains=word)
+                | Q(user__first_name__icontains=word)
+                | Q(user__last_name__icontains=word)
             )
+            plan_query &= (
+                Q(name__icontains=word)
+                | Q(description__icontains=word)
+                | Q(user__first_name__icontains=word)
+                | Q(user__last_name__icontains=word)
+            )
+            schedule_query &= (
+                Q(science__name__icontains=word)
+                | Q(classes__name__icontains=word)
+                | Q(user__first_name__icontains=word)
+                | Q(user__last_name__icontains=word)
+            )
+
+        resource_results = (
+            models.Resource.objects.filter(resource_query)
             .select_related("type", "user")
             .prefetch_related("classes")
             .only(
@@ -48,24 +75,18 @@ class UnifiedSearchView(views.APIView):
             )
         )
 
+        logger.debug(f"Resource SQL Query: {resource_results.query}")
+
         plan_results = (
-            models.Plan.objects.filter(
-                Q(name__icontains=query)
-                | Q(description__icontains=query)
-                | Q(user__first_name__icontains=query)
-                | Q(user__last_name__icontains=query)
-            )
+            models.Plan.objects.filter(plan_query)
             .select_related("user")
             .only("name", "description", "user__first_name", "user__last_name")
         )
 
+        logger.debug(f"Plan SQL Query: {plan_results.query}")
+
         schedule_results = (
-            models.Schedule.objects.filter(
-                Q(science__name__icontains=query)
-                | Q(classes__name__icontains=query)
-                | Q(user__first_name__icontains=query)
-                | Q(user__last_name__icontains=query)
-            )
+            models.Schedule.objects.filter(schedule_query)
             .select_related("user")
             .only(
                 "science__name",
@@ -74,6 +95,8 @@ class UnifiedSearchView(views.APIView):
                 "user__last_name",
             )
         )
+
+        logger.debug(f"Schedule SQL Query: {schedule_results.query}")
 
         resource_serializer = serializers.ResourceSerializer(
             resource_results, many=True, context={"request": request}
