@@ -5,7 +5,9 @@ from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import permissions, viewsets
 from rest_framework.decorators import action
 from rest_framework.exceptions import PermissionDenied
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
+from rest_framework.views import APIView
 
 from core.apps.classcom import models, serializers
 from ..choices import Role
@@ -66,3 +68,28 @@ class ResourceViewSet(viewsets.ModelViewSet):
             case "retrieve":
                 return serializers.ResourceDetailSerializer
         return serializers.ResourceSerializer
+
+
+############################################################################################################
+# Moderator Resource Types
+############################################################################################################
+class ModeratorResourceTypesAPIView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        user = request.user
+
+        if user.role == Role.MODERATOR:
+            moderator = models.Moderator.objects.filter(user=user).first()
+            if moderator:
+                resource_types = moderator.resource_type.all()
+                serializer = serializers.ResourceTypeSerializer(
+                    resource_types, many=True
+                )
+                return Response(serializer.data)
+            else:
+                raise PermissionDenied(_("Moderator topilmadi."))
+        else:
+            raise PermissionDenied(
+                _("Sizda bu amalni bajarish uchun ruxsat yo‘q.")
+            )
