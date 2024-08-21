@@ -34,6 +34,8 @@ class ScheduleViewSet(viewsets.ModelViewSet):
 ############################################
 # Schedule Choice View
 ############################################
+
+
 class ScheduleChoiceViewSet(viewsets.ModelViewSet):
     queryset = ScheduleChoices.objects.all()
     http_method_names = ["get", "post", "put", "patch", "delete"]
@@ -44,7 +46,12 @@ class ScheduleChoiceViewSet(viewsets.ModelViewSet):
         quarter_param = self.request.query_params.get("quarter")
         week_param = self.request.query_params.get("week")
 
-        if date_param:
+        if week_param or quarter_param:
+            if week_param:
+                queryset = queryset.filter(week=week_param)
+            if quarter_param:
+                queryset = queryset.filter(quarter=quarter_param)
+        elif date_param:
             try:
                 date = datetime.strptime(date_param, "%Y-%m-%d").date()
                 week = Weeks.objects.filter(
@@ -56,11 +63,6 @@ class ScheduleChoiceViewSet(viewsets.ModelViewSet):
                     queryset = ScheduleChoices.objects.none()
             except ValueError:
                 return ScheduleChoices.objects.none()
-
-        if quarter_param:
-            queryset = queryset.filter(quarter=quarter_param)
-        if week_param:
-            queryset = queryset.filter(week=week_param)
 
         return queryset
 
