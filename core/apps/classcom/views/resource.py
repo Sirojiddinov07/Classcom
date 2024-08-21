@@ -1,11 +1,14 @@
 from django.utils.decorators import method_decorator
+from django.utils.translation import gettext_lazy as _
 from django.views.decorators.cache import never_cache
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import permissions, viewsets
 from rest_framework.decorators import action
+from rest_framework.exceptions import PermissionDenied
 from rest_framework.response import Response
 
 from core.apps.classcom import models, serializers
+from ..choices import Role
 from ..filters import ResourceFilter
 
 
@@ -30,14 +33,31 @@ class ResourceViewSet(viewsets.ModelViewSet):
     filter_backends = [DjangoFilterBackend]
     filterset_class = ResourceFilter
 
-    # fields = ["name", "type", "classes", "subtype", "category", "category_type"]
-
     @method_decorator(never_cache)
     def dispatch(self, request, *args, **kwargs):
         return super().dispatch(request, *args, **kwargs)
 
     def perform_create(self, serializer):
-        serializer.save(user=self.request.user)
+        user = self.request.user
+        resource_type = serializer.validated_data.get("type")
+
+        if user.role == Role.MODERATOR:
+            moderator = models.Moderator.objects.filter(user=user).first()
+            if (
+                moderator
+                and moderator.resource_type.filter(
+                    id=resource_type.id
+                ).exists()
+            ):
+                serializer.save(user=user)
+            else:
+                raise PermissionDenied(
+                    _("Sizda bu amalni bajarish uchun ruxsat yo‘q.")
+                )
+        else:
+            raise PermissionDenied(
+                _("Sizda bu amalni bajarish uchun ruxsat yo‘q.")
+            )
 
     def get_serializer_class(self):
         match self.action:

@@ -57,11 +57,6 @@ urlpatterns = [
         "moderator/", views.ModeratorCreateViewSet.as_view(), name="moderator"
     ),
     path(
-        "get-schedule/",
-        views.GetScheduleDataView.as_view(),
-        name="get_schedule_data",
-    ),
-    path(
         "chats/", views.ChatListCreateView.as_view(), name="chat-list-create"
     ),
     path(

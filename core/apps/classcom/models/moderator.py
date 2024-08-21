@@ -46,6 +46,12 @@ class Moderator(AbstractBaseModel):
     resource_creatable = models.BooleanField(
         default=True, verbose_name=_("Resurs yarata olishi.")
     )
+    resource_type = models.ManyToManyField(
+        "ResourceType",
+        blank=True,
+        related_name="moderators",
+        verbose_name=_("Resurs turlari"),
+    )
 
     def __str__(self) -> str:
         return str(self.user.first_name)
