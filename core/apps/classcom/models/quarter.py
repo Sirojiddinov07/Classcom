@@ -1,8 +1,9 @@
-from datetime import datetime
+from datetime import datetime, timedelta
 
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
+from core.apps.classcom.models.weeks import Weeks
 from core.http.models import AbstractBaseModel
 
 
@@ -33,6 +34,26 @@ class Quarter(AbstractBaseModel):
 
     def __str__(self):
         return f" {self.choices} ({self.start_date} - {self.end_date})"
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        self.get_number_of_weeks()
+
+    def get_number_of_weeks(self):
+        delta = self.end_date - self.start_date
+        week_count = delta.days // 7
+
+        for i in range(week_count):
+            week_start_date = self.start_date + timedelta(weeks=i)
+            week_end_date = week_start_date + timedelta(days=6)
+            Weeks.objects.get_or_create(
+                quarter=self,
+                week_count=i + 1,
+                defaults={
+                    "start_date": week_start_date,
+                    "end_date": week_end_date,
+                },
+            )
 
     class Meta:
         verbose_name = _("Chorak")

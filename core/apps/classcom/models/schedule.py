@@ -1,5 +1,3 @@
-import datetime
-
 from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils.translation import gettext_lazy as _
@@ -22,6 +20,12 @@ def validate_lesson_time(value):
 
 
 class Schedule(AbstractBaseModel):
+    name = models.CharField(
+        max_length=255,
+        verbose_name=_("Dars jadvali nomi"),
+        null=True,
+        blank=True,
+    )
     shift = models.CharField(
         max_length=255,
         choices=choices.ShiftChoice.choices,
@@ -57,36 +61,32 @@ class Schedule(AbstractBaseModel):
         validators=[validate_lesson_time],
         verbose_name=_("Dars vaqti"),
     )
-    quarter = models.ForeignKey(
-        "Quarter", models.CASCADE, verbose_name=_("Chorak")
-    )
-    date = models.DateField(verbose_name=_("Sana"))
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f"{self.user} {self.science} {self.start_time} {self.end_time}"
 
     class Meta:
         verbose_name = _("Dars jadvali")
         verbose_name_plural = _("Dars jadvali")
-        unique_together = ("date", "start_time", "end_time", "user")
+        unique_together = ("start_time", "end_time", "user")
 
-    def save(self, *args, **kwargs):
-        weekday_map = {
-            "Monday": choices.Weekday.monday,
-            "Tuesday": choices.Weekday.tuesday,
-            "Wednesday": choices.Weekday.wednesday,
-            "Thursday": choices.Weekday.thursday,
-            "Friday": choices.Weekday.friday,
-            "Saturday": choices.Weekday.saturday,
-        }
-        if isinstance(self.date, datetime.date):
-            date_str = self.date.isoformat()
-        else:
-            date_str = self.date
 
-        if datetime.date.fromisoformat(date_str).strftime("%A") == "Sunday":
-            raise ValidationError("Date cannot be Sunday.")
-        self.weekday = weekday_map[
-            datetime.date.fromisoformat(date_str).strftime("%A")
-        ]
-        super().save(*args, **kwargs)
+class ScheduleChoices(AbstractBaseModel):
+    schedule = models.ForeignKey(
+        "Schedule", models.CASCADE, verbose_name=_("Dars jadvali")
+    )
+    user = models.ForeignKey(
+        "http.User", models.CASCADE, verbose_name=_("Foydalanuvchi")
+    )
+    quarter = models.ForeignKey(
+        "Quarter", models.CASCADE, verbose_name=_("Chorak")
+    )
+    week = models.ForeignKey("Weeks", models.CASCADE, verbose_name=_("Hafta"))
+
+    class Meta:
+        verbose_name = _("Dars jadvali tanlash")
+        verbose_name_plural = _("Dars jadvali tanlash")
+        unique_together = ("schedule", "user")
+
+    def __str__(self) -> str:
+        return f"{self.schedule} {self.user}"

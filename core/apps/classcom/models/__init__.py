@@ -19,3 +19,4 @@ from .settings import *  # noqa
 from .teacher import *  # noqa
 from .topic import *  # noqa
 from ...payments.models import *  # noqa
+from .weeks import *  # noqa

@@ -1,9 +1,13 @@
 from rest_framework import serializers
 
-from core.apps.classcom.models import Schedule
-from core.apps.classcom.serializers import ClassTypeSerializer
+from core.apps.classcom.models import Schedule, ScheduleChoices
+from core.apps.classcom.serializers import (
+    ClassTypeSerializer,
+    QuarterMiniSerializer,
+)
 from core.apps.classcom.serializers.classes import ClassesSerializer
 from core.apps.classcom.serializers.science import ScienceSerializer
+from core.apps.classcom.serializers.weks import WeeksSerializer
 from core.http.serializers import UserSerializer
 
 
@@ -20,6 +24,7 @@ class ScheduleListSerializer(serializers.ModelSerializer):
         model = Schedule
         fields = (
             "id",
+            "name",
             "shift",
             "user",
             "science",
@@ -29,7 +34,6 @@ class ScheduleListSerializer(serializers.ModelSerializer):
             "start_time",
             "end_time",
             "lesson_time",
-            "date",
         )
 
 
@@ -40,6 +44,7 @@ class ScheduleCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Schedule
         fields = (
+            "name",
             "shift",
             "science",
             "classes",
@@ -48,8 +53,6 @@ class ScheduleCreateSerializer(serializers.ModelSerializer):
             "start_time",
             "end_time",
             "lesson_time",
-            "quarter",
-            "date",
         )
 
     def create(self, validated_data):
@@ -57,3 +60,45 @@ class ScheduleCreateSerializer(serializers.ModelSerializer):
         schedule = Schedule.objects.create(user=user, **validated_data)
 
         return schedule
+
+
+############################################
+# Schedule Choice Serializer
+############################################
+class ScheduleChoiceSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ScheduleChoices
+        fields = (
+            "id",
+            "schedule",
+            "quarter",
+            "week",
+            "created_at",
+        )
+
+    def create(self, validated_data):
+        user = self.context["request"].user
+        schedule_choice = ScheduleChoices.objects.create(
+            user=user, **validated_data
+        )
+
+        return schedule_choice
+
+
+############################################
+# Schedule Choice List Serializer
+############################################
+class ScheduleChoiceListSerializer(serializers.ModelSerializer):
+    schedule = ScheduleListSerializer()
+    quarter = QuarterMiniSerializer()
+    week = WeeksSerializer()
+
+    class Meta:
+        model = ScheduleChoices
+        fields = (
+            "id",
+            "schedule",
+            "quarter",
+            "week",
+            "created_at",
+        )
