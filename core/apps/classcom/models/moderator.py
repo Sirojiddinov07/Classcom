@@ -41,10 +41,10 @@ class Moderator(AbstractBaseModel):
         default=False, verbose_name=_("Shartnoma")
     )
     plan_creatable = models.BooleanField(
-        default=True, verbose_name=_("Tematik Reja yarata olishi")
+        default=False, verbose_name=_("Tematik Reja yarata olishi")
     )
     resource_creatable = models.BooleanField(
-        default=True, verbose_name=_("Resurs yarata olishi.")
+        default=False, verbose_name=_("Resurs yarata olishi.")
     )
     resource_type = models.ManyToManyField(
         "ResourceType",

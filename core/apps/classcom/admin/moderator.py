@@ -14,6 +14,7 @@ class ModeratorAdmin(admin.ModelAdmin):
         "science_group",
     )
     search_fields = ("user__first_name", "user__last_name", "user__phone")
+    filter_horizontal = ("resource_type",)
 
     def full_name(self, obj):
         return f"{obj.user.first_name} {obj.user.last_name}"

@@ -57,6 +57,11 @@ urlpatterns = [
         "moderator/", views.ModeratorCreateViewSet.as_view(), name="moderator"
     ),
     path(
+        "moderator/resource-types/",
+        views.ModeratorResourceTypesAPIView.as_view(),
+        name="moderator",
+    ),
+    path(
         "chats/", views.ChatListCreateView.as_view(), name="chat-list-create"
     ),
     path(
