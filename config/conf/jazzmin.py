@@ -1,5 +1,7 @@
 from typing import Any
 
+from django.utils.translation import gettext_lazy as _
+
 JAZZMIN_SETTINGS: dict[str | Any, str | None | Any] = {
     "site_title": "classcom.uz",
     "site_header": "classcom.uz",
@@ -9,13 +11,13 @@ JAZZMIN_SETTINGS: dict[str | Any, str | None | Any] = {
     "login_logo_dark": None,
     "site_logo_classes": "img-circle",
     "site_icon": None,
-    "welcome_sign": "Welcome to the classcom.uz admin",
+    "welcome_sign": _("classcom.uz ga xush kelibsiz"),
     "copyright": "classcom.uz Ltd",
     "search_model": ["auth.User"],
     "user_avatar": None,
     "topmenu_links": [
         {
-            "name": "Home",
+            "name": _("Bosh sahifa"),
             "url": "admin:index",
             "permissions": ["auth.view_user"],
         },
@@ -86,6 +88,8 @@ JAZZMIN_SETTINGS: dict[str | Any, str | None | Any] = {
         "classcom.ClassType": "fas fa-school",
         "classcom.TempModerator": "fas fa-user-shield",
         "classcom.Chat": "fas fa-comments",
+        "classcom.ScheduleChoices": "fas fa-calendar",
+        "classcom.Weeks": "fas fa-calendar",
         "payments.Payments": "fas fa-money-bill",
         "payments.Orders": "fas fa-shopping-cart",
         "payments.Plans": "fas fa-calendar",
