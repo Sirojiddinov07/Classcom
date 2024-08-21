@@ -16,3 +16,4 @@ from .science import *  # noqa
 from .settings import *  # noqa
 from .teacher import *  # noqa
 from .topic import *  # noqa
+from .weeks import *  # noqa

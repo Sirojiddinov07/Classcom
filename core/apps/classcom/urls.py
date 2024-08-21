@@ -2,7 +2,7 @@ from django.urls import include, path
 from rest_framework import routers
 
 from core.apps.classcom import views
-from core.apps.classcom.views import UnifiedSearchView
+from core.apps.classcom.views import UnifiedSearchView, WeeksByQuarterView
 from core.http.views import SchoolTypeViewSet
 
 router = routers.DefaultRouter()
@@ -17,6 +17,9 @@ router.register(
 router.register("class", views.ClassesViewSet, basename="class")
 router.register("science", views.ScienceViewSet, basename="science")
 router.register("schedule", views.ScheduleViewSet, basename="schedule")
+router.register(
+    "schedule-choice", views.ScheduleChoiceViewSet, basename="schedule-choice"
+)
 router.register("days_off", views.DaysOffViewSet, basename="days_off")
 router.register("resource", views.ResourceViewSet, basename="resource")
 router.register("region", views.RegionViewSet, basename="region")
@@ -71,5 +74,10 @@ urlpatterns = [
         "moderator/media/",
         views.moderator_media_list,
         name="moderator-media-list",
+    ),
+    path(
+        "weeks/",
+        WeeksByQuarterView.as_view(),
+        name="moderator-media-detail",
     ),
 ]
