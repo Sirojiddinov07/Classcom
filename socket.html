@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebSocket Example</title>
+</head>
+<body>
+<h1>WebSocket Example</h1>
+<div id="status">Connecting...</div>
+<div id="messages"></div>
+
+<script>
+    const token = localStorage.getItem('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI0MzExMzkyLCJpYXQiOjE3MjQzMDc3OTIsImp0aSI6IjQ0ZmJhNjc2Y2Q4OTQzYjBhZjM3ODA5Zjk2ODVmMjFkIiwidXNlcl9pZCI6MX0.KD4Sgw3nzwCSd0uXcXtJOujW4o1pQfhJ31LsbvptiAs');
+    const socket = new WebSocket('ws://localhost:8081/ws/notifications/', ['authorization', `Bearer ${token}`]);
+
+    socket.onopen = () => {
+        document.getElementById('status').innerText = 'WebSocket is connected';
+    };
+</script>
+</body>
+</html>
