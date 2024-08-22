@@ -3,6 +3,7 @@ from channels.auth import AuthMiddlewareStack
 from channels.db import database_sync_to_async
 from channels.middleware import BaseMiddleware
 from django.conf import settings
+from django.contrib.auth import get_user_model
 from django.contrib.auth.models import AnonymousUser
 
 
@@ -11,8 +12,6 @@ def get_user(token):
     try:
         payload = jwt.decode(token, settings.SECRET_KEY, algorithms=["HS256"])
         user_id = payload["user_id"]
-        from django.contrib.auth import get_user_model
-
         User = get_user_model()
         return User.objects.get(id=user_id)
     except (
