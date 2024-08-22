@@ -1,6 +1,6 @@
 from modeltranslation.translator import TranslationOptions, register
 
-from core.apps.classcom.models import Notification
+from core.apps.websocket.models import Notification
 
 
 @register(Notification)

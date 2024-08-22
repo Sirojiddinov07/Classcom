@@ -1,9 +1,7 @@
 from django.urls import include, path
-from django.urls import re_path
 from rest_framework import routers
 
 from core.apps.classcom import views
-from core.apps.classcom.consumers import NotificationConsumer
 from core.apps.classcom.views import UnifiedSearchView, WeeksByQuarterView
 from core.http.views import SchoolTypeViewSet
 
@@ -79,8 +77,4 @@ urlpatterns = [
         WeeksByQuarterView.as_view(),
         name="moderator-media-detail",
     ),
-]
-
-websocket_urlpatterns = [
-    re_path(r"ws/notifications/$", NotificationConsumer.as_asgi()),
 ]
