@@ -5,14 +5,14 @@ from core.http.models import AbstractBaseModel
 
 
 class ClassType(AbstractBaseModel):
-    name = models.CharField(max_length=255, verbose_name=_("Sinf turi"))
+    name = models.CharField(max_length=255, verbose_name=_("Sinf guruhi nomi"))
 
     def __str__(self):
         return self.name
 
     class Meta:
-        verbose_name = _("Sinf turi")
-        verbose_name_plural = _("Sinf turlari")
+        verbose_name = _("Sinf Guruhi")
+        verbose_name_plural = _("Sinf Guruhlari")
 
 
 class Classes(AbstractBaseModel):
@@ -22,7 +22,7 @@ class Classes(AbstractBaseModel):
         on_delete=models.CASCADE,
         null=True,
         blank=True,
-        verbose_name=_("Sinf turi"),
+        verbose_name=_("Sinf guruhi"),
     )
 
     def __str__(self):
