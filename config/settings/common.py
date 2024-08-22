@@ -35,7 +35,6 @@ MIDDLEWARE = [
     "django.contrib.sessions.middleware.SessionMiddleware",
     "corsheaders.middleware.CorsMiddleware",  # Cors middleware
     "django.middleware.locale.LocaleMiddleware",  # Locale middleware
-    # "core.middlewares.websocket.JWTAuthMiddlewareStack",  # Websocket middleware
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
