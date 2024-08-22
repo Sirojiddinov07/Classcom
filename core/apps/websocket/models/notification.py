@@ -12,7 +12,6 @@ class Notification(AbstractBaseModel):
         verbose_name=_("Foydalanuvchi"),
     )
     message = models.TextField(verbose_name=_("Xabar"))
-
     is_read = models.BooleanField(default=False, verbose_name=_("O'qilgan"))
 
     def __str__(self) -> str:

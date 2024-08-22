@@ -3,7 +3,7 @@ from django.dispatch import receiver
 
 from ..models import TempModerator, Moderator
 from ..models.feedback import Answer
-from ..models.notification import Notification
+from core.apps.websocket.models.notification import Notification
 
 
 @receiver(post_save, sender=Answer)

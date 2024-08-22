@@ -6,7 +6,6 @@ from .download import *  # noqa
 from .feedback import *  # noqa
 from .media import *  # noqa
 from .moderator import *  # noqa
-from .notification import *  # noqa
 from .plan import *  # noqa
 from .quarter import *  # noqa
 from .recource import *  # noqa

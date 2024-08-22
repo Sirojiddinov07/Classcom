@@ -10,7 +10,7 @@ os.environ.setdefault("DJANGO_SETTINGS_MODULE", "config.settings.local")
 
 django.setup()
 
-from core.apps.classcom.urls import websocket_urlpatterns  # noqa
+from core.apps.websocket.urls import websocket_urlpatterns  # noqa
 
 asgi_application = get_asgi_application()
 

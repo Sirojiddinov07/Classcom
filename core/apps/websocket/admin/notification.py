@@ -1,8 +1,8 @@
 from django.contrib import admin
+from django.utils.translation import gettext_lazy as _
 from modeltranslation.admin import TabbedTranslationAdmin
 
-from core.apps.classcom.models import Notification
-from django.utils.translation import gettext_lazy as _
+from core.apps.websocket.models import Notification
 
 
 @admin.register(Notification)
