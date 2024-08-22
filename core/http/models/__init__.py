@@ -4,3 +4,4 @@ from .locations import *  # noqa
 from .school_type import *  # noqa
 from .science import *  # noqa
 from .user import *  # noqa
+from .school_group import *  # noqa

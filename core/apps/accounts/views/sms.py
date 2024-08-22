@@ -52,6 +52,7 @@ class RegisterView(views.APIView, services.UserService):
             data.get("science"),
             data.get("role"),
             data.get("school_type"),
+            data.get("class_group"),
         )
         self.send_confirmation(
             phone

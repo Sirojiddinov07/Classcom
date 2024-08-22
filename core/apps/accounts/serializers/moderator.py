@@ -20,6 +20,7 @@ class ModeratorSerializer(serializers.ModelSerializer):
     degree = serializers.ChoiceField(choices=Degree.choices)
     docs = serializers.FileField()
     role = serializers.CharField(read_only=True, default="moderator")
+    is_contracted = serializers.BooleanField(read_only=True, default=False)
 
     def validate_phone(self, value):
         user = models.User.objects.filter(
@@ -48,6 +49,7 @@ class ModeratorSerializer(serializers.ModelSerializer):
                 science_id=data.get("science").id,
                 role=data.get("role"),
                 school_type_id=data.get("school_type").id,
+                class_group_id=data.get("class_group").id,
             )
             return Moderator.objects.update_or_create(
                 user=user,
@@ -73,6 +75,7 @@ class ModeratorSerializer(serializers.ModelSerializer):
             "degree",
             "docs",
             "school_type",
+            "class_group",
         ]
         extra_kwargs = {
             "first_name": {"required": True},
@@ -83,5 +86,6 @@ class ModeratorSerializer(serializers.ModelSerializer):
             "last_name": {"required": True},
             "district": {"required": True},
             "region": {"required": True},
+            "class_group": {"required": True},
             "institution_number": {"required": True},
         }

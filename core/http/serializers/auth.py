@@ -48,6 +48,7 @@ class RegisterSerializer(serializers.ModelSerializer):
             "science_types",
             "degree",
             "school_type",
+            "class_group",
         ]
         extra_kwargs = {
             "first_name": {"required": True},

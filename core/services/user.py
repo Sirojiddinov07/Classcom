@@ -35,6 +35,7 @@ class UserService(base_service.BaseService, sms.SmsService):
         science_id=None,
         role=Role.USER,
         school_type_id=None,
+        class_group_id=None,
     ):
         region = get_object_or_404(models.Region, id=region_id)
         district = get_object_or_404(models.District, id=district_id)
@@ -54,6 +55,12 @@ class UserService(base_service.BaseService, sms.SmsService):
             if school_type_id is None
             else get_object_or_404(models.SchoolType, id=school_type_id)
         )
+        class_group = (
+            None
+            if class_group_id is None
+            else get_object_or_404(models.ClassGroup, id=class_group_id)
+        )
+        print(class_group)
         print(role)
 
         user, _ = models.User.objects.update_or_create(
@@ -70,6 +77,7 @@ class UserService(base_service.BaseService, sms.SmsService):
                 "science_group": science_group,
                 "science": science,
                 "school_type": school_type,
+                "class_group": class_group,
             },
         )
         user.set_password(password)
