@@ -6,3 +6,4 @@ from .jazzmin import *  # noqa
 from .jwt import *  # noqa
 from .logs import *  # noqa
 from .rest_framework import *  # noqa
+from .websocket import *  # noqa

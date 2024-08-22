@@ -20,12 +20,6 @@ def validate_lesson_time(value):
 
 
 class Schedule(AbstractBaseModel):
-    name = models.CharField(
-        max_length=255,
-        verbose_name=_("Dars jadvali nomi"),
-        null=True,
-        blank=True,
-    )
     shift = models.CharField(
         max_length=255,
         choices=choices.ShiftChoice.choices,
@@ -68,12 +62,33 @@ class Schedule(AbstractBaseModel):
     class Meta:
         verbose_name = _("Dars jadvali")
         verbose_name_plural = _("Dars jadvali")
-        unique_together = ("start_time", "end_time", "user")
+        ordering = ["weekday", "lesson_time"]
+
+
+class ScheduleTemplate(AbstractBaseModel):
+    user = models.ForeignKey(
+        "http.User",
+        models.CASCADE,
+        verbose_name=_("Foydalanuvchi"),
+    )
+    name = models.CharField(
+        max_length=255,
+        verbose_name=_("Dars jadval shablon nomi"),
+        null=True,
+        blank=True,
+    )
+    schedules = models.ManyToManyField(
+        "Schedule",
+        related_name="schedule_templates",
+        verbose_name=_("Dars jadvalar"),
+    )
 
 
 class ScheduleChoices(AbstractBaseModel):
-    schedule = models.ForeignKey(
-        "Schedule", models.CASCADE, verbose_name=_("Dars jadvali")
+    schedule_template = models.ForeignKey(
+        "ScheduleTemplate",
+        models.CASCADE,
+        verbose_name=_("Dars jadval shabloni"),
     )
     user = models.ForeignKey(
         "http.User", models.CASCADE, verbose_name=_("Foydalanuvchi")
@@ -86,7 +101,6 @@ class ScheduleChoices(AbstractBaseModel):
     class Meta:
         verbose_name = _("Dars jadvali tanlash")
         verbose_name_plural = _("Dars jadvali tanlash")
-        unique_together = ("schedule", "user")
 
     def __str__(self) -> str:
-        return f"{self.schedule} {self.user}"
+        return f"{self.user}"

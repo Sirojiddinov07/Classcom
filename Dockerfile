@@ -14,4 +14,4 @@ RUN pip install poetry
 RUN poetry lock --no-update
 RUN poetry install
 
-CMD poetry run python3 manage.py runserver 0.0.0.0:8000
+CMD poetry run daphne -p 8000 -b 0.0.0.0 config.asgi:application

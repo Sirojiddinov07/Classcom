@@ -1,7 +1,9 @@
 from django.urls import include, path
+from django.urls import re_path
 from rest_framework import routers
 
 from core.apps.classcom import views
+from core.apps.classcom.consumers import NotificationConsumer
 from core.apps.classcom.views import UnifiedSearchView, WeeksByQuarterView
 from core.http.views import SchoolTypeViewSet
 
@@ -11,12 +13,9 @@ router.register("topic", views.TopicViewSet, basename="topic")
 router.register("media", views.MediaViewSet, basename="media")
 router.register("feedback", views.FeedbackCreateViewSet, basename="feedback")
 router.register("answer", views.AnswerCreateViewSet, basename="answer")
-router.register(
-    "notification", views.NotificationListView, basename="notification"
-)
 router.register("class", views.ClassesViewSet, basename="class")
 router.register("science", views.ScienceViewSet, basename="science")
-router.register("schedule", views.ScheduleViewSet, basename="schedule")
+router.register("schedule", views.ScheduleTemplateViewSet, basename="schedule")
 router.register(
     "schedule-choice", views.ScheduleChoiceViewSet, basename="schedule-choice"
 )
@@ -80,4 +79,8 @@ urlpatterns = [
         WeeksByQuarterView.as_view(),
         name="moderator-media-detail",
     ),
+]
+
+websocket_urlpatterns = [
+    re_path(r"ws/notifications/$", NotificationConsumer.as_asgi()),
 ]
