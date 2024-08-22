@@ -1,9 +1,9 @@
-import os
+import os  # noqa
 import pathlib
 
 from django.utils.translation import gettext_lazy as _
 
-from common.env import env
+from common.env import env  # noqa
 from config.conf import *  # noqa
 
 BASE_DIR = pathlib.Path(__file__).resolve().parent.parent.parent
@@ -14,6 +14,7 @@ DEBUG = env.str("DEBUG")
 ALLOWED_HOSTS = ["*"]
 
 INSTALLED_APPS = [
+    "daphne",
     # Design admin panel
     "jazzmin",
     "django_select2",
@@ -34,6 +35,7 @@ MIDDLEWARE = [
     "django.contrib.sessions.middleware.SessionMiddleware",
     "corsheaders.middleware.CorsMiddleware",  # Cors middleware
     "django.middleware.locale.LocaleMiddleware",  # Locale middleware
+    # "core.middlewares.websocket.JWTAuthMiddlewareStack",  # Websocket middleware
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
@@ -59,7 +61,8 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = "config.wsgi.application"
+# WSGI_APPLICATION = "config.wsgi.application"
+ASGI_APPLICATION = "config.asgi.application"
 
 AUTH_PASSWORD_VALIDATORS = [
     {

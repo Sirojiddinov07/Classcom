@@ -2,40 +2,19 @@ from datetime import datetime
 
 from rest_framework import viewsets
 
-from core.apps.classcom.models import Schedule
 from core.apps.classcom.models import ScheduleChoices, Weeks
+from core.apps.classcom.models.schedule import ScheduleTemplate
 from core.apps.classcom.serializers import (
     ScheduleChoiceSerializer,
     ScheduleChoiceListSerializer,
+    ScheduleTemplateListSerializer,
 )
-from core.apps.classcom.serializers import (
-    ScheduleCreateSerializer,
-    ScheduleListSerializer,
-)
-
-
-class ScheduleViewSet(viewsets.ModelViewSet):
-    queryset = Schedule.objects.all()
-    http_method_names = ["get", "post", "put", "patch", "delete"]
-
-    def get_queryset(self):
-        queryset = Schedule.objects.filter(user=self.request.user)
-        date_param = self.request.query_params.get("date")
-        if date_param:
-            queryset = queryset.filter(date=date_param)
-        return queryset
-
-    def get_serializer_class(self):
-        if self.request.method == "GET":
-            return ScheduleListSerializer
-        return ScheduleCreateSerializer
+from core.apps.classcom.serializers import ScheduleTemplateSerializer
 
 
 ############################################
 # Schedule Choice View
 ############################################
-
-
 class ScheduleChoiceViewSet(viewsets.ModelViewSet):
     queryset = ScheduleChoices.objects.all()
     http_method_names = ["get", "post", "put", "patch", "delete"]
@@ -70,3 +49,26 @@ class ScheduleChoiceViewSet(viewsets.ModelViewSet):
         if self.request.method == "GET":
             return ScheduleChoiceListSerializer
         return ScheduleChoiceSerializer
+
+
+############################################
+# Schedule Template View
+############################################
+class ScheduleTemplateViewSet(viewsets.ModelViewSet):
+    queryset = ScheduleTemplate.objects.all()
+    serializer_class = ScheduleTemplateSerializer
+    http_method_names = [
+        "get",
+        "post",
+        "put",
+        "patch",
+        "delete",
+    ]
+
+    def get_queryset(self):
+        return ScheduleTemplate.objects.filter(user=self.request.user)
+
+    def get_serializer_class(self):
+        if self.request.method == "GET":
+            return ScheduleTemplateListSerializer
+        return ScheduleTemplateSerializer

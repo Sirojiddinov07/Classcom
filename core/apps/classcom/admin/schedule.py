@@ -1,14 +1,17 @@
 from django.contrib import admin
 from django.utils.translation import gettext_lazy as _
 
-from core.apps.classcom.models import Schedule, ScheduleChoices
+from core.apps.classcom.models import (
+    Schedule,
+    ScheduleChoices,
+    ScheduleTemplate,
+)
 
 
 @admin.register(Schedule)
 class ScheduleAdmin(admin.ModelAdmin):
     list_display = (
         "id",
-        "name",
         "user",
         "science",
         "classes",
@@ -34,6 +37,13 @@ class ScheduleAdmin(admin.ModelAdmin):
 
 @admin.register(ScheduleChoices)
 class ScheduleChoicesAdmin(admin.ModelAdmin):
-    list_display = ("id", "schedule", "user", "quarter", "week")
+    list_display = ("id", "user", "quarter", "week")
     search_fields = ("user__first_name", "user__last_name", "schedule__name")
     list_filter = ("week", "quarter")
+
+
+@admin.register(ScheduleTemplate)
+class ScheduleTemplateAdmin(admin.ModelAdmin):
+    list_display = ("id", "name")
+    search_fields = ("name",)
+    list_filter = ("name",)

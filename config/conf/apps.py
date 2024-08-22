@@ -2,6 +2,7 @@
 # My Settings
 #####################
 INSTALLED_APPS = [
+    "channels",
     "rest_framework",
     "corsheaders",
     "django_filters",
