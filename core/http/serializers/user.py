@@ -1,4 +1,4 @@
-from django.conf import settings
+from django.conf import settings  # noqa
 from rest_framework import serializers
 
 from core.apps.classcom.choices import Role
@@ -8,7 +8,7 @@ from core.http.serializers import SchoolTypeSerializer
 
 
 class UserSerializer(serializers.ModelSerializer):
-    avatar = serializers.ImageField(max_length=None, use_url=True)
+    # avatar = serializers.ImageField(max_length=None, use_url=True)
     school_type = SchoolTypeSerializer()
     resource_creatable = serializers.SerializerMethodField(read_only=True)
     plan_creatable = serializers.SerializerMethodField(read_only=True)
@@ -27,6 +27,7 @@ class UserSerializer(serializers.ModelSerializer):
             "science",
             "classes",
             "school_type",
+            "class_group",
             "resource_creatable",
             "plan_creatable",
         ]
@@ -37,16 +38,16 @@ class UserSerializer(serializers.ModelSerializer):
         }
         model = models.User
 
-    def get_avatar(self, obj):
-        if obj.avatar:
-            avatar_url = obj.avatar.url.replace(settings.MEDIA_URL, "")
-            media_url = (
-                settings.MEDIA_URL
-                if settings.MEDIA_URL.endswith("/")
-                else settings.MEDIA_URL + "/"
-            )
-            return media_url + avatar_url
-        return None
+    # def get_avatar(self, obj):
+    #     if obj.avatar:
+    #         avatar_url = obj.avatar.url.replace(settings.MEDIA_URL, "")
+    #         media_url = (
+    #             settings.MEDIA_URL
+    #             if settings.MEDIA_URL.endswith("/")
+    #             else settings.MEDIA_URL + "/"
+    #         )
+    #         return media_url + avatar_url
+    #     return None
 
     def is_moderator(self, obj):
         return obj.role == Role.MODERATOR

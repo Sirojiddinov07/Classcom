@@ -3,7 +3,7 @@ from rest_framework import routers
 
 from core.apps.classcom import views
 from core.apps.classcom.views import UnifiedSearchView, WeeksByQuarterView
-from core.http.views import SchoolTypeViewSet
+from core.http.views import SchoolTypeViewSet, FilteredSchoolGroupViewSet
 
 router = routers.DefaultRouter()
 router.register("plan", views.PlanViewSet, basename="plan")
@@ -13,6 +13,9 @@ router.register("feedback", views.FeedbackCreateViewSet, basename="feedback")
 router.register("answer", views.AnswerCreateViewSet, basename="answer")
 router.register("class", views.ClassesViewSet, basename="class")
 router.register("science", views.ScienceViewSet, basename="science")
+router.register(
+    "class-group", FilteredSchoolGroupViewSet, basename="class-group"
+)
 router.register("schedule", views.ScheduleTemplateViewSet, basename="schedule")
 router.register(
     "schedule-choice", views.ScheduleChoiceViewSet, basename="schedule-choice"

@@ -71,6 +71,13 @@ class User(auth_models.AbstractUser, AbstractBaseModel):
         blank=True,
         verbose_name=_("Maktab turi"),
     )
+    class_group = models.ForeignKey(
+        "ClassGroup",
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        verbose_name=_("Sinf turi"),
+    )
     institution_number = models.CharField(
         max_length=255,
         null=True,

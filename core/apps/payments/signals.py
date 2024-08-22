@@ -11,6 +11,7 @@ def order_create(sender, instance, created, **kwargs):
         instance.price = plan.price
         instance.end_date = plan.quarter.end_date
         instance.save()
+        print("Order created")
 
 
 post_save.connect(order_create, Orders)
