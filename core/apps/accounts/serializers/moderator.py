@@ -20,7 +20,6 @@ class ModeratorSerializer(serializers.ModelSerializer):
     degree = serializers.ChoiceField(choices=Degree.choices)
     docs = serializers.FileField()
     role = serializers.CharField(read_only=True, default="moderator")
-    is_contracted = serializers.BooleanField(read_only=True, default=False)
 
     def validate_phone(self, value):
         user = models.User.objects.filter(
