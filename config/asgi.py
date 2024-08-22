@@ -7,7 +7,7 @@ from common.env import env  # noqa
 from core.apps.classcom.urls import websocket_urlpatterns
 from core.middlewares.websocket import JWTAuthMiddlewareStack
 
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "config.settings")
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", env("DJANGO_SETTINGS_MODULE"))
 
 asgi_application = get_asgi_application()
 
