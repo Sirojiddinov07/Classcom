@@ -20,7 +20,7 @@ class Science(AbstractBaseModel):
     name = models.CharField(verbose_name=_("Nomi"))
     science_grp = models.ForeignKey(
         ScienceGroups,
-        on_delete=models.CASCADE,
+        on_delete=models.SET_NULL,
         null=True,
         blank=True,
         verbose_name=_("Fan guruhi"),
@@ -29,8 +29,8 @@ class Science(AbstractBaseModel):
     order_number = models.PositiveIntegerField(
         verbose_name=_("Tartib raqami"), blank=True, null=True
     )
-    class_group = models.ManyToManyField(
-        ClassGroup, verbose_name=_("Sinf turi"),
+    class_group = models.ForeignKey(
+        ClassGroup, verbose_name=_("Sinf turi"), on_delete=models.SET_NULL, null=True, blank=True
     )
 
     def __str__(self):
@@ -74,3 +74,4 @@ class Science(AbstractBaseModel):
     class Meta:
         verbose_name = _("Fan")
         verbose_name_plural = _("Fanlar")
+        ordering = ["order_number"]
