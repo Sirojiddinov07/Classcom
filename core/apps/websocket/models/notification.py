@@ -13,6 +13,9 @@ class Notification(AbstractBaseModel):
     )
     message = models.TextField(verbose_name=_("Xabar"))
     is_read = models.BooleanField(default=False, verbose_name=_("O'qilgan"))
+    is_sending = models.BooleanField(
+        default=False, verbose_name=_("Jo'natilmoqda")
+    )
 
     def __str__(self) -> str:
         return f"{self.user.phone} | {self.message}"

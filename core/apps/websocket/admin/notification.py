@@ -7,7 +7,14 @@ from core.apps.websocket.models import Notification
 
 @admin.register(Notification)
 class NotificationAdmin(TabbedTranslationAdmin):
-    list_display = ("id", "full_name", "message", "is_read", "created_at")
+    list_display = (
+        "id",
+        "full_name",
+        "message",
+        "is_read",
+        "is_sending",
+        "created_at",
+    )
     search_fields = (
         "user__first_name",
         "message",
