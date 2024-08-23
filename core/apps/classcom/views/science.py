@@ -12,6 +12,13 @@ class ScienceViewSet(viewsets.ReadOnlyModelViewSet):
     filter_backends = [DjangoFilterBackend]
     filterset_fields = ["science_grp", "name"]
 
+    def get_queryset(self):
+        queryset = models.Science.objects.all()
+        class_group = self.request.query_params.get('class_group', None)
+        if class_group is not None:
+            queryset = queryset.filter(class_group=class_group)
+        return queryset
+
 
 class ScienceTypesViewSet(viewsets.ReadOnlyModelViewSet):
     permission_classes = [AllowAny]
