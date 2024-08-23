@@ -29,9 +29,8 @@ class Science(AbstractBaseModel):
     order_number = models.PositiveIntegerField(
         verbose_name=_("Tartib raqami"), blank=True, null=True
     )
-    class_group = models.ForeignKey(
-        ClassGroup, verbose_name=_("Sinf turi"), on_delete=models.CASCADE, null=True, blank=True
-
+    class_group = models.ManyToManyField(
+        ClassGroup, verbose_name=_("Sinf turi"),
     )
 
     def __str__(self):
