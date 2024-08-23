@@ -19,11 +19,8 @@ class ClassGroupAdmin(CustomTabbedTranslationAdmin):
     list_display = [
         "id",
         "name",
-        "school_type",
-        "science",
         "created_at",
         "updated_at",
     ]
     search_fields = ["name"]
-    list_filter = ["school_type", "science"]
-    autocomplete_fields = ["school_type", "science"]
+

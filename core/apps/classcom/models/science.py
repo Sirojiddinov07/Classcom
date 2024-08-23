@@ -2,6 +2,7 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 
 from core.http.models import ScienceGroups, AbstractBaseModel
+from core.http.models.school_group import ClassGroup
 
 
 class ScienceTypes(AbstractBaseModel):
@@ -28,6 +29,10 @@ class Science(AbstractBaseModel):
     order_number = models.PositiveIntegerField(
         verbose_name=_("Tartib raqami"), blank=True, null=True
     )
+    class_group = models.ForeignKey(
+        ClassGroup, verbose_name=_("Sinf turi"), on_delete=models.CASCADE, null=True, blank=True
+
+    )
 
     def __str__(self):
         return self.name
@@ -36,10 +41,10 @@ class Science(AbstractBaseModel):
         if not self.pk:  # Yangi qator qo'shilayotgan bo'lsa
             if self.order_number is None:
                 max_order_number = (
-                    Science.objects.aggregate(models.Max("order_number"))[
-                        "order_number__max"
-                    ]
-                    or 0
+                        Science.objects.aggregate(models.Max("order_number"))[
+                            "order_number__max"
+                        ]
+                        or 0
                 )
                 self.order_number = max_order_number + 1
             else:
@@ -51,8 +56,8 @@ class Science(AbstractBaseModel):
             # Yangi tartibga o'zgartirish (eski va yangi order_numberni solishtirib, qatorlarni surish)
             old_instance = Science.objects.get(pk=self.pk)
             if (
-                self.order_number is not None
-                and old_instance.order_number is not None
+                    self.order_number is not None
+                    and old_instance.order_number is not None
             ):
                 if self.order_number < old_instance.order_number:
                     Science.objects.filter(

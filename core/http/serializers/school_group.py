@@ -6,7 +6,7 @@ from core.http.models import ClassGroup
 class ClassGroupSerializer(serializers.ModelSerializer):
     class Meta:
         model = ClassGroup
-        fields = ["id", "name", "school_type", "science"]
+        fields = ["id", "name"]
         read_only_fields = ["id"]
         extra_kwargs = {
             "name": {"required": True},
