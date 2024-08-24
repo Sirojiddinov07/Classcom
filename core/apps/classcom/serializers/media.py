@@ -1,66 +1,32 @@
 from rest_framework import serializers
 
-from core.apps.classcom import models
-from ..models import Media, Plan
+from core.apps.classcom.models import Media
 
 
 class MediaSerializer(serializers.ModelSerializer):
-    science = serializers.SerializerMethodField()
-    topic = serializers.SerializerMethodField()
-    _class = serializers.SerializerMethodField()
-    user = serializers.SerializerMethodField()
-    is_author = serializers.SerializerMethodField()
+    class Meta:
+        model = Media
+        fields = (
+            "id",
+            "desc",
+            "file",
+        )
 
+    def create(self, validated_data):
+        media = Media.objects.create(**validated_data)
+        return media
+
+
+class MediaDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = Media
         fields = (
             "id",
             "name",
-            "file_type",
             "desc",
-            "topic",
-            "science",
-            "_class",
-            "user",
+            "type",
             "size",
             "count",
             "statistics",
             "created_at",
-            "updated_at",
-            "is_author",
         )
-
-    def get_is_author(self, obj):
-        plan = Plan.objects.filter(plan_resource=obj).first()
-        return plan.user == self.context["request"].user if plan else False
-
-    def get_science(self, obj):
-        plan = Plan.objects.filter(plan_resource=obj).first()
-        return plan.science.name if plan and plan.science else None
-
-    def get_topic(self, obj):
-        plan = Plan.objects.filter(plan_resource=obj).first()
-        return plan.topic.name if plan and plan.topic else None
-
-    def get__class(self, obj):
-        plan = Plan.objects.filter(plan_resource=obj).first()
-        return plan.classes.name if plan and plan.classes else None
-
-    def get_user(self, obj):
-        plan = Plan.objects.filter(plan_resource=obj).first()
-        user = plan.user if plan else None
-        return (
-            {
-                "id": user.id,
-                "first_name": user.first_name,
-                "last_name": user.last_name,
-            }
-            if user
-            else None
-        )
-
-
-class MediaMiniSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = models.Media
-        fields = ("id", "name")

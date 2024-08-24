@@ -16,20 +16,10 @@ class TopicAdmin(ImportExportModelAdmin, TabbedTranslationAdmin):
     list_display = (
         "id",
         "name",
-        "science",
-        "_class",
+        "description",
         "sequence_number",
     )
     search_fields = (
         "name",
-        "science__name",
-        "_class__name",
-    )
-    list_filter = (
-        "science",
-        "_class",
-    )
-    autocomplete_fields = (
-        "science",
-        "_class",
+        "description",
     )

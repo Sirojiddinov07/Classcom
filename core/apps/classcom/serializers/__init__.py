@@ -15,3 +15,4 @@ from .schedule import *  # noqa
 from .science import *  # noqa
 from .search import *  # noqa
 from .topic import *  # noqa
+from .type import *  # noqa

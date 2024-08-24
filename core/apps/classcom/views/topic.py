@@ -1,61 +1,105 @@
-from datetime import datetime
-
-from django_filters.rest_framework import DjangoFilterBackend
-from drf_spectacular.utils import OpenApiParameter, extend_schema
-from rest_framework import decorators, exceptions, permissions, viewsets
+from rest_framework import status
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
+from rest_framework.views import APIView
 
-from core.apps.classcom import models, serializers, services
+from core.apps.classcom.models import Topic, Plan
+from core.apps.classcom.serializers.topic import (
+    TopicSerializer,
+    TopicDetailSerializer,
+)
 
 
-class TopicViewSet(viewsets.ReadOnlyModelViewSet):
-    queryset = models.Topic.objects.all()
-    serializer_class = serializers.TopicSerializer
-    filter_backends = [DjangoFilterBackend]
-    filterset_fields = ["_class", "quarter", "science"]
+class TopicApiView(APIView):
+    permission_classes = [IsAuthenticated]
 
-    def get_permissions(self):
-        perms = []
-        match self.action:
-            case "get_topic":
-                perms.append(permissions.IsAuthenticated)
-        self.permission_classes = perms
-        return super().get_permissions()
+    def get(self, request):
+        plan_id = request.query_params.get("plan_id")
+        topic_id = request.query_params.get("id")
 
-    @extend_schema(
-        parameters=[
-            OpenApiParameter("_class", type=int, description="Class ID"),
-            OpenApiParameter("science", type=int, description="Science ID"),
-            OpenApiParameter(
-                "date", type=str, description="Date in format YYYY-MM-DD"
-            ),
-        ],
-        summary="Get topic.",
-        description="Get topic by date.",
-        responses=serializers.TopicCalculationSerializer,
-    )
-    @decorators.action(
-        methods=["GET"],
-        detail=False,
-        url_path="calculation",
-        url_name="calculation",
-    )
-    def get_topic(self, request):
-        ser = serializers.TopicFilterSerializer(data=request.GET)
-        ser.is_valid(raise_exception=True)
+        if topic_id:
+            try:
+                topic = Topic.objects.get(id=topic_id)
+                serializer = TopicDetailSerializer(topic)
+                return Response(serializer.data, status=status.HTTP_200_OK)
+            except Topic.DoesNotExist:
+                return Response(
+                    {"error": "Topic not found"},
+                    status=status.HTTP_404_NOT_FOUND,
+                )
 
-        service = services.TopicService()
-        date = ser.data.get("date", None)
-        try:
-            topic = service.get_topic_by_date(
-                date if date else datetime.now().strftime("%d.%m.%Y"),
-                ser.data.get("science"),
-                ser.data.get("_class"),
-                request.user,
-            )
-        except ValueError as e:
-            raise exceptions.APIException(e)
+        if plan_id:
+            try:
+                plan = Plan.objects.get(id=plan_id, user=request.user)
+                topics = plan.topic.all()
+                serializer = TopicDetailSerializer(topics, many=True)
+                return Response(serializer.data, status=status.HTTP_200_OK)
+            except Plan.DoesNotExist:
+                return Response(
+                    {"error": "Plan not found"},
+                    status=status.HTTP_404_NOT_FOUND,
+                )
 
         return Response(
-            data=serializers.TopicCalculationSerializer(topic).data
+            {"error": "Either id or plan_id is required"},
+            status=status.HTTP_400_BAD_REQUEST,
         )
+
+    def post(self, request):
+        plan_id = request.query_params.get("plan_id")
+        if not plan_id:
+            return Response(
+                {"error": "plan_id is required"},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
+        try:
+            plan = Plan.objects.get(id=plan_id, user=request.user)
+        except Plan.DoesNotExist:
+            return Response(
+                {"error": "Plan not found"}, status=status.HTTP_404_NOT_FOUND
+            )
+
+        serializer = TopicSerializer(data=request.data, many=True)
+        if serializer.is_valid():
+            topics = serializer.save()
+            plan.topic.add(*topics)
+            plan.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request):
+        topic_id = request.query_params.get("id")
+        if not topic_id:
+            return Response(
+                {"error": "id is required"}, status=status.HTTP_400_BAD_REQUEST
+            )
+
+        try:
+            topic = Topic.objects.get(id=topic_id)
+            topic.delete()
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        except Topic.DoesNotExist:
+            return Response(
+                {"error": "Topic not found"}, status=status.HTTP_404_NOT_FOUND
+            )
+
+    def patch(self, request):
+        topic_id = request.query_params.get("id")
+        if not topic_id:
+            return Response(
+                {"error": "id is required"}, status=status.HTTP_400_BAD_REQUEST
+            )
+
+        try:
+            topic = Topic.objects.get(id=topic_id)
+        except Topic.DoesNotExist:
+            return Response(
+                {"error": "Topic not found"}, status=status.HTTP_404_NOT_FOUND
+            )
+
+        serializer = TopicSerializer(topic, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
