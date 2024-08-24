@@ -10,10 +10,10 @@ class MediaAdmin(TabbedTranslationAdmin):
         "id",
         "name",
         "file",
-        "file_type",
+        "type",
         "count",
         "statistics",
     )
     search_fields = ("name",)
-    list_filter = ("file_type",)
+    list_filter = ("type",)
     readonly_fields = ("created_at", "updated_at")

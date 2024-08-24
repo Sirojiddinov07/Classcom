@@ -1,56 +1,39 @@
 from rest_framework import serializers
 
 from core.apps.classcom import models
-from .classes import ClassMiniSerializer
-from .quarter import QuarterMiniSerializer
-from .science import ScienceMiniSerializer
+from core.apps.classcom.serializers.media import MediaDetailSerializer
 
 
 class TopicSerializer(serializers.ModelSerializer):
-    _class = ClassMiniSerializer(read_only=True)
-    quarter = QuarterMiniSerializer(read_only=True)
-    science = ScienceMiniSerializer(read_only=True)
+    class Meta:
+        model = models.Topic
+        fields = [
+            "id",
+            "name",
+            "description",
+            "hours",
+            "sequence_number",
+            "banner",
+        ]
+
+    def create(self, validated_data):
+        topic = models.Topic.objects.create(**validated_data)
+        return topic
+
+
+class TopicDetailSerializer(serializers.ModelSerializer):
+    media = MediaDetailSerializer(many=True)
 
     class Meta:
         model = models.Topic
         fields = [
             "id",
             "name",
-            "_class",
-            "quarter",
-            "science",
+            "description",
+            "hours",
             "sequence_number",
-            "thematic_plan",
+            "created_at",
+            "banner",
+            "media",
         ]
-
-
-class TopicMiniSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = models.Topic
-        fields = ("id", "name")
-
-
-class TopicFilterSerializer(serializers.ModelSerializer):
-    date = serializers.DateField(required=False, format="%d.%m.%Y")
-
-    class Meta:
-        model = models.Topic
-        fields = ("_class", "science", "date")
-
-
-class TopicCalculationSerializer(serializers.ModelSerializer):
-    resources = serializers.SerializerMethodField()
-
-    class Meta:
-        model = models.Topic
-        fields = (
-            "id",
-            "name",
-            "sequence_number",
-            "resources",
-        )
-
-    def get_resources(self, obj):
-        from .resource import ResourceSerializer  # Lazy import here
-
-        return ResourceSerializer(obj.resources.all(), many=True).data
+        extra_kwargs = {"media": {"required": False}}

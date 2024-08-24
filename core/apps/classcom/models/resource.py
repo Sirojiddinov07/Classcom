@@ -2,7 +2,7 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 
 from core.http.models import AbstractBaseModel
-from ..choices import Types, ResourceDegree
+from ..choices import ResourceDegree
 
 
 class Resource(AbstractBaseModel):
@@ -106,10 +106,4 @@ class Resource(AbstractBaseModel):
     class Meta:
         verbose_name = _("Resurs")
         verbose_name_plural = _("Resurslar")
-
-
-class ResourceTypes(AbstractBaseModel):
-    name = models.CharField(verbose_name=_("Nomi"), max_length=255)
-    type = models.CharField(
-        choices=Types.choices, verbose_name=_("Turi"), max_length=255
-    )
+        ordering = ["order_number"]

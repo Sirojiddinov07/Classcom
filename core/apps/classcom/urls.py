@@ -3,12 +3,10 @@ from rest_framework import routers
 
 from core.apps.classcom import views
 from core.apps.classcom.views import UnifiedSearchView, WeeksByQuarterView
+from core.apps.websocket.views import NotificationViewSet
 from core.http.views import SchoolTypeViewSet, FilteredSchoolGroupViewSet
 
 router = routers.DefaultRouter()
-router.register("plan", views.PlanViewSet, basename="plan")
-router.register("topic", views.TopicViewSet, basename="topic")
-router.register("media", views.MediaViewSet, basename="media")
 router.register("feedback", views.FeedbackCreateViewSet, basename="feedback")
 router.register("answer", views.AnswerCreateViewSet, basename="answer")
 router.register("class", views.ClassesViewSet, basename="class")
@@ -80,4 +78,11 @@ urlpatterns = [
         WeeksByQuarterView.as_view(),
         name="moderator-media-detail",
     ),
+    path(
+        "notification/",
+        NotificationViewSet.as_view({"get": "list"}),
+        name="notification",
+    ),
+    path("plan/", views.PlanApiView.as_view(), name="plan"),
+    path("topic/", views.TopicApiView.as_view(), name="topic"),
 ]
