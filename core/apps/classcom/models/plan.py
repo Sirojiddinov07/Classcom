@@ -36,14 +36,11 @@ class Plan(AbstractBaseModel):
     plan_resource = models.ManyToManyField(
         "Media", blank=True, verbose_name=_("Resurslar")
     )
-    topic = models.ForeignKey(
-        "Topic",
-        on_delete=models.CASCADE,
-        null=True,
-        blank=True,
-        related_name="plans",
-        verbose_name=_("Mavzu"),
-    )
+    # topic = models.ManyToManyField(
+    #     "Topic",
+    #     related_name="plans",
+    #     verbose_name=_("Mavzu"),
+    # )
 
     def __str__(self):
         return self.name

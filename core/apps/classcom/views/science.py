@@ -14,7 +14,7 @@ class ScienceViewSet(viewsets.ReadOnlyModelViewSet):
 
     def get_queryset(self):
         queryset = models.Science.objects.all()
-        class_group = self.request.query_params.get('class_group', None)
+        class_group = self.request.query_params.get("class_group", None)
         if class_group is not None:
             queryset = queryset.filter(class_group=class_group)
         return queryset
@@ -29,8 +29,8 @@ class ScienceTypesViewSet(viewsets.ReadOnlyModelViewSet):
 
     def get_queryset(self):
         queryset = models.ScienceTypes.objects.all()
-        science_id = self.request.query_params.get('science', None)
-        class_group = self.request.query_params.get('class_group', None)
+        science_id = self.request.query_params.get("science", None)
+        class_group = self.request.query_params.get("class_group", None)
         if science_id is not None:
             queryset = queryset.filter(science__id=science_id)
         if class_group is not None:

@@ -21,12 +21,12 @@ class Topic(AbstractBaseModel):
     sequence_number = models.IntegerField(
         default=1, verbose_name=_("Tartib raqami")
     )
-    thematic_plan = models.ManyToManyField(
-        "Plan",
-        blank=True,
-        related_name="topics",
-        verbose_name=_("Tematik reja"),
-    )
+    # thematic_plan = models.ManyToManyField(
+    #     "Plan",
+    #     blank=True,
+    #     related_name="topics",
+    #     verbose_name=_("Tematik reja"),
+    # )
 
     def __str__(self):
         return f"{self.name}, {self.id}"

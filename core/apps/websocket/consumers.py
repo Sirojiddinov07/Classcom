@@ -1,42 +1,27 @@
 import json
 import logging
 
+from asgiref.sync import sync_to_async, async_to_sync
 from channels.generic.websocket import AsyncWebsocketConsumer
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 from core.apps.websocket.models.notification import Notification
-
-logger = logging.getLogger(__name__)
 
 
 class NotificationConsumer(AsyncWebsocketConsumer):
     async def acknowledge_notification(self, notification_id: int):
-        logger.debug(
+        logging.debug(
             f"Attempting to acknowledge notification {notification_id} for user {self.user.id}"
         )
-        try:
-            notification = Notification.objects.get(
-                id=notification_id, user=self.user
-            )
-            logger.debug(
-                f"Notification {notification_id} found for user {self.user.id}"
-            )
-            notification.is_sending = True
-            notification.is_read = True
-            notification.save()
-            logger.info(
-                f"Notification {notification_id} acknowledged by user {self.user.id}"
-            )
-            logger.debug(
-                f"Notification {notification_id} status: is_sending={notification.is_sending}, is_read={notification.is_read}"
-            )
-        except Notification.DoesNotExist:
-            logger.warning(
-                f"Notification {notification_id} does not exist for user {self.user.id}"
-            )
-        except Exception as e:
-            logger.error(
-                f"An error occurred while acknowledging notification {notification_id} for user {self.user.id}: {e}"
-            )
+        notification = await Notification.objects.aget(
+            id=notification_id, user=self.user
+        )
+        logging.debug(
+            f"Notification {notification_id} found for user {self.user.id}"
+        )
+        notification.is_read = True
+        await notification.asave()
 
     async def connect(self):
         self.user = self.scope["user"]
@@ -48,6 +33,41 @@ class NotificationConsumer(AsyncWebsocketConsumer):
             )
             await self.accept()
 
+            notifications = await sync_to_async(list)(
+                Notification.objects.filter(user=self.user, is_sending=False)
+            )
+            for notification in notifications:
+                await self.send(
+                    text_data=json.dumps(
+                        {
+                            "type": "send_notification",
+                            "message": notification.message,
+                            "notification_id": notification.id,
+                        }
+                    )
+                )
+                notification.is_sending = True
+                await notification.asave()
+
+            @receiver(post_save, sender=Notification)
+            def notification_created(sender, instance, created, **kwargs):
+                if created and instance.user == self.user:
+                    async_to_sync(self.channel_layer.group_send)(
+                        f"user_{self.user.id}",
+                        {
+                            "type": "send_notification",
+                            "message": json.dumps(
+                                {
+                                    "type": "send_notification",
+                                    "message": instance.message,
+                                    "notification_id": instance.id,
+                                }
+                            ),
+                        },
+                    )
+                    instance.is_sending = True
+                    instance.save()
+
     async def disconnect(self, close_code):
         await self.channel_layer.group_discard(
             f"user_{self.user.id}", self.channel_name
@@ -56,26 +76,19 @@ class NotificationConsumer(AsyncWebsocketConsumer):
     async def receive(self, text_data):
         data = json.loads(text_data)
         if data.get("type") == "acknowledge_notification":
-            await self.acknowledge_notification(int(data["notification_id"]))
+            try:
+                await self.acknowledge_notification(
+                    int(data["notification_id"])
+                )
+            except Exception as e:
+                print("=======")
+                print(e)
+                print("=======")
             print(
-                f"Notification acknowledged {data['notification_id']} {self.user.id} {self.channel_name} {self.channel_layer}"
+                f"Notification acknowledged {data['notification_id']} {self.user.id}"
+                f" {self.channel_name} {self.channel_layer}"
             )
             print(data)
-        #     channel_layer = get_channel_layer()
-        #     async_to_sync(channel_layer.group_send)(
-        #         f"user_{self.user.id}",
-        #         {
-        #             "type": "acknowledge_notification",
-        #             "notification_id": int(data["notification_id"]),
-        #         }
-        #     )
-        #     notification = Notification.objects.get(id=int(data["notification_id"]), user=self.user)
-        #     notification.refresh_from_db()
-        #     notification.is_sending = True
-        #     notification.save()
-        # else:
-        #     logger.warning(f"Unknown message type: {data.get('type')}")
-        #     print(f"Unknown message type: {data.get('type')}")
 
     async def send_notification(self, event):
         message = event["message"]
