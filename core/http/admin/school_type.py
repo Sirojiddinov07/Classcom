@@ -23,4 +23,3 @@ class ClassGroupAdmin(CustomTabbedTranslationAdmin):
         "updated_at",
     ]
     search_fields = ["name"]
-

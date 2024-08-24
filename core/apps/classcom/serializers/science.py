@@ -14,7 +14,14 @@ class ScienceSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Science
-        fields = ["id", "name", "science_grp", "types", "class_group", "created_at"]
+        fields = [
+            "id",
+            "name",
+            "science_grp",
+            "types",
+            "class_group",
+            "created_at",
+        ]
 
 
 class ScienceMiniSerializer(serializers.ModelSerializer):
