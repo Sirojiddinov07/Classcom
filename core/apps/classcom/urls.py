@@ -10,6 +10,7 @@ router = routers.DefaultRouter()
 router.register("feedback", views.FeedbackCreateViewSet, basename="feedback")
 router.register("answer", views.AnswerCreateViewSet, basename="answer")
 router.register("class", views.ClassesViewSet, basename="class")
+router.register("class-type", views.ClassTypeViewSet, basename="class-type")
 router.register("science", views.ScienceViewSet, basename="science")
 router.register(
     "class-group", FilteredSchoolGroupViewSet, basename="class-group"
@@ -85,4 +86,5 @@ urlpatterns = [
     ),
     path("plan/", views.PlanApiView.as_view(), name="plan"),
     path("topic/", views.TopicApiView.as_view(), name="topic"),
+    path("media/", views.MediaApiView.as_view(), name="media"),
 ]
