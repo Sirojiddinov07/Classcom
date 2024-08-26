@@ -52,7 +52,9 @@ class NotificationConsumer(AsyncWebsocketConsumer):
 
     async def check_and_send_notifications(self):
         notifications = await sync_to_async(list)(
-            Notification.objects.filter(user=self.user, is_sending=False)
+            Notification.objects.filter(
+                user=self.user, is_sending=False
+            )  # noqa
         )
         for notification in notifications:
             await self.send(
