@@ -3,8 +3,10 @@ from django.utils.translation import gettext_lazy as _
 
 from core.apps.classcom import choices
 from core.apps.classcom.choices import Role
+from core.apps.classcom.models import Classes
 from core.apps.classcom.models.science import ScienceTypes
 from core.http.models import AbstractBaseModel
+from core.http.models.school_group import ClassGroup
 
 
 class Moderator(AbstractBaseModel):
@@ -12,19 +14,6 @@ class Moderator(AbstractBaseModel):
         "http.User", on_delete=models.CASCADE, verbose_name=_("Foydalanuvchi")
     )
     balance = models.BigIntegerField(default=0, verbose_name=_("Balans"))
-    science = models.ForeignKey(
-        to="Science",
-        on_delete=models.SET_NULL,
-        null=True,
-        verbose_name=_("Fan"),
-    )
-    science_type = models.ForeignKey(
-        ScienceTypes,
-        on_delete=models.SET_NULL,
-        null=True,
-        blank=True,
-        verbose_name=_("Fan turi"),
-    )
     degree = models.CharField(
         max_length=15,
         choices=choices.Degree.choices,
@@ -40,6 +29,9 @@ class Moderator(AbstractBaseModel):
     is_contracted = models.BooleanField(
         default=False, verbose_name=_("Shartnoma")
     )
+    ##############
+    # Permissions
+    ##############
     plan_creatable = models.BooleanField(
         default=False, verbose_name=_("Tematik Reja yarata olishi")
     )
@@ -51,6 +43,40 @@ class Moderator(AbstractBaseModel):
         blank=True,
         related_name="moderators",
         verbose_name=_("Resurs turlari"),
+    )
+    science = models.ManyToManyField(
+        to="Science",
+        blank=True,
+        verbose_name=_("Fan"),
+    )
+    science_type = models.ManyToManyField(
+        ScienceTypes,
+        blank=True,
+        verbose_name=_("Fan turi"),
+    )
+    languages = models.ManyToManyField(
+        "LanguageModel",
+        blank=True,
+        related_name="moderators",
+        verbose_name=_("Tillar"),
+    )
+    classes = models.ManyToManyField(
+        Classes,
+        blank=True,
+        related_name="moderators",
+        verbose_name=_("Sinflar"),
+    )
+    class_groups = models.ManyToManyField(
+        ClassGroup,
+        blank=True,
+        related_name="moderators",
+        verbose_name=_("Sinflar turlari"),
+    )
+    quarters = models.ManyToManyField(
+        "Quarter",
+        blank=True,
+        related_name="moderators",
+        verbose_name=_("Choraklar"),
     )
 
     def __str__(self) -> str:
@@ -65,18 +91,6 @@ class Moderator(AbstractBaseModel):
             self.user.role = Role.MODERATOR
             self.user.save()
         super().save(*args, **kwargs)
-
-    def get_dirty_fields(self):
-        dirty_fields = {}
-        if not self.pk:
-            return dirty_fields
-
-        db_instance = type(self).objects.get(pk=self.pk)
-        for field in self._meta.fields:
-            field_name = field.name
-            if getattr(db_instance, field_name) != getattr(self, field_name):
-                dirty_fields[field_name] = getattr(self, field_name)
-        return dirty_fields
 
 
 class TempModerator(AbstractBaseModel):

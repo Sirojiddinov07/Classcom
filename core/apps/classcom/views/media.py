@@ -1,5 +1,5 @@
 from rest_framework import status
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -11,7 +11,7 @@ from core.apps.classcom.serializers.media import (
 
 
 class MediaApiView(APIView):
-    permission_classes = [AllowAny]
+    permission_classes = [IsAuthenticated]
 
     def get(self, request):
         media_id = request.query_params.get("id")
@@ -60,14 +60,15 @@ class MediaApiView(APIView):
                 {"error": "Topic not found"}, status=status.HTTP_404_NOT_FOUND
             )
 
-        if not isinstance(request.data, list):
+        media_list = request.data.get("media")
+        if not isinstance(media_list, list):
             return Response(
-                {"error": "Request data must be a list of dictionaries"},
+                {"error": "Request data must contain a list of media items"},
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
         media_data = []
-        for media_item in request.data:
+        for media_item in media_list:
             if not isinstance(media_item, dict):
                 return Response(
                     {"error": "Each media item must be a dictionary"},

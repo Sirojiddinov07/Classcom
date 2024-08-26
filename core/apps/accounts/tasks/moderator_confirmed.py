@@ -24,7 +24,7 @@ def send_congratulation_sms(phone, first_name, last_name):
         console.Console().success(f"Success: {phone}-{first_name}-{last_name}")
     except Exception as e:
         console.Console().error(
-            "Error: {phone}-{first_name} {last_name}\n\n{error}".format(
+            "Error: {phone}-{first_name}-{last_name}\n\n{error}".format(
                 phone=phone,
                 first_name=first_name,
                 last_name=last_name,

@@ -4,6 +4,7 @@ from .classes import *  # noqa
 from .daysoff import *  # noqa
 from .download import *  # noqa
 from .feedback import *  # noqa
+from .languages import *  # noqa
 from .media import *  # noqa
 from .moderator import *  # noqa
 from .plan import *  # noqa

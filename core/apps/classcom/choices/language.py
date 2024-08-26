@@ -11,4 +11,12 @@ class LanguageModel(models.Model):
     language = models.CharField(
         max_length=2,
         choices=Language.choices,
+        verbose_name=_("Til"),
     )
+
+    def __str__(self):
+        return self.language
+
+    class Meta:
+        verbose_name = _("Til")
+        verbose_name_plural = _("Tillar")

@@ -14,7 +14,44 @@ class ModeratorAdmin(admin.ModelAdmin):
         "science_group",
     )
     search_fields = ("user__first_name", "user__last_name", "user__phone")
-    filter_horizontal = ("resource_type",)
+    filter_horizontal = (
+        "resource_type",
+        "science",
+        "science_type",
+        "languages",
+        "classes",
+        "class_groups",
+        "quarters",
+    )
+    fieldsets = (
+        (
+            None,
+            {"fields": ("user", "balance", "degree", "docs", "is_contracted")},
+        ),
+        (
+            _("Plan Permissions"),
+            {
+                "fields": (
+                    "plan_creatable",
+                    "languages",
+                    "science",
+                    "science_type",
+                    "classes",
+                    "class_groups",
+                    "quarters",
+                )
+            },
+        ),
+        (
+            _("Resource Permissions"),
+            {
+                "fields": (
+                    "resource_creatable",
+                    "resource_type",
+                )
+            },
+        ),
+    )
 
     def full_name(self, obj):
         return f"{obj.user.first_name} {obj.user.last_name}"

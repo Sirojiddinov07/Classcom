@@ -4,6 +4,9 @@ from core.apps.classcom.models import ScheduleChoices
 from core.apps.classcom.models.schedule import Schedule, ScheduleTemplate
 from core.apps.classcom.serializers import (
     QuarterMiniSerializer,
+    ScienceSerializer,
+    ClassesSerializer,
+    ClassTypeSerializer,
 )
 from core.apps.classcom.serializers.weks import WeeksSerializer
 from core.http.serializers import UserSerializer
@@ -32,10 +35,10 @@ class ScheduleSerializer(serializers.ModelSerializer):
 # Schedule List Serializer
 ############################################
 class ScheduleListSerializer(serializers.ModelSerializer):
-    # user = UserSerializer()
-    # science = ScienceSerializer()
-    # classes = ClassesSerializer()
-    # class_type = ClassTypeSerializer()
+    user = UserSerializer()
+    science = ScienceSerializer()
+    classes = ClassesSerializer()
+    class_type = ClassTypeSerializer()
 
     class Meta:
         model = Schedule
