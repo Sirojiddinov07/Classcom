@@ -60,29 +60,21 @@ class MediaApiView(APIView):
                 {"error": "Topic not found"}, status=status.HTTP_404_NOT_FOUND
             )
 
-        media_list = request.data.get("media")
-        if not isinstance(media_list, list):
-            return Response(
-                {"error": "Request data must contain a list of media items"},
-                status=status.HTTP_400_BAD_REQUEST,
-            )
-
         media_data = []
-        for media_item in media_list:
-            if not isinstance(media_item, dict):
-                return Response(
-                    {"error": "Each media item must be a dictionary"},
-                    status=status.HTTP_400_BAD_REQUEST,
-                )
-            media_file = request.FILES.get(media_item.get("file"))
-            if not media_file:
-                return Response(
-                    {"error": "File is required for each media item"},
-                    status=status.HTTP_400_BAD_REQUEST,
-                )
-            media_data.append(
-                {"file": media_file, "desc": media_item.get("desc")}
-            )
+        for key in request.data:
+            if key.startswith("desc[") and key.endswith("]"):
+                index = key[len("desc[") : -1]  # noqa: E203
+                file_key = f"file[{index}]"
+                media_desc = request.data.get(key)
+                media_file = request.FILES.get(file_key)
+                if not media_file:
+                    return Response(
+                        {"error": f"File is required for media item {index}"},
+                        status=status.HTTP_400_BAD_REQUEST,
+                    )
+                if not media_desc:
+                    media_desc = media_file.name
+                media_data.append({"file": media_file, "desc": media_desc})
 
         serializer = MediaSerializer(data=media_data, many=True)
         if serializer.is_valid():
