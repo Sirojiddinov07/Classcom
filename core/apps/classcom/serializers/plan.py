@@ -23,6 +23,7 @@ class PlanSerializer(serializers.ModelSerializer):
             "class_group",
             "science_types",
         ]
+        extra_kwargs = {"id": {"read_only": True}}
 
     def create(self, validated_data):
         user = self.context["request"].user

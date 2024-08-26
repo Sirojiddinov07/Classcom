@@ -4,6 +4,7 @@ from django.utils.translation import gettext_lazy as _
 
 from core.apps.classcom import choices
 from core.http.models import AbstractBaseModel
+from core.http.models.school_group import ClassGroup
 
 
 def validate_lesson_time(value):
@@ -54,6 +55,13 @@ class Schedule(AbstractBaseModel):
         max_length=25,
         validators=[validate_lesson_time],
         verbose_name=_("Dars vaqti"),
+    )
+    class_group = models.ForeignKey(
+        ClassGroup,
+        models.CASCADE,
+        verbose_name=_("Sinflar guruhi"),
+        null=True,
+        blank=True,
     )
 
     def __str__(self) -> str:
