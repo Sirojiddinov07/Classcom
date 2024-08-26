@@ -18,18 +18,12 @@ class PlanPermission(permissions.BasePermission):
     def has_permission(self, request, view):
         user = request.user
         try:
-            # languages = int(request.data.get("language"))
-            # print(languages)
+            # languages = int(request.data.get("language")) # TODO: LANGUAGE CHECK ADD
             science = int(request.data.get("science"))
-            print(science)
             science_type = int(request.data.get("science_types"))
-            print(science_type)
             classes = int(request.data.get("classes"))
-            print(classes)
             class_groups = int(request.data.get("class_group"))
-            print(class_groups)
             quarters = int(request.data.get("quarter"))
-            print(quarters)
         except (TypeError, ValueError):
             raise ValidationError("Invalid data provided.")
 
@@ -37,12 +31,12 @@ class PlanPermission(permissions.BasePermission):
             moderator = Moderator.objects.get(user=user)
             if (
                 not moderator.plan_creatable
-                # and moderator.languages.filter(id=languages).exists()
-                and moderator.science.filter(id=science).exists()
-                and moderator.science_type.filter(id=science_type).exists()
-                and moderator.classes.filter(id=classes).exists()
-                and moderator.class_groups.filter(id=class_groups).exists()
-                and moderator.quarters.filter(id=quarters).exists()
+                # or not moderator.languages.filter(id=languages).exists()
+                or not moderator.science.filter(id=science).exists()
+                or not moderator.science_type.filter(id=science_type).exists()
+                or not moderator.classes.filter(id=classes).exists()
+                or not moderator.class_groups.filter(id=class_groups).exists()
+                or not moderator.quarters.filter(id=quarters).exists()
             ):
                 raise ValidationError("User is not allowed to create a plan.")
         except Moderator.DoesNotExist:
