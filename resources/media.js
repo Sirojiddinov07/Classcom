@@ -1,53 +1,68 @@
 const BASE_URL = 'http://' + window.location.hostname + ':8081';
 
-document.getElementById('addMediaInput').addEventListener('click', function () {
+document.getElementById('addMediaInput')?.addEventListener('click', function () {
     const mediaInputs = document.getElementById('mediaInputs');
-    const newMediaInput = document.createElement('div');
-    newMediaInput.classList.add('mediaInput');
-    newMediaInput.innerHTML = `
-        <label for="file_desc">Description:</label>
-        <input type="text" name="file_desc" required><br><br>
+    if (mediaInputs) {
+        const newMediaInput = document.createElement('div');
+        newMediaInput.classList.add('mediaInput');
+        newMediaInput.innerHTML = `
+            <label for="desc">Description:</label>
+            <input type="text" name="desc" required><br><br>
 
-        <label for="media_files">Select Media Files:</label>
-        <input type="file" name="media_files" required><br><br>
-    `;
-    mediaInputs.appendChild(newMediaInput);
+            <label for="file">Select Media Files:</label>
+            <input type="file" name="file" required><br><br>
+        `;
+        mediaInputs.appendChild(newMediaInput);
+    }
 });
 
-document.getElementById('mediaForm').addEventListener('submit', function (event) {
+document.getElementById('mediaForm')?.addEventListener('submit', function (event) {
     event.preventDefault();
 
-    const topicId = document.getElementById('topic_id').value;
     const mediaInputs = document.querySelectorAll('.mediaInput');
-    const formData = new FormData();
+    const mediaData = [];
 
-    formData.append('topic_id', topicId);
-    mediaInputs.forEach(input => {
-        const fileDesc = input.querySelector('input[name="file_desc"]').value;
-        const mediaFile = input.querySelector('input[name="media_files"]').files[0];
+    Promise.all(Array.from(mediaInputs).map((input, index) => {
+        const fileDesc = input.querySelector('input[name="desc"]')?.value;
+        const mediaFile = input.querySelector('input[name="file"]')?.files[0];
 
-        formData.append('file_desc', fileDesc);
-        formData.append('media_files', mediaFile);
-    });
+        if (fileDesc && mediaFile) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    mediaData.push({
+                        file: event.target.result.split(',')[1], // Base64 encoded file
+                        desc: fileDesc
+                    });
+                    resolve();
+                };
+                reader.onerror = reject;
+                reader.readAsDataURL(mediaFile); // Reads the file as Base64
+            });
+        }
+    })).then(() => {
+        const requestData = {
+            media: mediaData
+        };
 
-    const queryParams = new URLSearchParams({topic_id: topicId}).toString();
-
-    fetch(BASE_URL + `/media/?${queryParams}`, {
-        method: 'POST',
-        body: formData
-    })
-        .then(response => {
-            if (!response.ok) {
-                return response.json().then(data => {
-                    throw new Error(data.detail || 'Unknown error');
-                });
-            }
-            return response.json();
-        })
-        .then(data => {
-            document.getElementById('response').innerText = JSON.stringify(data, null, 2);
-        })
-        .catch(error => {
-            document.getElementById('response').innerText = 'Error: ' + error.message;
+        return fetch(BASE_URL + `/media/?topic_id=21`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(requestData)
         });
+    }).then(response => {
+        if (response.ok) {
+            return response.json();
+        } else {
+            return response.json().then(data => {
+                throw new Error(data.detail || 'Unknown error');
+            });
+        }
+    }).then(data => {
+        document.getElementById('response').innerText = JSON.stringify(data, null, 2);
+    }).catch(error => {
+        document.getElementById('response').innerText = 'Error: ' + error.message;
+    });
 });
