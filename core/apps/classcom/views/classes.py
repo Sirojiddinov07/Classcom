@@ -2,7 +2,7 @@ from rest_framework import viewsets
 from rest_framework.permissions import AllowAny
 
 from core.apps.classcom import models, serializers
-from core.apps.classcom.views import CustomPagination
+from core.apps.classcom.views.region import CustomPagination
 
 
 class ClassesViewSet(viewsets.ReadOnlyModelViewSet):
