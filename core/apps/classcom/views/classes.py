@@ -12,3 +12,13 @@ class ClassesViewSet(viewsets.ReadOnlyModelViewSet):
     permission_classes = [AllowAny]
     queryset = models.Classes.objects.all()
     serializer_class = serializers.ClassesSerializer
+
+
+class ClassTypeViewSet(viewsets.ReadOnlyModelViewSet):
+    """
+    API endpoint that allows class types to be viewed or edited.
+    """
+
+    permission_classes = [AllowAny]
+    queryset = models.ClassType.objects.all()
+    serializer_class = serializers.ClassTypeSerializer
