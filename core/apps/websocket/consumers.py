@@ -1,10 +1,9 @@
+import asyncio
 import json
 import logging
 
-from asgiref.sync import sync_to_async, async_to_sync
+from asgiref.sync import sync_to_async
 from channels.generic.websocket import AsyncWebsocketConsumer
-from django.db.models.signals import post_save
-from django.dispatch import receiver
 
 from core.apps.websocket.models.notification import Notification
 
@@ -33,42 +32,44 @@ class NotificationConsumer(AsyncWebsocketConsumer):
             )
             await self.accept()
 
-            notifications = await sync_to_async(list)(
-                Notification.objects.filter(user=self.user, is_sending=False)
+            self.periodic_task = asyncio.create_task(
+                self.check_notifications_periodically()
             )
-            for notification in notifications:
-                await self.send(
-                    text_data=json.dumps(
-                        {
-                            "type": "send_notification",
-                            "message": notification.message,
-                            "notification_id": notification.id,
-                        }
-                    )
-                )
-                notification.is_sending = True
-                await notification.asave()
-
-            @receiver(post_save, sender=Notification)
-            def notification_created(sender, instance, created, **kwargs):
-                if created and instance.user == self.user:
-                    async_to_sync(self.channel_layer.group_send)(
-                        f"user_{self.user.id}",
-                        {
-                            "type": "send_notification",
-                            "message": json.dumps(
-                                {
-                                    "type": "send_notification",
-                                    "message": instance.message,
-                                    "notification_id": instance.id,
-                                }
-                            ),
-                        },
-                    )
-                    instance.is_sending = True
-                    instance.save()
 
     async def disconnect(self, close_code):
+        await self.channel_layer.group_discard(
+            f"user_{self.user.id}", self.channel_name
+        )
+        self.periodic_task.cancel()
+
+    async def check_notifications_periodically(self):
+        try:
+            while True:
+                await self.check_and_send_notifications()
+                await asyncio.sleep(5)
+        except asyncio.CancelledError:
+            pass
+
+    async def check_and_send_notifications(self):
+        notifications = await sync_to_async(list)(
+            Notification.objects.filter(
+                user=self.user, is_sending=False
+            )  # noqa
+        )
+        for notification in notifications:
+            await self.send(
+                text_data=json.dumps(
+                    {
+                        "type": "send_notification",
+                        "message": notification.message,
+                        "notification_id": notification.id,
+                    }
+                )
+            )
+            notification.is_sending = True
+            await notification.asave()
+
+    async def disconnect(self, close_code):  # noqa
         await self.channel_layer.group_discard(
             f"user_{self.user.id}", self.channel_name
         )
@@ -81,14 +82,7 @@ class NotificationConsumer(AsyncWebsocketConsumer):
                     int(data["notification_id"])
                 )
             except Exception as e:
-                print("=======")
-                print(e)
-                print("=======")
-            print(
-                f"Notification acknowledged {data['notification_id']} {self.user.id}"
-                f" {self.channel_name} {self.channel_layer}"
-            )
-            print(data)
+                logging.error(f"Error acknowledging notification: {e}")
 
     async def send_notification(self, event):
         message = event["message"]

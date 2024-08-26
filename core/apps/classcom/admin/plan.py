@@ -10,7 +10,7 @@ from core.apps.classcom.models import Plan
 class PlanAdmin(ImportExportModelAdmin):
     list_display = ("id", "full_name", "created_at")
     """
-    Cosutimize the plan model in admin panel interface
+    Customize the plan model in admin panel interface
     """
 
     resource_class = resources.PlanResource

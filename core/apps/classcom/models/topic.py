@@ -23,6 +23,16 @@ class Topic(AbstractBaseModel):
         "Media", related_name="topic", verbose_name=_("Media")
     )
 
+    # media_creatable = models.BooleanField(
+    #     default=False, verbose_name=_("Media yarata olishi.")
+    # )
+    # media_creatable_users = models.ManyToManyField(
+    #     "http.User",
+    #     blank=True,
+    #     related_name="media_creatable",
+    #     verbose_name=_("Media yarata olishi."),
+    # )
+
     def __str__(self):
         return f"{self.name}, {self.id}"
 

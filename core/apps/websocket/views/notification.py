@@ -9,7 +9,7 @@ class NotificationViewSet(ModelViewSet):
     queryset = Notification.objects.all()
     serializer_class = NotificationSerializer
     permission_classes = [IsAuthenticated]
-    http_method_names = ["get"]
+    http_method_names = ["get", "patch"]
 
     def get_queryset(self):
         return self.queryset.filter(user=self.request.user, is_read=False)

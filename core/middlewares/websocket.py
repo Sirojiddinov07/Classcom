@@ -1,3 +1,5 @@
+from urllib.parse import parse_qs
+
 import jwt
 from channels.auth import AuthMiddlewareStack
 from channels.db import database_sync_to_async
@@ -24,11 +26,11 @@ def get_user(token):
 
 class JWTAuthMiddleware(BaseMiddleware):
     async def __call__(self, scope, receive, send):
-        headers = dict(scope["headers"])
-        token = headers.get(b"authorization", None)
+        query_string = scope.get("query_string", b"").decode()
+        query_params = parse_qs(query_string)
+        token = query_params.get("token", [None])[0]
 
         if token:
-            token = token.decode().split(" ")[1]
             scope["user"] = await get_user(token)
         else:
             scope["user"] = AnonymousUser()
