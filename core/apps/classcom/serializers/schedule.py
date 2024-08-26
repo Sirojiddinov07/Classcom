@@ -9,7 +9,7 @@ from core.apps.classcom.serializers import (
     ClassTypeSerializer,
 )
 from core.apps.classcom.serializers.weks import WeeksSerializer
-from core.http.serializers import UserSerializer
+from core.http.serializers import UserSerializer, ClassGroupSerializer
 
 
 ############################################
@@ -28,6 +28,7 @@ class ScheduleSerializer(serializers.ModelSerializer):
             "start_time",
             "end_time",
             "lesson_time",
+            "class_group",
         )
 
 
@@ -39,6 +40,7 @@ class ScheduleListSerializer(serializers.ModelSerializer):
     science = ScienceSerializer()
     classes = ClassesSerializer()
     class_type = ClassTypeSerializer()
+    class_group = ClassGroupSerializer()
 
     class Meta:
         model = Schedule
@@ -53,6 +55,7 @@ class ScheduleListSerializer(serializers.ModelSerializer):
             "start_time",
             "end_time",
             "lesson_time",
+            "class_group",
         )
 
 

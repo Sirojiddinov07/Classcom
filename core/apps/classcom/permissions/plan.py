@@ -17,18 +17,27 @@ class PlanPermission(permissions.BasePermission):
 
     def has_permission(self, request, view):
         user = request.user
-        languages = request.data.get("language")
-        science = request.data.get("science")
-        science_type = request.data.get("science_types")
-        classes = request.data.get("classes")
-        class_groups = request.data.get("class_group")
-        quarters = request.data.get("quarter")
+        try:
+            # languages = int(request.data.get("language"))
+            # print(languages)
+            science = int(request.data.get("science"))
+            print(science)
+            science_type = int(request.data.get("science_types"))
+            print(science_type)
+            classes = int(request.data.get("classes"))
+            print(classes)
+            class_groups = int(request.data.get("class_group"))
+            print(class_groups)
+            quarters = int(request.data.get("quarter"))
+            print(quarters)
+        except (TypeError, ValueError):
+            raise ValidationError("Invalid data provided.")
 
         try:
             moderator = Moderator.objects.get(user=user)
             if (
                 not moderator.plan_creatable
-                and moderator.languages.filter(id=languages).exists()
+                # and moderator.languages.filter(id=languages).exists()
                 and moderator.science.filter(id=science).exists()
                 and moderator.science_type.filter(id=science_type).exists()
                 and moderator.classes.filter(id=classes).exists()

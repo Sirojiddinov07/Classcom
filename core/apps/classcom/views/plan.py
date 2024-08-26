@@ -13,11 +13,11 @@ class PlanApiView(APIView):
     permission_classes = [IsAuthenticated]
 
     def post(self, request, *args, **kwargs):
+        self.permission_classes.append(PlanPermission(["moderator"]))
         plan_serializer = PlanSerializer(
             data=request.data, context={"request": request}
         )
         plan_serializer.is_valid(raise_exception=True)
-        self.permission_classes.append(PlanPermission(["moderator"]))
         plan_serializer.save()
         return Response(plan_serializer.data, status=status.HTTP_201_CREATED)
 
