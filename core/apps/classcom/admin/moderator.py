@@ -51,6 +51,10 @@ class ModeratorAdmin(admin.ModelAdmin):
                 )
             },
         ),
+        (
+            _("topic Permissions"),
+            {"fields": ("topic_creatable",)},
+        ),
     )
 
     def full_name(self, obj):
