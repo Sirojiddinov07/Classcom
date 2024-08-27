@@ -32,7 +32,7 @@ class UnifiedSearchView(views.APIView):
         logger.debug(f"Received search query: {query}")
 
         if not query:
-            return Response({"resources": [], "plans": [], "schedules": []})
+            return Response({"resources": [], "topics": [], "schedules": []})
 
         cache_key = f"search_results_{query}"
         cached_results = cache.get(cache_key)
@@ -42,7 +42,7 @@ class UnifiedSearchView(views.APIView):
 
         query_words = query.split()
         resource_query = Q()
-        plan_query = Q()
+        topic_query = Q()
         schedule_query = Q()
 
         for word in query_words:
@@ -62,15 +62,8 @@ class UnifiedSearchView(views.APIView):
                 | Q(type__name_uz__icontains=word)
                 | Q(classes__name_uz__icontains=word)
             )
-            plan_query &= (
-                Q(name__icontains=word)
-                | Q(description__icontains=word)
-                | Q(user__first_name__icontains=word)
-                | Q(user__last_name__icontains=word)
-                | Q(name_ru__icontains=word)
-                | Q(description_ru__icontains=word)
-                | Q(name_uz__icontains=word)
-                | Q(description_uz__icontains=word)
+            topic_query &= Q(name__icontains=word) | Q(
+                description__icontains=word
             )
             schedule_query &= (
                 Q(science__name__icontains=word)
@@ -98,13 +91,13 @@ class UnifiedSearchView(views.APIView):
 
         logger.debug(f"Resource SQL Query: {resource_results.query}")
 
-        plan_results = (
-            models.Plan.objects.filter(plan_query)
+        topic_results = (
+            models.Topic.objects.filter(topic_query)
             .select_related("user")
-            .only("name", "description", "user__first_name", "user__last_name")
+            .only("name", "description")
         )
 
-        logger.debug(f"Plan SQL Query: {plan_results.query}")
+        logger.debug(f"Plan SQL Query: {topic_results.query}")
 
         schedule_results = (
             models.Schedule.objects.filter(schedule_query)
@@ -122,8 +115,8 @@ class UnifiedSearchView(views.APIView):
         resource_serializer = serializers.ResourceSerializer(
             resource_results, many=True, context={"request": request}
         )
-        plan_serializer = serializers.PlanSerializer(
-            plan_results, many=True, context={"request": request}
+        topic_serializer = serializers.TopicDetailSerializer(
+            topic_results, many=True, context={"request": request}
         )
         schedule_serializer = serializers.ScheduleListSerializer(
             schedule_results, many=True, context={"request": request}
@@ -131,7 +124,7 @@ class UnifiedSearchView(views.APIView):
 
         results = {
             "resources": resource_serializer.data,
-            "plans": plan_serializer.data,
+            "topics": topic_serializer.data,
             "schedules": schedule_serializer.data,
         }
 
