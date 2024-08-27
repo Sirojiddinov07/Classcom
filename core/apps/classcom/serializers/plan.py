@@ -7,7 +7,6 @@ from core.apps.classcom.serializers.quarter import QuarterMiniSerializer
 from core.apps.classcom.serializers.science import ScienceSerializer
 from core.apps.classcom.serializers.science import ScienceTypesSerializer
 from core.apps.classcom.serializers.topic import TopicDetailSerializer
-from core.apps.classcom.serializers.type import TypeSerializer
 from core.http.serializers import UserSerializer, ClassGroupSerializer
 
 
@@ -17,7 +16,6 @@ class PlanSerializer(serializers.ModelSerializer):
         fields = [
             "id",
             "language",
-            "type",
             "classes",
             "quarter",
             "science",
@@ -40,7 +38,6 @@ class PlanSerializer(serializers.ModelSerializer):
 
 
 class PlanDetailSerializer(serializers.ModelSerializer):
-    type = TypeSerializer()
     classes = ClassesSerializer()
     user = UserSerializer()
     quarter = QuarterMiniSerializer()
@@ -58,7 +55,6 @@ class PlanDetailSerializer(serializers.ModelSerializer):
             "is_author",
             "hour",
             "language",
-            "type",
             "user",
             "classes",
             "quarter",
@@ -80,7 +76,7 @@ class PlanDetailSerializer(serializers.ModelSerializer):
         data = super().to_representation(instance)
         request = self.context.get("request")
 
-        if request.user.is_authenticated:
+        if request and request.user.is_authenticated:
             data["is_author"] = instance.user == request.user
 
         return data

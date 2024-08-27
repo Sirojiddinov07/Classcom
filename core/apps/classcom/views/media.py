@@ -8,10 +8,12 @@ from core.apps.classcom.serializers.media import (
     MediaDetailSerializer,
     MediaSerializer,
 )
+from core.apps.classcom.views import CustomPagination
 
 
 class MediaApiView(APIView):
     permission_classes = [IsAuthenticated]
+    pagination_class = CustomPagination
 
     def get(self, request):
         media_id = request.query_params.get("id")
@@ -32,8 +34,10 @@ class MediaApiView(APIView):
             try:
                 topic = Topic.objects.get(id=topic_id)
                 media = topic.media.all()
-                serializer = MediaDetailSerializer(media, many=True)
-                return Response(serializer.data, status=status.HTTP_200_OK)
+                paginator = self.pagination_class()
+                paginated_media = paginator.paginate_queryset(media, request)
+                serializer = MediaDetailSerializer(paginated_media, many=True)
+                return paginator.get_paginated_response(serializer.data)
             except Topic.DoesNotExist:
                 return Response(
                     {"error": "Topic not found"},

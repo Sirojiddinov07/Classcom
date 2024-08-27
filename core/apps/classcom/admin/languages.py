@@ -8,6 +8,7 @@ class LanguageModelAdmin(admin.ModelAdmin):
     list_display = (
         "id",
         "language",
+        "name",
     )
     search_fields = ("language",)
-    fieldsets = ((None, {"fields": ("language",)}),)
+    fieldsets = ((None, {"fields": ("language", "name")}),)

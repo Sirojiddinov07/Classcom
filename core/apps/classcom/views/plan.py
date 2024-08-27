@@ -7,10 +7,12 @@ from rest_framework.views import APIView
 from core.apps.classcom.models import Plan, Moderator
 from core.apps.classcom.permissions import PlanPermission
 from core.apps.classcom.serializers import PlanSerializer, PlanDetailSerializer
+from core.apps.classcom.views import CustomPagination
 
 
 class PlanApiView(APIView):
     permission_classes = [IsAuthenticated]
+    pagination_class = CustomPagination
 
     def post(self, request, *args, **kwargs):
         # self.permission_classes.append(PlanPermission(["moderator"]))
@@ -26,15 +28,19 @@ class PlanApiView(APIView):
         plan_id = request.query_params.get("id", None)
 
         if Moderator.objects.filter(user=user).exists():
-            plans = Plan.objects.filter(user=user)
-        else:
             plans = Plan.objects.all()
+        else:
+            plans = Plan.objects.filter(
+                user=user
+            )  # TODO : Teacher bolsa sotvolgani kelsin
 
         if plan_id:
             plans = plans.filter(id=plan_id)
 
-        plan_serializer = PlanDetailSerializer(plans, many=True)
-        return Response(plan_serializer.data, status=status.HTTP_200_OK)
+        paginator = self.pagination_class()
+        paginated_plans = paginator.paginate_queryset(plans, request)
+        plan_serializer = PlanDetailSerializer(paginated_plans, many=True)
+        return paginator.get_paginated_response(plan_serializer.data)
 
     def patch(self, request, *args, **kwargs):
         plan_id = request.query_params.get("id", None)
