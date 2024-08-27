@@ -26,16 +26,29 @@ class PlanApiView(APIView):
     def get(self, request, *args, **kwargs):
         user = request.user
         plan_id = request.query_params.get("id", None)
+        classes = request.query_params.get("classes", None)
+        quarter = request.query_params.get("quarter", None)
+        science = request.query_params.get("science", None)
+        class_group = request.query_params.get("class_group", None)
+        science_types = request.query_params.get("science_types", None)
 
         if Moderator.objects.filter(user=user).exists():
             plans = Plan.objects.all()
         else:
-            plans = Plan.objects.filter(
-                user=user
-            )  # TODO : Teacher bolsa sotvolgani kelsin
+            plans = Plan.objects.filter(user=user)
 
         if plan_id:
             plans = plans.filter(id=plan_id)
+        if classes:
+            plans = plans.filter(classes=classes)
+        if quarter:
+            plans = plans.filter(quarter=quarter)
+        if science:
+            plans = plans.filter(science=science)
+        if class_group:
+            plans = plans.filter(class_group=class_group)
+        if science_types:
+            plans = plans.filter(science_types=science_types)
 
         paginator = self.pagination_class()
         paginated_plans = paginator.paginate_queryset(plans, request)
