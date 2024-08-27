@@ -13,7 +13,6 @@ class TopicSerializer(serializers.ModelSerializer):
             "description",
             "hours",
             "sequence_number",
-            "banner",
         ]
 
     def create(self, validated_data):
@@ -33,7 +32,6 @@ class TopicDetailSerializer(serializers.ModelSerializer):
             "hours",
             "sequence_number",
             "created_at",
-            "banner",
             "media_creatable",
             "media",
         ]

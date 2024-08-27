@@ -38,6 +38,9 @@ class Moderator(AbstractBaseModel):
     resource_creatable = models.BooleanField(
         default=False, verbose_name=_("Resurs yarata olishi.")
     )
+    topic_creatable = models.BooleanField(
+        default=False, verbose_name=_("Mavzu yarata olishi.")
+    )
     resource_type = models.ManyToManyField(
         "ResourceType",
         blank=True,

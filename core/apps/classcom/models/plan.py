@@ -53,3 +53,10 @@ class Plan(AbstractBaseModel):
     class Meta:
         verbose_name = _("Tematik reja")
         verbose_name_plural = _("Tematik rejalar")
+        unique_together = (
+            "classes",
+            "quarter",
+            "science",
+            "class_group",
+            "science_types",
+        )
