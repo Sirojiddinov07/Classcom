@@ -4,7 +4,11 @@ from rest_framework import routers
 from core.apps.classcom import views
 from core.apps.classcom.views import UnifiedSearchView, WeeksByQuarterView
 from core.apps.websocket.views import NotificationViewSet
-from core.http.views import SchoolTypeViewSet, FilteredSchoolGroupViewSet
+from core.http.views import (
+    SchoolTypeViewSet,
+    FilteredSchoolGroupViewSet,
+    ModeratorClassGroupApiView,
+)
 
 router = routers.DefaultRouter()
 router.register("feedback", views.FeedbackCreateViewSet, basename="feedback")
@@ -87,4 +91,42 @@ urlpatterns = [
     path("plan/", views.PlanApiView.as_view(), name="plan"),
     path("topic/", views.TopicApiView.as_view(), name="topic"),
     path("media/", views.MediaApiView.as_view(), name="media"),
+    ############################################################################################################
+    # Permission bor bo'lgan foydalanuvchilar uchun
+    ############################################################################################################
+    path(
+        "moderator/resource-types/",
+        views.ModeratorResourceTypesAPIView.as_view(),
+        name="moderator",
+    ),
+    path(
+        "moderator/science/",
+        views.ModeratorScienceApiView.as_view(),
+        name="moderator-science",
+    ),
+    path(
+        "moderator/science-type/",
+        views.ModeratorScienceTypeApiView.as_view(),
+        name="science-type",
+    ),
+    path(
+        "moderator/classes/",
+        views.ModeratorClassesApiView.as_view(),
+        name="moderator-classes",
+    ),
+    path(
+        "moderator/class-groups/",
+        ModeratorClassGroupApiView.as_view(),
+        name="moderator-class-groups",
+    ),
+    path(
+        "moderator/quarters/",
+        views.ModeratorQuarterApiView.as_view(),
+        name="moderator-quarters",
+    ),
+    path(
+        "moderator/languages/",
+        views.ModeratorLanguageAPIView.as_view(),
+        name="moderator-languages",
+    ),
 ]
