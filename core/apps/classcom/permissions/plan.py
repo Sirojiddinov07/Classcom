@@ -18,7 +18,7 @@ class PlanPermission(permissions.BasePermission):
     def has_permission(self, request, view):
         user = request.user
         try:
-            # languages = int(request.data.get("language")) # TODO: LANGUAGE CHECK ADD
+            language = request.data.get("language")
             science = int(request.data.get("science"))
             science_type = int(request.data.get("science_types"))
             classes = int(request.data.get("classes"))
@@ -31,7 +31,7 @@ class PlanPermission(permissions.BasePermission):
             moderator = Moderator.objects.get(user=user)
             if (
                 not moderator.plan_creatable
-                # or not moderator.languages.filter(id=languages).exists()
+                or not moderator.languages.filter(language=language).exists()
                 or not moderator.science.filter(id=science).exists()
                 or not moderator.science_type.filter(id=science_type).exists()
                 or not moderator.classes.filter(id=classes).exists()

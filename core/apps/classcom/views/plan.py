@@ -13,7 +13,7 @@ class PlanApiView(APIView):
     permission_classes = [IsAuthenticated]
 
     def post(self, request, *args, **kwargs):
-        self.permission_classes.append(PlanPermission(["moderator"]))
+        # self.permission_classes.append(PlanPermission(["moderator"]))
         plan_serializer = PlanSerializer(
             data=request.data, context={"request": request}
         )
