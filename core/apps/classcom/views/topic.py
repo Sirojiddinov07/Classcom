@@ -8,10 +8,12 @@ from core.apps.classcom.serializers.topic import (
     TopicSerializer,
     TopicDetailSerializer,
 )
+from core.apps.classcom.views import CustomPagination
 
 
 class TopicApiView(APIView):
     permission_classes = [IsAuthenticated]
+    pagination_class = CustomPagination
 
     def get(self, request):
         plan_id = request.query_params.get("plan_id")
@@ -32,8 +34,10 @@ class TopicApiView(APIView):
             try:
                 plan = Plan.objects.get(id=plan_id, user=request.user)
                 topics = plan.topic.all()
-                serializer = TopicDetailSerializer(topics, many=True)
-                return Response(serializer.data, status=status.HTTP_200_OK)
+                paginator = self.pagination_class()
+                paginated_topics = paginator.paginate_queryset(topics, request)
+                serializer = TopicDetailSerializer(paginated_topics, many=True)
+                return paginator.get_paginated_response(serializer.data)
             except Plan.DoesNotExist:
                 return Response(
                     {"error": "Plan not found"},

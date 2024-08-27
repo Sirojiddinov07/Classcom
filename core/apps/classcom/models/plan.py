@@ -8,13 +8,6 @@ from core.http.models.school_group import ClassGroup
 
 
 class Plan(AbstractBaseModel):
-    type = models.ForeignKey(
-        "ResourceType",
-        on_delete=models.CASCADE,
-        null=True,
-        blank=True,
-        verbose_name=_("Resurs turi"),
-    )
     is_active = models.BooleanField(default=True, verbose_name=_("Faol"))
     hour = models.IntegerField(
         default=0, null=True, blank=True, verbose_name=_("Soat")
