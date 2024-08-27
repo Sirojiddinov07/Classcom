@@ -16,6 +16,8 @@ class LanguageModel(models.Model):
     name = models.CharField(
         max_length=255,
         verbose_name=_("Nomi"),
+        blank=True,
+        null=True,
     )
 
     def __str__(self):
@@ -23,11 +25,9 @@ class LanguageModel(models.Model):
 
     def save(self, *args, **kwargs):
         if self.language == Language.uz:
-            self.name = "O'zbek tili"
             self.name_ru = "Узбекский язык"
             self.name_uz = "O'zbek tili"
         elif self.language == Language.ru:
-            self.name = "Rus tili"
             self.name_ru = "Русский язык"
             self.name_uz = "Rus tili"
         super().save(*args, **kwargs)

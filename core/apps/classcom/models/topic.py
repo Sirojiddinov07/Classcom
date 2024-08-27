@@ -13,12 +13,6 @@ class Topic(AbstractBaseModel):
         default=1, verbose_name=_("Tartib raqami")
     )
     hours = models.PositiveIntegerField(default=0, verbose_name=_("Soatlar"))
-    banner = models.ImageField(
-        upload_to="topic/banner/",
-        blank=True,
-        null=True,
-        verbose_name=_("Banner"),
-    )
     media = models.ManyToManyField(
         "Media", related_name="topic", verbose_name=_("Media")
     )

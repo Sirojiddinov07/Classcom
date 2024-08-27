@@ -23,3 +23,4 @@ class TopicAdmin(ImportExportModelAdmin, TabbedTranslationAdmin):
         "name",
         "description",
     )
+    filter_horizontal = ("media",)

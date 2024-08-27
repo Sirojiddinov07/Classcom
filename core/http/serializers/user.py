@@ -12,6 +12,7 @@ class UserSerializer(serializers.ModelSerializer):
     school_type = SchoolTypeSerializer()
     resource_creatable = serializers.SerializerMethodField(read_only=True)
     plan_creatable = serializers.SerializerMethodField(read_only=True)
+    topic_creatable = serializers.SerializerMethodField(read_only=True)
 
     class Meta:
         fields = [
@@ -30,6 +31,7 @@ class UserSerializer(serializers.ModelSerializer):
             "class_group",
             "resource_creatable",
             "plan_creatable",
+            "topic_creatable",
         ]
         extra_kwargs = {
             "role": {"read_only": True},
@@ -60,6 +62,15 @@ class UserSerializer(serializers.ModelSerializer):
             try:
                 moderator = Moderator.objects.get(user=obj)
                 return moderator.plan_creatable
+            except Moderator.DoesNotExist:
+                return False
+        return False
+
+    def get_topic_creatable(self, obj):
+        if self.is_moderator(obj):
+            try:
+                moderator = Moderator.objects.get(user=obj)
+                return moderator.topic_creatable
             except Moderator.DoesNotExist:
                 return False
         return False

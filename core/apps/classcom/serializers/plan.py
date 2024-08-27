@@ -23,6 +23,13 @@ class PlanSerializer(serializers.ModelSerializer):
             "science_types",
         ]
         extra_kwargs = {"id": {"read_only": True}}
+        unique_together = (
+            "classes",
+            "quarter",
+            "science",
+            "class_group",
+            "science_types",
+        )
 
     def create(self, validated_data):
         user = self.context["request"].user
