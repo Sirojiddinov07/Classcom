@@ -91,10 +91,8 @@ class UnifiedSearchView(views.APIView):
 
         logger.debug(f"Resource SQL Query: {resource_results.query}")
 
-        topic_results = (
-            models.Topic.objects.filter(topic_query)
-            .select_related("user")
-            .only("name", "description")
+        topic_results = models.Topic.objects.filter(topic_query).only(
+            "name", "description"
         )
 
         logger.debug(f"Plan SQL Query: {topic_results.query}")
