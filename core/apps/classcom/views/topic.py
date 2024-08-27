@@ -3,7 +3,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from core.apps.classcom.models import Topic, Plan
+from core.apps.classcom.models import Topic, Plan, Moderator
 from core.apps.classcom.serializers.topic import (
     TopicSerializer,
     TopicDetailSerializer,
@@ -32,7 +32,7 @@ class TopicApiView(APIView):
 
         if plan_id:
             try:
-                plan = Plan.objects.get(id=plan_id, user=request.user)
+                plan = Plan.objects.get(id=plan_id)
                 topics = plan.topic.all()
                 paginator = self.pagination_class()
                 paginated_topics = paginator.paginate_queryset(topics, request)
@@ -50,6 +50,7 @@ class TopicApiView(APIView):
         )
 
     def post(self, request):
+        user = request.user
         plan_id = request.query_params.get("plan_id")
         if not plan_id:
             return Response(
@@ -58,10 +59,23 @@ class TopicApiView(APIView):
             )
 
         try:
-            plan = Plan.objects.get(id=plan_id, user=request.user)
+            plan = Plan.objects.get(id=plan_id)
         except Plan.DoesNotExist:
             return Response(
                 {"error": "Plan not found"}, status=status.HTTP_404_NOT_FOUND
+            )
+
+        try:
+            moderator = Moderator.objects.get(user=user)
+        except Moderator.DoesNotExist:
+            return Response(
+                {"error": "You are not a moderator"},
+                status=status.HTTP_403_FORBIDDEN,
+            )
+        if not moderator.topic_creatable:
+            return Response(
+                {"error": "You are not allowed to create topic"},
+                status=status.HTTP_403_FORBIDDEN,
             )
 
         serializer = TopicSerializer(data=request.data, many=True)
