@@ -1,51 +1,39 @@
-const BASE_URL = 'http://' + window.location.hostname + ':8081';
+async function createMedia(topicId, mediaItems) {
+    if (!topicId) {
+        throw new Error("topic_id is required");
+    }
 
-document.getElementById('mediaForm')?.addEventListener('submit', function (event) {
-    event.preventDefault();
-
-    const mediaInputs = document.querySelectorAll('.mediaInput');
-    const mediaData = [];
-
-    mediaInputs.forEach(input => {
-        const fileDesc = input.querySelector('input[name="desc"]')?.value;
-        const mediaFile = input.querySelector('input[name="file"]')?.files[0];
-
-        if (fileDesc) {
-            mediaData.push({
-                file: mediaFile ? mediaFile.name : "",  // Use file name or empty string
-                desc: fileDesc
-            });
+    const response = await fetch(`/api/topics/${topicId}`);
+    if (!response.ok) {
+        if (response.status === 404) {
+            throw new Error("Topic not found");
         }
+        throw new Error("Failed to fetch topic");
+    }
+
+    const topic = await response.json();
+    if (!topic.media_creatable) {
+        throw new Error("Media creation is not allowed for this topic");
+    }
+
+    const formData = new FormData();
+    mediaItems.forEach((item, index) => {
+        if (!item.file) {
+            throw new Error(`File is required for media item ${index}`);
+        }
+        formData.append(`file[${index}]`, item.file);
+        formData.append(`desc[${index}]`, item.desc || item.file.name);
     });
 
-    const requestData = {
-        media: mediaData
-    };
-
-    fetch(BASE_URL + `/media/?topic_id=21`, {
+    const mediaResponse = await fetch(`/api/media`, {
         method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(requestData)  // Send requestData as JSON
-    })
-        .then(response => {
-            if (response.ok) {
-                return response.json();
-            } else {
-                return response.json().then(data => {
-                    throw new Error(data.detail || 'Unknown error');
-                });
-            }
-        })
-        .then(data => {
-            document.getElementById('response').innerText = JSON.stringify(data, null, 2);
-        })
-        .catch(error => {
-            if (error.name === 'TypeError') {
-                document.getElementById('response').innerText = 'Network error: ' + error.message;
-            } else {
-                document.getElementById('response').innerText = 'Error: ' + error.message;
-            }
-        });
-});
+        body: formData,
+    });
+
+    if (!mediaResponse.ok) {
+        const errorData = await mediaResponse.json();
+        throw new Error(errorData.error || "Failed to create media");
+    }
+
+    return await mediaResponse.json();
+}

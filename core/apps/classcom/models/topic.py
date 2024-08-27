@@ -22,6 +22,9 @@ class Topic(AbstractBaseModel):
     media = models.ManyToManyField(
         "Media", related_name="topic", verbose_name=_("Media")
     )
+    media_creatable = models.BooleanField(
+        default=False, verbose_name=_("Media yarata olishi.")
+    )
 
     # media_creatable = models.BooleanField(
     #     default=False, verbose_name=_("Media yarata olishi.")

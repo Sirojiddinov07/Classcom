@@ -27,7 +27,7 @@ class ModeratorQuarterApiView(APIView):
         if user.role == Role.MODERATOR:
             moderator = Moderator.objects.filter(user=user).first()
             if moderator:
-                quarters = moderator.quarter.all()
+                quarters = moderator.quarters.all()
                 serializer = QuarterMiniSerializer(quarters, many=True)
                 return Response(serializer.data)
             else:

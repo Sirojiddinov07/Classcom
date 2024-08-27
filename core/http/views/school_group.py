@@ -34,7 +34,7 @@ class ModeratorClassGroupApiView(APIView):
         if user.role == Role.MODERATOR:
             moderator = Moderator.objects.filter(user=user).first()
             if moderator:
-                class_group = moderator.class_group.all()
+                class_group = moderator.class_groups.all()
                 serializer = ClassGroupSerializer(class_group, many=True)
                 return Response(serializer.data)
             else:

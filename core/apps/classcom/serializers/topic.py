@@ -34,6 +34,7 @@ class TopicDetailSerializer(serializers.ModelSerializer):
             "sequence_number",
             "created_at",
             "banner",
+            "media_creatable",
             "media",
         ]
         extra_kwargs = {"media": {"required": False}}

@@ -59,6 +59,11 @@ class MediaApiView(APIView):
             return Response(
                 {"error": "Topic not found"}, status=status.HTTP_404_NOT_FOUND
             )
+        if topic.media_creatable is False:
+            return Response(
+                {"error": "Media creation is not allowed for this topic"},
+                status=status.HTTP_403_FORBIDDEN,
+            )
 
         media_data = []
         for key in request.data:
