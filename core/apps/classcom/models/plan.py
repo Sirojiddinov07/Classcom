@@ -51,10 +51,14 @@ class Plan(AbstractBaseModel):
         return self.user.first_name if self.user.first_name else "Plan"
 
     def save(self, *args, **kwargs):
+        if not self.pk:
+            super().save(*args, **kwargs)
+
         self.hour = (
             self.topic.aggregate(models.Sum("hours"))["hours__sum"] or 0
         )
-        super().save(*args, **kwargs)
+
+        super().save(update_fields=["hour"])
 
     class Meta:
         verbose_name = _("Tematik reja")
