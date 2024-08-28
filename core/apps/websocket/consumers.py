@@ -69,11 +69,6 @@ class NotificationConsumer(AsyncWebsocketConsumer):
             notification.is_sending = True
             await notification.asave()
 
-    async def disconnect(self, close_code):  # noqa
-        await self.channel_layer.group_discard(
-            f"user_{self.user.id}", self.channel_name
-        )
-
     async def receive(self, text_data):
         data = json.loads(text_data)
         if data.get("type") == "acknowledge_notification":
