@@ -14,15 +14,12 @@ class Topic(AbstractBaseModel):
     )
     hours = models.PositiveIntegerField(default=0, verbose_name=_("Soatlar"))
     media = models.ManyToManyField(
-        "Media", related_name="topic", verbose_name=_("Media")
+        "Media", related_name="topic", verbose_name=_("Media"), blank=True
     )
     media_creatable = models.BooleanField(
         default=False, verbose_name=_("Media yarata olishi.")
     )
 
-    # media_creatable = models.BooleanField(
-    #     default=False, verbose_name=_("Media yarata olishi.")
-    # )
     # media_creatable_users = models.ManyToManyField(
     #     "http.User",
     #     blank=True,

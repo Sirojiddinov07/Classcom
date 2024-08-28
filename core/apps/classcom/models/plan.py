@@ -50,6 +50,12 @@ class Plan(AbstractBaseModel):
     def __str__(self):
         return self.user.first_name if self.user.first_name else "Plan"
 
+    def save(self, *args, **kwargs):
+        self.hour = (
+            self.topic.aggregate(models.Sum("hours"))["hours__sum"] or 0
+        )
+        super().save(*args, **kwargs)
+
     class Meta:
         verbose_name = _("Tematik reja")
         verbose_name_plural = _("Tematik rejalar")

@@ -12,6 +12,7 @@ from core.apps.classcom.models import (
     Download,
     DownloadToken,
     Teacher,
+    Topic,
 )
 from core.apps.classcom.models import Media, Plan, Moderator
 from core.apps.classcom.views import CustomPagination
@@ -29,7 +30,8 @@ class DownloadMediaView(APIView):
             else None
         )
 
-        plan = Plan.objects.filter(plan_resource=media).first()
+        # Assuming the correct field name is `media_files` in the `Plan` model
+        plan = Plan.objects.filter(topic__media=media).first()
         moderator = (
             get_object_or_404(Moderator, user=plan.user) if plan else None
         )
@@ -139,8 +141,19 @@ def moderator_media_list(request):
         return Response({"detail": "User is not a moderator"}, status=403)
 
     moderator = Moderator.objects.get(user=request.user)
+    print(f"moderator: {moderator}")
+
+    # Retrieve all plans associated with the moderator's user
     plans = Plan.objects.filter(user=moderator.user)
-    media_files = Media.objects.filter(plan__in=plans).distinct()
+    print(f"plans: {plans}")
+
+    # Retrieve all topics associated with these plans
+    topics = Topic.objects.filter(plans__in=plans).distinct()
+    print(f"topics: {topics}")
+
+    # Retrieve all media files associated with these topics
+    media_files = Media.objects.filter(topic__in=topics).distinct()
+    print(f"media_files: {media_files}")
 
     paginator = CustomPagination()
     paginated_media = paginator.paginate_queryset(media_files, request)
@@ -149,7 +162,7 @@ def moderator_media_list(request):
         {
             "id": media.id,
             "name": media.name,
-            "file_type": media.file_type,
+            "file_type": media.type,
             "desc": media.desc,
             "size": media.size,
             "count": media.count,

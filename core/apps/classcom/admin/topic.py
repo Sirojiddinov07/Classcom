@@ -3,6 +3,7 @@ from import_export.admin import ImportExportModelAdmin
 from modeltranslation.admin import TabbedTranslationAdmin
 
 from core.apps.classcom.models import Topic
+from core.apps.classcom.resources import TopicResource
 
 
 @admin.register(Topic)
@@ -13,6 +14,7 @@ class TopicAdmin(ImportExportModelAdmin, TabbedTranslationAdmin):
         ImportExportModelAdmin (_type_): _description_
     """
 
+    resource_class = TopicResource
     list_display = (
         "id",
         "name",
