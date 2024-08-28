@@ -30,6 +30,13 @@ class Topic(AbstractBaseModel):
     def __str__(self):
         return f"{self.name}, {self.id}"
 
+    def save(self, *args, **kwargs):
+        if self.name_uz is None:
+            self.name_uz = self.name_ru
+        elif self.name_ru is None:
+            self.name_ru = self.name_uz
+        super().save(*args, **kwargs)
+
     class Meta:
         verbose_name = _("Mavzu")
         verbose_name_plural = _("Mavzular")
