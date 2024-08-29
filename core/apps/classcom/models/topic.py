@@ -19,6 +19,9 @@ class Topic(AbstractBaseModel):
     media_creatable = models.BooleanField(
         default=False, verbose_name=_("Media yarata olishi.")
     )
+    weeks = models.PositiveIntegerField(
+        default=1, verbose_name=_("Haftalar"), blank=True, null=True
+    )
 
     # media_creatable_users = models.ManyToManyField(
     #     "http.User",
