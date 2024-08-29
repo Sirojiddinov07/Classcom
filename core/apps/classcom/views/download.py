@@ -8,6 +8,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+from core.apps.classcom.choices import Role
 from core.apps.classcom.models import (
     Download,
     DownloadToken,
@@ -22,10 +23,11 @@ class DownloadMediaView(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request, media_id, format=None):
+        user = request.user
         media = get_object_or_404(Media, id=media_id)
         teacher = (
-            get_object_or_404(Teacher, user=request.user)
-            if Teacher.objects.filter(user=request.user).exists()
+            get_object_or_404(Teacher, user=user)
+            if Teacher.objects.filter(user=user).exists()
             else None
         )
 
@@ -42,13 +44,13 @@ class DownloadMediaView(APIView):
             moderator=moderator,
         )
 
-        if not Moderator.objects.filter(user=request.user).exists():
-            if not download.media.download_users.filter(
-                id=request.user.id
-            ).exists():
-                download.media.download_users.add(request.user)
+        if not user.role == Role.MODERATOR:
+            if not download.media.download_users.filter(id=user.id).exists():
+                download.media.download_users.add(user)
                 download.media.count += 1
                 download.media.save()
+        elif user.role == Role.MODERATOR and media.user != user:
+            raise Http404("You can't download this file")
 
         science = plan.science if plan else None
         users_count = (
