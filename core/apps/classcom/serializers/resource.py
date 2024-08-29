@@ -143,7 +143,10 @@ class ResourceCreateSerializer(serializers.ModelSerializer):
         resource = models.Resource.objects.create(user=user, **validated_data)
 
         resource.media.create(
-            file=media_file, name=media_file.name, size=media_file.size
+            file=media_file,
+            name=media_file.name,
+            size=media_file.size,
+            user=user,
         )
 
         return resource

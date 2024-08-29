@@ -12,7 +12,6 @@ from core.apps.classcom.models import (
     Download,
     DownloadToken,
     Teacher,
-    Topic,
 )
 from core.apps.classcom.models import Media, Plan, Moderator
 from core.apps.classcom.views import CustomPagination
@@ -141,19 +140,8 @@ def moderator_media_list(request):
         return Response({"detail": "User is not a moderator"}, status=403)
 
     moderator = Moderator.objects.get(user=request.user)
-    print(f"moderator: {moderator}")
 
-    # Retrieve all plans associated with the moderator's user
-    plans = Plan.objects.filter(user=moderator.user)
-    print(f"plans: {plans}")
-
-    # Retrieve all topics associated with these plans
-    topics = Topic.objects.filter(plans__in=plans).distinct()
-    print(f"topics: {topics}")
-
-    # Retrieve all media files associated with these topics
-    media_files = Media.objects.filter(topic__in=topics).distinct()
-    print(f"media_files: {media_files}")
+    media_files = Media.objects.filter(user=moderator.user).distinct()
 
     paginator = CustomPagination()
     paginated_media = paginator.paginate_queryset(media_files, request)

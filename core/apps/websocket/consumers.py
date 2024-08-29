@@ -9,7 +9,7 @@ from core.apps.websocket.models.notification import Notification
 
 
 class NotificationConsumer(AsyncWebsocketConsumer):
-    async def acknowledge_notification(self, notification_id: int):
+    async def acknowledge_notification(self, notification_id: int) -> None:
         logging.debug(
             f"Attempting to acknowledge notification {notification_id} for user {self.user.id}"
         )
