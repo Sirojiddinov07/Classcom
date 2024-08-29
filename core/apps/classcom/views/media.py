@@ -85,7 +85,9 @@ class MediaApiView(APIView):
                     media_desc = media_file.name
                 media_data.append({"file": media_file, "desc": media_desc})
 
-        serializer = MediaSerializer(data=media_data, many=True)
+        serializer = MediaSerializer(
+            data=media_data, many=True, context={"request": request}
+        )
         if serializer.is_valid():
             serializer.save()
             topic.media.add(*serializer.instance)

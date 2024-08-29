@@ -26,6 +26,14 @@ class Media(AbstractBaseModel):
     statistics = models.CharField(
         max_length=255, blank=True, null=True, verbose_name=_("Statistika")
     )
+    user = models.ForeignKey(
+        "http.User",
+        on_delete=models.CASCADE,
+        related_name="media",
+        verbose_name=_("Foydalanuvchi"),
+        null=True,
+        blank=True,
+    )
 
     def __str__(self) -> str:
         return str(self.name) if self.name is not None else f"Media {self.id}"
