@@ -23,6 +23,7 @@ class ModeratorAdmin(admin.ModelAdmin):
         "class_groups",
         "quarters",
     )
+    ordering = ("-updated_at",)
     fieldsets = (
         (
             None,

@@ -8,7 +8,16 @@ from core.apps.classcom.models import Plan
 
 @admin.register(Plan)
 class PlanAdmin(ImportExportModelAdmin):
-    list_display = ("id", "full_name", "created_at")
+    list_display = (
+        "id",
+        "full_name",
+        "classes",
+        "science",
+        "class_group",
+        "science_types",
+        "quarter",
+        "created_at",
+    )
     """
     Customize the plan model in admin panel interface
     """
@@ -26,3 +35,28 @@ class PlanAdmin(ImportExportModelAdmin):
         return f"{obj.user.first_name} {obj.user.last_name}"
 
     full_name.short_description = _("Ism Familiya")
+
+    def classes(self, obj):
+        return f"{obj.classes.name}"
+
+    classes.short_description = _("Sinflar")
+
+    def science(self, obj):
+        return f"{obj.science.name}"
+
+    science.short_description = _("Fan")
+
+    def class_group(self, obj):
+        return f"{obj.class_group.name}"
+
+    class_group.short_description = _("Sinflar turi")
+
+    def science_types(self, obj):
+        return f"{obj.science_types.name}"
+
+    science_types.short_description = _("Fan turi")
+
+    def quarter(self, obj):
+        return f"{obj.quarter.name}"
+
+    quarter.short_description = _("Chorak")
