@@ -39,7 +39,7 @@ class PlanApiView(APIView):
                 quarter__in=moderator.quarters.all(),
                 science__in=moderator.science.all(),
                 class_group__in=moderator.class_groups.all(),
-                science_type__in=moderator.science_types.all(),
+                science_type__in=moderator.science_type.all(),
             )
         else:
             plans = Plan.objects.filter(user=user)
