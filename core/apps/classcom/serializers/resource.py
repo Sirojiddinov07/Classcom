@@ -100,7 +100,9 @@ class ResourceDetailSerializer(ResourceSerializer):
 
 
 class ResourceCreateSerializer(serializers.ModelSerializer):
-    media_file = serializers.FileField(write_only=True)
+    media_files = serializers.ListField(
+        child=serializers.FileField(), write_only=True
+    )
     _media = serializers.SerializerMethodField(read_only=True)
 
     def get__media(self, obj):
@@ -124,7 +126,7 @@ class ResourceCreateSerializer(serializers.ModelSerializer):
             "source",
             "degree",
             "classes",
-            "media_file",
+            "media_files",
             "_media",
         )
         extra_kwargs = {"type": {"required": True}}
@@ -138,15 +140,16 @@ class ResourceCreateSerializer(serializers.ModelSerializer):
         except Moderator.DoesNotExist:
             raise APIException("User is not a moderator.")
 
-        media_file = validated_data.pop("media_file")
+        media_files = validated_data.pop("media_files")
         validated_data.pop("user", None)
         resource = models.Resource.objects.create(user=user, **validated_data)
 
-        resource.media.create(
-            file=media_file,
-            name=media_file.name,
-            size=media_file.size,
-            user=user,
-        )
+        for media_file in media_files:
+            resource.media.create(
+                file=media_file,
+                name=media_file.name,
+                size=media_file.size,
+                user=user,
+            )
 
         return resource

@@ -31,7 +31,7 @@ class Topic(AbstractBaseModel):
     # )
 
     def __str__(self):
-        return f"{self.name}, {self.id}"
+        return f"{self.name}, {self.sequence_number}"
 
     def save(self, *args, **kwargs):
         if self.name_uz is None:
