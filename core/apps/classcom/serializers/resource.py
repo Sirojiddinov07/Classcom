@@ -23,7 +23,7 @@ class ClassesSerializer(serializers.ModelSerializer):
 
 class ResourceSerializer(serializers.ModelSerializer):
     user = http_serializers.UserSerializer()
-    media = media.MediaSerializer(many=True, read_only=True)
+    media = media.MediaDetailSerializer(many=True, read_only=True)
     type = ResourceTypeMiniSerializer(read_only=True)
     classes = ClassesSerializer(read_only=True)
     subtype = serializers.SerializerMethodField()
@@ -104,7 +104,7 @@ class ResourceCreateSerializer(serializers.ModelSerializer):
     _media = serializers.SerializerMethodField(read_only=True)
 
     def get__media(self, obj):
-        return media.MediaSerializer(obj.media.first()).data
+        return media.MediaDetailSerializer(obj.media.first()).data
 
     def to_representation(self, instance):
         data = super().to_representation(instance)
