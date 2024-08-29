@@ -33,7 +33,14 @@ class PlanApiView(APIView):
         science_types = request.query_params.get("science_types", None)
 
         if Moderator.objects.filter(user=user).exists():
-            plans = Plan.objects.all()
+            moderator = Moderator.objects.get(user=user)
+            plans = Plan.objects.filter(
+                classes__in=moderator.classes.all(),
+                quarter__in=moderator.quarters.all(),
+                science__in=moderator.science.all(),
+                class_group__in=moderator.class_groups.all(),
+                science_type__in=moderator.science_types.all(),
+            )
         else:
             plans = Plan.objects.filter(user=user)
 
