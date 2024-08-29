@@ -3,6 +3,7 @@ from datetime import datetime
 from rest_framework import serializers
 
 from core.apps.classcom.models import Media
+from core.http.serializers import UserSerializer
 
 
 class MediaSerializer(serializers.ModelSerializer):
@@ -26,6 +27,8 @@ class MediaSerializer(serializers.ModelSerializer):
 
 
 class MediaDetailSerializer(serializers.ModelSerializer):
+    user = UserSerializer()
+
     class Meta:
         model = Media
         fields = (
@@ -37,4 +40,5 @@ class MediaDetailSerializer(serializers.ModelSerializer):
             "count",
             "statistics",
             "created_at",
+            "user",
         )
