@@ -1,7 +1,7 @@
 from rest_framework import serializers
 
 from ..choices import Types, Departments, Schools, Docs
-from ..models import ResourceType, Classes
+from ..models import ResourceType, Classes, Science
 
 
 class ResourceTypeSerializer(serializers.ModelSerializer):
@@ -26,6 +26,8 @@ class ResourceTypeSerializer(serializers.ModelSerializer):
                 ]
             case Types.BYDOCS:
                 response = [{"id": i.name, "name": str(i.label)} for i in Docs]
+            case Types.BYSCIENCE:
+                response = Science.objects.all().values("id", "name")
         return response
 
     class Meta:

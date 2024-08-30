@@ -6,6 +6,7 @@ from core.apps.classcom.models import Moderator
 from core.apps.classcom.serializers import (
     CategorySerializer,
     CategoryTypeSerializer,
+    ScienceSerializer,
 )
 from core.apps.classcom.serializers import media
 from core.apps.classcom.serializers.resource_type import (
@@ -29,6 +30,7 @@ class ResourceSerializer(serializers.ModelSerializer):
     subtype = serializers.SerializerMethodField()
     category = CategorySerializer()
     category_type = CategoryTypeSerializer()
+    science = ScienceSerializer(read_only=True)
 
     def get_subtype(self, obj):
         try:
@@ -46,6 +48,10 @@ class ResourceSerializer(serializers.ModelSerializer):
                 case Types.BYDOCS:
                     data = Docs(obj.subtype)
                     return {"id": data.name, "name": data.label}
+                case Types.BYSCIENCE:
+                    return ScienceSerializer(
+                        models.Science.objects.get(id=obj.subtype)
+                    ).data
                 case _:
                     return None
         except Exception as e:
@@ -77,6 +83,7 @@ class ResourceSerializer(serializers.ModelSerializer):
             "name",
             "category",
             "classes",
+            "science",
             "media",
             "type",
             "subtype",
@@ -126,6 +133,7 @@ class ResourceCreateSerializer(serializers.ModelSerializer):
             "source",
             "degree",
             "classes",
+            "science",
             "media_files",
             "_media",
         )
