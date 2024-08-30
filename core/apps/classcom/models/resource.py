@@ -64,6 +64,13 @@ class Resource(AbstractBaseModel):
     order_number = models.PositiveIntegerField(
         verbose_name=_("Tartib raqami"), blank=True, null=True
     )
+    science = models.ForeignKey(
+        "Science",
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True,
+        verbose_name=_("Fan"),
+    )
 
     def __str__(self):
         return str(self.name) or "Unnamed Resource"
