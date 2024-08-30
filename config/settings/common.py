@@ -13,6 +13,9 @@ DEBUG = env.str("DEBUG")
 
 ALLOWED_HOSTS = ["*"]
 
+DATA_UPLOAD_MAX_MEMORY_SIZE = 734003200  # 700 MB
+FILE_UPLOAD_MAX_MEMORY_SIZE = 734003200  # 700 MB
+
 INSTALLED_APPS = [
     "daphne",
     # Design admin panel

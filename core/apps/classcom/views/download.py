@@ -31,11 +31,15 @@ class DownloadMediaView(APIView):
             else None
         )
 
-        # Assuming the correct field name is `media_files` in the `Plan` model
+        # Check if media has an associated topic
         plan = Plan.objects.filter(topic__media=media).first()
         moderator = (
             get_object_or_404(Moderator, user=plan.user) if plan else None
         )
+
+        # If media has a topic, only the owner can download
+        if plan and media.user != user:
+            raise Http404("You can't download this file")
 
         download = Download.objects.create(
             teacher=teacher,
@@ -49,8 +53,6 @@ class DownloadMediaView(APIView):
                 download.media.download_users.add(user)
                 download.media.count += 1
                 download.media.save()
-        elif user.role == Role.MODERATOR and media.user != user:
-            raise Http404("You can't download this file")
 
         science = plan.science if plan else None
         users_count = (
