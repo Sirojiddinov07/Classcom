@@ -91,6 +91,14 @@ class ScheduleTemplate(AbstractBaseModel):
         verbose_name=_("Dars jadvalar"),
     )
 
+    def __str__(self) -> str:
+        return f"{self.name}"
+
+    class Meta:
+        verbose_name = _("Dars jadval shabloni")
+        verbose_name_plural = _("Dars jadval shabloni")
+        ordering = ["name"]
+
 
 class ScheduleChoices(AbstractBaseModel):
     schedule_template = models.ForeignKey(
