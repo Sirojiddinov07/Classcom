@@ -1,6 +1,9 @@
-from rest_framework import serializers
+from datetime import date
 
-from core.apps.classcom.models import ScheduleChoices
+from rest_framework import serializers
+from rest_framework.exceptions import ValidationError
+
+from core.apps.classcom.models import ScheduleChoices, Quarter, Weeks
 from core.apps.classcom.models.schedule import Schedule, ScheduleTemplate
 from core.apps.classcom.serializers import (
     QuarterMiniSerializer,
@@ -76,12 +79,42 @@ class ScheduleTemplateSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         user = self.context["request"].user
         schedules_data = validated_data.pop("schedules")
+
+        if ScheduleTemplate.objects.filter(user=user).exists():
+            schedule_template = ScheduleTemplate.objects.create(
+                user=user, **validated_data
+            )
+            for schedule_data in schedules_data:
+                schedule = Schedule.objects.create(user=user, **schedule_data)
+                schedule_template.schedules.add(schedule)
+            return schedule_template
+
         schedule_template = ScheduleTemplate.objects.create(
             user=user, **validated_data
         )
         for schedule_data in schedules_data:
             schedule = Schedule.objects.create(user=user, **schedule_data)
             schedule_template.schedules.add(schedule)
+
+        current_date = date.today()
+
+        quarter = Quarter.objects.filter(
+            start_date__lte=current_date, end_date__gte=current_date
+        ).first()
+
+        if not quarter:
+            raise ValidationError("No quarter found for the current date.")
+
+        weeks = Weeks.objects.filter(quarter=quarter)
+
+        for week in weeks:
+            ScheduleChoices.objects.create(
+                user=user,
+                schedule_template=schedule_template,
+                quarter=quarter,
+                week=week,
+            )
+
         return schedule_template
 
     def update(self, instance, validated_data):

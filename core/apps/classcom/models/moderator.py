@@ -88,6 +88,7 @@ class Moderator(AbstractBaseModel):
     class Meta:
         verbose_name = _("Moderator")
         verbose_name_plural = _("Moderatorlar")
+        ordering = ["-updated_at"]
 
     def save(self, *args, **kwargs):
         if self.user.role != Role.MODERATOR:
