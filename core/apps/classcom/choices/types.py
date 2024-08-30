@@ -9,6 +9,7 @@ class Types(TextChoices):
     BYDEPARTMENT = "BYDEPARTMENT", _("By Department")
     BYDOCS = "BYDOCS", _("By docs")
     BYSCHOOL = "BYSCHOOL", _("By school")
+    BYSCIENCE = "BYSCIENCE", _("By science")
 
 
 class Departments(TextChoices):

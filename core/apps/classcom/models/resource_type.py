@@ -2,7 +2,6 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 
 from core.apps.classcom.choices import Types
-from core.apps.classcom.utils.dynamic_sort import OrderNumberService
 from core.http.models import AbstractBaseModel
 
 
@@ -20,7 +19,38 @@ class ResourceType(AbstractBaseModel):
         return self.name
 
     def save(self, *args, **kwargs):
-        OrderNumberService.update_order_numbers(self, "order_number")
+        if not self.pk:  # Yangi qator qo'shilayotgan bo'lsa
+            if self.order_number is None:
+                max_order_number = (
+                    ResourceType.objects.aggregate(models.Max("order_number"))[
+                        "order_number__max"
+                    ]
+                    or 0
+                )
+                self.order_number = max_order_number + 1
+            else:
+                # Order_number ga yangi tartib raqami kiritilgan bo'lsa
+                ResourceType.objects.filter(
+                    order_number__gte=self.order_number
+                ).update(order_number=models.F("order_number") + 1)
+        else:
+            # Yangi tartibga o'zgartirish (eski va yangi order_numberni solishtirib, qatorlarni surish)
+            old_instance = ResourceType.objects.get(pk=self.pk)
+            if (
+                self.order_number is not None
+                and old_instance.order_number is not None
+            ):
+                if self.order_number < old_instance.order_number:
+                    ResourceType.objects.filter(
+                        order_number__gte=self.order_number,
+                        order_number__lt=old_instance.order_number,
+                    ).update(order_number=models.F("order_number") + 1)
+                else:
+                    ResourceType.objects.filter(
+                        order_number__gt=old_instance.order_number,
+                        order_number__lte=self.order_number,
+                    ).update(order_number=models.F("order_number") - 1)
+
         super().save(*args, **kwargs)
 
     class Meta:
