@@ -30,13 +30,7 @@ class ResourceTypeSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = ResourceType
-        fields = (
-            "id",
-            "name",
-            "type",
-            "label",
-            "items",
-        )
+        fields = ("id", "name", "type", "label", "items", "is_active")
 
 
 class ResourceTypeMiniSerializer(serializers.ModelSerializer):
@@ -47,8 +41,4 @@ class ResourceTypeMiniSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = ResourceType
-        fields = (
-            "id",
-            "name",
-            "label",
-        )
+        fields = ("id", "name", "label", "is_active")

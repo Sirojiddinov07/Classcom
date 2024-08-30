@@ -21,3 +21,4 @@ class Teacher(AbstractBaseModel):
     class Meta:
         verbose_name = _("O'qituvchi")
         verbose_name_plural = _("O'qituvchilar")
+        ordering = ["-updated_at"]
