@@ -6,7 +6,7 @@ from core.apps.classcom.models import Weeks, Plan, Schedule, ScheduleChoices
 from core.apps.classcom.serializers import TopicDetailSerializer
 
 
-class PlanTopicView(APIView):
+class AlgorithmApiView(APIView):
     def get(self, request):
         science = request.query_params.get("science")
         classes = request.query_params.get("classes")

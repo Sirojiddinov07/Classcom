@@ -131,7 +131,7 @@ urlpatterns = [
     ),
     path(
         "algorithm/",
-        views.PlanTopicView.as_view(),
+        views.AlgorithmApiView.as_view(),
         name="algorithm",
     ),
 ]
