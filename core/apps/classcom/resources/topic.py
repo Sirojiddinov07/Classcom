@@ -31,13 +31,11 @@ class TopicResource(resources.ModelResource):
                             name=instance.name,
                             description=instance.description,
                             sequence_number=instance.sequence_number,
-                            hours=1,  # Each new instance should have hours set to 1
+                            hours=1,
                             media_creatable=instance.media_creatable,
                             weeks=instance.weeks,
                         )
-                        new_instance.media.set(
-                            instance.media.all()
-                        )  # Use media.set() instead of direct assignment
+                        new_instance.media.set(instance.media.all())
                         plan.topic.add(new_instance)
                 plan.topic.add(instance)
                 plan.save()
