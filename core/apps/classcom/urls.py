@@ -129,4 +129,9 @@ urlpatterns = [
         views.ModeratorLanguageAPIView.as_view(),
         name="moderator-languages",
     ),
+    path(
+        "algorithm/",
+        views.AlgorithmApiView.as_view(),
+        name="algorithm",
+    ),
 ]

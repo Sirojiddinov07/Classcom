@@ -1,7 +1,6 @@
 from datetime import date
 
 from rest_framework import serializers
-from rest_framework.exceptions import ValidationError
 
 from core.apps.classcom.models import ScheduleChoices, Quarter, Weeks
 from core.apps.classcom.models.schedule import Schedule, ScheduleTemplate
@@ -103,7 +102,7 @@ class ScheduleTemplateSerializer(serializers.ModelSerializer):
         ).first()
 
         if not quarter:
-            raise ValidationError("No quarter found for the current date.")
+            quarter = Quarter.objects.all().first()
 
         weeks = Weeks.objects.filter(quarter=quarter)
 

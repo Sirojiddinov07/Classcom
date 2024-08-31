@@ -10,9 +10,10 @@ class TopicResource(resources.ModelResource):
         model = Topic
         fields = (
             "id",
+            "sequence_number",
+            "weeks",
             "name",
             "description",
-            "sequence_number",
             "hours",
             "plan_id",
         )
