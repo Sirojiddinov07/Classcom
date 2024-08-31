@@ -36,3 +36,17 @@ class TopicDetailSerializer(serializers.ModelSerializer):
             "media",
         ]
         extra_kwargs = {"media": {"required": False}}
+
+
+class TopicNoPaidSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Topic
+        fields = [
+            "id",
+            "name",
+            "description",
+            "hours",
+            "sequence_number",
+            "created_at",
+            "media_creatable",
+        ]

@@ -25,6 +25,18 @@ class TopicResource(resources.ModelResource):
         if hasattr(self, "plan_id") and self.plan_id:
             try:
                 plan = Plan.objects.get(id=self.plan_id)
+                if instance.hours > 1:
+                    for _ in range(instance.hours - 1):
+                        new_instance = Topic.objects.create(
+                            name=instance.name,
+                            description=instance.description,
+                            sequence_number=instance.sequence_number,
+                            hours=1,
+                            media_creatable=instance.media_creatable,
+                            weeks=instance.weeks,
+                        )
+                        new_instance.media.set(instance.media.all())
+                        plan.topic.add(new_instance)
                 plan.topic.add(instance)
                 plan.save()
             except Plan.DoesNotExist:
