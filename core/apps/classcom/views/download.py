@@ -38,13 +38,15 @@ class DownloadMediaView(APIView):
             get_object_or_404(Moderator, user=plan.user) if plan else None
         )
 
-        order = Orders.objects.filter(
-            user=user,
-            science=plan.science,
-            types=plan.science_types,
-            start_date__lt=current_date,
-            end_date__gt=current_date,
-        ).first()
+        order = None
+        if plan:
+            order = Orders.objects.filter(
+                user=user,
+                science=plan.science,
+                types=plan.science_types,
+                start_date__lt=current_date,
+                end_date__gt=current_date,
+            ).first()
 
         # If media has a topic, only the owner or a user with an order can download
         if plan and (
