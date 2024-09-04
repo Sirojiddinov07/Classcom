@@ -35,9 +35,7 @@ def create_moderator(sender, instance, created, **kwargs):
 
 @receiver(post_delete, sender=Topic)
 def reorder_topics_on_delete(sender, instance, **kwargs):
-    plans = (
-        instance.plan_set.all()
-    )  # Retrieve all plans associated with the topic
+    plans = instance.plans.all()
     for plan in plans:
         related_topics = plan.topics.all().order_by("sequence_number")
         for index, topic in enumerate(related_topics, start=1):
