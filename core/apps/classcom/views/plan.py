@@ -5,6 +5,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from core.apps.classcom.models import Plan, Moderator
+from core.apps.classcom.permissions import PlanPermission
 from core.apps.classcom.serializers import PlanSerializer, PlanDetailSerializer
 from core.apps.classcom.views import CustomPagination
 
@@ -14,6 +15,12 @@ class PlanApiView(APIView):
     pagination_class = CustomPagination
 
     def post(self, request, *args, **kwargs):
+        self.permission_classes = [
+            IsAuthenticated,
+            PlanPermission(["moderator"]),
+        ]
+        self.check_permissions(request)
+
         plan_serializer = PlanSerializer(
             data=request.data, context={"request": request}
         )
