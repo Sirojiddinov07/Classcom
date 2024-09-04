@@ -41,14 +41,35 @@ class DownloadMediaView(APIView):
         if plan and media.user != user:
             raise Http404("You can't download this file")
 
+        current_date = datetime.date.today()
+
+        order = Orders.objects.filter(
+            user=user,
+            science=plan.science,
+            types=plan.science_types,
+            start_date__lt=current_date,
+            end_date__gt=current_date,
+        ).first()
+
+        if plan and not order:
+            raise Http404("You can't download this file")
+
         download = Download.objects.create(
             teacher=teacher,
             media=media,
-            date=datetime.date.today(),
+            date=current_date,
             moderator=moderator,
         )
 
-        if not user.role == Role.MODERATOR:
+        if plan:
+            if user.role != Role.MODERATOR:
+                if not download.media.download_users.filter(
+                    id=user.id
+                ).exists():
+                    download.media.download_users.add(user)
+                    download.media.count += 1
+                    download.media.save()
+        else:
             if not download.media.download_users.filter(id=user.id).exists():
                 download.media.download_users.add(user)
                 download.media.count += 1
