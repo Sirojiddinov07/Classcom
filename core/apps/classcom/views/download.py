@@ -24,6 +24,7 @@ class DownloadMediaView(APIView):
 
     def get(self, request, media_id, format=None):
         user = request.user
+        current_date = datetime.date.today()
         media = get_object_or_404(Media, id=media_id)
         teacher = (
             get_object_or_404(Teacher, user=user)
@@ -37,12 +38,6 @@ class DownloadMediaView(APIView):
             get_object_or_404(Moderator, user=plan.user) if plan else None
         )
 
-        # If media has a topic, only the owner can download
-        if plan and media.user != user:
-            raise Http404("You can't download this file")
-
-        current_date = datetime.date.today()
-
         order = Orders.objects.filter(
             user=user,
             science=plan.science,
@@ -51,7 +46,10 @@ class DownloadMediaView(APIView):
             end_date__gt=current_date,
         ).first()
 
-        if plan and not order:
+        # If media has a topic, only the owner or a user with an order can download
+        if plan and (
+            media.user != user and (not order and user.role != Role.MODERATOR)
+        ):
             raise Http404("You can't download this file")
 
         download = Download.objects.create(
