@@ -12,6 +12,7 @@ class TopicSerializer(serializers.ModelSerializer):
             "name",
             "description",
             "hours",
+            "weeks",
             "sequence_number",
         ]
 
@@ -33,6 +34,7 @@ class TopicDetailSerializer(serializers.ModelSerializer):
             "sequence_number",
             "created_at",
             "media_creatable",
+            "weeks",
             "media",
         ]
         extra_kwargs = {"media": {"required": False}}
@@ -46,6 +48,7 @@ class TopicNoPaidSerializer(serializers.ModelSerializer):
             "name",
             "description",
             "hours",
+            "weeks",
             "sequence_number",
             "created_at",
             "media_creatable",
