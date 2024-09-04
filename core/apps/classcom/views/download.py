@@ -49,9 +49,10 @@ class DownloadMediaView(APIView):
             ).first()
 
         # If media has a topic, only the owner or a user with an order can download
-        if plan and (
-            media.user != user and (not order and user.role != Role.MODERATOR)
-        ):
+        if plan and media.user != user:
+            raise Http404("You can't download this file")
+
+        if plan and not order and user.role != Role.MODERATOR:
             raise Http404("You can't download this file")
 
         download = Download.objects.create(
