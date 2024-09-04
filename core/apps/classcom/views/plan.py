@@ -15,7 +15,12 @@ class PlanApiView(APIView):
     pagination_class = CustomPagination
 
     def post(self, request, *args, **kwargs):
-        # self.permission_classes.append(PlanPermission(["moderator"]))
+        self.permission_classes = [
+            IsAuthenticated,
+            PlanPermission(["moderator"]),
+        ]
+        self.check_permissions(request)
+
         plan_serializer = PlanSerializer(
             data=request.data, context={"request": request}
         )
@@ -42,7 +47,7 @@ class PlanApiView(APIView):
                 science_types__in=moderator.science_type.all(),
             )
         else:
-            plans = Plan.objects.filter(user=user)
+            plans = Plan.objects.all()
 
         if plan_id:
             plans = plans.filter(id=plan_id)
@@ -68,7 +73,6 @@ class PlanApiView(APIView):
             plan = Plan.objects.get(id=plan_id, user=request.user)
         except Plan.DoesNotExist:
             raise NotFound("Plan not found")
-        self.permission_classes.append(PlanPermission(["moderator"]))
         plan_serializer = PlanSerializer(plan, data=request.data, partial=True)
         plan_serializer.is_valid(raise_exception=True)
         plan_serializer.save()
@@ -82,6 +86,5 @@ class PlanApiView(APIView):
             raise NotFound(
                 "Plan not found or you do not have permission to delete it"
             )
-        self.permission_classes.append(PlanPermission(["moderator"]))
         plan.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)

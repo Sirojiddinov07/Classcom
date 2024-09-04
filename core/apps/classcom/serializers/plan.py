@@ -1,7 +1,6 @@
 from rest_framework import serializers
 
 from core.apps.classcom.models import Plan
-from core.apps.classcom.permissions import PlanPermission
 from core.apps.classcom.serializers.classes import ClassesSerializer
 from core.apps.classcom.serializers.quarter import QuarterMiniSerializer
 from core.apps.classcom.serializers.science import ScienceSerializer
@@ -34,11 +33,6 @@ class PlanSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         user = self.context["request"].user
         validated_data["user"] = user
-        permission = PlanPermission(["moderator"])
-        if not permission.has_permission(self.context["request"], self):
-            raise serializers.ValidationError(
-                "You do not have permission to create a plan."
-            )
 
         plan = Plan.objects.create(**validated_data)
         return plan
