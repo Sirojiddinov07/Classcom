@@ -85,9 +85,9 @@ class AlgorithmApiView(APIView):
             print(f"Schedules: {schedules}")
 
             if len(weekdays) == 1:
-                schedule_position = list(
-                    schedules.order_by("start_time")
-                ).index(schedule)
+                schedule_position = (
+                    list(schedules.order_by("start_time")).index(schedule) + 1
+                )
             else:
                 schedule_position = (
                     list(schedules.order_by("weekday")).index(schedule) + 1
