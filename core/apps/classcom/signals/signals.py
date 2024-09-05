@@ -1,8 +1,8 @@
-from django.db.models.signals import post_save, post_delete
+from django.db.models.signals import post_save, pre_delete
 from django.dispatch import receiver
 
 from core.apps.websocket.models.notification import Notification
-from ..models import TempModerator, Moderator, Topic
+from ..models import TempModerator, Moderator, Topic, Plan
 from ..models.feedback import Answer
 
 
@@ -33,13 +33,18 @@ def create_moderator(sender, instance, created, **kwargs):
         instance.delete()
 
 
-@receiver(post_delete, sender=Topic)
+@receiver(pre_delete, sender=Topic)
 def reorder_topics_on_delete(sender, instance, **kwargs):
-    plans = (
-        instance.plan_set.all()
-    )  # Retrieve all plans associated with the topic
-    for plan in plans:
-        related_topics = plan.topics.all().order_by("sequence_number")
-        for index, topic in enumerate(related_topics, start=1):
-            topic.sequence_number = index
-            topic.save()
+    plans = Plan.objects.filter(topic=instance).distinct()
+    if not plans.exists():
+        print(f"No Plans found for Topic: {instance}")
+    else:
+        for plan in plans:
+            related_topics = (
+                plan.topic.all()
+                .order_by("sequence_number")
+                .exclude(id=instance.id)
+            )
+            for index, topic in enumerate(related_topics, start=1):
+                topic.sequence_number = index
+                topic.save()
