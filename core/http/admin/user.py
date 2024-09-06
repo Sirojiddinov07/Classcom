@@ -1,6 +1,6 @@
 from django.contrib.auth import admin
 from import_export import admin as import_export
-from unfold.admin import ModelAdmin, TabularInline
+from unfold.admin import ModelAdmin, StackedInline
 
 # from core.http.forms import CustomUserCreationForm
 from unfold.forms import (
@@ -28,7 +28,7 @@ class GroupAdmin(ModelAdmin, import_export.ImportExportModelAdmin):
     filter_horizontal = ("permissions",)
 
 
-class ModeratorInline(TabularInline):
+class ModeratorInline(StackedInline):
     model = Moderator
     can_delete = False
     tab = True
@@ -51,10 +51,14 @@ class UserAdmin(
     search_fields = ["phone", "first_name", "last_name"]
     list_filter = ["role"]
     fieldsets = (
-        (None, {"fields": ("username", "phone", "password")}),
+        (
+            "User",
+            {"classes": ["tab"], "fields": ("username", "phone", "password")},
+        ),
         (
             "Personal info",
             {
+                "classes": ["tab"],
                 "fields": (
                     "first_name",
                     "last_name",
@@ -69,22 +73,26 @@ class UserAdmin(
                     "institution_number",
                     "school_type",
                     "class_group",
-                )
+                ),
             },
         ),
         (
             "Permissions",
             {
+                "classes": ["tab"],
                 "fields": (
                     "is_active",
                     "is_staff",
                     "is_superuser",
                     "groups",
                     "user_permissions",
-                )
+                ),
             },
         ),
-        ("Important dates", {"fields": ("last_login", "date_joined")}),
+        (
+            "Important dates",
+            {"classes": ["tab"], "fields": ("last_login", "date_joined")},
+        ),
     )
 
     def get_inlines(self, request, obj=None):
