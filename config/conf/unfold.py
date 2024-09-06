@@ -12,6 +12,14 @@ UNFOLD = {
         "light": lambda request: static("images/felix.png"),  # light mode
         "dark": lambda request: static("images/felix.png"),  # dark mode
     },
+    "SITE_FAVICONS": [
+        {
+            "rel": "icon",
+            "sizes": "32x32",
+            "type": "image/svg+xml",
+            "href": lambda request: static("images/classcom.png"),
+        },
+    ],
     # "SITE_LOGO": {
     #     "light": lambda request: static("images/felix.png"),  # light mode
     #     "dark": lambda request: static("images/felix.png"),  # dark mode
