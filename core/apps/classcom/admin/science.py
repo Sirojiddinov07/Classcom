@@ -1,18 +1,18 @@
 from django.contrib import admin
-from import_export.admin import ImportExportModelAdmin
 from modeltranslation.admin import TabbedTranslationAdmin
+from unfold.admin import ModelAdmin
 
 from core.apps.classcom.models import Science, ScienceTypes
 
 
 @admin.register(ScienceTypes)
-class ScienceTypesAdmin(ImportExportModelAdmin, TabbedTranslationAdmin):
+class ScienceTypesAdmin(ModelAdmin, TabbedTranslationAdmin):
     list_display = ("id", "name")
     search_fields = ("name",)
 
 
 @admin.register(Science)
-class ScienceAdmin(ImportExportModelAdmin, TabbedTranslationAdmin):
+class ScienceAdmin(ModelAdmin, TabbedTranslationAdmin):
     list_display = ("id", "order_number", "name")
     search_fields = ("name",)
     ordering = ("order_number",)

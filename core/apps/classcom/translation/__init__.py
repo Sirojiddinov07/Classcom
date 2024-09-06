@@ -6,4 +6,3 @@ from .notification import *  # noqa
 from .recource import *  # noqa
 from .recource_type import *  # noqa
 from .science import *  # noqa
-from .topic import *  # noqa

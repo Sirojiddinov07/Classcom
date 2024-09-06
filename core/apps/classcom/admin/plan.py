@@ -1,13 +1,12 @@
 from django.contrib import admin
 from django.utils.translation import gettext_lazy as _
-from import_export.admin import ImportExportModelAdmin
+from unfold.admin import ModelAdmin
 
-from core.apps.classcom import resources
 from core.apps.classcom.models import Plan
 
 
 @admin.register(Plan)
-class PlanAdmin(ImportExportModelAdmin):
+class PlanAdmin(ModelAdmin):
     list_display = (
         "id",
         "full_name",
@@ -21,8 +20,6 @@ class PlanAdmin(ImportExportModelAdmin):
     """
     Customize the plan model in admin panel interface
     """
-
-    resource_class = resources.PlanResource
 
     search_fields = (
         "user__first_name",

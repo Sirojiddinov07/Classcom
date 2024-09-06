@@ -1,17 +1,18 @@
 from django.contrib import admin
+from django.utils.translation import gettext_lazy as _
+from unfold.admin import ModelAdmin, TabularInline
 
 from core.apps.classcom.models import Answer, Feedback
-from django.utils.translation import gettext_lazy as _
 
 
-class InlineAnswer(admin.TabularInline):
+class InlineAnswer(TabularInline):
     model = Answer
     fields = ["body"]
-    extra = 1
+    tab = True
 
 
 @admin.register(Feedback)
-class FeedbackAdmin(admin.ModelAdmin):
+class FeedbackAdmin(ModelAdmin):
     inlines = [InlineAnswer]
     list_display = ("id", "full_name", "feedback_type", "answered")
 
@@ -22,7 +23,7 @@ class FeedbackAdmin(admin.ModelAdmin):
 
 
 @admin.register(Answer)
-class AnswerAdmin(admin.ModelAdmin):
+class AnswerAdmin(ModelAdmin):
     list_display = ("id", "feedback", "body")
     search_fields = ("feedback", "body")
     list_filter = ("feedback",)

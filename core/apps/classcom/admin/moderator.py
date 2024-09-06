@@ -1,11 +1,12 @@
 from django.contrib import admin
 from django.utils.translation import gettext_lazy as _
+from unfold.admin import ModelAdmin
 
 from core.apps.classcom.models import Moderator, TempModerator
 
 
 @admin.register(Moderator)
-class ModeratorAdmin(admin.ModelAdmin):
+class ModeratorAdmin(ModelAdmin):
     list_display = (
         "id",
         "full_name",
@@ -32,6 +33,7 @@ class ModeratorAdmin(admin.ModelAdmin):
         (
             _("Plan Permissions"),
             {
+                "classes": ["tab"],
                 "fields": (
                     "plan_creatable",
                     "languages",
@@ -40,21 +42,22 @@ class ModeratorAdmin(admin.ModelAdmin):
                     "classes",
                     "class_groups",
                     "quarters",
-                )
+                ),
             },
         ),
         (
             _("Resource Permissions"),
             {
+                "classes": ["tab"],
                 "fields": (
                     "resource_creatable",
                     "resource_type",
-                )
+                ),
             },
         ),
         (
             _("topic Permissions"),
-            {"fields": ("topic_creatable",)},
+            {"classes": ["tab"], "fields": ("topic_creatable",)},
         ),
     )
 
@@ -63,7 +66,7 @@ class ModeratorAdmin(admin.ModelAdmin):
 
 
 @admin.register(TempModerator)
-class TempModeratorAdmin(admin.ModelAdmin):
+class TempModeratorAdmin(ModelAdmin):
     list_display = (
         "id",
         "full_name",
