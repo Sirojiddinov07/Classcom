@@ -1,10 +1,16 @@
-from django.contrib.admin import StackedInline
 from django.contrib.auth import admin
 from import_export import admin as import_export
+from unfold.admin import ModelAdmin, TabularInline
+
+# from core.http.forms import CustomUserCreationForm
+from unfold.forms import (
+    AdminPasswordChangeForm,
+    UserChangeForm,
+    UserCreationForm,
+)
 
 from core.apps.classcom.choices import Role
 from core.apps.classcom.models import Moderator
-from core.http.forms import CustomUserCreationForm
 
 
 # class CustomUserAdmin(admin.UserAdmin, import_export.ImportExportModelAdmin):
@@ -15,16 +21,17 @@ from core.http.forms import CustomUserCreationForm
 #     )
 
 
-class GroupAdmin(import_export.ImportExportModelAdmin):
+class GroupAdmin(ModelAdmin, import_export.ImportExportModelAdmin):
     list_display = ["name"]
     search_fields = ["name"]
 
     filter_horizontal = ("permissions",)
 
 
-class ModeratorInline(StackedInline):
+class ModeratorInline(TabularInline):
     model = Moderator
     can_delete = False
+    tab = True
     verbose_name_plural = "Moderators"
     fields = [
         "balance",
@@ -34,8 +41,12 @@ class ModeratorInline(StackedInline):
     ]
 
 
-class UserAdmin(admin.UserAdmin, import_export.ImportExportModelAdmin):
-    add_form = CustomUserCreationForm
+class UserAdmin(
+    admin.UserAdmin, ModelAdmin, import_export.ImportExportModelAdmin
+):
+    change_password_form = AdminPasswordChangeForm
+    add_form = UserCreationForm
+    form = UserChangeForm
     list_display = ["id", "phone", "first_name", "last_name", "role"]
     search_fields = ["phone", "first_name", "last_name"]
     list_filter = ["role"]

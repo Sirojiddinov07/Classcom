@@ -1,0 +1,58 @@
+{% extends 'admin/base.html' %}
+{% load humanize unfold i18n static %}
+
+{% block content %}
+    {{ block.super }}
+    <script src="{% static "admin/js/dashboard.js" %}"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            document.querySelectorAll('button[data-language]').forEach(button => {
+                button.addEventListener('click', function () {
+                    const languageCode = this.getAttribute('data-language');
+                    fetch("{% url 'change_language' %}", {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRFToken': '{{ csrf_token }}'
+                        },
+                        body: JSON.stringify({language_code: languageCode})
+                    })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.status === 'success') {
+                                location.reload();
+                            } else {
+                                alert('Noto\'g\'ri so\'rov');
+                            }
+                        });
+                });
+            });
+        });
+    </script>
+    <div x-data="data">
+        {% component 'unfold/components/container.html' %}
+            <div class="flex justify-end mb-5 gap-x-3">
+                <button class="bg-blue-500 p-2 rounded shadow font-[500] text-white" data-language="uz">
+                    O'zbekcha
+                </button>
+                <button class="bg-orange-500 p-2 rounded shadow font-[500] text-white" data-language="ru">
+                    Русский
+                </button>
+            </div>
+            <div class="flex justify-end mb-5 gap-x-3">
+            </div>
+            {% component 'unfold/components/flex.html' with class='grid grid-cols-1 sm:grid-cols-2 gap-8 md:grid-cols-3 lg:grid-cols-4' %}
+                {% for card in cards %}
+                    {% component 'unfold/components/card.html' with class='w-full cursor-pointer' %}
+                        <h1 class="font-[400]">{{ card.title }}</h1>
+                        <h1 class="mt-3 font-[600] text-[20px]">{{ card.value|intcomma }}</h1>
+                    {% endcomponent %}
+                {% endfor %}
+            {% endcomponent %}
+            <div class="grid gird-cols-1 md:grid-cols-2 mt-10">
+                {% include "components/chart.html" with id=1 %}
+                {% include "components/chart.html" with id=2 %}
+            </div>
+        {% endcomponent %}
+    </div>
+{% endblock %}

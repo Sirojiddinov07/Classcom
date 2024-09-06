@@ -1,5 +1,6 @@
 from django.contrib import admin
 from django.utils.translation import gettext_lazy as _
+from unfold.admin import ModelAdmin
 
 from core.apps.classcom.models import (
     Schedule,
@@ -9,7 +10,7 @@ from core.apps.classcom.models import (
 
 
 @admin.register(Schedule)
-class ScheduleAdmin(admin.ModelAdmin):
+class ScheduleAdmin(ModelAdmin):
     list_display = (
         "id",
         "user",
@@ -36,14 +37,14 @@ class ScheduleAdmin(admin.ModelAdmin):
 
 
 @admin.register(ScheduleChoices)
-class ScheduleChoicesAdmin(admin.ModelAdmin):
+class ScheduleChoicesAdmin(ModelAdmin):
     list_display = ("id", "user", "quarter", "week")
     search_fields = ("user__first_name", "user__last_name", "schedule__name")
     list_filter = ("week", "quarter")
 
 
 @admin.register(ScheduleTemplate)
-class ScheduleTemplateAdmin(admin.ModelAdmin):
+class ScheduleTemplateAdmin(ModelAdmin):
     list_display = ("id", "name")
     search_fields = ("name",)
     list_filter = ("name",)

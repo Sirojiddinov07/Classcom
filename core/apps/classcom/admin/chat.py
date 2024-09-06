@@ -1,11 +1,12 @@
 from django.contrib import admin
+from unfold.admin import ModelAdmin
 
 from core.apps.classcom.models import Chat
 from django.utils.translation import gettext_lazy as _
 
 
 @admin.register(Chat)
-class ChatAdmin(admin.ModelAdmin):
+class ChatAdmin(ModelAdmin):
     list_display = (
         "id",
         "full_name",

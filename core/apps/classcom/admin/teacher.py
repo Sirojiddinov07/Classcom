@@ -1,11 +1,12 @@
 from django.contrib import admin
 from django.utils.translation import gettext_lazy as _
+from unfold.admin import ModelAdmin
 
 from core.apps.classcom.models import Teacher
 
 
 @admin.register(Teacher)
-class TeacherAdmin(admin.ModelAdmin):
+class TeacherAdmin(ModelAdmin):
     list_display = (
         "id",
         "user",

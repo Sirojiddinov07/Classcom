@@ -2,9 +2,11 @@ from django.contrib import admin
 
 from .models import Plans, Payments, Orders
 
+from unfold.admin import ModelAdmin
+
 
 @admin.register(Orders)
-class OrdersAdmin(admin.ModelAdmin):
+class OrdersAdmin(ModelAdmin):
     list_display = (
         "id",
         "user",
@@ -20,7 +22,7 @@ class OrdersAdmin(admin.ModelAdmin):
 
 
 @admin.register(Payments)
-class PaymentsAdmin(admin.ModelAdmin):
+class PaymentsAdmin(ModelAdmin):
     list_display = (
         "id",
         "order",
@@ -37,7 +39,7 @@ class PaymentsAdmin(admin.ModelAdmin):
 
 
 @admin.register(Plans)
-class PlansAdmin(admin.ModelAdmin):
+class PlansAdmin(ModelAdmin):
     list_display = (
         "id",
         "quarter",

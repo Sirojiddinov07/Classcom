@@ -1,11 +1,12 @@
 from django.contrib import admin
 from django.utils.translation import gettext_lazy as _
+from unfold.admin import ModelAdmin
 
 from core.apps.classcom.models import DaysOff
 
 
 @admin.register(DaysOff)
-class DaysOffAdmin(admin.ModelAdmin):
+class DaysOffAdmin(ModelAdmin):
     list_display = (
         "id",
         "full_name",

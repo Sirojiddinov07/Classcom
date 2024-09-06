@@ -1,10 +1,11 @@
 from django.contrib import admin
+from unfold.admin import ModelAdmin
 
 from core.apps.classcom.models import Settings
 
 
 @admin.register(Settings)
-class SettingsAdmin(admin.ModelAdmin):
+class SettingsAdmin(ModelAdmin):
     list_display = (
         "id",
         "key",

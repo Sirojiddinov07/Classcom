@@ -1,10 +1,11 @@
 from django.contrib import admin
 from modeltranslation.admin import TabbedTranslationAdmin
+from unfold.admin import ModelAdmin
 
 from core.http.models import SchoolType, ClassGroup
 
 
-class CustomTabbedTranslationAdmin(TabbedTranslationAdmin, admin.ModelAdmin):
+class CustomTabbedTranslationAdmin(TabbedTranslationAdmin, ModelAdmin):
     pass
 
 

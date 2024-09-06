@@ -1,12 +1,13 @@
 from django.contrib import admin
 from django.utils.translation import gettext_lazy as _
 from modeltranslation.admin import TabbedTranslationAdmin
+from unfold.admin import ModelAdmin
 
 from core.apps.classcom.models import Resource
 
 
 @admin.register(Resource)
-class ResourceAdmin(TabbedTranslationAdmin):
+class ResourceAdmin(ModelAdmin, TabbedTranslationAdmin):
     list_display = (
         "id",
         "order_number",

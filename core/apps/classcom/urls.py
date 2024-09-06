@@ -32,6 +32,7 @@ router.register(
     "science-types", views.ScienceTypesViewSet, basename="science-types"
 )
 router.register("school-type", SchoolTypeViewSet, basename="school-type")
+router.register("notification", NotificationViewSet, basename="notification")
 
 urlpatterns = [
     path("", include(router.urls)),
@@ -82,11 +83,6 @@ urlpatterns = [
         "weeks/",
         WeeksByQuarterView.as_view(),
         name="moderator-media-detail",
-    ),
-    path(
-        "notification/",
-        NotificationViewSet.as_view({"get": "list"}),
-        name="notification",
     ),
     path("plan/", views.PlanApiView.as_view(), name="plan"),
     path("topic/", views.TopicApiView.as_view(), name="topic"),

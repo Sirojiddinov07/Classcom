@@ -1,12 +1,13 @@
 from django.contrib import admin
 from django.utils.translation import gettext_lazy as _
 from modeltranslation.admin import TabbedTranslationAdmin
+from unfold.admin import ModelAdmin
 
 from core.apps.websocket.models import Notification
 
 
 @admin.register(Notification)
-class NotificationAdmin(TabbedTranslationAdmin):
+class NotificationAdmin(ModelAdmin, TabbedTranslationAdmin):
     list_display = (
         "id",
         "full_name",

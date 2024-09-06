@@ -19,7 +19,9 @@ FILE_UPLOAD_MAX_MEMORY_SIZE = 734003200  # 700 MB
 INSTALLED_APPS = [
     "daphne",
     # Design admin panel
-    "jazzmin",
+    "unfold",
+    "unfold.contrib.import_export",
+    # "jazzmin",
     "django_select2",
     "modeltranslation",
     # Default apps
@@ -29,6 +31,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "django.contrib.humanize",
 ]
 
 INSTALLED_APPS += apps.INSTALLED_APPS  # noqa
@@ -38,6 +41,7 @@ MIDDLEWARE = [
     "django.contrib.sessions.middleware.SessionMiddleware",
     "corsheaders.middleware.CorsMiddleware",  # Cors middleware
     "django.middleware.locale.LocaleMiddleware",  # Locale middleware
+    "core.middlewares.language.LanguageMiddleware",  # Language middleware
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",

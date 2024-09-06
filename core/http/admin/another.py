@@ -1,8 +1,9 @@
 from django.contrib import admin
 from django.db import models as db_model
 from django_select2 import forms as django_select2
-from import_export import admin as import_export
-from modeltranslation import admin as modeltranslation
+from import_export.admin import ImportExportModelAdmin
+from modeltranslation.admin import TabbedTranslationAdmin
+from unfold.admin import ModelAdmin
 
 from core.http import forms, models
 
@@ -19,8 +20,9 @@ class TagsInline(admin.TabularInline):
 
 
 class PostAdmin(
-    modeltranslation.TabbedTranslationAdmin,
-    import_export.ImportExportModelAdmin,
+    ModelAdmin,
+    TabbedTranslationAdmin,
+    ImportExportModelAdmin,
 ):  # noqa
     fields: tuple = ("title", "desc", "image", "tags")
     search_fields: list = ["title", "desc"]
@@ -35,23 +37,23 @@ class PostAdmin(
     }
 
 
-class TagsAdmin(import_export.ImportExportModelAdmin):
+class TagsAdmin(ModelAdmin, ImportExportModelAdmin):
     fields: tuple = ("name",)
     search_fields: list = ["name"]
 
 
-class FrontendTranslationAdmin(import_export.ImportExportModelAdmin):  # noqa
+class FrontendTranslationAdmin(ModelAdmin, ImportExportModelAdmin):  # noqa
     fields: tuple = ("key", "value")
     required_languages: tuple = ("uz",)
     list_display = ["key", "value"]
 
 
-class SmsConfirmAdmin(admin.ModelAdmin):
+class SmsConfirmAdmin(ModelAdmin):
     list_display = ["id", "phone", "code", "resend_count", "try_count"]
     search_fields = ["phone", "code"]
     ordering = ["-created_at"]
 
 
-class CommentAdmin(import_export.ImportExportModelAdmin):
+class CommentAdmin(ModelAdmin, ImportExportModelAdmin):
     list_display = ["text"]
     search_fields = ["text"]
