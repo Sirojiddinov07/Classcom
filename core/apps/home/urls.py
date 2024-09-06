@@ -12,6 +12,7 @@ router = routers.DefaultRouter()
 router.register("", views.PostListView, basename="posts")
 
 urlpatterns = [
+    path("admin/dashboard/", DashboardView.as_view(), name="dashboard"),
     path(
         "messages/",
         views.FrontendTranslationView.as_view(),
@@ -19,6 +20,5 @@ urlpatterns = [
     ),  # noqa
     path("posts/", include(router.urls), name="posts"),
     path("", views.HomeView.as_view(), name="home"),
-    path("admin/dashboard/", DashboardView.as_view(), name="dashboard"),
     path("change_language/", change_language, name="change_language"),
 ]

@@ -13,6 +13,7 @@ from drf_spectacular.views import (
 )
 
 urlpatterns = [
+    path("", include("core.apps.home.urls")),
     path("admin/", admin.site.urls),
     path("rosetta/", include("rosetta.urls")),
     path("accounts/", include("django.contrib.auth.urls")),
@@ -20,7 +21,6 @@ urlpatterns = [
     path("i18n/", include("django.conf.urls.i18n")),
     path("", include("core.apps.payments.urls")),
     path("", include("core.apps.accounts.urls")),
-    path("", include("core.apps.home.urls")),
     path("", include("core.apps.classcom.urls")),
     path(
         "ckeditor5/",
