@@ -19,7 +19,7 @@ PAGES = [
         ],
     },
     {
-        "title": _("Auth"),
+        "title": _("Foydalanuvchilar"),
         "separator": True,  # Top border
         "items": [
             {
@@ -39,15 +39,68 @@ PAGES = [
             },
             {
                 "title": _("O'qituvchilar"),
-                "icon": "shield_person",
+                "icon": "school",
                 "link": reverse_lazy("admin:classcom_teacher_changelist"),
             },
             {
                 "title": _("Temp Moderators"),
-                "icon": "shield_person",
+                "icon": "remove_moderator",
                 "link": reverse_lazy(
                     "admin:classcom_tempmoderator_changelist"
                 ),
+            },
+        ],
+    },
+    {
+        "title": _("Kalendar Tematik Reja"),
+        "separator": True,  # Top border
+        "items": [
+            {
+                "title": _("Tematik reja"),
+                "icon": "fact_check",
+                "link": reverse_lazy("admin:classcom_plan_changelist"),
+            },
+            {
+                "title": _("Mavzular"),
+                "icon": "checklist",
+                "link": reverse_lazy("admin:classcom_topic_changelist"),
+            },
+        ],
+    },
+    {
+        "title": _("Elektron resurslar"),
+        "separator": True,  # Top border
+        "items": [
+            {
+                "title": _("Elektron resurslar"),
+                "icon": "picture_as_pdf",
+                "link": reverse_lazy("admin:classcom_resource_changelist"),
+            },
+            {
+                "title": _("Resurs turlari"),
+                "icon": "border_color",
+                "link": reverse_lazy("admin:classcom_resourcetype_changelist"),
+            },
+            {
+                "title": _("Kategoriyalar"),
+                "icon": "format_list_numbered",
+                "link": reverse_lazy("admin:classcom_category_changelist"),
+            },
+            {
+                "title": _("Kategoriya turlari"),
+                "icon": "format_indent_increase",
+                "link": reverse_lazy("admin:classcom_categorytype_changelist"),
+            },
+        ],
+    },
+    {
+        "title": _("Maktablar"),
+        "separator": True,  # Top border
+        "items": [
+            {
+                "title": _("Maktab turi"),
+                "icon": "history_edu",
+                "link": reverse_lazy("admin:http_schooltype_changelist"),
             },
         ],
     },
@@ -57,17 +110,17 @@ PAGES = [
         "items": [
             {
                 "title": _("Sinflar"),
-                "icon": "admin_panel_settings",
+                "icon": "class",
                 "link": reverse_lazy("admin:classcom_classes_changelist"),
             },
             {
                 "title": _("Sinf Guruhi"),
-                "icon": "shield_person",
+                "icon": "ad_group",
                 "link": reverse_lazy("admin:classcom_classtype_changelist"),
             },
             {
                 "title": _("Sinf turi"),
-                "icon": "shield_person",
+                "icon": "border_color",
                 "link": reverse_lazy("admin:http_classgroup_changelist"),
             },
         ],
@@ -78,79 +131,37 @@ PAGES = [
         "items": [
             {
                 "title": _("Darslar"),
-                "icon": "admin_panel_settings",
+                "icon": "pending_actions",
                 "link": reverse_lazy("admin:classcom_schedule_changelist"),
             },
             {
                 "title": _("Dars jadval shablonlari"),
-                "icon": "shield_person",
+                "icon": "tab_recent",
                 "link": reverse_lazy(
                     "admin:classcom_scheduletemplate_changelist"
                 ),
             },
             {
                 "title": _("Dars jadvali tanlash"),
-                "icon": "shield_person",
+                "icon": "event_available",
                 "link": reverse_lazy(
                     "admin:classcom_schedulechoices_changelist"
                 ),
             },
             {
                 "title": _("Dam olish kunlari"),
-                "icon": "shield_person",
+                "icon": "free_cancellation",
                 "link": reverse_lazy("admin:classcom_daysoff_changelist"),
             },
             {
                 "title": _("Choraklar"),
-                "icon": "shield_person",
+                "icon": "dashboard_customize",
                 "link": reverse_lazy("admin:classcom_quarter_changelist"),
             },
             {
                 "title": _("Haftalar"),
-                "icon": "shield_person",
+                "icon": "date_range",
                 "link": reverse_lazy("admin:classcom_weeks_changelist"),
-            },
-        ],
-    },
-    {
-        "title": _("Kalendar Tematik Reja"),
-        "separator": True,  # Top border
-        "items": [
-            {
-                "title": _("Tematik reja"),
-                "icon": "admin_panel_settings",
-                "link": reverse_lazy("admin:classcom_plan_changelist"),
-            },
-            {
-                "title": _("Mavzular"),
-                "icon": "admin_panel_settings",
-                "link": reverse_lazy("admin:classcom_topic_changelist"),
-            },
-        ],
-    },
-    {
-        "title": _("Elektorn resurslar"),
-        "separator": True,  # Top border
-        "items": [
-            {
-                "title": _("Elektron resurslar"),
-                "icon": "admin_panel_settings",
-                "link": reverse_lazy("admin:classcom_resource_changelist"),
-            },
-            {
-                "title": _("Resurs turlari"),
-                "icon": "admin_panel_settings",
-                "link": reverse_lazy("admin:classcom_resourcetype_changelist"),
-            },
-            {
-                "title": _("Kategoriyalar"),
-                "icon": "admin_panel_settings",
-                "link": reverse_lazy("admin:classcom_category_changelist"),
-            },
-            {
-                "title": _("Kategoriya turlari"),
-                "icon": "admin_panel_settings",
-                "link": reverse_lazy("admin:classcom_categorytype_changelist"),
             },
         ],
     },
@@ -160,24 +171,24 @@ PAGES = [
         "items": [
             {
                 "title": _("Bildirishnomalar"),
-                "icon": "admin_panel_settings",
+                "icon": "notifications",
                 "link": reverse_lazy(
                     "admin:websocket_notification_changelist"
                 ),
             },
             {
                 "title": _("Chat"),
-                "icon": "admin_panel_settings",
+                "icon": "forum",
                 "link": reverse_lazy("admin:classcom_chat_changelist"),
             },
             {
                 "title": _("Fikr mulohazalar"),
-                "icon": "admin_panel_settings",
+                "icon": "share_reviews",
                 "link": reverse_lazy("admin:classcom_feedback_changelist"),
             },
             {
                 "title": _("Javoblar"),
-                "icon": "admin_panel_settings",
+                "icon": "mark_chat_read",
                 "link": reverse_lazy("admin:classcom_answer_changelist"),
             },
         ],
@@ -188,17 +199,17 @@ PAGES = [
         "items": [
             {
                 "title": _("Fanlar"),
-                "icon": "admin_panel_settings",
+                "icon": "psychology",
                 "link": reverse_lazy("admin:classcom_science_changelist"),
             },
             {
                 "title": _("Fan turlari"),
-                "icon": "admin_panel_settings",
+                "icon": "experiment",
                 "link": reverse_lazy("admin:classcom_sciencetypes_changelist"),
             },
             {
                 "title": _("Fan guruhi"),
-                "icon": "admin_panel_settings",
+                "icon": "psychology_alt",
                 "link": reverse_lazy("admin:http_sciencegroups_changelist"),
             },
         ],
@@ -209,12 +220,12 @@ PAGES = [
         "items": [
             {
                 "title": _("Viloyatlar"),
-                "icon": "admin_panel_settings",
+                "icon": "location_on",
                 "link": reverse_lazy("admin:http_region_changelist"),
             },
             {
                 "title": _("Tumanlar"),
-                "icon": "admin_panel_settings",
+                "icon": "my_location",
                 "link": reverse_lazy("admin:http_district_changelist"),
             },
         ],
@@ -225,12 +236,12 @@ PAGES = [
         "items": [
             {
                 "title": _("Media Fayllar"),
-                "icon": "admin_panel_settings",
+                "icon": "share",
                 "link": reverse_lazy("admin:classcom_media_changelist"),
             },
             {
                 "title": _("Yuklashlar"),
-                "icon": "admin_panel_settings",
+                "icon": "download",
                 "link": reverse_lazy("admin:classcom_download_changelist"),
             },
         ],
@@ -241,17 +252,17 @@ PAGES = [
         "items": [
             {
                 "title": _("Buyurtmalar"),
-                "icon": "admin_panel_settings",
+                "icon": "shopping_cart",
                 "link": reverse_lazy("admin:payments_orders_changelist"),
             },
             {
                 "title": _("To'lovlar"),
-                "icon": "admin_panel_settings",
+                "icon": "attach_money",
                 "link": reverse_lazy("admin:payments_payments_changelist"),
             },
             {
                 "title": _("Tariflar"),
-                "icon": "admin_panel_settings",
+                "icon": "shopping_bag",
                 "link": reverse_lazy("admin:payments_plans_changelist"),
             },
         ],
@@ -262,19 +273,19 @@ PAGES = [
         "items": [
             {
                 "title": _("Sozlamalar"),
-                "icon": "admin_panel_settings",
+                "icon": "settings",
                 "link": reverse_lazy("admin:classcom_settings_changelist"),
             },
             {
                 "title": _("Tillar"),
-                "icon": "admin_panel_settings",
+                "icon": "translate",
                 "link": reverse_lazy(
                     "admin:classcom_languagemodel_changelist"
                 ),
             },
             {
                 "title": _("SMS tasdiqlash"),
-                "icon": "admin_panel_settings",
+                "icon": "feedback",
                 "link": reverse_lazy("admin:http_smsconfirm_changelist"),
             },
         ],
