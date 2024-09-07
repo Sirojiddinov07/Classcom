@@ -47,6 +47,7 @@ class UserAdmin(
     change_password_form = AdminPasswordChangeForm
     add_form = UserCreationForm
     form = UserChangeForm
+    list_filter_submit = True
     list_display = ["id", "phone", "first_name", "last_name", "role"]
     search_fields = ["phone", "first_name", "last_name"]
     list_filter = ["role"]

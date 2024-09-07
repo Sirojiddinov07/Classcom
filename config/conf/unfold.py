@@ -1,16 +1,16 @@
 from django.templatetags.static import static
 
-# from django.utils.translation import gettext_lazy as _
 # from django.urls import reverse_lazy
+# from django.utils.translation import gettext_lazy as _
 from . import navigation
 
 UNFOLD = {
-    "SITE_TITLE": "Felix ITS",
-    "SITE_HEADER": "Felix ITS",
+    "SITE_TITLE": "CLASSCOM.UZ",
+    "SITE_HEADER": "CLASSCOM.UZ",
     "SITE_URL": "/",
     "SITE_ICON": {
-        "light": lambda request: static("images/felix.png"),  # light mode
-        "dark": lambda request: static("images/felix.png"),  # dark mode
+        "light": lambda request: static("images/classcom.png"),  # light mode
+        "dark": lambda request: static("images/classcom.png"),  # dark mode
     },
     "SITE_FAVICONS": [
         {
@@ -38,6 +38,14 @@ UNFOLD = {
     # lambda request: static("js/script.js"),
     # ],
     "COLORS": {
+        "font": {
+            "subtle-light": "107 114 128",
+            "subtle-dark": "156 163 175",
+            "default-light": "75 85 99",
+            "default-dark": "209 213 219",
+            "important-light": "17 24 39",
+            "important-dark": "243 244 246",
+        },
         "primary": {
             "50": "250 245 255",
             "100": "243 232 255",
@@ -55,9 +63,9 @@ UNFOLD = {
     "EXTENSIONS": {
         "modeltranslation": {
             "flags": {
+                "uz": "🇺🇿",
+                "ru": "🇷🇺",
                 "en": "🇬🇧",
-                "fr": "🇫🇷",
-                "nl": "🇧🇪",
             },
         },
     },
