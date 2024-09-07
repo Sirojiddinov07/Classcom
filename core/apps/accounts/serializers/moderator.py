@@ -1,10 +1,12 @@
-from django.core.files.base import ContentFile
-from django.core.files.storage import default_storage
+import logging
+
 from django.utils.translation import gettext as _
 from rest_framework import serializers, exceptions
+from rest_framework import status
+from rest_framework.response import Response
 
 from core.apps.classcom.choices import Degree
-from core.apps.classcom.models import Moderator
+from core.apps.classcom.models import Moderator, Document
 from core.apps.classcom.models import ScienceTypes
 from core.http import models
 from core.services import UserService
@@ -35,11 +37,29 @@ class ModeratorSerializer(serializers.ModelSerializer):
 
     def create(self, data):
         try:
-            docs_files = self.context.get("request").FILES.getlist("docs")
-            saved_files = []
-            for doc in docs_files:
-                file = default_storage.save(doc.name, ContentFile(doc.read()))
-                saved_files.append(file)
+            request = self.context.get("request")
+            docs_data = []
+
+            for key in request.data:
+                if key.startswith("description[") and key.endswith("]"):
+                    index = key[len("description[") : -1]  # noqa: E203
+                    file_key = f"docs[{index}]"
+                    doc_desc = request.data.get(key)
+                    doc_file = request.FILES.get(file_key)
+
+                    if not doc_file:
+                        return Response(
+                            {
+                                "error": f"File is required for document item {index}"
+                            },
+                            status=status.HTTP_400_BAD_REQUEST,
+                        )
+                    if not doc_desc:
+                        doc_desc = doc_file.name
+                    docs_data.append(
+                        {"docs": doc_file, "description": doc_desc}
+                    )
+
             user = UserService().create_user(
                 phone=data.get("phone"),
                 first_name=data.get("first_name"),
@@ -55,12 +75,20 @@ class ModeratorSerializer(serializers.ModelSerializer):
                 school_type_id=data.get("school_type").id,
                 class_group_id=data.get("class_group").id,
             )
+
             moderator, created = Moderator.objects.update_or_create(
                 user=user, defaults={"degree": data.get("degree")}
             )
-            moderator.docs.set(saved_files)
+
+            for doc_data in docs_data:
+                document = Document.objects.create(
+                    file=doc_data["docs"], description=doc_data["description"]
+                )
+                moderator.docs.add(document)
+
             return moderator
         except Exception as e:
+            logging.error(f"Error in create method: {str(e)}")
             raise exceptions.ValidationError({"detail": str(e)})
 
     class Meta:
