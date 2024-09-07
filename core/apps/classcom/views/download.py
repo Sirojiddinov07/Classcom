@@ -137,23 +137,39 @@ class DownloadHistoryView(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request, format=None):
-        teacher = get_object_or_404(Teacher, user=request.user)
+        user = request.user
+        teacher = Teacher.objects.filter(user=user).first()
+        moderator = None
+
+        if not teacher:
+            moderator = get_object_or_404(Moderator, user=user)
+
         downloads = (
-            Download.objects.filter(teacher=teacher)
-            .order_by("-date")
-            .distinct()
+            (
+                Download.objects.filter(teacher=teacher)
+                if teacher
+                else Download.objects.filter(moderator=moderator)
+            )
+            .order_by("media_id", "-created_at")
+            .distinct("media_id")
         )
+
+        paginator = CustomPagination()
+        paginated_downloads = paginator.paginate_queryset(downloads, request)
 
         download_history = [
             {
                 "media_id": download.media.id,
                 "media_name": download.media.name,
+                "media_type": download.media.type,
+                "media_desc": download.media.desc,
+                "media_size": download.media.size,
                 "download_date": download.date,
             }
-            for download in downloads
+            for download in paginated_downloads
         ]
 
-        return Response({"download_history": download_history})
+        return paginator.get_paginated_response(download_history)
 
 
 ############################################################################################################
@@ -167,7 +183,11 @@ def moderator_media_list(request):
 
     moderator = Moderator.objects.get(user=request.user)
 
-    media_files = Media.objects.filter(user=moderator.user).distinct()
+    media_files = (
+        Media.objects.filter(user=moderator.user)
+        .distinct()
+        .order_by("-created_at")
+    )
 
     paginator = CustomPagination()
     paginated_media = paginator.paginate_queryset(media_files, request)
