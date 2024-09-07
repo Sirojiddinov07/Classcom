@@ -10,7 +10,7 @@ from ..models.feedback import Answer
 def notify_user_on_answer(sender, instance, created, **kwargs):
     if created:
         Notification.objects.create(
-            user=instance.feedback.user, message=instance.body
+            user=instance.feedback.user, message_uz=instance.body
         )
 
         feedback = instance.feedback

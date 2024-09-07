@@ -8,7 +8,7 @@ from core.apps.classcom.models import Answer, Feedback
 class InlineAnswer(TabularInline):
     model = Answer
     fields = ["body"]
-    tab = True
+    extra = 0
 
 
 @admin.register(Feedback)

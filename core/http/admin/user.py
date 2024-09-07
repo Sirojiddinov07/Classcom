@@ -31,7 +31,6 @@ class GroupAdmin(ModelAdmin, import_export.ImportExportModelAdmin):
 class ModeratorInline(StackedInline):
     model = Moderator
     can_delete = False
-    tab = True
     verbose_name_plural = "Moderators"
     fields = [
         "balance",
