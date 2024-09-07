@@ -129,7 +129,11 @@ class DownloadHistoryView(APIView):
     def get(self, request, format=None):
         user = request.user
 
-        downloads = Download.objects.filter(user=user).order_by("-created_at")
+        downloads = (
+            Download.objects.filter(user=user)
+            .order_by("media_id", "-created_at")
+            .distinct("media_id")
+        )
 
         paginator = CustomPagination()
         paginated_downloads = paginator.paginate_queryset(downloads, request)

@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-07 14:16+0500\n"
-"PO-Revision-Date: 2024-09-07 14:28+0500\n"
+"POT-Creation-Date: 2024-09-07 16:32+0500\n"
+"PO-Revision-Date: 2024-09-07 16:34+0500\n"
 "Last-Translator: Jahongir Hakimjonov <jahongirhakimjonov@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -176,7 +176,7 @@ msgstr "Предметы"
 msgid "Fan turlari"
 msgstr "Типы предметов"
 
-#: config/conf/navigation.py:211 core/apps/classcom/admin/moderator.py:92
+#: config/conf/navigation.py:211 core/apps/classcom/admin/moderator.py:105
 #: core/apps/classcom/models/plan.py:47
 #: core/apps/classcom/models/science.py:26 core/http/models/science.py:8
 #: core/http/models/science.py:14 core/http/models/science.py:15
@@ -204,38 +204,45 @@ msgstr "Файлы"
 msgid "Media Fayllar"
 msgstr "Медиа-файлы"
 
-#: config/conf/navigation.py:243
+#: config/conf/navigation.py:243 core/apps/classcom/admin/moderator.py:78
+#: core/apps/classcom/models/documents.py:17
+#: core/apps/classcom/models/moderator.py:27
+#| msgid "Hujjat"
+msgid "Hujjatlar"
+msgstr "Документы"
+
+#: config/conf/navigation.py:248
 msgid "Yuklashlar"
 msgstr "Загрузки"
 
-#: config/conf/navigation.py:250 config/conf/navigation.py:259
+#: config/conf/navigation.py:255 config/conf/navigation.py:264
 msgid "To'lovlar"
 msgstr "Платежи"
 
-#: config/conf/navigation.py:254 core/apps/payments/models.py:35
+#: config/conf/navigation.py:259 core/apps/payments/models.py:35
 #: core/apps/payments/models.py:36
 msgid "Buyurtmalar"
 msgstr "Заказы"
 
-#: config/conf/navigation.py:264
+#: config/conf/navigation.py:269
 msgid "Tariflar"
 msgstr "Тарифы"
 
-#: config/conf/navigation.py:271
+#: config/conf/navigation.py:276
 msgid "Qo'shimcha"
 msgstr "Дополнительный"
 
-#: config/conf/navigation.py:275 core/apps/classcom/models/settings.py:15
+#: config/conf/navigation.py:280 core/apps/classcom/models/settings.py:15
 #: core/apps/classcom/models/settings.py:16
 msgid "Sozlamalar"
 msgstr "Настройки"
 
-#: config/conf/navigation.py:280 core/apps/classcom/choices/language.py:37
+#: config/conf/navigation.py:285 core/apps/classcom/choices/language.py:38
 #: core/apps/classcom/models/moderator.py:64
 msgid "Tillar"
 msgstr "Языки"
 
-#: config/conf/navigation.py:287
+#: config/conf/navigation.py:292
 msgid "SMS tasdiqlash"
 msgstr "СМС-верификация"
 
@@ -258,9 +265,10 @@ msgstr "Токен"
 
 #: core/apps/accounts/models/reset_token.py:12
 #: core/apps/classcom/admin/schedule.py:36
-#: core/apps/classcom/admin/teacher.py:29 core/apps/classcom/choices/role.py:8
+#: core/apps/classcom/admin/teacher.py:30 core/apps/classcom/choices/role.py:8
 #: core/apps/classcom/models/chat.py:10
 #: core/apps/classcom/models/days_off.py:20
+#: core/apps/classcom/models/download.py:13
 #: core/apps/classcom/models/feedback.py:27
 #: core/apps/classcom/models/media.py:33
 #: core/apps/classcom/models/moderator.py:14
@@ -289,7 +297,7 @@ msgstr ""
 msgid "Foydalanuvchi topilmadi. Iltimos, qayta kirishni urinib ko'ring."
 msgstr "Пользователь не найден. Пожалуйста, попробуйте снова войти."
 
-#: core/apps/accounts/serializers/moderator.py:30
+#: core/apps/accounts/serializers/moderator.py:32
 #: core/http/serializers/auth.py:30
 msgid "Phone number already registered."
 msgstr "Номер телефона уже зарегистрирован."
@@ -348,27 +356,27 @@ msgstr "Токен неправильный"
 msgid "Parol yangilandi"
 msgstr "Пароль обновлен"
 
-#: core/apps/classcom/admin/chat.py:24 core/apps/classcom/admin/daysoff.py:27
+#: core/apps/classcom/admin/chat.py:24 core/apps/classcom/admin/daysoff.py:28
 #: core/apps/classcom/admin/feedback.py:22
-#: core/apps/classcom/admin/moderator.py:82
-#: core/apps/classcom/admin/plan.py:34 core/apps/classcom/admin/recource.py:29
+#: core/apps/classcom/admin/moderator.py:95
+#: core/apps/classcom/admin/plan.py:34 core/apps/classcom/admin/recource.py:30
 #: core/apps/websocket/admin/notification.py:29
 msgid "Ism Familiya"
 msgstr "Имя Фамилия"
 
-#: core/apps/classcom/admin/moderator.py:34
+#: core/apps/classcom/admin/moderator.py:38
 msgid "Plan Permissions"
 msgstr "Разрешения на тематический план"
 
-#: core/apps/classcom/admin/moderator.py:49
+#: core/apps/classcom/admin/moderator.py:53
 msgid "Resource Permissions"
 msgstr "Разрешения на электронные ресурсы"
 
-#: core/apps/classcom/admin/moderator.py:59
+#: core/apps/classcom/admin/moderator.py:63
 msgid "topic Permissions"
 msgstr "Разрешения темы"
 
-#: core/apps/classcom/admin/moderator.py:87
+#: core/apps/classcom/admin/moderator.py:100
 #: core/apps/classcom/admin/plan.py:44 core/apps/classcom/admin/schedule.py:31
 #: core/apps/classcom/models/moderator.py:53
 #: core/apps/classcom/models/moderator.py:109
@@ -438,12 +446,13 @@ msgid "Rus tili"
 msgstr "Русский язык"
 
 #: core/apps/classcom/choices/language.py:14
-#: core/apps/classcom/choices/language.py:36
+#: core/apps/classcom/choices/language.py:37
 #: core/apps/classcom/models/plan.py:19
 msgid "Til"
 msgstr "Язык"
 
-#: core/apps/classcom/choices/language.py:18
+#: core/apps/classcom/choices/language.py:19
+#: core/apps/classcom/models/documents.py:8
 #: core/apps/classcom/models/media.py:9
 #: core/apps/classcom/models/resource.py:23
 #: core/apps/classcom/models/resource_type.py:9
@@ -458,7 +467,6 @@ msgid "Administrator"
 msgstr "Администратор"
 
 #: core/apps/classcom/choices/role.py:7
-#: core/apps/classcom/models/download.py:20
 #: core/apps/classcom/models/moderator.py:89
 msgid "Moderator"
 msgstr "Модератор"
@@ -643,24 +651,48 @@ msgstr "Причина"
 msgid "Dam olish kuni"
 msgstr "Выходной день"
 
-#: core/apps/classcom/models/download.py:13
-#: core/apps/classcom/models/teacher.py:22
-msgid "O'qituvchi"
-msgstr "Учитель"
+#: core/apps/classcom/models/documents.py:9
+msgid "Tasnifi"
+msgstr "Классификация"
 
-#: core/apps/classcom/models/download.py:22
+#: core/apps/classcom/models/documents.py:10
+#: core/apps/classcom/models/media.py:12
+msgid "Fayl"
+msgstr "Файл"
+
+#: core/apps/classcom/models/documents.py:11 core/apps/payments/models.py:32
+#: core/apps/payments/models.py:50
+msgid "Holati"
+msgstr "Состояние"
+
+#: core/apps/classcom/models/documents.py:12
+#: core/apps/classcom/models/resource_type.py:11
+msgid "Turi"
+msgstr "Тип"
+
+#: core/apps/classcom/models/documents.py:13
+#: core/apps/classcom/models/media.py:17
+msgid "Hajmi"
+msgstr "Размер"
+
+#: core/apps/classcom/models/documents.py:16
+#: core/apps/classcom/models/moderator.py:128
+msgid "Hujjat"
+msgstr "Документ"
+
+#: core/apps/classcom/models/download.py:15
 msgid "Sanasi"
 msgstr "Дата"
 
-#: core/apps/classcom/models/download.py:24
+#: core/apps/classcom/models/download.py:17
 #: core/apps/classcom/models/media.py:53
 #: core/apps/classcom/models/resource.py:54
 #: core/apps/classcom/models/topic.py:17
 msgid "Media"
 msgstr "Медиа"
 
-#: core/apps/classcom/models/download.py:31
-#: core/apps/classcom/models/download.py:32
+#: core/apps/classcom/models/download.py:24
+#: core/apps/classcom/models/download.py:25
 msgid "Yuklamalar"
 msgstr "Загрузки"
 
@@ -707,17 +739,9 @@ msgstr "Отзывы"
 msgid "Tavsif"
 msgstr "Описание"
 
-#: core/apps/classcom/models/media.py:12
-msgid "Fayl"
-msgstr "Файл"
-
 #: core/apps/classcom/models/media.py:14
 msgid "Fayl turi"
 msgstr "Тип файла"
-
-#: core/apps/classcom/models/media.py:17
-msgid "Hajmi"
-msgstr "Размер"
 
 #: core/apps/classcom/models/media.py:23
 msgid "Yuklab olganlar"
@@ -741,11 +765,6 @@ msgstr "Баланс"
 #: core/apps/classcom/models/resource.py:62
 msgid "Daraja"
 msgstr "Степень"
-
-#: core/apps/classcom/models/moderator.py:27
-#: core/apps/classcom/models/moderator.py:128
-msgid "Hujjat"
-msgstr "Документ"
 
 #: core/apps/classcom/models/moderator.py:30
 #: core/apps/classcom/models/moderator.py:131
@@ -814,10 +833,6 @@ msgstr "Ресурс"
 msgid "Resurslar"
 msgstr "Ресурсы"
 
-#: core/apps/classcom/models/resource_type.py:11
-msgid "Turi"
-msgstr "Тип"
-
 #: core/apps/classcom/models/resource_type.py:16
 msgid "Aktiv"
 msgstr "Активный"
@@ -872,6 +887,10 @@ msgstr "Значение"
 #: core/apps/classcom/models/teacher.py:15
 msgid "To'lov holati"
 msgstr "Состояние платежа"
+
+#: core/apps/classcom/models/teacher.py:22
+msgid "O'qituvchi"
+msgstr "Учитель"
 
 #: core/apps/classcom/models/topic.py:15
 msgid "Soatlar"
@@ -957,12 +976,10 @@ msgid "Barcha sharhlar"
 msgstr "Все отзывы"
 
 #: core/apps/home/views/dashboard.py:53
-#| msgid "Javob berilgan fikrlar"
 msgid "Javob berilgan sharhlar"
 msgstr "Отзыв был рассмотрен"
 
 #: core/apps/home/views/dashboard.py:57
-#| msgid "Javob berilmagan fikrlar"
 msgid "Javob berilmagan sharhlar"
 msgstr "Отзыв был не рассмотрен"
 
@@ -978,10 +995,6 @@ msgstr "Дата окончания"
 #: core/apps/payments/models.py:67
 msgid "Narxi"
 msgstr "Цена"
-
-#: core/apps/payments/models.py:32 core/apps/payments/models.py:50
-msgid "Holati"
-msgstr "Состояние"
 
 #: core/apps/payments/models.py:47
 msgid "Buyurtma"

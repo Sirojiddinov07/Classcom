@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-07 14:16+0500\n"
+"POT-Creation-Date: 2024-09-07 16:32+0500\n"
 "PO-Revision-Date: 2024-09-04 14:38+0500\n"
 "Last-Translator: Jahongirrr Hakimjonov <jahongirhakimjonov@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -176,7 +176,7 @@ msgstr ""
 msgid "Fan turlari"
 msgstr ""
 
-#: config/conf/navigation.py:211 core/apps/classcom/admin/moderator.py:92
+#: config/conf/navigation.py:211 core/apps/classcom/admin/moderator.py:105
 #: core/apps/classcom/models/plan.py:47 core/apps/classcom/models/science.py:26
 #: core/http/models/science.py:8 core/http/models/science.py:14
 #: core/http/models/science.py:15 core/http/models/user.py:65
@@ -203,38 +203,44 @@ msgstr ""
 msgid "Media Fayllar"
 msgstr ""
 
-#: config/conf/navigation.py:243
+#: config/conf/navigation.py:243 core/apps/classcom/admin/moderator.py:78
+#: core/apps/classcom/models/documents.py:17
+#: core/apps/classcom/models/moderator.py:27
+msgid "Hujjatlar"
+msgstr ""
+
+#: config/conf/navigation.py:248
 msgid "Yuklashlar"
 msgstr ""
 
-#: config/conf/navigation.py:250 config/conf/navigation.py:259
+#: config/conf/navigation.py:255 config/conf/navigation.py:264
 msgid "To'lovlar"
 msgstr ""
 
-#: config/conf/navigation.py:254 core/apps/payments/models.py:35
+#: config/conf/navigation.py:259 core/apps/payments/models.py:35
 #: core/apps/payments/models.py:36
 msgid "Buyurtmalar"
 msgstr ""
 
-#: config/conf/navigation.py:264
+#: config/conf/navigation.py:269
 msgid "Tariflar"
 msgstr ""
 
-#: config/conf/navigation.py:271
+#: config/conf/navigation.py:276
 msgid "Qo'shimcha"
 msgstr ""
 
-#: config/conf/navigation.py:275 core/apps/classcom/models/settings.py:15
+#: config/conf/navigation.py:280 core/apps/classcom/models/settings.py:15
 #: core/apps/classcom/models/settings.py:16
 msgid "Sozlamalar"
 msgstr ""
 
-#: config/conf/navigation.py:280 core/apps/classcom/choices/language.py:37
+#: config/conf/navigation.py:285 core/apps/classcom/choices/language.py:38
 #: core/apps/classcom/models/moderator.py:64
 msgid "Tillar"
 msgstr ""
 
-#: config/conf/navigation.py:287
+#: config/conf/navigation.py:292
 msgid "SMS tasdiqlash"
 msgstr ""
 
@@ -257,9 +263,10 @@ msgstr ""
 
 #: core/apps/accounts/models/reset_token.py:12
 #: core/apps/classcom/admin/schedule.py:36
-#: core/apps/classcom/admin/teacher.py:29 core/apps/classcom/choices/role.py:8
+#: core/apps/classcom/admin/teacher.py:30 core/apps/classcom/choices/role.py:8
 #: core/apps/classcom/models/chat.py:10
 #: core/apps/classcom/models/days_off.py:20
+#: core/apps/classcom/models/download.py:13
 #: core/apps/classcom/models/feedback.py:27
 #: core/apps/classcom/models/media.py:33
 #: core/apps/classcom/models/moderator.py:14
@@ -287,7 +294,7 @@ msgstr ""
 msgid "Foydalanuvchi topilmadi. Iltimos, qayta kirishni urinib ko'ring."
 msgstr ""
 
-#: core/apps/accounts/serializers/moderator.py:30
+#: core/apps/accounts/serializers/moderator.py:32
 #: core/http/serializers/auth.py:30
 msgid "Phone number already registered."
 msgstr "Telefon raqami allaqachon ro'yxatdan o'tgan."
@@ -344,28 +351,28 @@ msgstr ""
 msgid "Parol yangilandi"
 msgstr ""
 
-#: core/apps/classcom/admin/chat.py:24 core/apps/classcom/admin/daysoff.py:27
+#: core/apps/classcom/admin/chat.py:24 core/apps/classcom/admin/daysoff.py:28
 #: core/apps/classcom/admin/feedback.py:22
-#: core/apps/classcom/admin/moderator.py:82 core/apps/classcom/admin/plan.py:34
-#: core/apps/classcom/admin/recource.py:29
+#: core/apps/classcom/admin/moderator.py:95 core/apps/classcom/admin/plan.py:34
+#: core/apps/classcom/admin/recource.py:30
 #: core/apps/websocket/admin/notification.py:29
 msgid "Ism Familiya"
 msgstr ""
 
-#: core/apps/classcom/admin/moderator.py:34
+#: core/apps/classcom/admin/moderator.py:38
 msgid "Plan Permissions"
 msgstr "Plan yaratish uchun ruhsatlar"
 
-#: core/apps/classcom/admin/moderator.py:49
+#: core/apps/classcom/admin/moderator.py:53
 msgid "Resource Permissions"
 msgstr "Elektron resurs yaratish uchun ruhsatlar"
 
-#: core/apps/classcom/admin/moderator.py:59
+#: core/apps/classcom/admin/moderator.py:63
 msgid "topic Permissions"
 msgstr "Mavzular uchun ruhsatlar"
 
-#: core/apps/classcom/admin/moderator.py:87 core/apps/classcom/admin/plan.py:44
-#: core/apps/classcom/admin/schedule.py:31
+#: core/apps/classcom/admin/moderator.py:100
+#: core/apps/classcom/admin/plan.py:44 core/apps/classcom/admin/schedule.py:31
 #: core/apps/classcom/models/moderator.py:53
 #: core/apps/classcom/models/moderator.py:109
 #: core/apps/classcom/models/plan.py:31
@@ -433,12 +440,13 @@ msgid "Rus tili"
 msgstr ""
 
 #: core/apps/classcom/choices/language.py:14
-#: core/apps/classcom/choices/language.py:36
+#: core/apps/classcom/choices/language.py:37
 #: core/apps/classcom/models/plan.py:19
 msgid "Til"
 msgstr ""
 
-#: core/apps/classcom/choices/language.py:18
+#: core/apps/classcom/choices/language.py:19
+#: core/apps/classcom/models/documents.py:8
 #: core/apps/classcom/models/media.py:9
 #: core/apps/classcom/models/resource.py:23
 #: core/apps/classcom/models/resource_type.py:9
@@ -453,7 +461,6 @@ msgid "Administrator"
 msgstr ""
 
 #: core/apps/classcom/choices/role.py:7
-#: core/apps/classcom/models/download.py:20
 #: core/apps/classcom/models/moderator.py:89
 msgid "Moderator"
 msgstr ""
@@ -638,24 +645,48 @@ msgstr ""
 msgid "Dam olish kuni"
 msgstr ""
 
-#: core/apps/classcom/models/download.py:13
-#: core/apps/classcom/models/teacher.py:22
-msgid "O'qituvchi"
+#: core/apps/classcom/models/documents.py:9
+msgid "Tasnifi"
 msgstr ""
 
-#: core/apps/classcom/models/download.py:22
+#: core/apps/classcom/models/documents.py:10
+#: core/apps/classcom/models/media.py:12
+msgid "Fayl"
+msgstr ""
+
+#: core/apps/classcom/models/documents.py:11 core/apps/payments/models.py:32
+#: core/apps/payments/models.py:50
+msgid "Holati"
+msgstr ""
+
+#: core/apps/classcom/models/documents.py:12
+#: core/apps/classcom/models/resource_type.py:11
+msgid "Turi"
+msgstr ""
+
+#: core/apps/classcom/models/documents.py:13
+#: core/apps/classcom/models/media.py:17
+msgid "Hajmi"
+msgstr ""
+
+#: core/apps/classcom/models/documents.py:16
+#: core/apps/classcom/models/moderator.py:128
+msgid "Hujjat"
+msgstr ""
+
+#: core/apps/classcom/models/download.py:15
 msgid "Sanasi"
 msgstr ""
 
-#: core/apps/classcom/models/download.py:24
+#: core/apps/classcom/models/download.py:17
 #: core/apps/classcom/models/media.py:53
 #: core/apps/classcom/models/resource.py:54
 #: core/apps/classcom/models/topic.py:17
 msgid "Media"
 msgstr ""
 
-#: core/apps/classcom/models/download.py:31
-#: core/apps/classcom/models/download.py:32
+#: core/apps/classcom/models/download.py:24
+#: core/apps/classcom/models/download.py:25
 msgid "Yuklamalar"
 msgstr ""
 
@@ -702,16 +733,8 @@ msgstr ""
 msgid "Tavsif"
 msgstr ""
 
-#: core/apps/classcom/models/media.py:12
-msgid "Fayl"
-msgstr ""
-
 #: core/apps/classcom/models/media.py:14
 msgid "Fayl turi"
-msgstr ""
-
-#: core/apps/classcom/models/media.py:17
-msgid "Hajmi"
 msgstr ""
 
 #: core/apps/classcom/models/media.py:23
@@ -735,11 +758,6 @@ msgstr ""
 #: core/apps/classcom/models/moderator.py:122
 #: core/apps/classcom/models/resource.py:62
 msgid "Daraja"
-msgstr ""
-
-#: core/apps/classcom/models/moderator.py:27
-#: core/apps/classcom/models/moderator.py:128
-msgid "Hujjat"
 msgstr ""
 
 #: core/apps/classcom/models/moderator.py:30
@@ -809,10 +827,6 @@ msgstr ""
 msgid "Resurslar"
 msgstr ""
 
-#: core/apps/classcom/models/resource_type.py:11
-msgid "Turi"
-msgstr ""
-
 #: core/apps/classcom/models/resource_type.py:16
 msgid "Aktiv"
 msgstr ""
@@ -866,6 +880,10 @@ msgstr ""
 
 #: core/apps/classcom/models/teacher.py:15
 msgid "To'lov holati"
+msgstr ""
+
+#: core/apps/classcom/models/teacher.py:22
+msgid "O'qituvchi"
 msgstr ""
 
 #: core/apps/classcom/models/topic.py:15
@@ -970,10 +988,6 @@ msgstr ""
 #: core/apps/payments/models.py:31 core/apps/payments/models.py:49
 #: core/apps/payments/models.py:67
 msgid "Narxi"
-msgstr ""
-
-#: core/apps/payments/models.py:32 core/apps/payments/models.py:50
-msgid "Holati"
 msgstr ""
 
 #: core/apps/payments/models.py:47
