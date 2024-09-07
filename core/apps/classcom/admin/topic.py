@@ -6,14 +6,8 @@ from core.apps.classcom.models import Topic
 from core.apps.classcom.resources import TopicResource
 
 
-# from unfold.contrib.import_export.forms import ExportForm, ImportForm
-
-
 @admin.register(Topic)
 class TopicAdmin(ModelAdmin, ImportExportModelAdmin):
-    # import_form_class = ImportForm
-    # export_form_class = ExportForm
-    # export_form_class = SelectableFieldsExportForm
     """Topic admin
 
     Args:
