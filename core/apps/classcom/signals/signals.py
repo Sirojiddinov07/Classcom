@@ -2,7 +2,7 @@ from django.db.models.signals import post_save, pre_delete
 from django.dispatch import receiver
 
 from core.apps.websocket.models.notification import Notification
-from ..models import TempModerator, Moderator, Topic, Plan
+from ..models import TempModerator, Moderator, Topic, Plan, Chat
 from ..models.feedback import Answer
 
 
@@ -48,3 +48,13 @@ def reorder_topics_on_delete(sender, instance, **kwargs):
             for index, topic in enumerate(related_topics, start=1):
                 topic.sequence_number = index
                 topic.save()
+
+
+@receiver(post_save, sender=Chat)
+def notify_user_on_response(sender, instance, created, **kwargs):
+    text_uz = "Sizning xabaringizga javob berildi"
+    text_ru = "Вашему сообщению был дан ответ"
+    if instance.response and not created:
+        Notification.objects.create(
+            user=instance.user, message_uz=text_uz, message_ru=text_ru
+        )
