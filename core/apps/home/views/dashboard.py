@@ -46,15 +46,15 @@ class DashboardView(View):
                     "value": self.plan.all().count(),
                 },
                 {
-                    "title": _("Fikrlar"),
+                    "title": _("Barcha sharhlar"),
                     "value": self.feedback.all().count(),
                 },
                 {
-                    "title": _("Javob berilgan fikrlar"),
+                    "title": _("Javob berilgan sharhlar"),
                     "value": self.feedback.filter(answered=True).count(),
                 },
                 {
-                    "title": _("Javob berilmagan fikrlar"),
+                    "title": _("Javob berilmagan sharhlar"),
                     "value": self.feedback.filter(answered=False).count(),
                 },
             ]

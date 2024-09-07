@@ -26,11 +26,11 @@ class TopicResource(resources.ModelResource):
             try:
                 plan = Plan.objects.get(id=self.plan_id)
                 if instance.hours > 1:
-                    for _ in range(instance.hours - 1):
+                    for i in range(1, instance.hours):
                         new_instance = Topic.objects.create(
                             name=instance.name,
                             description=instance.description,
-                            sequence_number=instance.sequence_number,
+                            sequence_number=instance.sequence_number + i,
                             hours=1,
                             media_creatable=instance.media_creatable,
                             weeks=instance.weeks,
@@ -38,6 +38,10 @@ class TopicResource(resources.ModelResource):
                         new_instance.media.set(instance.media.all())
                         plan.topic.add(new_instance)
                 plan.topic.add(instance)
+                related_topics = plan.topic.all().order_by("sequence_number")
+                for index, topic in enumerate(related_topics, start=1):
+                    topic.sequence_number = index
+                    topic.save()
                 plan.save()
             except Plan.DoesNotExist:
                 pass
