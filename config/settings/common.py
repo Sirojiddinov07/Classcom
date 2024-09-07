@@ -20,8 +20,6 @@ INSTALLED_APPS = [
     "daphne",
     # Design admin panel
     "unfold",
-    "unfold.contrib.import_export",
-    # "jazzmin",
     "django_select2",
     "modeltranslation",
     # Default apps
