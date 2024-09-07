@@ -22,6 +22,7 @@ class TeacherAdmin(ModelAdmin):
         "payment_status",
         "science",
     )
+    filter_horizontal = ("science",)
 
     def user(self, obj):
         return f"{obj.user.first_name} {obj.user.last_name}"

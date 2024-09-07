@@ -12,6 +12,7 @@ class LanguageModel(models.Model):
         max_length=2,
         choices=Language.choices,
         verbose_name=_("Til"),
+        unique=True,
     )
     name = models.CharField(
         max_length=255,

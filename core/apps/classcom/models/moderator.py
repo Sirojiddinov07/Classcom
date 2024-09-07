@@ -20,11 +20,11 @@ class Moderator(AbstractBaseModel):
         default=choices.Degree.AUTHOR,
         verbose_name=_("Daraja"),
     )
-    docs = models.FileField(
-        upload_to="documents/",
-        null=True,
+    docs = models.ManyToManyField(
+        "Document",
         blank=True,
-        verbose_name=_("Hujjat"),
+        related_name="moderators",
+        verbose_name=_("Hujjatlar"),
     )
     is_contracted = models.BooleanField(
         default=False, verbose_name=_("Shartnoma")

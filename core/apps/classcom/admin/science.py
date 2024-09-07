@@ -17,3 +17,4 @@ class ScienceAdmin(ModelAdmin, TabbedTranslationAdmin):
     search_fields = ("name",)
     ordering = ("order_number",)
     list_filter = ("types",)
+    filter_horizontal = ("types",)

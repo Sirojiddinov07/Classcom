@@ -5,19 +5,12 @@ from core.http.models import AbstractBaseModel
 
 
 class Download(AbstractBaseModel):
-    teacher = models.ForeignKey(
-        "Teacher",
+    user = models.ForeignKey(
+        "http.User",
         on_delete=models.CASCADE,
         blank=True,
         null=True,
-        verbose_name=_("O'qituvchi"),
-    )
-    moderator = models.ForeignKey(
-        "Moderator",
-        on_delete=models.CASCADE,
-        blank=True,
-        null=True,
-        verbose_name=_("Moderator"),
+        verbose_name=_("Foydalanuvchi"),
     )
     date = models.DateField(verbose_name=_("Sanasi"))
     media = models.ForeignKey(

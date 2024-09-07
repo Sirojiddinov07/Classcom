@@ -18,7 +18,9 @@ class ModeratorSerializer(serializers.ModelSerializer):
         )
     )
     degree = serializers.ChoiceField(choices=Degree.choices)
-    docs = serializers.FileField()
+    docs = serializers.ListField(
+        child=serializers.FileField(), write_only=True
+    )
     role = serializers.CharField(read_only=True, default="moderator")
 
     def validate_phone(self, value):
@@ -33,8 +35,11 @@ class ModeratorSerializer(serializers.ModelSerializer):
 
     def create(self, data):
         try:
-            docs = self.context.get("request").FILES["docs"]
-            file = default_storage.save(docs.name, ContentFile(docs.read()))
+            docs_files = self.context.get("request").FILES.getlist("docs")
+            saved_files = []
+            for doc in docs_files:
+                file = default_storage.save(doc.name, ContentFile(doc.read()))
+                saved_files.append(file)
             user = UserService().create_user(
                 phone=data.get("phone"),
                 first_name=data.get("first_name"),
@@ -52,7 +57,7 @@ class ModeratorSerializer(serializers.ModelSerializer):
             )
             return Moderator.objects.update_or_create(
                 user=user,
-                defaults={"degree": data.get("degree"), "docs": file},
+                defaults={"degree": data.get("degree"), "docs": saved_files},
             )
         except Exception as e:
             raise exceptions.ValidationError({"detail": e})

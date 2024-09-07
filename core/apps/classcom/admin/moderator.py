@@ -5,14 +5,17 @@ from unfold.admin import ModelAdmin
 from core.apps.classcom.models import Moderator, TempModerator
 
 
+from django.utils.html import format_html
+
+
 @admin.register(Moderator)
 class ModeratorAdmin(ModelAdmin):
     list_display = (
         "id",
         "full_name",
         "is_contracted",
-        "docs",
         "degree",
+        "docs_links",
     )
     search_fields = ("user__first_name", "user__last_name", "user__phone")
     filter_horizontal = (
@@ -23,6 +26,7 @@ class ModeratorAdmin(ModelAdmin):
         "classes",
         "class_groups",
         "quarters",
+        "docs",
     )
     ordering = ("-updated_at",)
     fieldsets = (
@@ -63,6 +67,15 @@ class ModeratorAdmin(ModelAdmin):
 
     def full_name(self, obj):
         return f"{obj.user.first_name} {obj.user.last_name}"
+
+    def docs_links(self, obj):
+        links = [
+            format_html('<a href="{}">{}</a>', doc.url, doc.title)
+            for doc in obj.docs.all()
+        ]
+        return format_html("<br>".join(links))
+
+    docs_links.short_description = _("Hujjatlar")
 
 
 @admin.register(TempModerator)
