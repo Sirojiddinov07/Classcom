@@ -1,8 +1,7 @@
 from django.contrib import admin
+from unfold.admin import ModelAdmin
 
 from .models import Plans, Payments, Orders
-
-from unfold.admin import ModelAdmin
 
 
 @admin.register(Orders)
@@ -19,6 +18,7 @@ class OrdersAdmin(ModelAdmin):
         "user__last_name",
         "user__phone",
     )
+    filter_horizontal = ("types",)
 
 
 @admin.register(Payments)

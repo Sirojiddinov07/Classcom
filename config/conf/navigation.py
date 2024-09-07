@@ -240,6 +240,11 @@ PAGES = [
                 "link": reverse_lazy("admin:classcom_media_changelist"),
             },
             {
+                "title": _("Hujjatlar"),
+                "icon": "folder_open",
+                "link": reverse_lazy("admin:classcom_document_changelist"),
+            },
+            {
                 "title": _("Yuklashlar"),
                 "icon": "download",
                 "link": reverse_lazy("admin:classcom_download_changelist"),

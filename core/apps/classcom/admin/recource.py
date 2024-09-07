@@ -22,6 +22,7 @@ class ResourceAdmin(ModelAdmin, TabbedTranslationAdmin):
         "user__phone",
     )
     ordering = ("order_number",)
+    filter_horizontal = ("media",)
 
     def full_name(self, obj):
         return f"{obj.user.first_name} {obj.user.last_name}"

@@ -18,3 +18,4 @@ class MediaAdmin(ModelAdmin, TabbedTranslationAdmin):
     search_fields = ("name",)
     list_filter = ("type",)
     readonly_fields = ("created_at", "updated_at")
+    filter_horizontal = ("download_users",)

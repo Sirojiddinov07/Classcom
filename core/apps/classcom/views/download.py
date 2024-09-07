@@ -12,7 +12,6 @@ from core.apps.classcom.choices import Role
 from core.apps.classcom.models import (
     Download,
     DownloadToken,
-    Teacher,
 )
 from core.apps.classcom.models import Media, Plan, Moderator
 from core.apps.classcom.views import CustomPagination
@@ -26,17 +25,9 @@ class DownloadMediaView(APIView):
         user = request.user
         current_date = datetime.date.today()
         media = get_object_or_404(Media, id=media_id)
-        teacher = (
-            get_object_or_404(Teacher, user=user)
-            if Teacher.objects.filter(user=user).exists()
-            else None
-        )
 
         # Check if media has an associated topic
         plan = Plan.objects.filter(topic__media=media).first()
-        moderator = (
-            get_object_or_404(Moderator, user=plan.user) if plan else None
-        )
 
         order = None
         if plan:
@@ -56,10 +47,9 @@ class DownloadMediaView(APIView):
             raise Http404("You can't download this file")
 
         download = Download.objects.create(
-            teacher=teacher,
+            user=user,
             media=media,
             date=current_date,
-            moderator=moderator,
         )
 
         if plan:
@@ -138,21 +128,8 @@ class DownloadHistoryView(APIView):
 
     def get(self, request, format=None):
         user = request.user
-        teacher = Teacher.objects.filter(user=user).first()
-        moderator = None
 
-        if not teacher:
-            moderator = get_object_or_404(Moderator, user=user)
-
-        downloads = (
-            (
-                Download.objects.filter(teacher=teacher)
-                if teacher
-                else Download.objects.filter(moderator=moderator)
-            )
-            .order_by("media_id", "-created_at")
-            .distinct("media_id")
-        )
+        downloads = Download.objects.filter(user=user).order_by("-created_at")
 
         paginator = CustomPagination()
         paginated_downloads = paginator.paginate_queryset(downloads, request)

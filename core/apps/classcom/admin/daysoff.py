@@ -20,6 +20,7 @@ class DaysOffAdmin(ModelAdmin):
         "user__phone",
         "reason",
     )
+    filter_horizontal = ("science", "_class")
 
     def full_name(self, obj):
         return f"{obj.user.first_name} {obj.user.last_name}"
