@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-09-07 16:32+0500\n"
-"PO-Revision-Date: 2024-09-07 16:34+0500\n"
+"PO-Revision-Date: 2024-09-07 16:55+0500\n"
 "Last-Translator: Jahongir Hakimjonov <jahongirhakimjonov@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -159,7 +159,7 @@ msgstr "Чат"
 
 #: config/conf/navigation.py:185
 msgid "Fikr mulohazalar"
-msgstr "Мнения"
+msgstr "Отзывы"
 
 #: config/conf/navigation.py:190 core/apps/classcom/models/feedback.py:56
 msgid "Javoblar"

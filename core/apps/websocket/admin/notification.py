@@ -22,6 +22,7 @@ class NotificationAdmin(ModelAdmin, TabbedTranslationAdmin):
         "user__last_name",
         "user__phone",
     )
+    list_filter = ("is_read", "is_sending")
 
     def full_name(self, obj):
         return f"{obj.user.first_name} {obj.user.last_name}"

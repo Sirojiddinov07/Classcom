@@ -55,12 +55,13 @@ class ModeratorSerializer(serializers.ModelSerializer):
                 school_type_id=data.get("school_type").id,
                 class_group_id=data.get("class_group").id,
             )
-            return Moderator.objects.update_or_create(
-                user=user,
-                defaults={"degree": data.get("degree"), "docs": saved_files},
+            moderator, created = Moderator.objects.update_or_create(
+                user=user, defaults={"degree": data.get("degree")}
             )
+            moderator.docs.set(saved_files)
+            return moderator
         except Exception as e:
-            raise exceptions.ValidationError({"detail": e})
+            raise exceptions.ValidationError({"detail": str(e)})
 
     class Meta:
         model = models.User

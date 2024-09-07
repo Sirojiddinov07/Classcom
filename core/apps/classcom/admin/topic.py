@@ -17,9 +17,9 @@ class TopicAdmin(ModelAdmin, ImportExportModelAdmin):
     resource_class = TopicResource
     list_display = (
         "id",
+        "sequence_number",
         "name",
         "description",
-        "sequence_number",
     )
     search_fields = (
         "name",
