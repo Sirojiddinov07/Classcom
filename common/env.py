@@ -22,4 +22,6 @@ env = environ.Env(
     VITE_HOST=(str, "vite"),
     NGROK_AUTHTOKEN=(str, "TOKEN"),
     START_DATE=(str, "04.04.2024"),
+    UZUM_ID=(str, "id"),
+    UZUM_KEY=(str, "key"),
 )

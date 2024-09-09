@@ -35,6 +35,7 @@ INSTALLED_APPS = [
 INSTALLED_APPS += apps.INSTALLED_APPS  # noqa
 
 MIDDLEWARE = [
+    "core.middlewares.AppendSlashWithoutRedirect",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "corsheaders.middleware.CorsMiddleware",  # Cors middleware
