@@ -29,8 +29,6 @@ document.addEventListener('DOMContentLoaded', function () {
         label = labelElement.textContent;
     }
 
-    console.log(labels);
-    console.log(data);
 
     // Create the chart
     const ctx = document.getElementById('userCountChart').getContext('2d');

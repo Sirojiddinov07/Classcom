@@ -13,6 +13,11 @@
             text-align: center;
             margin-bottom: 20px;
         }
+
+        .chart-container {
+            width: 1000px;
+            height: 400px; /* Adjust the height as needed */
+        }
     </style>
     <!-- Include Chart.js from a CDN -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -22,12 +27,13 @@
 <body>
 <div class="container">
     <h1 class="chart-title">{% translate 'Viloyatlar kesimida foydalanuvchilar soni' %}</h1>
-    <canvas id="userCountChart"></canvas> <!-- Adjusted width and height -->
+    <div class="chart-container">
+        <canvas id="userCountChart"></canvas>
+    </div>
 
     <!-- Pass data to JavaScript via hidden elements -->
     <script id="chart-labels" type="application/json">{{ labels|safe }}</script>
     <script id="chart-data" type="application/json">{{ data|safe }}</script>
-    <!-- resources/templates/components/chart.html -->
     <script id="chart-label" type="application/json">{% trans "Foydalanuvchilar soni" %}</script>
 </div>
 </body>
