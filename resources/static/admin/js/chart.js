@@ -61,15 +61,15 @@ document.addEventListener('DOMContentLoaded', function () {
                 {
                     label: userLabel,
                     data: userData,
-                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                    borderColor: 'rgb(75, 192, 192)',
+                    backgroundColor: 'rgb(65,144,176, 0.2)',
+                    borderColor: 'rgb(65,144,176)',
                     borderWidth: 1
                 },
                 {
                     label: moderatorLabel,
                     data: moderatorData,
-                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                    borderColor: 'rgb(255, 99, 132)',
+                    backgroundColor: 'rgb(255,44,44, 0.2)',
+                    borderColor: 'rgb(255,44,44)',
                     borderWidth: 1
                 }
             ]
