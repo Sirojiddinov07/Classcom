@@ -1,12 +1,16 @@
+import json
+
 from django.contrib.admin import site
 from django.contrib.auth.decorators import login_required
 from django.core.cache import cache
+from django.db.models import Count
 from django.shortcuts import render
 from django.utils.decorators import method_decorator
 from django.utils.translation import gettext_lazy as _
 from django.views import View
 
 from core.apps.classcom.models import Resource, Feedback, Plan
+from core.http.models import Region
 from core.http.models import User
 
 
@@ -65,7 +69,35 @@ class DashboardView(View):
     def get(self, request):
         context = dict(site.each_context(request))
 
-        # ! Context
+        # Add cards to context
         context.update({"cards": self.get_cards()})
+
+        # Fetch and process region user counts
+        regions = Region.objects.all()
+        region_user_counts = User.objects.values("region__region").annotate(
+            user_count=Count("id")
+        )
+        region_user_counts_dict = {
+            item["region__region"]: item["user_count"]
+            for item in region_user_counts
+        }
+        region_user_counts = [
+            {
+                "region__region": region.region,
+                "user_count": region_user_counts_dict.get(region.region, 0),
+            }
+            for region in regions
+        ]
+        labels = [region["region__region"] for region in region_user_counts]
+        data = [region["user_count"] for region in region_user_counts]
+
+        # Update context with region user counts
+        context.update(
+            {
+                "region_user_counts": region_user_counts,
+                "labels": json.dumps(labels),
+                "data": json.dumps(data),
+            }
+        )
 
         return render(request, "admin/dashboard.html", context)
