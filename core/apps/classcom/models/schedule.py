@@ -3,6 +3,7 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 
 from core.apps.classcom import choices
+from core.apps.classcom.models import ScienceTypes
 from core.http.models import AbstractBaseModel
 from core.http.models.school_group import ClassGroup
 
@@ -60,6 +61,13 @@ class Schedule(AbstractBaseModel):
         ClassGroup,
         models.CASCADE,
         verbose_name=_("Sinflar guruhi"),
+        null=True,
+        blank=True,
+    )
+    science_type = models.ForeignKey(
+        ScienceTypes,
+        models.CASCADE,
+        verbose_name=_("Fan turi"),
         null=True,
         blank=True,
     )

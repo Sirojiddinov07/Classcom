@@ -1,13 +1,15 @@
-// resources/static/admin/js/chart.js
 document.addEventListener('DOMContentLoaded', function () {
-    // Retrieve and parse JSON data from hidden script elements
     const labelsElement = document.getElementById('chart-labels');
-    const dataElement = document.getElementById('chart-data');
-    const labelElement = document.getElementById('chart-label');
+    const userDataElement = document.getElementById('chart-user-data');
+    const moderatorDataElement = document.getElementById('chart-moderator-data');
+    const userLabelElement = document.getElementById('chart-user-label');
+    const moderatorLabelElement = document.getElementById('chart-moderator-label');
 
     let labels = [];
-    let data = [];
-    let label = 'User Count'; // Default label
+    let userData = [];
+    let moderatorData = [];
+    let userLabel = 'Foydaluvchilar soni';
+    let moderatorLabel = 'Moderatorlar soni';
 
     if (labelsElement && labelsElement.textContent) {
         try {
@@ -17,32 +19,60 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    if (dataElement && dataElement.textContent) {
+    if (userDataElement && userDataElement.textContent) {
         try {
-            data = JSON.parse(dataElement.textContent);
+            userData = JSON.parse(userDataElement.textContent);
         } catch (e) {
-            console.error('Error parsing data JSON:', e);
+            console.error('Error parsing user data JSON:', e);
         }
     }
 
-    if (labelElement && labelElement.textContent) {
-        label = labelElement.textContent;
+    if (moderatorDataElement && moderatorDataElement.textContent) {
+        try {
+            moderatorData = JSON.parse(moderatorDataElement.textContent);
+        } catch (e) {
+            console.error('Error parsing moderator data JSON:', e);
+        }
     }
 
+    if (userLabelElement && userLabelElement.textContent) {
+        try {
+            userLabel = userLabelElement.textContent;
+        } catch (e) {
+            console.error('Error parsing user label:', e);
+        }
+    }
 
-    // Create the chart
+    if (moderatorLabelElement && moderatorLabelElement.textContent) {
+        try {
+            moderatorLabel = moderatorLabelElement.textContent;
+        } catch (e) {
+            console.error('Error parsing moderator label:', e);
+        }
+    }
+
     const ctx = document.getElementById('userCountChart').getContext('2d');
+
     const userCountChart = new Chart(ctx, {
         type: 'bar',
         data: {
             labels: labels,
-            datasets: [{
-                label: label,
-                data: data,
-                backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                borderColor: 'rgb(65,144,176)',
-                borderWidth: 1
-            }]
+            datasets: [
+                {
+                    label: userLabel,
+                    data: userData,
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    borderColor: 'rgb(75, 192, 192)',
+                    borderWidth: 1
+                },
+                {
+                    label: moderatorLabel,
+                    data: moderatorData,
+                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                    borderColor: 'rgb(255, 99, 132)',
+                    borderWidth: 1
+                }
+            ]
         },
         options: {
             scales: {

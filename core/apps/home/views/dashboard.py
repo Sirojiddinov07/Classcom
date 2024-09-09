@@ -3,7 +3,7 @@ import json
 from django.contrib.admin import site
 from django.contrib.auth.decorators import login_required
 from django.core.cache import cache
-from django.db.models import Count
+from django.db.models import Count, Q
 from django.shortcuts import render
 from django.utils.decorators import method_decorator
 from django.utils.translation import gettext_lazy as _
@@ -75,28 +75,41 @@ class DashboardView(View):
         # Fetch and process region user counts
         regions = Region.objects.all()
         region_user_counts = User.objects.values("region_id").annotate(
-            user_count=Count("id")
+            user_count=Count("id", filter=Q(role="user")),
+            moderator_count=Count("id", filter=Q(role="moderator")),
         )
         region_user_counts_dict = {
-            item["region_id"]: item["user_count"]
+            item["region_id"]: {
+                "user_count": item["user_count"],
+                "moderator_count": item["moderator_count"],
+            }
             for item in region_user_counts
         }
         region_user_counts = [
             {
                 "region_region": region.region,
-                "user_count": region_user_counts_dict.get(region.id, 0),
+                "user_count": region_user_counts_dict.get(region.id, {}).get(
+                    "user_count", 0
+                ),
+                "moderator_count": region_user_counts_dict.get(
+                    region.id, {}
+                ).get("moderator_count", 0),
             }
             for region in regions
         ]
         labels = [region["region_region"] for region in region_user_counts]
-        data = [region["user_count"] for region in region_user_counts]
+        user_data = [region["user_count"] for region in region_user_counts]
+        moderator_data = [
+            region["moderator_count"] for region in region_user_counts
+        ]
 
-        # Update context with region user counts
+        # Update context with region user counts and moderator counts
         context.update(
             {
                 "region_user_counts": region_user_counts,
                 "labels": json.dumps(labels),
-                "data": json.dumps(data),
+                "user_data": json.dumps(user_data),
+                "moderator_data": json.dumps(moderator_data),
             }
         )
 
