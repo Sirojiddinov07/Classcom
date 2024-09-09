@@ -38,4 +38,4 @@ class OrderSerializer(serializers.ModelSerializer):
 
 class PaymentCreateSerializer(serializers.Serializer):
     order = serializers.PrimaryKeyRelatedField(queryset=Orders.objects.all())
-    status = serializers.BooleanField()
+    status = serializers.BooleanField(read_only=True)
