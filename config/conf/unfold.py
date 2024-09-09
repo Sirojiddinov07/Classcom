@@ -28,7 +28,7 @@ UNFOLD = {
     "SHOW_HISTORY": True,  # show/hide "History" button, default: True
     "SHOW_VIEW_ON_SITE": True,
     "LOGIN": {
-        "image": lambda request: static("images/login.png"),
+        "image": lambda request: static("images/login.jpg"),
     },
     # "THEME": "dark",
     "STYLES": [
