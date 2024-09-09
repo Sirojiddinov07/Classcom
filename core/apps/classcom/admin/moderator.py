@@ -1,11 +1,9 @@
 from django.contrib import admin
+from django.utils.html import format_html
 from django.utils.translation import gettext_lazy as _
 from unfold.admin import ModelAdmin
 
 from core.apps.classcom.models import Moderator, TempModerator
-
-
-from django.utils.html import format_html
 
 
 @admin.register(Moderator)
@@ -27,6 +25,10 @@ class ModeratorAdmin(ModelAdmin):
         "class_groups",
         "quarters",
         "docs",
+    )
+    list_filter = (
+        "is_contracted",
+        "degree",
     )
     ordering = ("-updated_at",)
     fieldsets = (
