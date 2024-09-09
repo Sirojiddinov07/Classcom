@@ -21,5 +21,4 @@ urlpatterns = [
     path("posts/", include(router.urls), name="posts"),
     path("", views.HomeView.as_view(), name="home"),
     path("change_language/", change_language, name="change_language"),
-    path("user_count/", views.user_count_view, name="user_count"),
 ]

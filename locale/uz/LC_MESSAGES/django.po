@@ -8,9 +8,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-07 16:32+0500\n"
-"PO-Revision-Date: 2024-09-04 14:38+0500\n"
-"Last-Translator: Jahongirrr Hakimjonov <jahongirhakimjonov@gmail.com>\n"
+"POT-Creation-Date: 2024-09-09 14:37+0500\n"
+"PO-Revision-Date: 2024-09-09 14:40+0500\n"
+"Last-Translator: Jahongir Hakimjonov <jahongirhakimjonov@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
@@ -32,7 +32,7 @@ msgid "Statistika"
 msgstr ""
 
 #: config/conf/navigation.py:22 config/conf/navigation.py:26
-#: core/apps/home/views/dashboard.py:29 core/http/models/user.py:114
+#: core/apps/home/views/dashboard.py:33 core/http/models/user.py:114
 #: core/http/models/user.py:115
 msgid "Foydalanuvchilar"
 msgstr ""
@@ -42,7 +42,7 @@ msgid "Guruhlar"
 msgstr ""
 
 #: config/conf/navigation.py:36 core/apps/classcom/models/moderator.py:90
-#: core/apps/home/views/dashboard.py:33
+#: core/apps/home/views/dashboard.py:37
 msgid "Moderatorlar"
 msgstr ""
 
@@ -67,7 +67,7 @@ msgid "Mavzular"
 msgstr ""
 
 #: config/conf/navigation.py:71 config/conf/navigation.py:75
-#: core/apps/home/views/dashboard.py:41
+#: core/apps/home/views/dashboard.py:45
 msgid "Elektron resurslar"
 msgstr ""
 
@@ -177,9 +177,10 @@ msgid "Fan turlari"
 msgstr ""
 
 #: config/conf/navigation.py:211 core/apps/classcom/admin/moderator.py:105
-#: core/apps/classcom/models/plan.py:47 core/apps/classcom/models/science.py:26
-#: core/http/models/science.py:8 core/http/models/science.py:14
-#: core/http/models/science.py:15 core/http/models/user.py:65
+#: core/apps/classcom/models/plan.py:47
+#: core/apps/classcom/models/science.py:26 core/http/models/science.py:8
+#: core/http/models/science.py:14 core/http/models/science.py:15
+#: core/http/models/user.py:65
 msgid "Fan guruhi"
 msgstr ""
 
@@ -294,7 +295,7 @@ msgstr ""
 msgid "Foydalanuvchi topilmadi. Iltimos, qayta kirishni urinib ko'ring."
 msgstr ""
 
-#: core/apps/accounts/serializers/moderator.py:32
+#: core/apps/accounts/serializers/moderator.py:34
 #: core/http/serializers/auth.py:30
 msgid "Phone number already registered."
 msgstr "Telefon raqami allaqachon ro'yxatdan o'tgan."
@@ -353,9 +354,9 @@ msgstr ""
 
 #: core/apps/classcom/admin/chat.py:24 core/apps/classcom/admin/daysoff.py:28
 #: core/apps/classcom/admin/feedback.py:22
-#: core/apps/classcom/admin/moderator.py:95 core/apps/classcom/admin/plan.py:34
-#: core/apps/classcom/admin/recource.py:30
-#: core/apps/websocket/admin/notification.py:29
+#: core/apps/classcom/admin/moderator.py:95
+#: core/apps/classcom/admin/plan.py:34 core/apps/classcom/admin/recource.py:30
+#: core/apps/websocket/admin/notification.py:30
 msgid "Ism Familiya"
 msgstr ""
 
@@ -383,7 +384,8 @@ msgstr "Mavzular uchun ruhsatlar"
 msgid "Fan"
 msgstr ""
 
-#: core/apps/classcom/admin/plan.py:49 core/apps/classcom/models/schedule.py:43
+#: core/apps/classcom/admin/plan.py:49
+#: core/apps/classcom/models/schedule.py:43
 msgid "Sinflar turi"
 msgstr ""
 
@@ -451,8 +453,8 @@ msgstr ""
 #: core/apps/classcom/models/resource.py:23
 #: core/apps/classcom/models/resource_type.py:9
 #: core/apps/classcom/models/science.py:9
-#: core/apps/classcom/models/science.py:20 core/apps/classcom/models/topic.py:8
-#: core/http/models/another.py:9
+#: core/apps/classcom/models/science.py:20
+#: core/apps/classcom/models/topic.py:8 core/http/models/another.py:9
 msgid "Nomi"
 msgstr ""
 
@@ -957,23 +959,23 @@ msgstr "Sizda mavzu yo'q"
 msgid "Moderator topilmadi."
 msgstr ""
 
-#: core/apps/home/views/dashboard.py:37
+#: core/apps/home/views/dashboard.py:41
 msgid "Ustozlar"
 msgstr ""
 
-#: core/apps/home/views/dashboard.py:45
+#: core/apps/home/views/dashboard.py:49
 msgid "Kalendar tematik rejalar"
 msgstr ""
 
-#: core/apps/home/views/dashboard.py:49
+#: core/apps/home/views/dashboard.py:53
 msgid "Barcha sharhlar"
 msgstr ""
 
-#: core/apps/home/views/dashboard.py:53
+#: core/apps/home/views/dashboard.py:57
 msgid "Javob berilgan sharhlar"
 msgstr ""
 
-#: core/apps/home/views/dashboard.py:57
+#: core/apps/home/views/dashboard.py:61
 msgid "Javob berilmagan sharhlar"
 msgstr ""
 
@@ -1206,6 +1208,14 @@ msgstr ""
 
 #: resources/templates/admin/base.html:11
 msgid "Django administration"
+msgstr ""
+
+#: resources/templates/components/chart.html:25
+msgid "Viloyatlar kesimida foydalanuvchilar soni"
+msgstr "Foydalanuvchilar soni (Viloyatlar kesimida)"
+
+#: resources/templates/components/chart.html:32
+msgid "Foydalanuvchilar soni"
 msgstr ""
 
 #: resources/templates/user/home.html:19

@@ -22,6 +22,7 @@ class Command(base.BaseCommand):
             with open(csv_path, newline="", encoding="utf-8") as csvfile:
                 reader = csv.DictReader(csvfile)
                 for row in reader:
+                    id = row.get("id")
                     region_id = row.get("region_id")
                     district_uz = row.get("name_uz")
                     district_ru = row.get("name_ru")
@@ -63,47 +64,45 @@ class Command(base.BaseCommand):
                                     region=region, district_en=district_en
                                 ).first()
 
-                        if not district:
-                            # If no existing district is found, create a new one
-                            district = District.objects.update_or_create(
-                                region=region,
-                                district_uz=district_uz,
-                                district_ru=district_ru,
-                                district_en=district_en,
+                        if district:
+                            if id:
+                                district.id = id
+                            if (
+                                district_ru
+                                and district.district_ru != district_ru
+                            ):
+                                district.district_ru = district_ru
+                            if (
+                                district_en
+                                and district.district_en != district_en
+                            ):
+                                district.district_en = district_en
+                            if (
+                                district_uz
+                                and district.district_uz != district_uz
+                            ):
+                                district.district_uz = district_uz
+                            district.save()
+                            self.stdout.write(
+                                self.style.SUCCESS(
+                                    f"District {district_uz} updated"
+                                )
+                            )
+                        else:
+                            District.objects.update_or_create(
+                                id=id,
+                                defaults={
+                                    "region": region,
+                                    "district_uz": district_uz,
+                                    "district_ru": district_ru,
+                                    "district_en": district_en,
+                                },
                             )
                             self.stdout.write(
                                 self.style.SUCCESS(
                                     f"District {district_uz} added"
                                 )
                             )
-                        else:
-                            # Update existing district with new names if provided and different
-                            updated = False
-                            if (
-                                district_ru
-                                and district.district_ru != district_ru
-                            ):
-                                district.district_ru = district_ru
-                                updated = True
-                            if (
-                                district_en
-                                and district.district_en != district_en
-                            ):
-                                district.district_en = district_en
-                                updated = True
-                            if (
-                                district_uz
-                                and district.district_uz != district_uz
-                            ):
-                                district.district_uz = district_uz
-                                updated = True
-                            if updated:
-                                district.save()
-                                self.stdout.write(
-                                    self.style.SUCCESS(
-                                        f"District {district_uz} updated"
-                                    )
-                                )
 
                     except Exception as e:
                         self.stdout.write(

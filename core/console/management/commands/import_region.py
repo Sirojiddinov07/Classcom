@@ -30,6 +30,7 @@ class Command(base.BaseCommand):
             with open(csv_path, newline="", encoding="utf-8") as csvfile:
                 reader = csv.DictReader(csvfile)
                 for row in reader:
+                    id = row.get("id", None)
                     region_uz = row.get("name_uz", None)
                     region_ru = row.get("name_ru", None)
                     region_en = row.get("name_oz", None)
@@ -61,6 +62,8 @@ class Command(base.BaseCommand):
                         continue
 
                     if region:
+                        if id:
+                            region.id = id
                         if region_uz:
                             region.region_uz = region_uz
                         if region_ru:
@@ -73,9 +76,12 @@ class Command(base.BaseCommand):
                         )
                     else:
                         Region.objects.update_or_create(
-                            region_uz=region_uz,
-                            region_ru=region_ru,
-                            region_en=region_en,
+                            id=id,
+                            defaults={
+                                "region_uz": region_uz,
+                                "region_ru": region_ru,
+                                "region_en": region_en,
+                            },
                         )
                         self.stdout.write(
                             self.style.SUCCESS(f"Region created: {row}")
