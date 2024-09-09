@@ -3,6 +3,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 
+from core.apps.classcom.views import CustomPagination
 from core.apps.websocket.models import Notification
 from core.apps.websocket.serializers.notification import NotificationSerializer
 
@@ -12,6 +13,7 @@ class NotificationViewSet(ModelViewSet):
     serializer_class = NotificationSerializer
     permission_classes = [IsAuthenticated]
     http_method_names = ["get", "patch", "put"]
+    pagination_class = CustomPagination
 
     def get_queryset(self):
         return self.queryset.filter(
