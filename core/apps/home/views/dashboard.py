@@ -74,21 +74,21 @@ class DashboardView(View):
 
         # Fetch and process region user counts
         regions = Region.objects.all()
-        region_user_counts = User.objects.values("region__region").annotate(
+        region_user_counts = User.objects.values("region_id").annotate(
             user_count=Count("id")
         )
         region_user_counts_dict = {
-            item["region__region"]: item["user_count"]
+            item["region_id"]: item["user_count"]
             for item in region_user_counts
         }
         region_user_counts = [
             {
-                "region__region": region.region,
-                "user_count": region_user_counts_dict.get(region.region, 0),
+                "region_region": region.region,
+                "user_count": region_user_counts_dict.get(region.id, 0),
             }
             for region in regions
         ]
-        labels = [region["region__region"] for region in region_user_counts]
+        labels = [region["region_region"] for region in region_user_counts]
         data = [region["user_count"] for region in region_user_counts]
 
         # Update context with region user counts

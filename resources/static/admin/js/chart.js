@@ -1,10 +1,13 @@
+// resources/static/admin/js/chart.js
 document.addEventListener('DOMContentLoaded', function () {
     // Retrieve and parse JSON data from hidden script elements
     const labelsElement = document.getElementById('chart-labels');
     const dataElement = document.getElementById('chart-data');
+    const labelElement = document.getElementById('chart-label');
 
     let labels = [];
     let data = [];
+    let label = 'User Count'; // Default label
 
     if (labelsElement && labelsElement.textContent) {
         try {
@@ -22,6 +25,10 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
+    if (labelElement && labelElement.textContent) {
+        label = labelElement.textContent;
+    }
+
     console.log(labels);
     console.log(data);
 
@@ -32,7 +39,7 @@ document.addEventListener('DOMContentLoaded', function () {
         data: {
             labels: labels,
             datasets: [{
-                label: 'User Count',
+                label: label,
                 data: data,
                 backgroundColor: 'rgba(75, 192, 192, 0.2)',
                 borderColor: 'rgb(65,144,176)',

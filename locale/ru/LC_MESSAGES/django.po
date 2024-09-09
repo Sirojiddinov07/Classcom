@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-07 16:32+0500\n"
-"PO-Revision-Date: 2024-09-07 16:55+0500\n"
+"POT-Creation-Date: 2024-09-09 14:37+0500\n"
+"PO-Revision-Date: 2024-09-09 14:39+0500\n"
 "Last-Translator: Jahongir Hakimjonov <jahongirhakimjonov@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -32,7 +32,7 @@ msgid "Statistika"
 msgstr "Статистика"
 
 #: config/conf/navigation.py:22 config/conf/navigation.py:26
-#: core/apps/home/views/dashboard.py:29 core/http/models/user.py:114
+#: core/apps/home/views/dashboard.py:33 core/http/models/user.py:114
 #: core/http/models/user.py:115
 msgid "Foydalanuvchilar"
 msgstr "Пользователи"
@@ -42,7 +42,7 @@ msgid "Guruhlar"
 msgstr "Группы"
 
 #: config/conf/navigation.py:36 core/apps/classcom/models/moderator.py:90
-#: core/apps/home/views/dashboard.py:33
+#: core/apps/home/views/dashboard.py:37
 msgid "Moderatorlar"
 msgstr "Модераторы"
 
@@ -67,7 +67,7 @@ msgid "Mavzular"
 msgstr "Темы"
 
 #: config/conf/navigation.py:71 config/conf/navigation.py:75
-#: core/apps/home/views/dashboard.py:41
+#: core/apps/home/views/dashboard.py:45
 msgid "Elektron resurslar"
 msgstr "Электронные ресурсы"
 
@@ -207,7 +207,6 @@ msgstr "Медиа-файлы"
 #: config/conf/navigation.py:243 core/apps/classcom/admin/moderator.py:78
 #: core/apps/classcom/models/documents.py:17
 #: core/apps/classcom/models/moderator.py:27
-#| msgid "Hujjat"
 msgid "Hujjatlar"
 msgstr "Документы"
 
@@ -297,7 +296,7 @@ msgstr ""
 msgid "Foydalanuvchi topilmadi. Iltimos, qayta kirishni urinib ko'ring."
 msgstr "Пользователь не найден. Пожалуйста, попробуйте снова войти."
 
-#: core/apps/accounts/serializers/moderator.py:32
+#: core/apps/accounts/serializers/moderator.py:34
 #: core/http/serializers/auth.py:30
 msgid "Phone number already registered."
 msgstr "Номер телефона уже зарегистрирован."
@@ -360,7 +359,7 @@ msgstr "Пароль обновлен"
 #: core/apps/classcom/admin/feedback.py:22
 #: core/apps/classcom/admin/moderator.py:95
 #: core/apps/classcom/admin/plan.py:34 core/apps/classcom/admin/recource.py:30
-#: core/apps/websocket/admin/notification.py:29
+#: core/apps/websocket/admin/notification.py:30
 msgid "Ism Familiya"
 msgstr "Имя Фамилия"
 
@@ -963,23 +962,23 @@ msgstr "У вас нет тем"
 msgid "Moderator topilmadi."
 msgstr "Модератор не найден."
 
-#: core/apps/home/views/dashboard.py:37
+#: core/apps/home/views/dashboard.py:41
 msgid "Ustozlar"
 msgstr "Учителя"
 
-#: core/apps/home/views/dashboard.py:45
+#: core/apps/home/views/dashboard.py:49
 msgid "Kalendar tematik rejalar"
 msgstr "Тематические планы календаря"
 
-#: core/apps/home/views/dashboard.py:49
+#: core/apps/home/views/dashboard.py:53
 msgid "Barcha sharhlar"
 msgstr "Все отзывы"
 
-#: core/apps/home/views/dashboard.py:53
+#: core/apps/home/views/dashboard.py:57
 msgid "Javob berilgan sharhlar"
 msgstr "Отзыв был рассмотрен"
 
-#: core/apps/home/views/dashboard.py:57
+#: core/apps/home/views/dashboard.py:61
 msgid "Javob berilmagan sharhlar"
 msgstr "Отзыв был не рассмотрен"
 
@@ -1215,6 +1214,15 @@ msgstr "Администратор сайта Джанго"
 #: resources/templates/admin/base.html:11
 msgid "Django administration"
 msgstr "Администрация Джанго"
+
+#: resources/templates/components/chart.html:25
+msgid "Viloyatlar kesimida foydalanuvchilar soni"
+msgstr "Количество пользователей (по регионам)"
+
+#: resources/templates/components/chart.html:32
+#| msgid "Foydalanuvchilar"
+msgid "Foydalanuvchilar soni"
+msgstr "Количество пользователей"
 
 #: resources/templates/user/home.html:19
 msgid "Django"
