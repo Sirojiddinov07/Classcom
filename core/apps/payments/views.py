@@ -13,8 +13,9 @@ from rest_framework.viewsets import GenericViewSet, ViewSet
 from rest_framework.exceptions import APIException
 
 from .models import Orders, Payments
-from .serializers import OrderSerializer, PaymentCreateSerializer
+from .serializers import OrderSerializer, PaymentCreateSerializer, UzumWebhookSerializer
 from .services import UzumService
+import logging
 
 
 class OrderViewSet(
@@ -70,5 +71,21 @@ class WebhookApiView(ViewSet):
         url_path="uzum",
     )
     def uzum(self, request):
-        print(request.GET)
+        ser = UzumWebhookSerializer(data=request.data)
+        ser.is_valid(raise_exception=True)
+        data = ser.data
+        if data.get("operationState") != "SUCCESS":
+            logging.error(ser.errors)
+            return Response({"success": False})
+        payment = Payments.objects.filter(trans_id=data.get("orderId"))
+        if not payment.exists():
+            logging.error("Order not found: {}".format(data.get("orderId")))
+            return Response({"success": False})
+        payment = payment.first()
+        order = payment.order
+        payment.status = True
+        order.status = True
+        payment.save()
+        order.save()
+        logging.debug("Payment success: {}".format(data.get("orderNumber")))
         return Response({"success": True})

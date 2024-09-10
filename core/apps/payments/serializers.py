@@ -39,3 +39,11 @@ class OrderSerializer(serializers.ModelSerializer):
 class PaymentCreateSerializer(serializers.Serializer):
     order = serializers.PrimaryKeyRelatedField(queryset=Orders.objects.all())
     status = serializers.BooleanField(read_only=True)
+
+
+class UzumWebhookSerializer(serializers.Serializer):
+    orderId = serializers.CharField()
+    bindingId = serializers.CharField()
+    orderNumber = serializers.CharField()
+    operationType = serializers.CharField()
+    operationState = serializers.CharField()
