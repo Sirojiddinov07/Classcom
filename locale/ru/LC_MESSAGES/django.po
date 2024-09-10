@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-09 15:46+0500\n"
-"PO-Revision-Date: 2024-09-09 15:48+0500\n"
+"POT-Creation-Date: 2024-09-10 14:24+0500\n"
+"PO-Revision-Date: 2024-09-10 14:26+0500\n"
 "Last-Translator: Jahongir Hakimjonov <jahongirhakimjonov@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -28,6 +28,7 @@ msgid "Bosh sahifa"
 msgstr "Домашняя страница"
 
 #: config/conf/navigation.py:14 core/apps/classcom/models/media.py:27
+#: resources/templates/admin/dashboard.html:4
 msgid "Statistika"
 msgstr "Статистика"
 
@@ -58,7 +59,8 @@ msgstr "Временные модераторы"
 msgid "Kalendar Tematik Reja"
 msgstr "Тематический план календаря"
 
-#: config/conf/navigation.py:59 core/apps/classcom/models/plan.py:64
+#: config/conf/navigation.py:59 core/apps/classcom/filters/plan.py:8
+#: core/apps/classcom/models/plan.py:64
 msgid "Tematik reja"
 msgstr "Тематический план"
 
@@ -176,7 +178,7 @@ msgstr "Предметы"
 msgid "Fan turlari"
 msgstr "Типы предметов"
 
-#: config/conf/navigation.py:211 core/apps/classcom/admin/moderator.py:105
+#: config/conf/navigation.py:211 core/apps/classcom/admin/moderator.py:107
 #: core/apps/classcom/models/plan.py:47
 #: core/apps/classcom/models/science.py:26 core/http/models/science.py:8
 #: core/http/models/science.py:14 core/http/models/science.py:15
@@ -204,7 +206,7 @@ msgstr "Файлы"
 msgid "Media Fayllar"
 msgstr "Медиа-файлы"
 
-#: config/conf/navigation.py:243 core/apps/classcom/admin/moderator.py:78
+#: config/conf/navigation.py:243 core/apps/classcom/admin/moderator.py:80
 #: core/apps/classcom/models/documents.py:17
 #: core/apps/classcom/models/moderator.py:27
 msgid "Hujjatlar"
@@ -245,15 +247,15 @@ msgstr "Языки"
 msgid "SMS tasdiqlash"
 msgstr "СМС-верификация"
 
-#: config/settings/common.py:130
+#: config/settings/common.py:133
 msgid "Russia"
 msgstr "Россия"
 
-#: config/settings/common.py:131
+#: config/settings/common.py:134
 msgid "English"
 msgstr "Английский"
 
-#: config/settings/common.py:132
+#: config/settings/common.py:135
 msgid "Uzbek"
 msgstr "Узбекский"
 
@@ -357,25 +359,25 @@ msgstr "Пароль обновлен"
 
 #: core/apps/classcom/admin/chat.py:24 core/apps/classcom/admin/daysoff.py:28
 #: core/apps/classcom/admin/feedback.py:22
-#: core/apps/classcom/admin/moderator.py:95
+#: core/apps/classcom/admin/moderator.py:97
 #: core/apps/classcom/admin/plan.py:34 core/apps/classcom/admin/recource.py:30
 #: core/apps/websocket/admin/notification.py:30
 msgid "Ism Familiya"
 msgstr "Имя Фамилия"
 
-#: core/apps/classcom/admin/moderator.py:38
+#: core/apps/classcom/admin/moderator.py:40
 msgid "Plan Permissions"
 msgstr "Разрешения на тематический план"
 
-#: core/apps/classcom/admin/moderator.py:53
+#: core/apps/classcom/admin/moderator.py:55
 msgid "Resource Permissions"
 msgstr "Разрешения на электронные ресурсы"
 
-#: core/apps/classcom/admin/moderator.py:63
+#: core/apps/classcom/admin/moderator.py:65
 msgid "topic Permissions"
 msgstr "Разрешения темы"
 
-#: core/apps/classcom/admin/moderator.py:100
+#: core/apps/classcom/admin/moderator.py:102
 #: core/apps/classcom/admin/plan.py:44 core/apps/classcom/admin/schedule.py:31
 #: core/apps/classcom/models/moderator.py:53
 #: core/apps/classcom/models/moderator.py:109
@@ -1016,14 +1018,14 @@ msgstr "План"
 msgid "Rejalar"
 msgstr "Планы"
 
-#: core/apps/payments/services.py:17
+#: core/apps/payments/services.py:16
 msgid ""
 "Serverda plan topilmadi bu texnik xatolik iltimos adminga murojat qiling"
 msgstr ""
 "План на сервере не найден. Это техническая ошибка, пожалуйста, обратитесь к "
 "администратору."
 
-#: core/apps/payments/views.py:48
+#: core/apps/payments/views.py:57
 msgid "Payment created"
 msgstr "Платеж создан"
 
@@ -1216,16 +1218,17 @@ msgstr "Администратор сайта Джанго"
 msgid "Django administration"
 msgstr "Администрация Джанго"
 
-#: resources/templates/components/chart.html:29
-msgid "Viloyatlar kesimida foydalanuvchilar soni"
+#: resources/templates/components/chart.html:10
+#: resources/templates/components/chart.html:38
+#| msgid "Foydalanuvchilar soni"
+msgid "Foydalanuvchilar soni (Viloyatlar kesimida)"
 msgstr "Количество пользователей (по регионам)"
 
-#: resources/templates/components/chart.html:38
+#: resources/templates/components/chart.html:46
 msgid "Foydalanuvchilar soni"
 msgstr "Количество пользователей"
 
-#: resources/templates/components/chart.html:39
-#| msgid "Moderatorlar"
+#: resources/templates/components/chart.html:47
 msgid "Moderatorlar soni"
 msgstr "Количество модераторов"
 
@@ -1236,6 +1239,9 @@ msgstr "Django"
 #: resources/templates/user/home.html:20
 msgid "Assalomu aleykum"
 msgstr "Здравствуйте"
+
+#~ msgid "Viloyatlar kesimida foydalanuvchilar soni"
+#~ msgstr "Количество пользователей (по регионам)"
 
 #~ msgid "Fikrlar"
 #~ msgstr "Мысли"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-09 15:46+0500\n"
+"POT-Creation-Date: 2024-09-10 14:24+0500\n"
 "PO-Revision-Date: 2024-09-09 14:40+0500\n"
 "Last-Translator: Jahongir Hakimjonov <jahongirhakimjonov@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -28,6 +28,7 @@ msgid "Bosh sahifa"
 msgstr ""
 
 #: config/conf/navigation.py:14 core/apps/classcom/models/media.py:27
+#: resources/templates/admin/dashboard.html:4
 msgid "Statistika"
 msgstr ""
 
@@ -58,7 +59,8 @@ msgstr ""
 msgid "Kalendar Tematik Reja"
 msgstr ""
 
-#: config/conf/navigation.py:59 core/apps/classcom/models/plan.py:64
+#: config/conf/navigation.py:59 core/apps/classcom/filters/plan.py:8
+#: core/apps/classcom/models/plan.py:64
 msgid "Tematik reja"
 msgstr ""
 
@@ -176,7 +178,7 @@ msgstr ""
 msgid "Fan turlari"
 msgstr ""
 
-#: config/conf/navigation.py:211 core/apps/classcom/admin/moderator.py:105
+#: config/conf/navigation.py:211 core/apps/classcom/admin/moderator.py:107
 #: core/apps/classcom/models/plan.py:47 core/apps/classcom/models/science.py:26
 #: core/http/models/science.py:8 core/http/models/science.py:14
 #: core/http/models/science.py:15 core/http/models/user.py:65
@@ -203,7 +205,7 @@ msgstr ""
 msgid "Media Fayllar"
 msgstr ""
 
-#: config/conf/navigation.py:243 core/apps/classcom/admin/moderator.py:78
+#: config/conf/navigation.py:243 core/apps/classcom/admin/moderator.py:80
 #: core/apps/classcom/models/documents.py:17
 #: core/apps/classcom/models/moderator.py:27
 msgid "Hujjatlar"
@@ -244,15 +246,15 @@ msgstr ""
 msgid "SMS tasdiqlash"
 msgstr ""
 
-#: config/settings/common.py:130
+#: config/settings/common.py:133
 msgid "Russia"
 msgstr "Rossiya"
 
-#: config/settings/common.py:131
+#: config/settings/common.py:134
 msgid "English"
 msgstr "Ingliz"
 
-#: config/settings/common.py:132
+#: config/settings/common.py:135
 msgid "Uzbek"
 msgstr "O'zbek"
 
@@ -353,25 +355,25 @@ msgstr ""
 
 #: core/apps/classcom/admin/chat.py:24 core/apps/classcom/admin/daysoff.py:28
 #: core/apps/classcom/admin/feedback.py:22
-#: core/apps/classcom/admin/moderator.py:95 core/apps/classcom/admin/plan.py:34
+#: core/apps/classcom/admin/moderator.py:97 core/apps/classcom/admin/plan.py:34
 #: core/apps/classcom/admin/recource.py:30
 #: core/apps/websocket/admin/notification.py:30
 msgid "Ism Familiya"
 msgstr ""
 
-#: core/apps/classcom/admin/moderator.py:38
+#: core/apps/classcom/admin/moderator.py:40
 msgid "Plan Permissions"
 msgstr "Plan yaratish uchun ruhsatlar"
 
-#: core/apps/classcom/admin/moderator.py:53
+#: core/apps/classcom/admin/moderator.py:55
 msgid "Resource Permissions"
 msgstr "Elektron resurs yaratish uchun ruhsatlar"
 
-#: core/apps/classcom/admin/moderator.py:63
+#: core/apps/classcom/admin/moderator.py:65
 msgid "topic Permissions"
 msgstr "Mavzular uchun ruhsatlar"
 
-#: core/apps/classcom/admin/moderator.py:100
+#: core/apps/classcom/admin/moderator.py:102
 #: core/apps/classcom/admin/plan.py:44 core/apps/classcom/admin/schedule.py:31
 #: core/apps/classcom/models/moderator.py:53
 #: core/apps/classcom/models/moderator.py:109
@@ -1011,12 +1013,12 @@ msgstr ""
 msgid "Rejalar"
 msgstr ""
 
-#: core/apps/payments/services.py:17
+#: core/apps/payments/services.py:16
 msgid ""
 "Serverda plan topilmadi bu texnik xatolik iltimos adminga murojat qiling"
 msgstr ""
 
-#: core/apps/payments/views.py:48
+#: core/apps/payments/views.py:57
 msgid "Payment created"
 msgstr "Toʻlov yaratildi"
 
@@ -1209,15 +1211,16 @@ msgstr ""
 msgid "Django administration"
 msgstr ""
 
-#: resources/templates/components/chart.html:29
-msgid "Viloyatlar kesimida foydalanuvchilar soni"
-msgstr "Foydalanuvchilar soni (Viloyatlar kesimida)"
-
+#: resources/templates/components/chart.html:10
 #: resources/templates/components/chart.html:38
+msgid "Foydalanuvchilar soni (Viloyatlar kesimida)"
+msgstr ""
+
+#: resources/templates/components/chart.html:46
 msgid "Foydalanuvchilar soni"
 msgstr ""
 
-#: resources/templates/components/chart.html:39
+#: resources/templates/components/chart.html:47
 msgid "Moderatorlar soni"
 msgstr ""
 
@@ -1228,3 +1231,6 @@ msgstr ""
 #: resources/templates/user/home.html:20
 msgid "Assalomu aleykum"
 msgstr ""
+
+#~ msgid "Viloyatlar kesimida foydalanuvchilar soni"
+#~ msgstr "Foydalanuvchilar soni (Viloyatlar kesimida)"

@@ -1,9 +1,7 @@
 {% extends 'admin/base.html' %}
 {% load humanize unfold i18n static %}
 
-{% block title %}
-    <title>{% trans "Statistika" %}</title>
-{% endblock %}
+{% block title %}{% trans "Statistika" %}{{ block.super }}{% endblock %}
 
 {% block content %}
     {{ block.super }}
