@@ -1,6 +1,10 @@
 {% extends 'admin/base.html' %}
 {% load humanize unfold i18n static %}
 
+{% block title %}
+    <title>{% trans "Statistika" %}</title>
+{% endblock %}
+
 {% block content %}
     {{ block.super }}
     <script src="{% static 'admin/js/dashboard.js' %}"></script>
@@ -50,7 +54,7 @@
                     {% endcomponent %}
                 {% endfor %}
             {% endcomponent %}
-            <div class="grid grid-cols-1 md:grid-cols-2 mt-10">
+            <div class="grid mt-10 mb-10">
                 {% include "components/chart.html" %}
             </div>
         {% endcomponent %}

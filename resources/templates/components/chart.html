@@ -1,12 +1,13 @@
 {% load static %}
 {% load i18n %}
+{% load humanize unfold i18n static %}
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Region User Count Chart</title>
+    <title>{% trans "Foydalanuvchilar soni (Viloyatlar kesimida)" %}</title>
     <style>
         .chart-title {
             font-size: 2em;
@@ -15,9 +16,16 @@
         }
 
         .chart-container {
-            width: 1000px;
-            height: 400px; /* Adjust the height as needed */
+            margin: 0 auto;
+            align-content: center;
+            width: 90%;
         }
+
+        .card {
+            width: 100%; /* Adjust the width as needed */
+            max-width: 1200px; /* Set a maximum width if needed */
+        }
+
     </style>
     <!-- Include Chart.js from a CDN -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -25,18 +33,19 @@
     <script src="{% static 'admin/js/chart.js' %}" defer></script>
 </head>
 <body>
-<div class="container">
-    <h1 class="chart-title">{% translate 'Viloyatlar kesimida foydalanuvchilar soni' %}</h1>
-    <div class="chart-container">
-        <canvas id="userCountChart"></canvas>
-    </div>
-
-    <!-- Pass data to JavaScript via hidden elements -->
-    <script id="chart-labels" type="application/json">{{ labels|safe }}</script>
-    <script id="chart-user-data" type="application/json">{{ user_data|safe }}</script>
-    <script id="chart-moderator-data" type="application/json">{{ moderator_data|safe }}</script>
-    <script id="chart-user-label" type="application/json">{% trans "Foydalanuvchilar soni" %}</script>
-    <script id="chart-moderator-label" type="application/json">{% trans "Moderatorlar soni" %}</script>
-</div>
+{% component 'unfold/components/flex.html' %}
+    {% component 'unfold/components/card.html' with class='w-full cursor-pointer card' %}
+        <h1 class="font-[400] chart-title">{% trans "Foydalanuvchilar soni (Viloyatlar kesimida)" %}</h1>
+        <div class="chart-container">
+            <canvas id="userCountChart"></canvas>
+        </div>
+        <!-- Pass data to JavaScript via hidden elements -->
+        <script id="chart-labels" type="application/json">{{ labels|safe }}</script>
+        <script id="chart-user-data" type="application/json">{{ user_data|safe }}</script>
+        <script id="chart-moderator-data" type="application/json">{{ moderator_data|safe }}</script>
+        <script id="chart-user-label" type="application/json">{% trans "Foydalanuvchilar soni" %}</script>
+        <script id="chart-moderator-label" type="application/json">{% trans "Moderatorlar soni" %}</script>
+    {% endcomponent %}
+{% endcomponent %}
 </body>
 </html>
