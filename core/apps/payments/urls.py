@@ -6,6 +6,6 @@ from .views import OrderViewSet, PaymentViewSet, WebhookApiView
 router = DefaultRouter()
 router.register("orders", OrderViewSet, basename="order")
 router.register("payment", PaymentViewSet, basename="payment")
-router.register("webkook", WebhookApiView, basename="webhook")
+router.register("webhook", WebhookApiView, basename="webhook")
 
 urlpatterns = [path("", include(router.urls))]
