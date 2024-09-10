@@ -21,6 +21,8 @@ INSTALLED_APPS = [
     # Design admin panel
     "unfold",
     "unfold.contrib.filters",
+    # "unfold.contrib.guardian",
+    # "unfold.contrib.simple_history",
     "django_select2",
     "modeltranslation",
     # Default apps
