@@ -105,7 +105,6 @@ class DashboardView(View):
                 },
             ]
             cache.set("orders", orders, 300)
-            print(orders)
         return orders
 
     def get(self, request):
@@ -116,30 +115,36 @@ class DashboardView(View):
         context.update({"orders": self.get_total_orders_price()})
 
         # Fetch and process region user counts
-        regions = Region.objects.all()
-        region_user_counts = User.objects.values("region_id").annotate(
-            user_count=Count("id", filter=Q(role="user")),
-            moderator_count=Count("id", filter=Q(role="moderator")),
-        )
-        region_user_counts_dict = {
-            item["region_id"]: {
-                "user_count": item["user_count"],
-                "moderator_count": item["moderator_count"],
+        # Check cache first
+        region_user_counts = cache.get("region_user_counts")
+        if not region_user_counts:
+            regions = Region.objects.all()
+            region_user_counts = User.objects.values("region_id").annotate(
+                user_count=Count("id", filter=Q(role="user")),
+                moderator_count=Count("id", filter=Q(role="moderator")),
+            )
+            region_user_counts_dict = {
+                item["region_id"]: {
+                    "user_count": item["user_count"],
+                    "moderator_count": item["moderator_count"],
+                }
+                for item in region_user_counts
             }
-            for item in region_user_counts
-        }
-        region_user_counts = [
-            {
-                "region_region": region.region,
-                "user_count": region_user_counts_dict.get(region.id, {}).get(
-                    "user_count", 0
-                ),
-                "moderator_count": region_user_counts_dict.get(
-                    region.id, {}
-                ).get("moderator_count", 0),
-            }
-            for region in regions
-        ]
+            region_user_counts = [
+                {
+                    "region_region": region.region,
+                    "user_count": region_user_counts_dict.get(
+                        region.id, {}
+                    ).get("user_count", 0),
+                    "moderator_count": region_user_counts_dict.get(
+                        region.id, {}
+                    ).get("moderator_count", 0),
+                }
+                for region in regions
+            ]
+            # Cache the result for 5 minutes
+            cache.set("region_user_counts", region_user_counts, 300)
+
         labels = [region["region_region"] for region in region_user_counts]
         user_data = [region["user_count"] for region in region_user_counts]
         moderator_data = [
