@@ -20,6 +20,7 @@ class OrdersAdmin(ModelAdmin):
         "user__phone",
     )
     filter_horizontal = ("types",)
+    list_filter = ("status",)
 
 
 @admin.register(Payments)
@@ -36,7 +37,9 @@ class PaymentsAdmin(ModelAdmin):
         "order__user__last_name",
         "order__user__phone",
         "order__plan__name",
+        "trans_id",
     )
+    list_filter = ("status",)
 
 
 @admin.register(Plans)
@@ -46,8 +49,6 @@ class PlansAdmin(ModelAdmin):
         "quarter",
         "price",
     )
-    search_fields = (
-        "quarter__name",
-        "price",
-    )
+    search_fields = ("price",)
     ordering = ("quarter",)
+    list_filter = ("quarter",)

@@ -44,6 +44,7 @@
                 </button>
             </div>
             <div class="flex justify-end mb-5 gap-x-3"></div>
+            <h1 class="font-[400] chart-title">{% trans "Statistika (raqamlarda)" %}</h1>
             {% component 'unfold/components/flex.html' with class='grid grid-cols-1 sm:grid-cols-2 gap-8 md:grid-cols-3 lg:grid-cols-4' %}
                 {% for card in cards %}
                     {% component 'unfold/components/card.html' with class='w-full cursor-pointer' %}
@@ -52,6 +53,10 @@
                     {% endcomponent %}
                 {% endfor %}
             {% endcomponent %}
+            <div class="grid mt-10 mb-10 grid-cols-1">
+            <h1 class="font-[400] chart-title">{% trans "Tushumlar (so'mda)" %}</h1>
+                {% include 'admin/orders.html' %}
+            </div>
             <div class="grid mt-10 mb-10">
                 {% include "components/chart.html" %}
             </div>
