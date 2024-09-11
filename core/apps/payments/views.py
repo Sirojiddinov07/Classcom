@@ -1,21 +1,26 @@
+import logging
+
+from django.utils import timezone
 from django.utils.translation import gettext as _
 from rest_framework.decorators import action
-from rest_framework.permissions import AllowAny
+from rest_framework.exceptions import APIException
 from rest_framework.mixins import (
     RetrieveModelMixin,
     CreateModelMixin,
     ListModelMixin,
     DestroyModelMixin,
 )
-
+from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.viewsets import GenericViewSet, ViewSet
-from rest_framework.exceptions import APIException
 
 from .models import Orders, Payments
-from .serializers import OrderSerializer, PaymentCreateSerializer, UzumWebhookSerializer
+from .serializers import (
+    OrderSerializer,
+    PaymentCreateSerializer,
+    UzumWebhookSerializer,
+)
 from .services import UzumService
-import logging
 
 
 class OrderViewSet(
@@ -28,10 +33,27 @@ class OrderViewSet(
     serializer_class = OrderSerializer
 
     def perform_create(self, serializer):
-        return serializer.save(user=self.request.user)
+        user = self.request.user
+        types = serializer.validated_data.get("types")
+        current_date = timezone.now().date()
+
+        if Orders.objects.filter(
+            user=user,
+            types__in=types,
+            start_date__lte=current_date,
+            end_date__gte=current_date,
+            status=True,
+        ).exists():
+            raise APIException(
+                _(
+                    "Bu foydalanuvchi uchun bu turdagi buyurtma allaqachon mavjud."
+                )
+            )
+
+        return serializer.save(user=user)
 
     def get_queryset(self):
-        return Orders.objects.filter(user=self.request.user)
+        return Orders.objects.filter(user=self.request.user).order_by("-id")
 
 
 class PaymentViewSet(ViewSet):
@@ -61,7 +83,6 @@ class PaymentViewSet(ViewSet):
 
 
 class WebhookApiView(ViewSet):
-
     permission_classes = [AllowAny]
 
     @action(

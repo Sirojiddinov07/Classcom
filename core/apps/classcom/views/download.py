@@ -3,6 +3,7 @@ import datetime
 from django.http import FileResponse, Http404
 from django.shortcuts import get_object_or_404
 from django.utils import timezone
+from django.utils.translation import gettext_lazy as _
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
@@ -27,24 +28,26 @@ class DownloadMediaView(APIView):
         media = get_object_or_404(Media, id=media_id)
 
         # Check if media has an associated topic
-        plan = Plan.objects.filter(topic__media=media).first()
+        plan = Plan.objects.filter(topic__media=media).last()
 
         order = None
         if plan:
             order = Orders.objects.filter(
                 user=user,
-                science=plan.science,
                 types=plan.science_types,
-                start_date__lt=current_date,
-                end_date__gt=current_date,
-            ).first()
+                start_date__lte=current_date,
+                end_date__gte=current_date,
+                status=True,
+            ).last()
 
         # If media has a topic, only the owner or a user with an order can download
-        if plan and media.user != user:
-            raise Http404("You can't download this file")
+        if plan and media.user != user and user.role == Role.MODERATOR:
+            raise Http404(_("Ushbu resurslar sizga tegishli emas"))
 
-        if plan and not order and user.role != Role.MODERATOR:
-            raise Http404("You can't download this file")
+        if plan and not order and user.role == Role.USER:
+            raise Http404(
+                _("Bu resursni yuklab olish uchun buyurtma berishingiz kerak")
+            )
 
         download = Download.objects.create(
             user=user,
@@ -105,7 +108,9 @@ class DownloadFileView(APIView):
         download_token = get_object_or_404(DownloadToken, token=download_token)
 
         if download_token.is_expired():
-            raise Http404("Download token not found or expired")
+            raise Http404(
+                _("Yuklab olish tokeni topilmadi yoki muddati oʻtgan")
+            )
 
         download = download_token.download
 
@@ -116,7 +121,7 @@ class DownloadFileView(APIView):
         try:
             response = FileResponse(open(file_path, "rb"))
         except FileNotFoundError:
-            raise Http404("File not found")
+            raise Http404(_("Fayl topilmadi"))
 
         download_token.delete()
 
@@ -160,7 +165,7 @@ class DownloadHistoryView(APIView):
 @permission_classes([IsAuthenticated])
 def moderator_media_list(request):
     if not Moderator.objects.filter(user=request.user).exists():
-        return Response({"detail": "User is not a moderator"}, status=403)
+        return Response({"detail": _("Siz moderator emassiz")}, status=403)
 
     moderator = Moderator.objects.get(user=request.user)
 

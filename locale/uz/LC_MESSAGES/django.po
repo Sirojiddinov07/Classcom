@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-10 14:24+0500\n"
+"POT-Creation-Date: 2024-09-11 10:41+0500\n"
 "PO-Revision-Date: 2024-09-09 14:40+0500\n"
 "Last-Translator: Jahongir Hakimjonov <jahongirhakimjonov@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -917,8 +917,8 @@ msgstr ""
 #: core/apps/classcom/views/resource.py:57
 #: core/apps/classcom/views/resource.py:61
 #: core/apps/classcom/views/resource.py:94
-#: core/apps/classcom/views/science.py:65
-#: core/apps/classcom/views/science.py:99 core/http/views/school_group.py:44
+#: core/apps/classcom/views/science.py:94
+#: core/apps/classcom/views/science.py:128 core/http/views/school_group.py:44
 msgid "Sizda bu amalni bajarish uchun ruxsat yo‘q."
 msgstr ""
 
@@ -955,9 +955,29 @@ msgstr "Sizda mavzu yo'q"
 #: core/apps/classcom/views/language.py:25
 #: core/apps/classcom/views/quarter.py:34
 #: core/apps/classcom/views/resource.py:91
-#: core/apps/classcom/views/science.py:62
-#: core/apps/classcom/views/science.py:96 core/http/views/school_group.py:41
+#: core/apps/classcom/views/science.py:91
+#: core/apps/classcom/views/science.py:125 core/http/views/school_group.py:41
 msgid "Moderator topilmadi."
+msgstr ""
+
+#: core/apps/classcom/views/download.py:45
+msgid "Ushbu resurslar sizga tegishli emas"
+msgstr ""
+
+#: core/apps/classcom/views/download.py:49
+msgid "Bu resursni yuklab olish uchun buyurtma berishingiz kerak"
+msgstr ""
+
+#: core/apps/classcom/views/download.py:112
+msgid "Yuklab olish tokeni topilmadi yoki muddati oʻtgan"
+msgstr ""
+
+#: core/apps/classcom/views/download.py:124
+msgid "Fayl topilmadi"
+msgstr ""
+
+#: core/apps/classcom/views/download.py:168
+msgid "Siz moderator emassiz"
 msgstr ""
 
 #: core/apps/home/views/dashboard.py:41
@@ -1013,12 +1033,16 @@ msgstr ""
 msgid "Rejalar"
 msgstr ""
 
-#: core/apps/payments/services.py:16
+#: core/apps/payments/services.py:30
 msgid ""
 "Serverda plan topilmadi bu texnik xatolik iltimos adminga murojat qiling"
 msgstr ""
 
-#: core/apps/payments/views.py:57
+#: core/apps/payments/views.py:49
+msgid "Bu foydalanuvchi uchun bu turdagi buyurtma allaqachon mavjud."
+msgstr ""
+
+#: core/apps/payments/views.py:79
 msgid "Payment created"
 msgstr "Toʻlov yaratildi"
 
