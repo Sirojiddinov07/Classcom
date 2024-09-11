@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-11 10:41+0500\n"
+"POT-Creation-Date: 2024-09-11 17:52+0500\n"
 "PO-Revision-Date: 2024-09-09 14:40+0500\n"
 "Last-Translator: Jahongir Hakimjonov <jahongirhakimjonov@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -33,7 +33,7 @@ msgid "Statistika"
 msgstr ""
 
 #: config/conf/navigation.py:22 config/conf/navigation.py:26
-#: core/apps/home/views/dashboard.py:33 core/http/models/user.py:114
+#: core/apps/home/views/dashboard.py:35 core/http/models/user.py:114
 #: core/http/models/user.py:115
 msgid "Foydalanuvchilar"
 msgstr ""
@@ -43,7 +43,7 @@ msgid "Guruhlar"
 msgstr ""
 
 #: config/conf/navigation.py:36 core/apps/classcom/models/moderator.py:90
-#: core/apps/home/views/dashboard.py:37
+#: core/apps/home/views/dashboard.py:39
 msgid "Moderatorlar"
 msgstr ""
 
@@ -69,7 +69,7 @@ msgid "Mavzular"
 msgstr ""
 
 #: config/conf/navigation.py:71 config/conf/navigation.py:75
-#: core/apps/home/views/dashboard.py:45
+#: core/apps/home/views/dashboard.py:47
 msgid "Elektron resurslar"
 msgstr ""
 
@@ -110,8 +110,8 @@ msgid "Sinf Guruhi"
 msgstr ""
 
 #: config/conf/navigation.py:122 core/apps/classcom/models/science.py:34
-#: core/http/models/school_group.py:8 core/http/models/school_group.py:14
-#: core/http/models/user.py:79
+#: core/apps/payments/models.py:35 core/http/models/school_group.py:8
+#: core/http/models/school_group.py:14 core/http/models/user.py:79
 msgid "Sinf turi"
 msgstr ""
 
@@ -219,8 +219,8 @@ msgstr ""
 msgid "To'lovlar"
 msgstr ""
 
-#: config/conf/navigation.py:259 core/apps/payments/models.py:35
-#: core/apps/payments/models.py:36
+#: config/conf/navigation.py:259 core/apps/payments/models.py:41
+#: core/apps/payments/models.py:42
 msgid "Buyurtmalar"
 msgstr ""
 
@@ -278,7 +278,7 @@ msgstr ""
 #: core/apps/classcom/models/schedule.py:35
 #: core/apps/classcom/models/schedule.py:88
 #: core/apps/classcom/models/schedule.py:118
-#: core/apps/classcom/models/teacher.py:9 core/apps/payments/models.py:16
+#: core/apps/classcom/models/teacher.py:9 core/apps/payments/models.py:17
 #: core/apps/websocket/models/notification.py:12
 msgid "Foydalanuvchi"
 msgstr ""
@@ -380,7 +380,7 @@ msgstr "Mavzular uchun ruhsatlar"
 #: core/apps/classcom/models/plan.py:31
 #: core/apps/classcom/models/resource.py:72
 #: core/apps/classcom/models/schedule.py:38
-#: core/apps/classcom/models/science.py:79 core/apps/payments/models.py:28
+#: core/apps/classcom/models/science.py:79 core/apps/payments/models.py:29
 #: core/http/models/user.py:99
 msgid "Fan"
 msgstr ""
@@ -394,7 +394,7 @@ msgstr ""
 #: core/apps/classcom/models/moderator.py:116
 #: core/apps/classcom/models/schedule.py:70
 #: core/apps/classcom/models/science.py:15
-#: core/apps/classcom/models/science.py:28 core/apps/payments/models.py:30
+#: core/apps/classcom/models/science.py:28 core/apps/payments/models.py:31
 msgid "Fan turi"
 msgstr ""
 
@@ -402,7 +402,7 @@ msgstr ""
 #: core/apps/classcom/models/quarter.py:26
 #: core/apps/classcom/models/quarter.py:59
 #: core/apps/classcom/models/schedule.py:121
-#: core/apps/classcom/models/weeks.py:9 core/apps/payments/models.py:65
+#: core/apps/classcom/models/weeks.py:9 core/apps/payments/models.py:71
 msgid "Chorak"
 msgstr ""
 
@@ -657,8 +657,8 @@ msgstr ""
 msgid "Fayl"
 msgstr ""
 
-#: core/apps/classcom/models/documents.py:11 core/apps/payments/models.py:32
-#: core/apps/payments/models.py:50
+#: core/apps/classcom/models/documents.py:11 core/apps/payments/models.py:38
+#: core/apps/payments/models.py:56
 msgid "Holati"
 msgstr ""
 
@@ -918,7 +918,7 @@ msgstr ""
 #: core/apps/classcom/views/resource.py:61
 #: core/apps/classcom/views/resource.py:94
 #: core/apps/classcom/views/science.py:94
-#: core/apps/classcom/views/science.py:128 core/http/views/school_group.py:44
+#: core/apps/classcom/views/science.py:128 core/http/views/school_group.py:57
 msgid "Sizda bu amalni bajarish uchun ruxsat yo‘q."
 msgstr ""
 
@@ -956,7 +956,7 @@ msgstr "Sizda mavzu yo'q"
 #: core/apps/classcom/views/quarter.py:34
 #: core/apps/classcom/views/resource.py:91
 #: core/apps/classcom/views/science.py:91
-#: core/apps/classcom/views/science.py:125 core/http/views/school_group.py:41
+#: core/apps/classcom/views/science.py:125 core/http/views/school_group.py:54
 msgid "Moderator topilmadi."
 msgstr ""
 
@@ -980,56 +980,80 @@ msgstr ""
 msgid "Siz moderator emassiz"
 msgstr ""
 
-#: core/apps/home/views/dashboard.py:41
+#: core/apps/home/views/dashboard.py:43
 msgid "Ustozlar"
 msgstr ""
 
-#: core/apps/home/views/dashboard.py:49
+#: core/apps/home/views/dashboard.py:51
 msgid "Kalendar tematik rejalar"
 msgstr ""
 
-#: core/apps/home/views/dashboard.py:53
+#: core/apps/home/views/dashboard.py:55
 msgid "Barcha sharhlar"
 msgstr ""
 
-#: core/apps/home/views/dashboard.py:57
+#: core/apps/home/views/dashboard.py:59
 msgid "Javob berilgan sharhlar"
 msgstr ""
 
-#: core/apps/home/views/dashboard.py:61
+#: core/apps/home/views/dashboard.py:63
 msgid "Javob berilmagan sharhlar"
 msgstr ""
 
-#: core/apps/payments/models.py:22
+#: core/apps/home/views/dashboard.py:67
+msgid "Umumiy buyurtmalar"
+msgstr ""
+
+#: core/apps/home/views/dashboard.py:71
+msgid "Muvaffaqiyatli buyurtmalar"
+msgstr ""
+
+#: core/apps/home/views/dashboard.py:75
+msgid "Muvaffaqiyatsiz buyurtmalar"
+msgstr ""
+
+#: core/apps/home/views/dashboard.py:88
+msgid "Umumiy buyurtmalar narxi"
+msgstr ""
+
+#: core/apps/home/views/dashboard.py:93
+msgid "Muvaffaqiyatli buyurtmalar narxi"
+msgstr ""
+
+#: core/apps/home/views/dashboard.py:100
+msgid "Muvaffaqiyatsiz buyurtmalar narxi"
+msgstr ""
+
+#: core/apps/payments/models.py:23
 msgid "Boshlanish sanasi"
 msgstr ""
 
-#: core/apps/payments/models.py:25
+#: core/apps/payments/models.py:26
 msgid "Tugash sanasi"
 msgstr ""
 
-#: core/apps/payments/models.py:31 core/apps/payments/models.py:49
-#: core/apps/payments/models.py:67
+#: core/apps/payments/models.py:37 core/apps/payments/models.py:55
+#: core/apps/payments/models.py:73
 msgid "Narxi"
 msgstr ""
 
-#: core/apps/payments/models.py:47
+#: core/apps/payments/models.py:53
 msgid "Buyurtma"
 msgstr ""
 
-#: core/apps/payments/models.py:52
+#: core/apps/payments/models.py:58
 msgid "Tranzaksiya ID"
 msgstr ""
 
-#: core/apps/payments/models.py:56 core/apps/payments/models.py:57
+#: core/apps/payments/models.py:62 core/apps/payments/models.py:63
 msgid "Payments"
 msgstr ""
 
-#: core/apps/payments/models.py:70
+#: core/apps/payments/models.py:76
 msgid "Reja"
 msgstr ""
 
-#: core/apps/payments/models.py:71
+#: core/apps/payments/models.py:77
 msgid "Rejalar"
 msgstr ""
 
@@ -1042,7 +1066,7 @@ msgstr ""
 msgid "Bu foydalanuvchi uchun bu turdagi buyurtma allaqachon mavjud."
 msgstr ""
 
-#: core/apps/payments/views.py:79
+#: core/apps/payments/views.py:83
 msgid "Payment created"
 msgstr "Toʻlov yaratildi"
 
@@ -1233,6 +1257,22 @@ msgstr ""
 
 #: resources/templates/admin/base.html:11
 msgid "Django administration"
+msgstr ""
+
+#: resources/templates/admin/dashboard.html:47
+msgid "Statistika (raqamlarda)"
+msgstr ""
+
+#: resources/templates/admin/dashboard.html:57
+msgid "Tushumlar (so'mda)"
+msgstr ""
+
+#: resources/templates/admin/orders.html:10
+msgid "Tushumlar"
+msgstr ""
+
+#: resources/templates/admin/orders.html:18
+msgid "so'm"
 msgstr ""
 
 #: resources/templates/components/chart.html:10
