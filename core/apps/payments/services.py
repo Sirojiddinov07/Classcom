@@ -42,8 +42,8 @@ class UzumService:
         url = "https://test-chk-api.uzumcheckout.uz/api/v1/payment/register"
 
         payload = {
-            "successUrl": "https://api.classcom.uz/webhook/uzum/",
-            "failureUrl": "https://api.classcom.uz/webhook/uzum/",
+            "successUrl": "https://my.classcom.uz/history/",
+            "failureUrl": "https://my.classcom.uz/payment/",
             "viewType": "WEB_VIEW",
             "clientId": str(client_id),
             "currency": 860,
@@ -99,7 +99,6 @@ class UzumService:
         redirect_url = data.get("paymentRedirectUrl")
 
         if not trans_id or not redirect_url:
-            print(response.content)
             raise Exception("Ma'lumotlar kutilgan formatda emas")
 
         return trans_id, redirect_url
