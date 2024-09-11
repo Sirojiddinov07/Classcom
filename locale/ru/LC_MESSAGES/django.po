@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-10 14:24+0500\n"
-"PO-Revision-Date: 2024-09-10 14:26+0500\n"
+"POT-Creation-Date: 2024-09-11 10:40+0500\n"
+"PO-Revision-Date: 2024-09-11 10:46+0500\n"
 "Last-Translator: Jahongir Hakimjonov <jahongirhakimjonov@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -922,8 +922,8 @@ msgstr "Дата окончания недели"
 #: core/apps/classcom/views/resource.py:57
 #: core/apps/classcom/views/resource.py:61
 #: core/apps/classcom/views/resource.py:94
-#: core/apps/classcom/views/science.py:65
-#: core/apps/classcom/views/science.py:99 core/http/views/school_group.py:44
+#: core/apps/classcom/views/science.py:94
+#: core/apps/classcom/views/science.py:128 core/http/views/school_group.py:44
 msgid "Sizda bu amalni bajarish uchun ruxsat yo‘q."
 msgstr "У вас нет разрешения на выполнение этого действия."
 
@@ -960,10 +960,31 @@ msgstr "У вас нет тем"
 #: core/apps/classcom/views/language.py:25
 #: core/apps/classcom/views/quarter.py:34
 #: core/apps/classcom/views/resource.py:91
-#: core/apps/classcom/views/science.py:62
-#: core/apps/classcom/views/science.py:96 core/http/views/school_group.py:41
+#: core/apps/classcom/views/science.py:91
+#: core/apps/classcom/views/science.py:125 core/http/views/school_group.py:41
 msgid "Moderator topilmadi."
 msgstr "Модератор не найден."
+
+#: core/apps/classcom/views/download.py:45
+msgid "Ushbu resurslar sizga tegishli emas"
+msgstr "Эти ресурсы вам не принадлежат"
+
+#: core/apps/classcom/views/download.py:49
+msgid "Bu resursni yuklab olish uchun buyurtma berishingiz kerak"
+msgstr "Вы должны разместить заказ на загрузку этого ресурса"
+
+#: core/apps/classcom/views/download.py:112
+msgid "Yuklab olish tokeni topilmadi yoki muddati oʻtgan"
+msgstr "Токен загрузки не найден или срок его действия истек"
+
+#: core/apps/classcom/views/download.py:124
+#| msgid "Foydalanuvchi topilmadi"
+msgid "Fayl topilmadi"
+msgstr "Файл не найден"
+
+#: core/apps/classcom/views/download.py:168
+msgid "Siz moderator emassiz"
+msgstr "Вы не модератор"
 
 #: core/apps/home/views/dashboard.py:41
 msgid "Ustozlar"
@@ -1018,14 +1039,18 @@ msgstr "План"
 msgid "Rejalar"
 msgstr "Планы"
 
-#: core/apps/payments/services.py:16
+#: core/apps/payments/services.py:30
 msgid ""
 "Serverda plan topilmadi bu texnik xatolik iltimos adminga murojat qiling"
 msgstr ""
 "План на сервере не найден. Это техническая ошибка, пожалуйста, обратитесь к "
 "администратору."
 
-#: core/apps/payments/views.py:57
+#: core/apps/payments/views.py:49
+msgid "Bu foydalanuvchi uchun bu turdagi buyurtma allaqachon mavjud."
+msgstr "Этот тип заказа уже существует для этого пользователя."
+
+#: core/apps/payments/views.py:79
 msgid "Payment created"
 msgstr "Платеж создан"
 
@@ -1220,7 +1245,6 @@ msgstr "Администрация Джанго"
 
 #: resources/templates/components/chart.html:10
 #: resources/templates/components/chart.html:38
-#| msgid "Foydalanuvchilar soni"
 msgid "Foydalanuvchilar soni (Viloyatlar kesimida)"
 msgstr "Количество пользователей (по регионам)"
 
