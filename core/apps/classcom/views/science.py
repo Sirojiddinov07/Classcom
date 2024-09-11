@@ -1,3 +1,4 @@
+from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import viewsets
@@ -8,6 +9,7 @@ from rest_framework.views import APIView
 
 from core.apps.classcom import models, serializers
 from core.apps.classcom.choices import Role
+from core.apps.payments.models import Orders
 
 
 class ScienceViewSet(viewsets.ReadOnlyModelViewSet):
@@ -18,10 +20,24 @@ class ScienceViewSet(viewsets.ReadOnlyModelViewSet):
     filterset_fields = ["science_grp", "name"]
 
     def get_queryset(self):
+        user = self.request.user
         queryset = models.Science.objects.all()
+        current_date = timezone.now().date()
+
+        if user.is_authenticated:
+            if user.role == Role.USER:
+                orders = Orders.objects.filter(
+                    user=user,
+                    status=True,
+                    start_date__lte=current_date,
+                    end_date__gte=current_date,
+                )
+                queryset = queryset.filter(orders__in=orders)
+
         class_group = self.request.query_params.get("class_group", None)
         if class_group is not None:
             queryset = queryset.filter(class_group=class_group)
+
         return queryset
 
 
@@ -33,13 +49,26 @@ class ScienceTypesViewSet(viewsets.ReadOnlyModelViewSet):
     http_method_names = ["get"]
 
     def get_queryset(self):
-        queryset = models.ScienceTypes.objects.all()
+        user = self.request.user
+        queryset = models.ScienceTypes.objects.all().distinct()
+        current_date = timezone.now().date()
+
+        if user.is_authenticated and user.role == Role.USER:
+            orders = Orders.objects.filter(
+                user=user,
+                status=True,
+                start_date__lte=current_date,
+                end_date__gte=current_date,
+            )
+            queryset = queryset.filter(science__orders__in=orders)
+
         science_id = self.request.query_params.get("science", None)
         class_group = self.request.query_params.get("class_group", None)
         if science_id is not None:
             queryset = queryset.filter(science__id=science_id)
         if class_group is not None:
             queryset = queryset.filter(science__class_group=class_group)
+
         return queryset
 
 

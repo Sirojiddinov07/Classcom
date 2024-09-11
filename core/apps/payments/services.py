@@ -1,14 +1,28 @@
+import requests
 from django.utils.translation import gettext as _
 from rest_framework.exceptions import APIException
-import requests
+from django.utils import timezone
+
 from common.env import env
-from .models import Plans
 
 
 class PlanService:
     def get_plan(self):
+        from core.apps.payments.models import Plans
+
         # TODO: Implement logic to retrieve the current month's plan
-        plan = Plans.objects.first()
+        current_date = timezone.now().date()
+
+        plan = Plans.objects.filter(
+            quarter__start_date__lte=current_date,
+            quarter__end_date__gte=current_date,
+        ).last()
+
+        if not plan:
+            plan = Plans.objects.filter(
+                quarter__start_date__gt=current_date
+            ).first()
+
         if plan:
             return plan
         raise APIException(

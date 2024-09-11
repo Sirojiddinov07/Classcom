@@ -10,8 +10,9 @@ class OrdersAdmin(ModelAdmin):
         "id",
         "user",
         "status",
+        "price",
+        "start_date",
         "created_at",
-        "updated_at",
     )
     search_fields = (
         "user__first_name",
