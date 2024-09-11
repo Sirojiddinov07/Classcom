@@ -67,7 +67,11 @@ class PaymentViewSet(ViewSet):
         order = data.get("order")
         try:
             trans_id, redirect_url = UzumService().register(
-                request.user.id, order.id, order.price, "1 chorak uchun to'lov"
+                request.user.id,
+                order.id,
+                order.price,
+                f"To'lov miqdori {order.price}, to'lov sanasi {order.created_at.strftime('%d-%m-%Y')}, "
+                f"to'lov buyurtma raqami {order.id}, buyurtma {order.science}",
             )
         except Exception as e:
             raise APIException(str(e))

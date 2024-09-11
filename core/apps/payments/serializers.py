@@ -15,6 +15,7 @@ class OrderSerializer(serializers.ModelSerializer):
             instance=instance.types, many=True
         ).data
         data["science"] = ScienceMiniSerializer(instance=instance.science).data
+        data["class_type"] = instance.class_type.name
         return data
 
     class Meta:
@@ -24,6 +25,7 @@ class OrderSerializer(serializers.ModelSerializer):
             "end_date",
             "science",
             "types",
+            "class_type",
             "price",
             "status",
         )

@@ -4,6 +4,7 @@ from django.utils.translation import gettext_lazy as _
 from core.apps.classcom.models import Quarter
 from core.apps.classcom.models.science import Science, ScienceTypes
 from core.http.models import AbstractBaseModel
+from core.http.models.school_group import ClassGroup
 
 
 class Orders(AbstractBaseModel):
@@ -28,6 +29,11 @@ class Orders(AbstractBaseModel):
         Science, on_delete=models.CASCADE, verbose_name=_("Fan")
     )
     types = models.ManyToManyField(ScienceTypes, verbose_name=_("Fan turi"))
+    class_type = models.ForeignKey(
+        ClassGroup,
+        on_delete=models.CASCADE,
+        verbose_name=_("Sinf turi"),
+    )
     price = models.BigIntegerField(default=0, verbose_name=_("Narxi"))
     status = models.BooleanField(default=False, verbose_name=_("Holati"))
 
