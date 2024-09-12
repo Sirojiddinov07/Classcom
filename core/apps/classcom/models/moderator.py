@@ -2,7 +2,6 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 
 from core.apps.classcom import choices
-from core.apps.classcom.choices import Role
 from core.apps.classcom.models import Classes
 from core.apps.classcom.models.science import ScienceTypes
 from core.http.models import AbstractBaseModel
@@ -89,31 +88,3 @@ class Moderator(AbstractBaseModel):
         verbose_name = _("Moderator")
         verbose_name_plural = _("Moderatorlar")
         ordering = ["-updated_at"]
-
-    def save(self, *args, **kwargs):
-        if self.user.role != Role.MODERATOR:
-            self.user.role = Role.MODERATOR
-            self.user.save()
-        super().save(*args, **kwargs)
-
-
-class TempModerator(AbstractBaseModel):
-    user = models.OneToOneField(
-        "http.User", on_delete=models.CASCADE, verbose_name=_("Foydalanuvchi")
-    )
-    balance = models.BigIntegerField(default=0, verbose_name=_("Balans"))
-    degree = models.CharField(
-        max_length=15,
-        choices=choices.Degree.choices,
-        default=choices.Degree.AUTHOR,
-        verbose_name=_("Daraja"),
-    )
-    docs = models.FileField(
-        upload_to="documents/",
-        null=True,
-        blank=True,
-        verbose_name=_("Hujjat"),
-    )
-    is_contracted = models.BooleanField(
-        default=False, verbose_name=_("Shartnoma")
-    )

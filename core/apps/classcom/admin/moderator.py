@@ -3,7 +3,7 @@ from django.utils.html import format_html
 from django.utils.translation import gettext_lazy as _
 from unfold.admin import ModelAdmin
 
-from core.apps.classcom.models import Moderator, TempModerator
+from core.apps.classcom.models import Moderator
 
 
 @admin.register(Moderator)
@@ -78,30 +78,3 @@ class ModeratorAdmin(ModelAdmin):
         return format_html("<br>".join(links))
 
     docs_links.short_description = _("Hujjatlar")
-
-
-@admin.register(TempModerator)
-class TempModeratorAdmin(ModelAdmin):
-    list_display = (
-        "id",
-        "full_name",
-        "is_contracted",
-        "science",
-        "science_group",
-    )
-    search_fields = ("user",)
-
-    def full_name(self, obj):
-        return f"{obj.user.first_name} {obj.user.last_name}"
-
-    full_name.short_description = _("Ism Familiya")
-
-    def science(self, obj):
-        return obj.user.science
-
-    science.short_description = _("Fan")
-
-    def science_group(self, obj):
-        return obj.user.science_group
-
-    science_group.short_description = _("Fan guruhi")

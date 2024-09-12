@@ -2,7 +2,7 @@ from django.db.models.signals import post_save, pre_delete
 from django.dispatch import receiver
 
 from core.apps.websocket.models.notification import Notification
-from ..models import TempModerator, Moderator, Topic, Plan, Chat
+from ..models import Topic, Plan, Chat
 from ..models.feedback import Answer
 
 
@@ -16,19 +16,6 @@ def notify_user_on_answer(sender, instance, created, **kwargs):
         feedback = instance.feedback
         feedback.answered = True
         feedback.save()
-
-
-@receiver(post_save, sender=TempModerator)
-def create_moderator(sender, instance, created, **kwargs):
-    if instance.is_contracted:
-        Moderator.objects.create(
-            user=instance.user,
-            balance=instance.balance,
-            degree=instance.degree,
-            docs=instance.docs,
-            is_contracted=instance.is_contracted,
-        )
-        instance.delete()
 
 
 @receiver(pre_delete, sender=Topic)
