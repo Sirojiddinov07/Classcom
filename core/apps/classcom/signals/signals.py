@@ -24,8 +24,6 @@ def create_moderator(sender, instance, created, **kwargs):
         Moderator.objects.create(
             user=instance.user,
             balance=instance.balance,
-            science=instance.science,
-            science_type=instance.science_type,
             degree=instance.degree,
             docs=instance.docs,
             is_contracted=instance.is_contracted,
