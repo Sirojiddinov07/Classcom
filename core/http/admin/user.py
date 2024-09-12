@@ -38,6 +38,7 @@ class ModeratorInline(StackedInline):
         "docs",
         "is_contracted",
     ]
+    readonly_fields = ["balance"]
 
 
 class UserAdmin(
@@ -97,7 +98,7 @@ class UserAdmin(
 
     def get_inlines(self, request, obj=None):
         inlines = list(super().get_inlines(request, obj))
-        if obj and obj.role == Role.MODERATOR:
+        if obj and obj.role == Role.MODERATOR or obj.role == Role.USER:
             inlines.append(ModeratorInline)
         return inlines
 

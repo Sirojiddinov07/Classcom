@@ -24,17 +24,25 @@ class ModeratorAdmin(ModelAdmin):
         "classes",
         "class_groups",
         "quarters",
-        "docs",
     )
     list_filter = (
         "is_contracted",
         "degree",
     )
     ordering = ("-updated_at",)
+    readonly_fields = ("docs_links", "balance")
     fieldsets = (
         (
             None,
-            {"fields": ("user", "balance", "degree", "docs", "is_contracted")},
+            {
+                "fields": (
+                    "user",
+                    "balance",
+                    "degree",
+                    "is_contracted",
+                    "docs_links",
+                )
+            },
         ),
         (
             _("Plan Permissions"),
@@ -62,7 +70,7 @@ class ModeratorAdmin(ModelAdmin):
             },
         ),
         (
-            _("topic Permissions"),
+            _("Topic Permissions"),
             {"classes": ["tab"], "fields": ("topic_creatable",)},
         ),
     )
@@ -72,7 +80,12 @@ class ModeratorAdmin(ModelAdmin):
 
     def docs_links(self, obj):
         links = [
-            format_html('<a href="{}">{}</a>', doc.url, doc.title)
+            format_html(
+                '<a href="{}">{}.{}</a>',
+                doc.file.url,
+                doc.description or doc.file.name,
+                doc.file.name.split(".")[-1],
+            )
             for doc in obj.docs.all()
         ]
         return format_html("<br>".join(links))
