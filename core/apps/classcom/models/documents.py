@@ -28,6 +28,7 @@ class Document(AbstractBaseModel):
                 if self.file.name is not None
                 else f"Media {self.id}"
             )
+            self.description = f"{self.title}"
         super().save(*args, **kwargs)
 
     @property

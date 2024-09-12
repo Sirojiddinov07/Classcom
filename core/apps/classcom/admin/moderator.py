@@ -83,7 +83,7 @@ class ModeratorAdmin(ModelAdmin):
             format_html(
                 '<a href="{}" target="_blank">{}</a><br>',
                 doc.file.url,
-                doc.file.name,
+                doc.title,
             )
             for doc in obj.docs.all()
         ]
