@@ -81,10 +81,9 @@ class ModeratorAdmin(ModelAdmin):
     def docs_links(self, obj):
         links = [
             format_html(
-                '<a href="{}">{}.{}</a>',
+                '<a href="{}" target="_blank">{}</a><br>',
                 doc.file.url,
-                doc.description or doc.file.name,
-                doc.file.name.split(".")[-1],
+                doc.file.name,
             )
             for doc in obj.docs.all()
         ]
