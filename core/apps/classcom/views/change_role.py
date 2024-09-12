@@ -11,14 +11,10 @@ class ChangeRoleView(generics.CreateAPIView):
     serializer_class = ChangeRoleSerializer
     permission_classes = [IsAuthenticated]
 
-    def create(self, request, *args, **kwargs):
-        serializer = self.get_serializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        self.perform_create(serializer)
-        headers = self.get_success_headers(serializer.data)
-        return Response(
-            serializer.data, status=status.HTTP_201_CREATED, headers=headers
+    def post(self, request, *args, **kwargs):
+        serializer = ChangeRoleSerializer(
+            data=request.data, context={"request": request}
         )
-
-    def perform_create(self, serializer):
+        serializer.is_valid(raise_exception=True)
         serializer.save()
+        return Response(serializer.data, status=status.HTTP_201_CREATED)

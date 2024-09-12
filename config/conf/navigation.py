@@ -42,13 +42,6 @@ PAGES = [
                 "icon": "school",
                 "link": reverse_lazy("admin:classcom_teacher_changelist"),
             },
-            {
-                "title": _("Temp Moderators"),
-                "icon": "remove_moderator",
-                "link": reverse_lazy(
-                    "admin:classcom_tempmoderator_changelist"
-                ),
-            },
         ],
     },
     {

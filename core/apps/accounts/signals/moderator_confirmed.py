@@ -16,5 +16,7 @@ def check_is_contracted_change(sender, instance, **kwargs):
             first_name = instance.user.first_name
             last_name = instance.user.last_name
             phone = instance.user.phone
+            instance.user.role = "moderator"
+            instance.user.save()
             send_congratulation_sms.delay(phone, first_name, last_name)
             print("Moderator confirmed")

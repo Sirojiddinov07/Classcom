@@ -1,69 +1,66 @@
-from django.utils.translation import gettext_lazy as _
+import logging
+
+from django.utils.translation import gettext_lazy as _  # noqa
+from rest_framework import exceptions
 from rest_framework import serializers
+from rest_framework import status
+from rest_framework.response import Response
 
 from core.apps.classcom.models import (
-    TempModerator,
-    choices,
+    Moderator,
+    Document,
 )
-from core.http.models import User
 
 
 class ChangeRoleSerializer(serializers.ModelSerializer):
-    user_id = serializers.IntegerField()
+    docs = serializers.ListField(
+        child=serializers.FileField(), write_only=True
+    )
 
     class Meta:
-        model = TempModerator
+        model = Moderator
         fields = [
-            "user_id",
-            "balance",
             "degree",
             "docs",
-            "is_contracted",
         ]
 
-    def validate_user_id(self, value):
-        request = self.context.get("request")
-        if not request or not request.user:
-            raise serializers.ValidationError(
-                {
-                    "detail": _("Foydalanuvchi soʻrovi mavjud emas"),
-                    "code": "no_request_user",
-                }
-            )
-
+    def create(self, data):
         try:
-            user = User.objects.get(id=value)
-        except User.DoesNotExist:
-            raise serializers.ValidationError(
-                {
-                    "detail": _("Foydalanuvchi topilmadi"),
-                    "code": "user_not_found",
-                }
+            request = self.context.get("request")
+            user = request.user
+            docs_data = []
+
+            for key in request.data:
+                if key.startswith("description[") and key.endswith("]"):
+                    index = key[len("description[") : -1]  # noqa: E203
+                    file_key = f"docs[{index}]"
+                    doc_desc = request.data.get(key)
+                    doc_file = request.FILES.get(file_key)
+
+                    if not doc_file:
+                        return Response(
+                            {
+                                "error": f"File is required for document item {index}"
+                            },
+                            status=status.HTTP_400_BAD_REQUEST,
+                        )
+                    if not doc_desc:
+                        doc_desc = doc_file.name
+                    docs_data.append(
+                        {"docs": doc_file, "description": doc_desc}
+                    )
+
+            moderator, created = Moderator.objects.update_or_create(
+                user=user, defaults={"degree": data.get("degree")}
             )
 
-        if user.role == choices.Role.MODERATOR:
-            raise serializers.ValidationError(
-                {
-                    "detail": _("Foydaluvchi allaqachon moderator"),
-                    "code": "already_moderator",
-                }
-            )
+            for doc_data in docs_data:
+                document = Document.objects.create(
+                    file=doc_data["docs"], description=doc_data["description"]
+                )
+                moderator.docs.add(document)
 
-        # Ensure only the requesting user can change their role
-        if user != request.user:
-            raise serializers.ValidationError(
-                {
-                    "detail": _(
-                        "Siz faqat o'zingizning ro'lingizni o'zgartirishingiz mumkin"
-                    ),
-                    "code": "permission_denied",
-                }
-            )
-
-        return value
-
-    def create(self, validated_data):
-        user_id = validated_data.pop("user_id")
-        user = User.objects.get(id=user_id)
-        moderator = TempModerator.objects.create(user=user, **validated_data)
-        return moderator
+            return moderator
+        except Exception as e:
+            logging.error(f"Error in create method: {str(e)}")
+            raise exceptions.ValidationError({"detail": str(e)})
