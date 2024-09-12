@@ -1,25 +1,15 @@
-from rest_framework import serializers
 from django.utils.translation import gettext_lazy as _
+from rest_framework import serializers
 
 from core.apps.classcom.models import (
     TempModerator,
     choices,
-    Science,
-    ScienceTypes,
 )
 from core.http.models import User
 
 
 class ChangeRoleSerializer(serializers.ModelSerializer):
     user_id = serializers.IntegerField()
-    science_id = serializers.PrimaryKeyRelatedField(
-        queryset=Science.objects.all(), source="science", allow_null=True
-    )
-    science_type_id = serializers.PrimaryKeyRelatedField(
-        queryset=ScienceTypes.objects.all(),
-        source="science_type",
-        allow_null=True,
-    )
 
     class Meta:
         model = TempModerator
@@ -29,8 +19,6 @@ class ChangeRoleSerializer(serializers.ModelSerializer):
             "degree",
             "docs",
             "is_contracted",
-            "science_id",
-            "science_type_id",
         ]
 
     def validate_user_id(self, value):

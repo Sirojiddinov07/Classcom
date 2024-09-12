@@ -102,19 +102,6 @@ class TempModerator(AbstractBaseModel):
         "http.User", on_delete=models.CASCADE, verbose_name=_("Foydalanuvchi")
     )
     balance = models.BigIntegerField(default=0, verbose_name=_("Balans"))
-    science = models.ForeignKey(
-        to="Science",
-        on_delete=models.SET_NULL,
-        null=True,
-        verbose_name=_("Fan"),
-    )
-    science_type = models.ForeignKey(
-        ScienceTypes,
-        on_delete=models.SET_NULL,
-        null=True,
-        blank=True,
-        verbose_name=_("Fan turi"),
-    )
     degree = models.CharField(
         max_length=15,
         choices=choices.Degree.choices,
