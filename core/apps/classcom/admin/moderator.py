@@ -70,7 +70,7 @@ class ModeratorAdmin(ModelAdmin):
             },
         ),
         (
-            _("Topic Permissions"),
+            _("topic Permissions"),
             {"classes": ["tab"], "fields": ("topic_creatable",)},
         ),
     )
