@@ -2,6 +2,7 @@ import random
 from datetime import datetime, timedelta
 
 from django.utils.translation import gettext_lazy as _
+from django.utils import translation
 
 from core import exceptions
 from core.http import models, tasks
@@ -9,7 +10,8 @@ from core.http import models, tasks
 
 class SmsService:
     @staticmethod
-    def send_confirm(phone):
+    def send_confirm(phone, language):
+        translation.activate(language)
         # TODO: Deploy this change when deploying -> code = random.randint(1000, 9999) # noqa
         code = random.randint(1000, 9999)
         # code = 1111
@@ -41,7 +43,7 @@ class SmsService:
         )  # noqa
         sms_confirm.save()
 
-        tasks.SendConfirm.delay(phone, code)
+        tasks.SendConfirm.delay(phone, code, language)
         return True
 
     @staticmethod

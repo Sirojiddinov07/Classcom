@@ -3,6 +3,7 @@ Base celery tasks
 """
 
 from celery import shared_task
+from django.utils import translation
 from django.utils.translation import gettext_lazy as _
 
 from core.services import sms_service
@@ -10,7 +11,8 @@ from core.utils import console
 
 
 @shared_task
-def SendConfirm(phone, code):
+def SendConfirm(phone, code, language):
+    translation.activate(language)
     try:
         service: sms_service.SendService = sms_service.SendService()
         service.send_sms(

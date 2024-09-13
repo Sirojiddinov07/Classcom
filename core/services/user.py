@@ -1,6 +1,7 @@
 import typing
 from datetime import datetime
 
+from django.utils import translation
 from rest_framework.generics import get_object_or_404
 from rest_framework_simplejwt import tokens
 
@@ -84,9 +85,10 @@ class UserService(base_service.BaseService, sms.SmsService):
         user.save()
         return user
 
-    def send_confirmation(self, phone) -> bool:
+    def send_confirmation(self, phone, language) -> bool:
+        translation.activate(language)
         try:
-            self.send_confirm(phone)
+            self.send_confirm(phone, language)
             return True
         except exceptions.SmsException as e:
             exception.ResponseException(

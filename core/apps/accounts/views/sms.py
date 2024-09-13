@@ -2,6 +2,7 @@ import typing
 import uuid
 
 from django.utils.translation import gettext_lazy as _
+from django.utils import translation
 from drf_spectacular.utils import extend_schema
 from rest_framework import generics, permissions
 from rest_framework import request as rest_request
@@ -54,8 +55,10 @@ class RegisterView(views.APIView, services.UserService):
             data.get("school_type"),
             data.get("class_group"),
         )
+        language = request.headers.get("Accept-Language", "uz")
+        translation.activate(language)
         self.send_confirmation(
-            phone
+            phone, language
         )  # Send confirmation code for sms eskiz.uz
         Orders.objects.create(
             user=user,

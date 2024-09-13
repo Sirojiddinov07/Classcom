@@ -1,3 +1,4 @@
+from django.utils import translation
 from django.utils.translation import gettext as _
 from rest_framework import permissions
 from rest_framework.decorators import action
@@ -24,8 +25,10 @@ class RegisterViewset(ViewSet):
         ser.is_valid(raise_exception=True)
         ser.save()
         phone = request.data.get("phone")
+        language = request.headers.get("Accept-Language", "uz")
+        translation.activate(language)
         try:
-            UserService().send_confirm(phone)
+            UserService().send_confirm(phone, language)
         except Exception as e:
             raise NotAcceptable(
                 {"detail": str(e), "expired": str(e.kwargs.get("expired"))}
