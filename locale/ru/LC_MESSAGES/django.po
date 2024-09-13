@@ -1065,7 +1065,7 @@ msgstr "Уведомление"
 #: core/enums/core.py:41
 #, python-format
 msgid "Sms %(phone)s raqamiga yuborildi"
-msgstr "Код подтверждения для Вашей регистрации на сайте classcom.uz и в мобильном приложении: %(code)s"
+msgstr "Сообщение отправлено на номер %(phone)s"
 
 #: core/enums/core.py:42
 msgid "User already exists"
