@@ -60,6 +60,7 @@ class RegisterView(views.APIView, services.UserService):
         Orders.objects.create(
             user=user,
             science_id=data.get("science"),
+            class_type=data.get("class_group"),
         ).types.set(data.get("science_types"))
         return response.Response(
             {"detail": _(enums.Messages.SEND_MESSAGE) % {"phone": phone}},
