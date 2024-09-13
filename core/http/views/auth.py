@@ -1,6 +1,7 @@
 from typing import Type
 
 from django.utils.translation import gettext as _
+from django.utils import translation
 from rest_framework import permissions, request, throttling, views
 
 from core import enums, services
@@ -18,8 +19,10 @@ class AbstractSendSms(views.APIView, http_views.ApiResponse):
         self.service = services.UserService()
 
     def post(self, rq: Type[request.Request]):
+        language = rq.headers.get("Accept-Language", "uz")
+        translation.activate(language)
         ser = self.serializer_class(data=rq.data)
         ser.is_valid(raise_exception=True)
         phone = ser.data.get("phone")
-        self.service.send_confirmation(phone)
+        self.service.send_confirmation(phone, language)
         return self.success(_(enums.Messages.SEND_MESSAGE) % {"phone": phone})
