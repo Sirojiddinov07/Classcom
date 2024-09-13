@@ -14,7 +14,11 @@ def SendConfirm(phone, code):
     try:
         service: sms_service.SendService = sms_service.SendService()
         service.send_sms(
-            phone, _("Sizning Tasdiqlash ko'dingiz: %(code)s") % {"code": code}
+            phone,
+            _(
+                "classcom.uz sayti va mobil ilovasiga ro'yxatdan o'tishingingiz uchun tasdiqlash kodi: %(code)s"
+            )
+            % {"code": code},
         )
         console.Console().success(f"Success: {phone}-{code}")
     except Exception as e:
