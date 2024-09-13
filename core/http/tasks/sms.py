@@ -3,7 +3,7 @@ Base celery tasks
 """
 
 from celery import shared_task
-from django.utils.translation import gettext as _
+from django.utils.translation import gettext_lazy as _
 
 from core.services import sms_service
 from core.utils import console
