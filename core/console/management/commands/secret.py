@@ -12,3 +12,4 @@ class Command(BaseCommand):
         print("================================================\n\n")
         print("[bold red]" + utils.get_random_secret_key() + "[/]")
         print("\n\n================================================")
+        return None

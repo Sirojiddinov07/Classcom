@@ -1,3 +1,4 @@
+from django.utils.translation import gettext_lazy as _
 from rest_framework import status, generics
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
@@ -12,6 +13,13 @@ class ChangeRoleView(generics.CreateAPIView):
     permission_classes = [IsAuthenticated]
 
     def post(self, request, *args, **kwargs):
+        user = request.user
+        if Moderator.objects.filter(user=user).exists():
+            return Response(
+                {"detail": _("Siz ariza topshirgansiz")},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
         serializer = ChangeRoleSerializer(
             data=request.data, context={"request": request}
         )

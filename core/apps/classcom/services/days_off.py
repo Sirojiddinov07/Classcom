@@ -18,7 +18,7 @@ class DaysOffService:
         classes: Optional[List[Union[int, models.Classes]]] = None,
         date_lte: Optional[str] = None,
         date_gte: Optional[str] = None,
-        weekdays: Optional[List[int]] = [],
+        weekdays: Optional[List[int]] = None,
     ) -> Union[int]:
         """User dam olish kunlarini filter qilib beradi.
 
@@ -32,6 +32,9 @@ class DaysOffService:
         Returns:
             _type_: DaysOff model
         """
+        if weekdays is None:
+            weekdays = []
+
         query = Q(user_id=user_id) | Q(user__isnull=True)
         date_gte = DateService().format_date(date_gte)
         date_lte = DateService().format_date(date_lte)

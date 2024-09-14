@@ -69,7 +69,7 @@ class NotificationConsumer(AsyncWebsocketConsumer):
             notification.is_sending = True
             await notification.asave()
 
-    async def receive(self, text_data):
+    async def receive(self, text_data=None, bytes_data=None):
         data = json.loads(text_data)
         if data.get("type") == "acknowledge_notification":
             try:
@@ -81,4 +81,4 @@ class NotificationConsumer(AsyncWebsocketConsumer):
 
     async def send_notification(self, event):
         message = event["message"]
-        await self.send(text_data=message)
+        await self.send(text_data=json.dumps({"message": message}))

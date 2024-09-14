@@ -3,7 +3,7 @@ Service for working with dates
 """
 
 from datetime import datetime
-from typing import List, Union
+from typing import Union
 
 import pandas as pd
 
@@ -13,9 +13,7 @@ from core.apps.classcom.choices import Weekday
 class DateService:
     def __init__(self) -> None: ...
 
-    def weekday_counter(
-        self, start_date, end_date, weekdays: Union[List[int]] = []
-    ) -> object:
+    def weekday_counter(self, start_date, end_date, weekdays=None) -> object:
         """Weekdays counter
 
         Args:
@@ -25,6 +23,8 @@ class DateService:
         Returns:
             int: count of weekdays
         """
+        if weekdays is None:
+            weekdays = []
         date = pd.date_range(
             start=self.format_date(start_date), end=self.format_date(end_date)
         )
@@ -57,7 +57,7 @@ class DateService:
             case _:
                 return -1
 
-    def format_date(self, date: str) -> str:
+    def format_date(self, date: str) -> datetime:
         if not date:
-            return None
+            return datetime.now()
         return datetime.strptime(date, "%d.%m.%Y")

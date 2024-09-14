@@ -11,10 +11,10 @@ from django.contrib.auth.models import AnonymousUser  # noqa
 
 @database_sync_to_async
 def get_user(token):
+    User = get_user_model()
     try:
         payload = jwt.decode(token, settings.SECRET_KEY, algorithms=["HS256"])
         user_id = payload["user_id"]
-        User = get_user_model()
         return User.objects.get(id=user_id)
     except (
         jwt.ExpiredSignatureError,
