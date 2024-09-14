@@ -14,23 +14,18 @@ PAGES = [
                 "title": _("Statistika"),
                 "icon": "monitoring",
                 "link": reverse_lazy("dashboard"),
-                "permission": lambda request: request.user.is_superuser,
+                "permission": lambda request: request.user.is_authenticated,
             },
         ],
     },
     {
         "title": _("Foydalanuvchilar"),
         "separator": True,  # Top border
-        "collapsible": True,
         "items": [
             {
                 "title": _("Foydalanuvchilar"),
                 "icon": "person",
                 "link": reverse_lazy("admin:http_user_changelist"),
-                "permission": lambda request: any(
-                    group.permissions.filter(codename="view_user").exists()
-                    for group in request.user.groups.all()
-                ),
             },
             {
                 "title": _("Guruhlar"),
@@ -52,7 +47,6 @@ PAGES = [
     {
         "title": _("Kalendar Tematik Reja"),
         "separator": True,  # Top border
-        "collapsible": True,
         "items": [
             {
                 "title": _("Tematik reja"),
@@ -69,7 +63,6 @@ PAGES = [
     {
         "title": _("Elektron resurslar"),
         "separator": True,  # Top border
-        "collapsible": True,
         "items": [
             {
                 "title": _("Elektron resurslar"),
@@ -96,7 +89,6 @@ PAGES = [
     {
         "title": _("Maktablar"),
         "separator": True,  # Top border
-        "collapsible": True,
         "items": [
             {
                 "title": _("Maktab turi"),
@@ -108,7 +100,6 @@ PAGES = [
     {
         "title": _("Sinflar"),
         "separator": True,  # Top border
-        "collapsible": True,
         "items": [
             {
                 "title": _("Sinflar"),
@@ -130,7 +121,6 @@ PAGES = [
     {
         "title": _("Dars jadvali"),
         "separator": True,  # Top border
-        "collapsible": True,
         "items": [
             {
                 "title": _("Darslar"),
@@ -171,7 +161,6 @@ PAGES = [
     {
         "title": _("Qo'llab quvvatlash"),
         "separator": True,  # Top border
-        "collapsible": True,
         "items": [
             {
                 "title": _("Bildirishnomalar"),
@@ -200,7 +189,6 @@ PAGES = [
     {
         "title": _("Fanlar"),
         "separator": True,  # Top border
-        "collapsible": True,
         "items": [
             {
                 "title": _("Fanlar"),
@@ -222,7 +210,6 @@ PAGES = [
     {
         "title": _("Manzillar"),
         "separator": True,  # Top border
-        "collapsible": True,
         "items": [
             {
                 "title": _("Viloyatlar"),
@@ -239,7 +226,6 @@ PAGES = [
     {
         "title": _("Fayllar"),
         "separator": True,  # Top border
-        "collapsible": True,
         "items": [
             {
                 "title": _("Media Fayllar"),
@@ -261,7 +247,6 @@ PAGES = [
     {
         "title": _("To'lovlar"),
         "separator": True,  # Top border
-        "collapsible": True,
         "items": [
             {
                 "title": _("Buyurtmalar"),
@@ -283,7 +268,6 @@ PAGES = [
     {
         "title": _("Qo'shimcha"),
         "separator": True,  # Top border
-        "collapsible": True,
         "items": [
             {
                 "title": _("Sozlamalar"),
