@@ -9,7 +9,6 @@ from unfold.forms import (
     UserCreationForm,
 )
 
-from core.apps.classcom.choices import Role
 from core.apps.classcom.models import Moderator
 
 
@@ -51,6 +50,7 @@ class UserAdmin(
     list_display = ["id", "phone", "first_name", "last_name", "role"]
     search_fields = ["phone", "first_name", "last_name"]
     list_filter = ["role"]
+    inlines = [ModeratorInline]
     fieldsets = (
         (
             "User",
@@ -95,12 +95,6 @@ class UserAdmin(
             {"classes": ["tab"], "fields": ("last_login", "date_joined")},
         ),
     )
-
-    def get_inlines(self, request, obj=None):
-        inlines = list(super().get_inlines(request, obj))
-        if obj and obj.role == Role.MODERATOR or obj.role == Role.USER:
-            inlines.append(ModeratorInline)
-        return inlines
 
     add_fieldsets = (
         (
