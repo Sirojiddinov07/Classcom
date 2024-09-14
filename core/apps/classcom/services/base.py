@@ -5,7 +5,9 @@ class BaseService:
         except (IndexError, Exception):
             return default
 
-    def serializer_name_replace(self, data, replaces=[]):
+    def serializer_name_replace(self, data, replaces=None):
+        if replaces is None:
+            replaces = []
         response = {}
         for key, val in data.items():
             if key in replaces:

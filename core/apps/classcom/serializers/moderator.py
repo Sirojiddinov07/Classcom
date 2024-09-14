@@ -111,8 +111,10 @@ class ModeratorCreateSerializer(serializers.ModelSerializer):
         ]
 
     def create(self, validated_data):
+        language = self.context.get("request").headers.get(
+            "Accept-Language", "uz"
+        )
         user_data = validated_data.pop("user")
-
         region = user_data.pop("region")
         district = user_data.pop("district")
 
@@ -124,7 +126,7 @@ class ModeratorCreateSerializer(serializers.ModelSerializer):
         user = user_serializer.save()
 
         sms_service = UserService()
-        sms_service.send_confirmation(user.phone)
+        sms_service.send_confirmation(user.phone, language)
 
         moderator = Moderator.objects.create(user=user, **validated_data)
         return moderator

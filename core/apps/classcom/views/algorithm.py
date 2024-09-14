@@ -99,6 +99,7 @@ class AlgorithmApiView(APIView):
             class_counter = 0
             topic_index = 0
             current_topic_hours = 0
+            current_topic = None  # Define current_topic before the loop
 
             while class_counter < total_classes:
                 if current_topic_hours == 0:
