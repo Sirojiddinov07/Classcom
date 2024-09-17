@@ -1,8 +1,38 @@
+from typing import Callable, TypeVar, cast, Protocol
+
 from django.contrib import admin
+from django.db.models.query import QuerySet
+from django.http import HttpRequest
 from django.utils.translation import gettext_lazy as _
 from unfold.admin import ModelAdmin
 
+from core.apps.classcom.filters import (
+    QuarterFilter,
+    ClassesFilter,
+    ScienceFilter,
+    ClassGroupFilter,
+)
 from core.apps.classcom.models import Plan
+
+
+class ActionWithDescription(Protocol):
+    def __call__(
+        self,
+        modeladmin: admin.ModelAdmin,
+        request: HttpRequest,
+        queryset: QuerySet,
+    ) -> None: ...
+
+    short_description: str
+
+
+T = TypeVar("T", bound=Callable[..., None])
+
+
+def describe_action(action: T, description: str) -> ActionWithDescription:
+    casted_action = cast(ActionWithDescription, action)
+    casted_action.short_description = description
+    return casted_action
 
 
 @admin.register(Plan)
@@ -16,7 +46,17 @@ class PlanAdmin(ModelAdmin):
         "science_types",
         "quarter",
         "created_at",
+        "is_active",
     )
+    list_editable = ("is_active",)
+    list_filter_submit = True
+    list_filter = (
+        QuarterFilter,
+        ScienceFilter,
+        ClassesFilter,
+        ClassGroupFilter,
+    )
+    actions = ["make_inactive", "make_active"]
     """
     Customize the plan model in admin panel interface
     """
@@ -57,3 +97,17 @@ class PlanAdmin(ModelAdmin):
         return f"{obj.quarter.name}"
 
     quarter.short_description = _("Chorak")
+
+    def make_active(self, request, queryset):
+        queryset.update(is_active=True)
+
+    make_active = describe_action(
+        make_active, _("Faol qilish")
+    )  # Apply custom type
+
+    def make_inactive(self, request, queryset):
+        queryset.update(is_active=False)
+
+    make_inactive = describe_action(
+        make_inactive, _("Nofaol qilish")
+    )  # Apply custom type

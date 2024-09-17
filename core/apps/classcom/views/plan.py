@@ -47,7 +47,7 @@ class PlanApiView(APIView):
                 science_types__in=moderator.science_type.all(),
             )
         else:
-            plans = Plan.objects.all()
+            plans = Plan.objects.filter(is_active=True)
 
         if plan_id:
             plans = plans.filter(id=plan_id)

@@ -25,7 +25,8 @@ class GroupAdmin(ModelAdmin, import_export.ImportExportModelAdmin):
     list_display = ["name"]
     search_fields = ["name"]
 
-    filter_horizontal = ("permissions",)
+    # filter_horizontal = ("permissions",)
+    filter_vertical = ("permissions",)
 
 
 class ModeratorInline(StackedInline):
