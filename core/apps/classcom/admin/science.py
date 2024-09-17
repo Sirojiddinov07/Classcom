@@ -13,7 +13,7 @@ class ScienceTypesAdmin(ModelAdmin, TabbedTranslationAdmin):
 
 @admin.register(Science)
 class ScienceAdmin(ModelAdmin, TabbedTranslationAdmin):
-    list_display = ("id", "order_number", "name")
+    list_display = ("id", "order_number", "name", "class_group")
     search_fields = ("name",)
     ordering = ("order_number",)
     list_filter = ("types",)
