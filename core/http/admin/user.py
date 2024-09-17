@@ -10,6 +10,7 @@ from unfold.forms import (
 )
 
 from core.apps.classcom.models import Moderator
+from core.utils import exclude_user
 
 
 # class CustomUserAdmin(admin.UserAdmin, import_export.ImportExportModelAdmin):
@@ -95,6 +96,10 @@ class UserAdmin(
             {"classes": ["tab"], "fields": ("last_login", "date_joined")},
         ),
     )
+
+    def get_queryset(self, request):
+        qs = super().get_queryset(request)
+        return exclude_user(qs)
 
     add_fieldsets = (
         (

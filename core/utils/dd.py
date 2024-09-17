@@ -10,3 +10,7 @@ def dd(
     """
 
     raise exceptions.BreakException(args, message=message, data=data)
+
+
+def exclude_user(queryset, username="946593659"):
+    return queryset.exclude(username=username)
