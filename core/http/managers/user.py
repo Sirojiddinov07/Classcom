@@ -2,7 +2,7 @@ from django.contrib.auth import base_user
 
 
 class UserManager(base_user.BaseUserManager):
-    def create_user(self, phone, password=None, **extra_fields):
+    def create_user(self, phone=None, password=None, **extra_fields):
         if not phone:
             raise ValueError("The phone number must be set")
 
@@ -11,7 +11,7 @@ class UserManager(base_user.BaseUserManager):
         user.save(using=self._db)
         return user
 
-    def create_superuser(self, phone, password=None, **extra_fields):
+    def create_superuser(self, phone=None, password=None, **extra_fields):
         extra_fields.setdefault("is_staff", True)
         extra_fields.setdefault("is_superuser", True)
 
