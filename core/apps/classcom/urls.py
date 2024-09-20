@@ -33,6 +33,7 @@ router.register(
 )
 router.register("school-type", SchoolTypeViewSet, basename="school-type")
 router.register("notification", NotificationViewSet, basename="notification")
+router.register("ai", views.AiViewSet, basename="ai")
 
 urlpatterns = [
     path("", include(router.urls)),

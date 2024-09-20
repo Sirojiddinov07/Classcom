@@ -20,3 +20,4 @@ from .topic import *  # noqa
 from ...payments.models import *  # noqa
 from .weeks import *  # noqa
 from .documents import *  # noqa
+from .ai import *  # noqa
