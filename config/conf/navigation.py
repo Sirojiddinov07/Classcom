@@ -88,6 +88,14 @@ PAGES = [
                     request.user, "view_topic"
                 ),
             },
+            {
+                "title": _("Suniy Intellekt"),
+                "icon": "network_intelligence_update",
+                "link": reverse_lazy("admin:classcom_ai_changelist"),
+                "permission": lambda request: user_has_group_or_permission(
+                    request.user, "view_ai"
+                ),
+            },
         ],
     },
     {

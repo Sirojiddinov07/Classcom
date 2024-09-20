@@ -17,3 +17,4 @@ from .search import *  # noqa
 from .topic import *  # noqa
 from .type import *  # noqa
 from .language import *  # noqa
+from .ai import *  # noqa

@@ -19,3 +19,4 @@ from .using_science_count import *  # noqa
 from .weeks import *  # noqa
 from .language import *  # noqa
 from .algorithm import *  # noqa
+from .ai import *  # noqa
