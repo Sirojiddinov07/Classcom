@@ -11,14 +11,18 @@ class AiSerializer(serializers.ModelSerializer):
         fields = (
             "id",
             "topic",
-            "user",
             "question",
             "answer",
             "is_author",
             "created_at",
             "updated_at",
         )
-        read_only_fields = ("id", "created_at", "updated_at")
+        read_only_fields = ("id", "created_at", "updated_at", "is_author")
 
     def get_is_author(self, obj):
         return self.context["request"].user == obj.user
+
+    def create(self, validated_data):
+        user = self.context["request"].user
+        validated_data.pop("user", None)
+        return Ai.objects.create(user=user, **validated_data)

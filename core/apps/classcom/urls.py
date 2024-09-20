@@ -33,7 +33,6 @@ router.register(
 )
 router.register("school-type", SchoolTypeViewSet, basename="school-type")
 router.register("notification", NotificationViewSet, basename="notification")
-router.register("ai", views.AiViewSet, basename="ai")
 
 urlpatterns = [
     path("", include(router.urls)),
@@ -84,6 +83,11 @@ urlpatterns = [
         "weeks/",
         WeeksByQuarterView.as_view(),
         name="moderator-media-detail",
+    ),
+    path(
+        "ai/",
+        views.AiAPIView.as_view(),
+        name="ai",
     ),
     path("plan/", views.PlanApiView.as_view(), name="plan"),
     path("topic/", views.TopicApiView.as_view(), name="topic"),
