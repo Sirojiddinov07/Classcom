@@ -20,3 +20,4 @@ from .weeks import *  # noqa
 from .language import *  # noqa
 from .algorithm import *  # noqa
 from .ai import *  # noqa
+from .notification import *  # noqa
