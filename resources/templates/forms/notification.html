@@ -1,0 +1,87 @@
+{% extends "admin/base_site.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Bildirishnoma" %}{{ block.super }}{% endblock %}
+
+{% block extrahead %}
+    {{ block.super }}
+    <style>
+        .form-row {
+            display: flex;
+            flex-direction: column; /* Stack children vertically */
+            align-items: center; /* Align items to the start of the container */
+            width: 100%; /* Ensure the container takes full width */
+        }
+
+        .form-group {
+            margin: 1rem 0; /* Adds vertical spacing around each .form-group */
+        }
+        
+
+        .h1_title {
+            font-size: 2rem;
+            font-weight: 400;
+            line-height: 1.2;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Add styles for the submit button */
+        button[type="submit"] {
+            background-color: #27aec4; /* Green background */
+            color: white; /* White text */
+            padding: 10px 20px; /* Some padding */
+            border: none; /* No border */
+            border-radius: 30px; /* Rounded corners */
+            cursor: pointer; /* Pointer/hand icon */
+            font-size: 16px; /* Larger font size */
+            margin-left: 650px;
+            -webkit-transition: all 0.3s;
+            transition: all 0.7s;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #57c75b; /* Darker shade of green */
+
+        }
+    </style>
+{% endblock %}
+
+{% block content_title %}{% endblock %}
+{% block breadcrumbs %}{% endblock %}
+
+{% block content %}
+    <h1 class="h1_title">{% trans "Tanlangan foydalanuvchilar uchun bildirishnoma yarating" %}</h1>
+    <br>
+    <br>
+    <br>
+    <form action="?type=submit" method="post" novalidate>
+        {% csrf_token %}
+        <div class="form-row">
+            {% for field in form %}
+                <div class="form-group">
+                    <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                    {{ field }}
+                    {% if field.help_text %}
+                    {% endif %}
+                    {% if field.errors %}
+                    {% endif %}
+                    <div class="text-danger">
+                        {% for error in field.errors %}
+                            <p>{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                    <small class="form-text text-muted">{{ field.help_text }}</small>
+                </div>
+            {% endfor %}
+        </div>
+        <button type="submit" class="btn btn-primary">{% trans "Tasdiqlash" %}</button>
+    </form>
+{% endblock %}

@@ -2,7 +2,11 @@ from django.urls import include, path
 from rest_framework import routers
 
 from core.apps.classcom import views
-from core.apps.classcom.views import UnifiedSearchView, WeeksByQuarterView
+from core.apps.classcom.views import (
+    UnifiedSearchView,
+    WeeksByQuarterView,
+    CreateNotificationFormView,
+)
 from core.apps.websocket.views import NotificationViewSet
 from core.http.views import (
     SchoolTypeViewSet,
@@ -36,6 +40,11 @@ router.register("notification", NotificationViewSet, basename="notification")
 
 urlpatterns = [
     path("", include(router.urls)),
+    path(
+        "create-notification-form/",
+        CreateNotificationFormView.as_view(),
+        name="create_notification_form",
+    ),
     path("quarters/", views.QuarterListView.as_view(), name="quarter-list"),
     path(
         "download/media/<int:media_id>/",
