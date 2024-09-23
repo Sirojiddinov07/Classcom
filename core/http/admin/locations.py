@@ -7,19 +7,15 @@ from core.http import models, resources
 
 
 @admin.register(models.Region)
-class RegionAdmin(ModelAdmin, ImportExportModelAdmin, TabbedTranslationAdmin):
-    resource_class = resources.RegionResource
+class RegionAdmin(ModelAdmin, TabbedTranslationAdmin):
     list_display = ["id", "region"]
     search_fields = ["region"]
 
 
 @admin.register(models.District)
-class DistrictAdmin(
-    ModelAdmin, ImportExportModelAdmin, TabbedTranslationAdmin
-):
-    resource_class = resources.DistrictResource
+class DistrictAdmin(ModelAdmin, TabbedTranslationAdmin):
     list_display = ["id", "region", "district"]
-    search_fields = ["region", "district"]
+    search_fields = ["region__region", "district"]
 
 
 @admin.register(models.ScienceGroups)
