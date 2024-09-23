@@ -119,6 +119,4 @@ class ModeratorSerializer(serializers.ModelSerializer):
             "last_name": {"required": True},
             "district": {"required": True},
             "region": {"required": True},
-            "class_group": {"required": True},
-            "institution_number": {"required": True},
         }
