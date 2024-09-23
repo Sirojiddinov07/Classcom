@@ -20,10 +20,3 @@ def check_is_contracted_change(sender, instance, **kwargs):
             instance.user.save()
             send_congratulation_sms.delay(phone, first_name, last_name)
             print("Moderator confirmed")
-        else:
-            print(
-                f"Old: {old_instance.is_contracted} New: {instance.is_contracted}"
-            )
-            instance.user.role = "user"
-            instance.user.save()
-            print("Moderator not confirmed")

@@ -43,3 +43,5 @@ def notify_user_on_response(sender, instance, created, **kwargs):
         Notification.objects.create(
             user=instance.user, message_uz=text_uz, message_ru=text_ru
         )
+        instance.is_answered = True
+        instance.save()

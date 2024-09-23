@@ -15,6 +15,9 @@ class Chat(AbstractBaseModel):
     response_time = models.DateTimeField(
         null=True, blank=True, verbose_name=_("Javob vaqti")
     )
+    is_answered = models.BooleanField(
+        default=False, verbose_name=_("Javob berildi")
+    )
 
     def __str__(self):
         return f"Chat by {self.user} to admin"
