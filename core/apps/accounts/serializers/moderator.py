@@ -23,7 +23,7 @@ class ModeratorSerializer(serializers.ModelSerializer):
     docs = serializers.ListField(
         child=serializers.FileField(), write_only=True
     )
-    role = serializers.CharField(read_only=True, default="moderator")
+    # role = serializers.CharField(read_only=True, default="moderator")
 
     def validate_phone(self, value):
         user = models.User.objects.filter(
@@ -71,8 +71,8 @@ class ModeratorSerializer(serializers.ModelSerializer):
                 institution_number=data.get("institution_number"),
                 science_group_id=data.get("science_group"),
                 science_id=data.get("science").id,
-                role=data.get("role"),
-                school_type_id=data.get("school_type").id,
+                # role=data.get("role"),
+                school_type_id=data.get("school_type"),
                 class_group_id=data.get("class_group").id,
             )
 
