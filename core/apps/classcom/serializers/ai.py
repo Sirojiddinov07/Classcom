@@ -12,6 +12,7 @@ class AiSerializer(serializers.ModelSerializer):
             "id",
             "type",
             "answer",
+            "topic",
             "question",
             "is_author",
             "created_at",
