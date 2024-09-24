@@ -105,14 +105,14 @@ class User(auth_models.AbstractUser, AbstractBaseModel):
     )
     default_document_uz = models.FileField(
         upload_to="documents/",
-        default="assets/document_uz.docx",
+        default="media/doc/document_uz.pdf",
         null=True,
         blank=True,
         verbose_name=_("Standart hujjat (uz)"),
     )
     default_document_ru = models.FileField(
         upload_to="documents/",
-        default="assets/document_ru.docx",
+        default="media/doc/document_ru.pdf",
         null=True,
         blank=True,
         verbose_name=_("Standart hujjat (rus)"),
