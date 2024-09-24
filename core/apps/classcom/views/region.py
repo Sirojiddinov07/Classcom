@@ -12,7 +12,7 @@ class CustomPagination(PageNumberPagination):
 
 
 class RegionViewSet(viewsets.ModelViewSet):
-    queryset = models.Region.objects.all()
+    queryset = models.Region.objects.all().order_by("region")
     permission_classes = [permissions.AllowAny]
     serializer_class = RegionSerializer
     http_method_names = ["get"]

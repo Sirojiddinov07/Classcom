@@ -8,6 +8,7 @@ class RegionSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Region
         fields = ["id", "region"]
+        ordering = ["region"]
 
 
 class RegionDetailSerializer(serializers.ModelSerializer):
@@ -16,3 +17,4 @@ class RegionDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Region
         fields = ["id", "region", "districts"]
+        ordering = ["districts"]
