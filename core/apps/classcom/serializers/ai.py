@@ -10,9 +10,9 @@ class AiSerializer(serializers.ModelSerializer):
         model = Ai
         fields = (
             "id",
-            "topic",
-            "question",
+            "type",
             "answer",
+            "question",
             "is_author",
             "created_at",
             "updated_at",
