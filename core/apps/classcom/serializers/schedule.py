@@ -12,7 +12,7 @@ from core.apps.classcom.serializers import (
     ScienceTypesSerializer,
 )
 from core.apps.classcom.serializers.weks import WeeksSerializer
-from core.http.serializers import UserSerializer, ClassGroupSerializer
+from core.http.serializers import ClassGroupSerializer
 
 
 ############################################
@@ -40,7 +40,7 @@ class ScheduleSerializer(serializers.ModelSerializer):
 # Schedule List Serializer
 ############################################
 class ScheduleListSerializer(serializers.ModelSerializer):
-    user = UserSerializer()
+    user = serializers.SerializerMethodField()
     science = ScienceSerializer()
     classes = ClassesSerializer()
     class_type = ClassTypeSerializer()
@@ -63,6 +63,11 @@ class ScheduleListSerializer(serializers.ModelSerializer):
             "class_group",
             "science_type",
         )
+
+    def get_user(self, obj):
+        from core.http.serializers import UserSerializer
+
+        return UserSerializer(obj.user).data
 
 
 ############################################
@@ -156,7 +161,7 @@ class ScheduleTemplateSerializer(serializers.ModelSerializer):
 ############################################
 class ScheduleTemplateListSerializer(serializers.ModelSerializer):
     schedules = ScheduleListSerializer(many=True)
-    user = UserSerializer()
+    user = serializers.SerializerMethodField()
 
     class Meta:
         model = ScheduleTemplate
@@ -166,6 +171,11 @@ class ScheduleTemplateListSerializer(serializers.ModelSerializer):
             "name",
             "schedules",
         )
+
+    def get_user(self, obj):
+        from core.http.serializers import UserSerializer
+
+        return UserSerializer(obj.user).data
 
 
 ############################################

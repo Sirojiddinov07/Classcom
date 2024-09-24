@@ -1,11 +1,10 @@
 from rest_framework import serializers
 
 from core.apps.classcom.models.chat import Chat
-from core.http.serializers import UserSerializer
 
 
 class ChatSerializer(serializers.ModelSerializer):
-    user = UserSerializer(read_only=True)
+    user = serializers.SerializerMethodField()
     responsed = serializers.SerializerMethodField()
     response = serializers.CharField(read_only=True)
 
@@ -20,6 +19,11 @@ class ChatSerializer(serializers.ModelSerializer):
             "response",
             "response_time",
         ]
+
+    def get_user(self, obj):
+        from core.http.serializers import UserSerializer
+
+        return UserSerializer(obj.user).data
 
     def get_responsed(self, obj):
         return obj.response is not None

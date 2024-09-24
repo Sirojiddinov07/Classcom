@@ -1,8 +1,8 @@
 import typing
 import uuid
 
-from django.utils.translation import gettext_lazy as _
 from django.utils import translation
+from django.utils.translation import gettext_lazy as _
 from drf_spectacular.utils import extend_schema
 from rest_framework import generics, permissions
 from rest_framework import request as rest_request
