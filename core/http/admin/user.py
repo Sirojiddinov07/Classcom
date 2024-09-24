@@ -64,7 +64,15 @@ class UserAdmin(
     form = UserChangeForm
     list_filter_submit = True
     actions = ["create_notifications_for_users"]
-    list_display = ["id", "phone", "first_name", "last_name", "role"]
+    list_display = [
+        "id",
+        "phone",
+        "first_name",
+        "last_name",
+        "role",
+        "default_document_uz",
+        "default_document_ru",
+    ]
     search_fields = ["phone", "first_name", "last_name"]
     readonly_fields = ("docs_links",)
     list_filter = ["role"]
