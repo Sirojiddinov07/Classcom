@@ -70,8 +70,6 @@ class UserAdmin(
         "first_name",
         "last_name",
         "role",
-        "default_document_uz",
-        "default_document_ru",
     ]
     search_fields = ["phone", "first_name", "last_name"]
     readonly_fields = ("docs_links",)
