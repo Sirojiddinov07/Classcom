@@ -6,7 +6,7 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 
 from core.apps.classcom.choices import Role
-from core.apps.classcom.models import Science, Classes
+from core.apps.classcom.models import Science, Classes, Document
 from core.http import choices, managers
 from core.http.models import AbstractBaseModel
 
@@ -97,6 +97,25 @@ class User(auth_models.AbstractUser, AbstractBaseModel):
         null=True,
         blank=True,
         verbose_name=_("Fan"),
+    )
+    document = models.ManyToManyField(
+        Document,
+        blank=True,
+        verbose_name=_("Hujjat"),
+    )
+    default_document_uz = models.FileField(
+        upload_to="documents/",
+        default="assets/document_uz.docx",
+        null=True,
+        blank=True,
+        verbose_name=_("Standart hujjat (uz)"),
+    )
+    default_document_ru = models.FileField(
+        upload_to="documents/",
+        default="assets/document_ru.docx",
+        null=True,
+        blank=True,
+        verbose_name=_("Standart hujjat (rus)"),
     )
 
     USERNAME_FIELD = "phone"

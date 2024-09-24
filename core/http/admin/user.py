@@ -5,6 +5,7 @@ from django.contrib.auth import admin
 from django.http import HttpRequest
 from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
+from django.utils.html import format_html
 from django.utils.translation import gettext_lazy as _
 from import_export import admin as import_export
 from unfold.admin import ModelAdmin
@@ -65,12 +66,13 @@ class UserAdmin(
     actions = ["create_notifications_for_users"]
     list_display = ["id", "phone", "first_name", "last_name", "role"]
     search_fields = ["phone", "first_name", "last_name"]
+    readonly_fields = ("docs_links",)
     list_filter = ["role"]
     inlines = [ModeratorInline]
     fieldsets = (
         (
-            "User",
-            {"classes": ["tab"], "fields": ("username", "phone", "password")},
+            None,
+            {"fields": ("username", "phone", "password", "docs_links")},
         ),
         (
             "Personal info",
@@ -90,6 +92,8 @@ class UserAdmin(
                     "institution_number",
                     "school_type",
                     "class_group",
+                    "default_document_uz",
+                    "default_document_ru",
                 ),
             },
         ),
@@ -125,6 +129,19 @@ class UserAdmin(
             },
         ),
     )
+
+    def docs_links(self, obj):
+        links = [
+            format_html(
+                '<a href="{}" target="_blank">{}</a><br>',
+                doc.file.url,
+                doc.title,
+            )
+            for doc in obj.document.all()
+        ]
+        return format_html("<br>".join(links))
+
+    docs_links.short_description = _("Hujjatlar")
 
     @action(
         description=_(

@@ -3,7 +3,6 @@ from datetime import datetime
 from rest_framework import serializers
 
 from core.apps.classcom.models import Media
-from core.http.serializers import UserSerializer
 
 
 class MediaSerializer(serializers.ModelSerializer):
@@ -27,7 +26,7 @@ class MediaSerializer(serializers.ModelSerializer):
 
 
 class MediaDetailSerializer(serializers.ModelSerializer):
-    user = UserSerializer()
+    user = serializers.SerializerMethodField()
 
     class Meta:
         model = Media
@@ -42,3 +41,8 @@ class MediaDetailSerializer(serializers.ModelSerializer):
             "created_at",
             "user",
         )
+
+    def get_user(self, obj):
+        from core.http.serializers import UserSerializer
+
+        return UserSerializer(obj.user).data

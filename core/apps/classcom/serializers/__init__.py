@@ -18,3 +18,4 @@ from .topic import *  # noqa
 from .type import *  # noqa
 from .language import *  # noqa
 from .ai import *  # noqa
+from .document import *  # noqa

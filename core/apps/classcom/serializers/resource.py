@@ -12,7 +12,6 @@ from core.apps.classcom.serializers import media
 from core.apps.classcom.serializers.resource_type import (
     ResourceTypeMiniSerializer,
 )
-from core.http import serializers as http_serializers
 from ..choices import Types, Departments, Schools, Docs
 
 
@@ -23,7 +22,7 @@ class ClassesSerializer(serializers.ModelSerializer):
 
 
 class ResourceSerializer(serializers.ModelSerializer):
-    user = http_serializers.UserSerializer()
+    user = serializers.SerializerMethodField()
     media = media.MediaDetailSerializer(many=True, read_only=True)
     type = ResourceTypeMiniSerializer(read_only=True)
     classes = ClassesSerializer(read_only=True)
@@ -56,6 +55,11 @@ class ResourceSerializer(serializers.ModelSerializer):
                     return None
         except Exception as e:
             raise APIException(e)
+
+    def get_user(self, obj):
+        from core.http.serializers import UserSerializer
+
+        return UserSerializer(obj.user).data
 
     def to_representation(self, instance):
         data = super().to_representation(instance)

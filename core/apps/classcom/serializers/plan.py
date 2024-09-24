@@ -6,7 +6,7 @@ from core.apps.classcom.serializers.quarter import QuarterMiniSerializer
 from core.apps.classcom.serializers.science import ScienceSerializer
 from core.apps.classcom.serializers.science import ScienceTypesSerializer
 from core.apps.classcom.serializers.topic import TopicDetailSerializer
-from core.http.serializers import UserSerializer, ClassGroupSerializer
+from core.http.serializers import ClassGroupSerializer
 
 
 class PlanSerializer(serializers.ModelSerializer):
@@ -40,7 +40,7 @@ class PlanSerializer(serializers.ModelSerializer):
 
 class PlanDetailSerializer(serializers.ModelSerializer):
     classes = ClassesSerializer()
-    user = UserSerializer()
+    user = serializers.SerializerMethodField()
     quarter = QuarterMiniSerializer()
     science = ScienceSerializer()
     class_group = ClassGroupSerializer()
@@ -72,6 +72,11 @@ class PlanDetailSerializer(serializers.ModelSerializer):
         if request and request.user.is_authenticated:
             return obj.user == request.user
         return False
+
+    def get_user(self, obj):
+        from core.http.serializers import UserSerializer
+
+        return UserSerializer(obj.user).data
 
     def to_representation(self, instance):
         data = super().to_representation(instance)
