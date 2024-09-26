@@ -1,7 +1,8 @@
-from django.db.models.signals import post_save, pre_delete
+from django.db.models.signals import post_save, pre_delete, m2m_changed
 from django.dispatch import receiver
 
 from core.apps.websocket.models.notification import Notification
+from core.http.models import User, ContractStatus
 from ..models import Topic, Plan, Chat
 from ..models.feedback import Answer
 
@@ -44,3 +45,36 @@ def notify_user_on_response(sender, instance, created, **kwargs):
             user=instance.user, message_uz=text_uz, message_ru=text_ru
         )
         Chat.objects.filter(pk=instance.pk).update(is_answered=True)
+
+
+@receiver(
+    m2m_changed, sender=User.document.through
+)  # M2M relationship changes
+def file_status_m2m(sender, instance, action, **kwargs):
+    if action == "post_add":  # Trigger after documents are added
+        if (
+            instance.document.exists()
+            and instance.status_file == ContractStatus.NO_FILE
+        ):
+            instance.status_file = ContractStatus.WAITING
+            instance.save()
+            Notification.objects.create(
+                user=instance,
+                message_uz="Sizning hujjatingiz qabul qilindi",
+                message_ru="Ваш документ принят",
+            )
+
+
+@receiver(post_save, sender=User)
+def file_status_pre_save(sender, instance, **kwargs):
+    if instance.response_file:
+        print(type(instance.response_file))
+        print(instance.status_file is not None)
+        User.objects.filter(pk=instance.pk).update(
+            status_file=ContractStatus.ACCEPTED
+        )
+        Notification.objects.create(
+            user=instance,
+            message_uz="Shartnoma qabul qilindi",
+            message_ru="Договор принят",
+        )
