@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-26 15:29+0500\n"
-"PO-Revision-Date: 2024-09-26 15:38+0500\n"
+"POT-Creation-Date: 2024-09-26 15:53+0500\n"
+"PO-Revision-Date: 2024-09-26 15:55+0500\n"
 "Last-Translator:   <>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -330,7 +330,6 @@ msgid "Eski parol noto'g'ri kiritildi."
 msgstr "Старый пароль введен неправильно."
 
 #: core/apps/accounts/views/moderator.py:27 core/apps/accounts/views/sms.py:45
-#| msgid "Phone number already registered."
 msgid "Phone number already registered"
 msgstr "Номер телефона уже зарегистрирован"
 
@@ -382,17 +381,18 @@ msgid "topic Permissions"
 msgstr "Разрешения темы"
 
 #: core/apps/classcom/admin/moderator.py:107
-#| msgid "Shartnoma"
 msgid "Kelgan shartnoma"
 msgstr "Входящий договор"
 
-#: core/apps/classcom/admin/moderator.py:114
-#: core/apps/classcom/models/moderator.py:29
+#: core/apps/classcom/admin/moderator.py:115
 msgid "Shartnoma"
 msgstr "Договор"
 
 #: core/apps/classcom/admin/moderator.py:119
-#| msgid "Tasdiqlangan vaqti"
+msgid "No contract available"
+msgstr "Нет доступного контракта"
+
+#: core/apps/classcom/admin/moderator.py:121
 msgid "Tasdiqlangan shartnoma"
 msgstr "Подтвержденный договор"
 
@@ -598,12 +598,10 @@ msgid "Sinflar guruhi"
 msgstr "Группа классов"
 
 #: core/apps/classcom/models/ai.py:9
-#| msgid "Barcha sharhlar"
 msgid "Barchasi"
 msgstr "Все"
 
 #: core/apps/classcom/models/ai.py:10
-#| msgid "Mavzular"
 msgid "Mavzuga qarab"
 msgstr "В зависимости от темы"
 
@@ -665,7 +663,6 @@ msgid "Javob vaqti"
 msgstr "Время ответа"
 
 #: core/apps/classcom/models/chat.py:19
-#| msgid "Javob berildimi"
 msgid "Javob berildi"
 msgstr "Ответил"
 
@@ -825,6 +822,11 @@ msgstr "Баланс"
 #: core/apps/classcom/models/resource.py:62
 msgid "Daraja"
 msgstr "Степень"
+
+#: core/apps/classcom/models/moderator.py:29
+#: resources/templates/forms/notification.html:85
+msgid "Tasdiqlash"
+msgstr "Подтверждение"
 
 #: core/apps/classcom/models/moderator.py:35
 msgid "Tematik Reja yarata olishi"
@@ -1008,7 +1010,6 @@ msgid "ID is required."
 msgstr "Требуется удостоверение личности."
 
 #: core/apps/classcom/views/ai.py:86
-#| msgid "Plan not found"
 msgid "Instance not found."
 msgstr "Экземпляр не найден."
 
@@ -1266,12 +1267,10 @@ msgid "Hujjat yuklanmagan"
 msgstr "Документ не загружен"
 
 #: core/http/models/user.py:16
-#| msgid "Siz ariza topshirgansiz"
 msgid "Hujjat topshirgan"
 msgstr "Отправил документ"
 
 #: core/http/models/user.py:17
-#| msgid "Shartnoma"
 msgid "Shartnoma tuzilgan"
 msgstr "Контракт заключен"
 
@@ -1300,12 +1299,10 @@ msgid "Muassasa raqami"
 msgstr "Номер учреждения"
 
 #: core/http/models/user.py:116
-#| msgid "Javob vaqti"
 msgid "Javob hujjati"
 msgstr "Ответный документ"
 
 #: core/http/models/user.py:122
-#| msgid "Statistika"
 msgid "Status"
 msgstr "Статус"
 
@@ -1403,11 +1400,6 @@ msgstr "Количество модераторов"
 #: resources/templates/forms/notification.html:61
 msgid "Tanlangan foydalanuvchilar uchun bildirishnoma yarating"
 msgstr "Создать уведомление для выбранных пользователей"
-
-#: resources/templates/forms/notification.html:85
-#| msgid "SMS tasdiqlash"
-msgid "Tasdiqlash"
-msgstr "Подтверждение"
 
 #~ msgid "Django"
 #~ msgstr "Django"
