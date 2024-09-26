@@ -14,6 +14,8 @@ class ModeratorAdmin(ModelAdmin):
         "is_contracted",
         "degree",
         "docs_links",
+        "contract_links",
+        "send_contract",
     )
     search_fields = ("user__first_name", "user__last_name", "user__phone")
     filter_horizontal = (
@@ -90,3 +92,28 @@ class ModeratorAdmin(ModelAdmin):
         return format_html("<br>".join(links))
 
     docs_links.short_description = _("Hujjatlar")
+
+    def contract_links(self, obj):
+        links = [
+            format_html(
+                '<a href="{}" target="_blank">{}</a><br>',
+                doc.file.url,
+                doc.title,
+            )
+            for doc in obj.user.document.all()
+        ]
+        return format_html("<br>".join(links))
+
+    contract_links.short_description = _("Kelgan shartnoma")
+
+    def send_contract(self, obj):
+        links = [
+            format_html(
+                '<a href="{}" target="_blank">{}</a><br>',
+                obj.user.response_file.url,
+                _("Shartnoma"),
+            )
+        ]
+        return format_html("<br>".join(links))
+
+    send_contract.short_description = _("Tasdiqlangan shartnoma")

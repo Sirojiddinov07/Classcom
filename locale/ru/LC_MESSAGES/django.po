@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-20 15:21+0500\n"
-"PO-Revision-Date: 2024-09-20 15:24+0500\n"
+"POT-Creation-Date: 2024-09-26 15:29+0500\n"
+"PO-Revision-Date: 2024-09-26 15:38+0500\n"
 "Last-Translator:   <>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -33,8 +33,8 @@ msgid "Statistika"
 msgstr "Статистика"
 
 #: config/conf/navigation.py:34 config/conf/navigation.py:38
-#: core/apps/home/views/dashboard.py:35 core/http/models/user.py:117
-#: core/http/models/user.py:118
+#: core/apps/home/views/dashboard.py:35 core/http/models/user.py:154
+#: core/http/models/user.py:155
 msgid "Foydalanuvchilar"
 msgstr "Пользователи"
 
@@ -64,7 +64,7 @@ msgstr "Тематический план"
 msgid "Mavzular"
 msgstr "Темы"
 
-#: config/conf/navigation.py:92 core/apps/classcom/models/ai.py:28
+#: config/conf/navigation.py:92 core/apps/classcom/models/ai.py:40
 msgid "Suniy Intellekt"
 msgstr "Искусственный интеллект"
 
@@ -91,7 +91,7 @@ msgid "Maktablar"
 msgstr "Школы"
 
 #: config/conf/navigation.py:144 core/http/models/school_type.py:9
-#: core/http/models/school_type.py:22 core/http/models/user.py:72
+#: core/http/models/school_type.py:22 core/http/models/user.py:78
 msgid "Maktab turi"
 msgstr "Тип школы"
 
@@ -103,7 +103,7 @@ msgstr "Тип школы"
 #: core/apps/classcom/models/moderator.py:69
 #: core/apps/classcom/models/plan.py:25
 #: core/apps/classcom/models/resource.py:51
-#: core/apps/classcom/models/schedule.py:41 core/http/models/user.py:92
+#: core/apps/classcom/models/schedule.py:41 core/http/models/user.py:98
 msgid "Sinflar"
 msgstr "Классы"
 
@@ -113,7 +113,7 @@ msgstr "Группа классов"
 
 #: config/conf/navigation.py:174 core/apps/classcom/models/science.py:34
 #: core/apps/payments/models.py:35 core/http/models/school_group.py:8
-#: core/http/models/school_group.py:14 core/http/models/user.py:79
+#: core/http/models/school_group.py:14 core/http/models/user.py:85
 msgid "Sinf turi"
 msgstr "Тип класса"
 
@@ -157,7 +157,7 @@ msgstr "Поддерживать"
 msgid "Bildirishnomalar"
 msgstr "Уведомления"
 
-#: config/conf/navigation.py:256 core/apps/classcom/models/chat.py:28
+#: config/conf/navigation.py:256 core/apps/classcom/models/chat.py:31
 msgid "Chat"
 msgstr "Чат"
 
@@ -183,7 +183,7 @@ msgstr "Типы предметов"
 #: config/conf/navigation.py:302 core/apps/classcom/models/plan.py:47
 #: core/apps/classcom/models/science.py:26 core/http/models/science.py:8
 #: core/http/models/science.py:14 core/http/models/science.py:15
-#: core/http/models/user.py:65
+#: core/http/models/user.py:71
 msgid "Fan guruhi"
 msgstr "Группа предметов"
 
@@ -207,9 +207,9 @@ msgstr "Файлы"
 msgid "Media Fayllar"
 msgstr "Медиа-файлы"
 
-#: config/conf/navigation.py:346 core/apps/classcom/admin/moderator.py:92
+#: config/conf/navigation.py:346 core/apps/classcom/admin/moderator.py:94
 #: core/apps/classcom/models/documents.py:17
-#: core/apps/classcom/models/moderator.py:26
+#: core/apps/classcom/models/moderator.py:26 core/http/admin/user.py:163
 msgid "Hujjatlar"
 msgstr "Документы"
 
@@ -268,7 +268,7 @@ msgstr "Токен"
 #: core/apps/accounts/models/reset_token.py:12
 #: core/apps/classcom/admin/schedule.py:36
 #: core/apps/classcom/admin/teacher.py:30 core/apps/classcom/choices/role.py:8
-#: core/apps/classcom/models/ai.py:19 core/apps/classcom/models/chat.py:10
+#: core/apps/classcom/models/ai.py:26 core/apps/classcom/models/chat.py:10
 #: core/apps/classcom/models/days_off.py:20
 #: core/apps/classcom/models/download.py:13
 #: core/apps/classcom/models/feedback.py:27
@@ -298,8 +298,8 @@ msgstr ""
 msgid "Foydalanuvchi topilmadi. Iltimos, qayta kirishni urinib ko'ring."
 msgstr "Пользователь не найден. Пожалуйста, попробуйте снова войти."
 
-#: core/apps/accounts/serializers/moderator.py:34
-#: core/http/serializers/auth.py:30
+#: core/apps/accounts/serializers/moderator.py:32
+#: core/http/serializers/auth.py:28
 msgid "Phone number already registered."
 msgstr "Номер телефона уже зарегистрирован."
 
@@ -329,52 +329,72 @@ msgstr "Пароль успешно изменен"
 msgid "Eski parol noto'g'ri kiritildi."
 msgstr "Старый пароль введен неправильно."
 
-#: core/apps/accounts/views/moderator.py:36
+#: core/apps/accounts/views/moderator.py:27 core/apps/accounts/views/sms.py:45
+#| msgid "Phone number already registered."
+msgid "Phone number already registered"
+msgstr "Номер телефона уже зарегистрирован"
+
+#: core/apps/accounts/views/moderator.py:42
 msgid "Tasdiqlash ko'di yuborildi"
 msgstr "Код подтверждения отправлен"
 
-#: core/apps/accounts/views/sms.py:34
+#: core/apps/accounts/views/sms.py:35
 msgid "Register new user"
 msgstr "Зарегистрировать нового пользователя"
 
-#: core/apps/accounts/views/sms.py:35
+#: core/apps/accounts/views/sms.py:36
 msgid "Yangi user ro'yhatdan o'tish uchun"
 msgstr "Для регистрации нового пользователя"
 
-#: core/apps/accounts/views/sms.py:101
+#: core/apps/accounts/views/sms.py:106
 msgid "Confirm otp code."
 msgstr "Подтвердите код OTP."
 
-#: core/apps/accounts/views/sms.py:102
+#: core/apps/accounts/views/sms.py:107
 msgid "Auth confirm."
 msgstr "Подтверждение авторизации."
 
-#: core/apps/accounts/views/sms.py:199
+#: core/apps/accounts/views/sms.py:204
 msgid "Token xato"
 msgstr "Токен неправильный"
 
-#: core/apps/accounts/views/sms.py:206
+#: core/apps/accounts/views/sms.py:211
 msgid "Parol yangilandi"
 msgstr "Пароль обновлен"
 
-#: core/apps/classcom/admin/chat.py:24 core/apps/classcom/admin/daysoff.py:28
+#: core/apps/classcom/admin/chat.py:26 core/apps/classcom/admin/daysoff.py:28
 #: core/apps/classcom/admin/feedback.py:22 core/apps/classcom/admin/plan.py:74
 #: core/apps/classcom/admin/recource.py:30
 #: core/apps/websocket/admin/notification.py:30
 msgid "Ism Familiya"
 msgstr "Имя Фамилия"
 
-#: core/apps/classcom/admin/moderator.py:48
+#: core/apps/classcom/admin/moderator.py:50
 msgid "Plan Permissions"
 msgstr "Разрешения на тематический план"
 
-#: core/apps/classcom/admin/moderator.py:63
+#: core/apps/classcom/admin/moderator.py:65
 msgid "Resource Permissions"
 msgstr "Разрешения на электронные ресурсы"
 
-#: core/apps/classcom/admin/moderator.py:73
+#: core/apps/classcom/admin/moderator.py:75
 msgid "topic Permissions"
 msgstr "Разрешения темы"
+
+#: core/apps/classcom/admin/moderator.py:107
+#| msgid "Shartnoma"
+msgid "Kelgan shartnoma"
+msgstr "Входящий договор"
+
+#: core/apps/classcom/admin/moderator.py:114
+#: core/apps/classcom/models/moderator.py:29
+msgid "Shartnoma"
+msgstr "Договор"
+
+#: core/apps/classcom/admin/moderator.py:119
+#| msgid "Tasdiqlangan vaqti"
+msgid "Tasdiqlangan shartnoma"
+msgstr "Подтвержденный договор"
 
 #: core/apps/classcom/admin/plan.py:84 core/apps/classcom/admin/schedule.py:31
 #: core/apps/classcom/filters/quarter.py:29
@@ -383,7 +403,7 @@ msgstr "Разрешения темы"
 #: core/apps/classcom/models/resource.py:72
 #: core/apps/classcom/models/schedule.py:38
 #: core/apps/classcom/models/science.py:79 core/apps/payments/models.py:29
-#: core/http/models/user.py:99
+#: core/http/models/user.py:105
 msgid "Fan"
 msgstr "Предмет"
 
@@ -577,22 +597,38 @@ msgstr "Суббота"
 msgid "Sinflar guruhi"
 msgstr "Группа классов"
 
-#: core/apps/classcom/models/ai.py:13 core/apps/classcom/models/plan.py:36
+#: core/apps/classcom/models/ai.py:9
+#| msgid "Barcha sharhlar"
+msgid "Barchasi"
+msgstr "Все"
+
+#: core/apps/classcom/models/ai.py:10
+#| msgid "Mavzular"
+msgid "Mavzuga qarab"
+msgstr "В зависимости от темы"
+
+#: core/apps/classcom/models/ai.py:18 core/apps/classcom/models/plan.py:36
 #: core/apps/classcom/models/topic.py:37
 msgid "Mavzu"
 msgstr "Тема"
 
-#: core/apps/classcom/models/ai.py:21
+#: core/apps/classcom/models/ai.py:31
+#: core/apps/classcom/models/documents.py:12
+#: core/apps/classcom/models/resource_type.py:11
+msgid "Turi"
+msgstr "Тип"
+
+#: core/apps/classcom/models/ai.py:33
 msgid "Savol"
 msgstr "Вопрос"
 
-#: core/apps/classcom/models/ai.py:22 core/apps/classcom/models/chat.py:14
+#: core/apps/classcom/models/ai.py:34 core/apps/classcom/models/chat.py:14
 #: core/apps/classcom/models/feedback.py:47
 #: core/apps/classcom/models/feedback.py:55
 msgid "Javob"
 msgstr "Ответ"
 
-#: core/apps/classcom/models/ai.py:29
+#: core/apps/classcom/models/ai.py:41
 msgid "Suniy Intellektlar"
 msgstr "Искусственный интеллект"
 
@@ -628,7 +664,12 @@ msgstr "Время"
 msgid "Javob vaqti"
 msgstr "Время ответа"
 
-#: core/apps/classcom/models/chat.py:29
+#: core/apps/classcom/models/chat.py:19
+#| msgid "Javob berildimi"
+msgid "Javob berildi"
+msgstr "Ответил"
+
+#: core/apps/classcom/models/chat.py:32
 msgid "Chatlar"
 msgstr "Чаты"
 
@@ -692,17 +733,12 @@ msgstr "Файл"
 msgid "Holati"
 msgstr "Состояние"
 
-#: core/apps/classcom/models/documents.py:12
-#: core/apps/classcom/models/resource_type.py:11
-msgid "Turi"
-msgstr "Тип"
-
 #: core/apps/classcom/models/documents.py:13
 #: core/apps/classcom/models/media.py:17
 msgid "Hajmi"
 msgstr "Размер"
 
-#: core/apps/classcom/models/documents.py:16
+#: core/apps/classcom/models/documents.py:16 core/http/models/user.py:110
 msgid "Hujjat"
 msgstr "Документ"
 
@@ -726,7 +762,7 @@ msgstr "Загрузки"
 msgid "Yuklama"
 msgstr "Загрузка"
 
-#: core/apps/classcom/models/download_token.py:20 core/http/models/user.py:138
+#: core/apps/classcom/models/download_token.py:20 core/http/models/user.py:175
 msgid "Muddati"
 msgstr "Срок"
 
@@ -789,10 +825,6 @@ msgstr "Баланс"
 #: core/apps/classcom/models/resource.py:62
 msgid "Daraja"
 msgstr "Степень"
-
-#: core/apps/classcom/models/moderator.py:29
-msgid "Shartnoma"
-msgstr "Договор"
 
 #: core/apps/classcom/models/moderator.py:35
 msgid "Tematik Reja yarata olishi"
@@ -951,10 +983,34 @@ msgstr "Тема для этой даты не найдена"
 msgid "You have no topics"
 msgstr "У вас нет тем"
 
-#: core/apps/classcom/views/ai.py:25 core/apps/classcom/views/ai.py:33
-#| msgid "Sizda bu amalni bajarish uchun ruxsat yo‘q."
+#: core/apps/classcom/views/ai.py:28 core/apps/classcom/views/ai.py:52
+msgid "Topic ID is required for type 'TOPIC'."
+msgstr "Для типа «ТЕМА» требуется идентификатор темы."
+
+#: core/apps/classcom/views/ai.py:33
+msgid "Invalid type parameter."
+msgstr "Недопустимый параметр типа."
+
+#: core/apps/classcom/views/ai.py:45 core/apps/classcom/views/ai.py:91
 msgid "Sizda buni amalga oshirishga ruxsat yo'q."
 msgstr "Вам не разрешено это делать."
+
+#: core/apps/classcom/views/ai.py:59
+msgid "Topic ID should not be present for type 'ALL'."
+msgstr "Идентификатор темы не должен присутствовать для типа «ВСЕ»."
+
+#: core/apps/classcom/views/ai.py:70
+msgid "Success"
+msgstr "Успех"
+
+#: core/apps/classcom/views/ai.py:78
+msgid "ID is required."
+msgstr "Требуется удостоверение личности."
+
+#: core/apps/classcom/views/ai.py:86
+#| msgid "Plan not found"
+msgid "Instance not found."
+msgstr "Экземпляр не найден."
 
 #: core/apps/classcom/views/change_role.py:19
 msgid "Siz ariza topshirgansiz"
@@ -1090,6 +1146,7 @@ msgid "Jo'natilmoqda"
 msgstr "Перевозки"
 
 #: core/apps/websocket/models/notification.py:25
+#: resources/templates/forms/notification.html:4
 msgid "Bildirishnoma"
 msgstr "Уведомление"
 
@@ -1113,6 +1170,10 @@ msgstr "Ошибка кода подтверждения"
 #: core/enums/core.py:45
 msgid "Parol o'zgartirildi"
 msgstr "Пароль изменен"
+
+#: core/http/admin/user.py:167
+msgid "Tanlangan foydalanuvchilar uchun bildirishnoma yaratish"
+msgstr "Создать уведомление для выбранных пользователей"
 
 #: core/http/choices/location.py:6
 msgid "Oliy"
@@ -1179,12 +1240,12 @@ msgid "Yangilangan vaqti"
 msgstr "Время обновления"
 
 #: core/http/models/locations.py:8 core/http/models/locations.py:14
-#: core/http/models/locations.py:24 core/http/models/user.py:44
+#: core/http/models/locations.py:24 core/http/models/user.py:50
 msgid "Viloyat"
 msgstr "Область"
 
 #: core/http/models/locations.py:19 core/http/models/locations.py:31
-#: core/http/models/user.py:51
+#: core/http/models/user.py:57
 msgid "Tuman"
 msgstr "Район"
 
@@ -1192,7 +1253,7 @@ msgstr "Район"
 msgid "Sinf turlari"
 msgstr "Типы классов"
 
-#: core/http/models/school_type.py:15 core/http/models/user.py:58
+#: core/http/models/school_type.py:15 core/http/models/user.py:64
 msgid "Muassasa"
 msgstr "Учреждение"
 
@@ -1200,59 +1261,91 @@ msgstr "Учреждение"
 msgid "Maktab turlari"
 msgstr "Типы школ"
 
+#: core/http/models/user.py:15
+msgid "Hujjat yuklanmagan"
+msgstr "Документ не загружен"
+
 #: core/http/models/user.py:16
+#| msgid "Siz ariza topshirgansiz"
+msgid "Hujjat topshirgan"
+msgstr "Отправил документ"
+
+#: core/http/models/user.py:17
+#| msgid "Shartnoma"
+msgid "Shartnoma tuzilgan"
+msgstr "Контракт заключен"
+
+#: core/http/models/user.py:22
 msgid "Telefon"
 msgstr "Телефон"
 
-#: core/http/models/user.py:22
+#: core/http/models/user.py:28
 msgid "Foydalanuvchi nomi"
 msgstr "Имя пользователя"
 
-#: core/http/models/user.py:25
+#: core/http/models/user.py:31
 msgid "Avatar"
 msgstr "Аватар"
 
-#: core/http/models/user.py:28
+#: core/http/models/user.py:34
 msgid "Tasdiqlangan vaqti"
 msgstr "Время подтверждения"
 
-#: core/http/models/user.py:34
+#: core/http/models/user.py:40
 msgid "Rol"
 msgstr "Роль"
 
-#: core/http/models/user.py:85
+#: core/http/models/user.py:91
 msgid "Muassasa raqami"
 msgstr "Номер учреждения"
 
+#: core/http/models/user.py:116
+#| msgid "Javob vaqti"
+msgid "Javob hujjati"
+msgstr "Ответный документ"
+
+#: core/http/models/user.py:122
+#| msgid "Statistika"
+msgid "Status"
+msgstr "Статус"
+
 #: core/http/models/user.py:129
+msgid "Standart hujjat (uz)"
+msgstr "Стандартный документ (uz)"
+
+#: core/http/models/user.py:136
+msgid "Standart hujjat (rus)"
+msgstr "Стандартный документ (ru)"
+
+#: core/http/models/user.py:166
 msgid "Kod"
 msgstr "Код"
 
-#: core/http/models/user.py:131
+#: core/http/models/user.py:168
 msgid "Urinishlar soni"
 msgstr "Количество попыток"
 
-#: core/http/models/user.py:134
+#: core/http/models/user.py:171
 msgid "Qayta yuborishlar soni"
 msgstr "Количество повторных отправок"
 
-#: core/http/models/user.py:136
+#: core/http/models/user.py:173
 msgid "Telefon raqami"
 msgstr "Телефонный номер"
 
-#: core/http/models/user.py:141
+#: core/http/models/user.py:178
 msgid "Bloklanish vaqti"
 msgstr "Время блокировки"
 
-#: core/http/models/user.py:146
+#: core/http/models/user.py:183
 msgid "Qayta yuborish bloklanish vaqti"
 msgstr "Время блокировки повторных отправок"
 
-#: core/http/serializers/auth.py:76
+#: core/http/serializers/auth.py:74
 msgid "Foydalanuvchi topilmadi"
 msgstr "Пользователь не найден"
 
-#: core/http/serializers/auth.py:87
+#: core/http/serializers/auth.py:85
 msgid "User does not exist"
 msgstr "Пользователь не существует"
 
@@ -1307,6 +1400,15 @@ msgstr "Количество пользователей"
 msgid "Moderatorlar soni"
 msgstr "Количество модераторов"
 
+#: resources/templates/forms/notification.html:61
+msgid "Tanlangan foydalanuvchilar uchun bildirishnoma yarating"
+msgstr "Создать уведомление для выбранных пользователей"
+
+#: resources/templates/forms/notification.html:85
+#| msgid "SMS tasdiqlash"
+msgid "Tasdiqlash"
+msgstr "Подтверждение"
+
 #~ msgid "Django"
 #~ msgstr "Django"
 
@@ -1334,9 +1436,6 @@ msgstr "Количество модераторов"
 
 #~ msgid "Fikrlar"
 #~ msgstr "Мысли"
-
-#~ msgid "Plan not found"
-#~ msgstr "План не найден"
 
 #~ msgid "Media files uploaded"
 #~ msgstr "Медиафайлы загружены"
