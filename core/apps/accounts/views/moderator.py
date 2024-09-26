@@ -6,6 +6,7 @@ from rest_framework.exceptions import NotAcceptable
 from rest_framework.response import Response
 from rest_framework.viewsets import ViewSet
 
+from core.http.models import User
 from core.services import UserService
 from ..serializers import ModeratorSerializer
 
@@ -19,12 +20,17 @@ class RegisterViewset(ViewSet):
 
         - science_types: fan turlari uchun example tanlov, majburiy, ...
         """
+
+        phone = request.data.get("phone")
+        if User.objects.filter(phone=phone).exists():
+            raise NotAcceptable(
+                {"detail": _("Phone number already registered")}
+            )
         ser = ModeratorSerializer(
             data=request.data, context={"request": self.request}
         )
         ser.is_valid(raise_exception=True)
         ser.save()
-        phone = request.data.get("phone")
         language = request.headers.get("Accept-Language", "uz")
         translation.activate(language)
         try:
