@@ -7,6 +7,7 @@ from drf_spectacular.utils import extend_schema
 from rest_framework import generics, permissions
 from rest_framework import request as rest_request
 from rest_framework import response, status, throttling, views, viewsets
+from rest_framework.exceptions import NotAcceptable
 from rest_framework.response import Response
 from rest_framework_simplejwt.views import TokenObtainPairView
 
@@ -39,6 +40,10 @@ class RegisterView(views.APIView, services.UserService):
         ser.is_valid(raise_exception=True)
         data = ser.data
         phone = data.get("phone")
+        if User.objects.filter(phone=phone).exists():
+            raise NotAcceptable(
+                {"detail": _("Phone number already registered")}
+            )
         # Create pending user
         user = self.create_user(
             phone,
