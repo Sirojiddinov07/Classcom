@@ -107,13 +107,15 @@ class ModeratorAdmin(ModelAdmin):
     contract_links.short_description = _("Kelgan shartnoma")
 
     def send_contract(self, obj):
-        links = [
-            format_html(
-                '<a href="{}" target="_blank">{}</a><br>',
-                obj.user.response_file.url,
-                _("Shartnoma"),
-            )
-        ]
-        return format_html("<br>".join(links))
+        if obj.user.response_file and hasattr(obj.user.response_file, "url"):
+            links = [
+                format_html(
+                    '<a href="{}" target="_blank">{}</a><br>',
+                    obj.user.response_file.url,
+                    _("Shartnoma"),
+                )
+            ]
+            return format_html("<br>".join(links))
+        return _("No contract available")
 
     send_contract.short_description = _("Tasdiqlangan shartnoma")
