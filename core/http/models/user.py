@@ -121,6 +121,9 @@ class User(auth_models.AbstractUser, AbstractBaseModel):
         default=ContractStatus.NO_FILE,
         verbose_name=_("Status"),
     )
+    status = models.BooleanField(
+        default=False, verbose_name=_("Shartnoma statusi")
+    )
     default_document_uz = models.FileField(
         upload_to="documents/",
         default="doc/document_uz.pdf",

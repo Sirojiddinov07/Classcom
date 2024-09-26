@@ -16,6 +16,7 @@ class ModeratorAdmin(ModelAdmin):
         "docs_links",
         "contract_links",
         "send_contract",
+        "status",
     )
     search_fields = ("user__first_name", "user__last_name", "user__phone")
     filter_horizontal = (
