@@ -11,6 +11,12 @@ from core.http import choices, managers
 from core.http.models import AbstractBaseModel
 
 
+class ContractStatus(models.TextChoices):
+    NO_FILE = "NO_FILE", _("Hujjat yuklanmagan")
+    WAITING = "WAITING", _("Hujjat topshirgan")
+    ACCEPTED = "ACCEPTED", _("Shartnoma tuzilgan")
+
+
 class User(auth_models.AbstractUser, AbstractBaseModel):
     phone = models.CharField(
         max_length=255, unique=True, verbose_name=_("Telefon")
@@ -102,6 +108,18 @@ class User(auth_models.AbstractUser, AbstractBaseModel):
         Document,
         blank=True,
         verbose_name=_("Hujjat"),
+    )
+    response_file = models.FileField(
+        upload_to="response_file/",
+        null=True,
+        blank=True,
+        verbose_name=_("Javob hujjati"),
+    )
+    status_file = models.CharField(
+        max_length=255,
+        choices=ContractStatus.choices,
+        default=ContractStatus.NO_FILE,
+        verbose_name=_("Status"),
     )
     default_document_uz = models.FileField(
         upload_to="documents/",

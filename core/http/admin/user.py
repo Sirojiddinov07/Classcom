@@ -70,15 +70,27 @@ class UserAdmin(
         "first_name",
         "last_name",
         "role",
+        "status_file",
     ]
     search_fields = ["phone", "first_name", "last_name"]
     readonly_fields = ("docs_links",)
-    list_filter = ["role"]
+    list_filter = ["role", "status_file"]
     inlines = [ModeratorInline]
+    filter_horizontal = ("document",)
     fieldsets = (
         (
             None,
-            {"fields": ("username", "phone", "password", "docs_links")},
+            {
+                "fields": (
+                    "username",
+                    "phone",
+                    "password",
+                    "docs_links",
+                    "response_file",
+                    "document",
+                    "status_file",
+                )
+            },
         ),
         (
             "Personal info",
