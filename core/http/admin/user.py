@@ -77,6 +77,7 @@ class UserAdmin(
     list_filter = ["role", "status_file"]
     inlines = [ModeratorInline]
     filter_horizontal = ("document",)
+    ordering = ["-updated_at"]
     fieldsets = (
         (
             None,
