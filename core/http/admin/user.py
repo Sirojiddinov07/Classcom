@@ -71,6 +71,7 @@ class UserAdmin(
         "last_name",
         "role",
         "status_file",
+        "status",
     ]
     search_fields = ["phone", "first_name", "last_name"]
     readonly_fields = ("docs_links",)

@@ -28,6 +28,9 @@ class Moderator(AbstractBaseModel):
     is_contracted = models.BooleanField(
         default=False, verbose_name=_("Tasdiqlash")
     )
+    status = models.BooleanField(
+        default=False, verbose_name=_("Shartnoma statusi")
+    )
     ##############
     # Permissions
     ##############

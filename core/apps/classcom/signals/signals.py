@@ -3,7 +3,7 @@ from django.dispatch import receiver
 
 from core.apps.websocket.models.notification import Notification
 from core.http.models import User, ContractStatus
-from ..models import Topic, Plan, Chat
+from ..models import Topic, Plan, Chat, Moderator
 from ..models.feedback import Answer
 
 
@@ -68,11 +68,11 @@ def file_status_m2m(sender, instance, action, **kwargs):
 @receiver(post_save, sender=User)
 def file_status_pre_save(sender, instance, **kwargs):
     if instance.response_file:
-        print(type(instance.response_file))
-        print(instance.status_file is not None)
         User.objects.filter(pk=instance.pk).update(
-            status_file=ContractStatus.ACCEPTED
+            status_file=ContractStatus.ACCEPTED, status=True
         )
+        if Moderator.objects.filter(user=instance).exists():
+            Moderator.objects.filter(user=instance).update(status=True)
         Notification.objects.create(
             user=instance,
             message_uz="Shartnoma qabul qilindi",
