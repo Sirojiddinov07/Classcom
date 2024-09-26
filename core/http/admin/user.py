@@ -69,15 +69,15 @@ class UserAdmin(
         "phone",
         "first_name",
         "last_name",
+        "science",
         "role",
         "status_file",
         "status",
     ]
     search_fields = ["phone", "first_name", "last_name"]
     readonly_fields = ("docs_links",)
-    list_filter = ["role", "status_file"]
+    list_filter = ["role", "status_file", "status"]
     inlines = [ModeratorInline]
-    filter_horizontal = ("document",)
     ordering = ["-updated_at"]
     fieldsets = (
         (
@@ -89,8 +89,6 @@ class UserAdmin(
                     "password",
                     "docs_links",
                     "response_file",
-                    "document",
-                    "status_file",
                 )
             },
         ),

@@ -13,6 +13,7 @@ class ModeratorAdmin(ModelAdmin):
         "full_name",
         "is_contracted",
         "degree",
+        "user_science",
         "docs_links",
         "contract_links",
         "send_contract",
@@ -31,6 +32,7 @@ class ModeratorAdmin(ModelAdmin):
     list_filter = (
         "is_contracted",
         "degree",
+        "status",
     )
     ordering = ("-updated_at",)
     readonly_fields = ("docs_links", "balance")
@@ -120,3 +122,8 @@ class ModeratorAdmin(ModelAdmin):
         return _("No contract available")
 
     send_contract.short_description = _("Tasdiqlangan shartnoma")
+
+    def user_science(self, obj):
+        return obj.user.science
+
+    user_science.short_description = _("Fan")
