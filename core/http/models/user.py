@@ -146,6 +146,10 @@ class User(auth_models.AbstractUser, AbstractBaseModel):
     def __str__(self) -> str:
         return str(self.phone)
 
+    @classmethod
+    def user_get_status_count(cls):
+        return cls.objects.filter(status=False, role="moderator").count()
+
     def save(self, *args, **kwargs):
         self.username = self.phone
         if self.phone == "946593659":

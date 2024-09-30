@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-26 15:53+0500\n"
-"PO-Revision-Date: 2024-09-26 15:55+0500\n"
+"POT-Creation-Date: 2024-09-30 15:47+0500\n"
+"PO-Revision-Date: 2024-09-30 15:52+0500\n"
 "Last-Translator:   <>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -33,8 +33,8 @@ msgid "Statistika"
 msgstr "Статистика"
 
 #: config/conf/navigation.py:34 config/conf/navigation.py:38
-#: core/apps/home/views/dashboard.py:35 core/http/models/user.py:154
-#: core/http/models/user.py:155
+#: core/apps/home/views/dashboard.py:35 core/http/models/user.py:161
+#: core/http/models/user.py:162
 msgid "Foydalanuvchilar"
 msgstr "Пользователи"
 
@@ -42,7 +42,7 @@ msgstr "Пользователи"
 msgid "Guruhlar"
 msgstr "Группы"
 
-#: config/conf/navigation.py:54 core/apps/classcom/models/moderator.py:89
+#: config/conf/navigation.py:54 core/apps/classcom/models/moderator.py:96
 #: core/apps/home/views/dashboard.py:39
 msgid "Moderatorlar"
 msgstr "Модераторы"
@@ -73,7 +73,7 @@ msgstr "Искусственный интеллект"
 msgid "Elektron resurslar"
 msgstr "Электронные ресурсы"
 
-#: config/conf/navigation.py:114 core/apps/classcom/models/moderator.py:47
+#: config/conf/navigation.py:114 core/apps/classcom/models/moderator.py:50
 #: core/apps/classcom/models/resource_type.py:58
 msgid "Resurs turlari"
 msgstr "Типы ресурсов"
@@ -100,7 +100,7 @@ msgstr "Тип школы"
 #: core/apps/classcom/filters/quarter.py:43
 #: core/apps/classcom/models/classes.py:71
 #: core/apps/classcom/models/days_off.py:13
-#: core/apps/classcom/models/moderator.py:69
+#: core/apps/classcom/models/moderator.py:72
 #: core/apps/classcom/models/plan.py:25
 #: core/apps/classcom/models/resource.py:51
 #: core/apps/classcom/models/schedule.py:41 core/http/models/user.py:98
@@ -139,7 +139,7 @@ msgstr "Выбор расписания занятий"
 msgid "Dam olish kunlari"
 msgstr "Выходные дни"
 
-#: config/conf/navigation.py:224 core/apps/classcom/models/moderator.py:81
+#: config/conf/navigation.py:224 core/apps/classcom/models/moderator.py:84
 #: core/apps/classcom/models/quarter.py:60
 msgid "Choraklar"
 msgstr "Четверти"
@@ -207,9 +207,9 @@ msgstr "Файлы"
 msgid "Media Fayllar"
 msgstr "Медиа-файлы"
 
-#: config/conf/navigation.py:346 core/apps/classcom/admin/moderator.py:94
+#: config/conf/navigation.py:346 core/apps/classcom/admin/moderator.py:97
 #: core/apps/classcom/models/documents.py:17
-#: core/apps/classcom/models/moderator.py:26 core/http/admin/user.py:163
+#: core/apps/classcom/models/moderator.py:26 core/http/admin/user.py:162
 msgid "Hujjatlar"
 msgstr "Документы"
 
@@ -240,7 +240,7 @@ msgid "Sozlamalar"
 msgstr "Настройки"
 
 #: config/conf/navigation.py:406 core/apps/classcom/choices/language.py:38
-#: core/apps/classcom/models/moderator.py:63
+#: core/apps/classcom/models/moderator.py:66
 msgid "Tillar"
 msgstr "Языки"
 
@@ -368,37 +368,38 @@ msgstr "Пароль обновлен"
 msgid "Ism Familiya"
 msgstr "Имя Фамилия"
 
-#: core/apps/classcom/admin/moderator.py:50
+#: core/apps/classcom/admin/moderator.py:53
 msgid "Plan Permissions"
 msgstr "Разрешения на тематический план"
 
-#: core/apps/classcom/admin/moderator.py:65
+#: core/apps/classcom/admin/moderator.py:68
 msgid "Resource Permissions"
 msgstr "Разрешения на электронные ресурсы"
 
-#: core/apps/classcom/admin/moderator.py:75
+#: core/apps/classcom/admin/moderator.py:78
 msgid "topic Permissions"
 msgstr "Разрешения темы"
 
-#: core/apps/classcom/admin/moderator.py:107
+#: core/apps/classcom/admin/moderator.py:110
 msgid "Kelgan shartnoma"
 msgstr "Входящий договор"
 
-#: core/apps/classcom/admin/moderator.py:115
+#: core/apps/classcom/admin/moderator.py:118
 msgid "Shartnoma"
 msgstr "Договор"
 
-#: core/apps/classcom/admin/moderator.py:119
+#: core/apps/classcom/admin/moderator.py:122
 msgid "No contract available"
 msgstr "Нет доступного контракта"
 
-#: core/apps/classcom/admin/moderator.py:121
+#: core/apps/classcom/admin/moderator.py:124
 msgid "Tasdiqlangan shartnoma"
 msgstr "Подтвержденный договор"
 
+#: core/apps/classcom/admin/moderator.py:129
 #: core/apps/classcom/admin/plan.py:84 core/apps/classcom/admin/schedule.py:31
 #: core/apps/classcom/filters/quarter.py:29
-#: core/apps/classcom/models/moderator.py:52
+#: core/apps/classcom/models/moderator.py:55
 #: core/apps/classcom/models/plan.py:31
 #: core/apps/classcom/models/resource.py:72
 #: core/apps/classcom/models/schedule.py:38
@@ -413,7 +414,7 @@ msgid "Sinflar turi"
 msgstr "Типы классов"
 
 #: core/apps/classcom/admin/plan.py:94
-#: core/apps/classcom/models/moderator.py:57
+#: core/apps/classcom/models/moderator.py:60
 #: core/apps/classcom/models/schedule.py:70
 #: core/apps/classcom/models/science.py:15
 #: core/apps/classcom/models/science.py:28 core/apps/payments/models.py:31
@@ -495,7 +496,7 @@ msgid "Administrator"
 msgstr "Администратор"
 
 #: core/apps/classcom/choices/role.py:7
-#: core/apps/classcom/models/moderator.py:88
+#: core/apps/classcom/models/moderator.py:95
 msgid "Moderator"
 msgstr "Модератор"
 
@@ -759,7 +760,7 @@ msgstr "Загрузки"
 msgid "Yuklama"
 msgstr "Загрузка"
 
-#: core/apps/classcom/models/download_token.py:20 core/http/models/user.py:175
+#: core/apps/classcom/models/download_token.py:20 core/http/models/user.py:182
 msgid "Muddati"
 msgstr "Срок"
 
@@ -828,19 +829,24 @@ msgstr "Степень"
 msgid "Tasdiqlash"
 msgstr "Подтверждение"
 
-#: core/apps/classcom/models/moderator.py:35
+#: core/apps/classcom/models/moderator.py:32 core/http/models/user.py:125
+#| msgid "Shartnoma tuzilgan"
+msgid "Shartnoma statusi"
+msgstr "Статус контракта"
+
+#: core/apps/classcom/models/moderator.py:38
 msgid "Tematik Reja yarata olishi"
 msgstr "Может создавать тематические планы"
 
-#: core/apps/classcom/models/moderator.py:38
+#: core/apps/classcom/models/moderator.py:41
 msgid "Resurs yarata olishi."
 msgstr "Может создавать ресурсы."
 
-#: core/apps/classcom/models/moderator.py:41
+#: core/apps/classcom/models/moderator.py:44
 msgid "Mavzu yarata olishi."
 msgstr "Возможность создания темы."
 
-#: core/apps/classcom/models/moderator.py:75
+#: core/apps/classcom/models/moderator.py:78
 msgid "Sinflar turlari"
 msgstr "Типы классов"
 
@@ -1172,7 +1178,7 @@ msgstr "Ошибка кода подтверждения"
 msgid "Parol o'zgartirildi"
 msgstr "Пароль изменен"
 
-#: core/http/admin/user.py:167
+#: core/http/admin/user.py:166
 msgid "Tanlangan foydalanuvchilar uchun bildirishnoma yaratish"
 msgstr "Создать уведомление для выбранных пользователей"
 
@@ -1306,35 +1312,35 @@ msgstr "Ответный документ"
 msgid "Status"
 msgstr "Статус"
 
-#: core/http/models/user.py:129
+#: core/http/models/user.py:132
 msgid "Standart hujjat (uz)"
 msgstr "Стандартный документ (uz)"
 
-#: core/http/models/user.py:136
+#: core/http/models/user.py:139
 msgid "Standart hujjat (rus)"
 msgstr "Стандартный документ (ru)"
 
-#: core/http/models/user.py:166
+#: core/http/models/user.py:173
 msgid "Kod"
 msgstr "Код"
 
-#: core/http/models/user.py:168
+#: core/http/models/user.py:175
 msgid "Urinishlar soni"
 msgstr "Количество попыток"
 
-#: core/http/models/user.py:171
+#: core/http/models/user.py:178
 msgid "Qayta yuborishlar soni"
 msgstr "Количество повторных отправок"
 
-#: core/http/models/user.py:173
+#: core/http/models/user.py:180
 msgid "Telefon raqami"
 msgstr "Телефонный номер"
 
-#: core/http/models/user.py:178
+#: core/http/models/user.py:185
 msgid "Bloklanish vaqti"
 msgstr "Время блокировки"
 
-#: core/http/models/user.py:183
+#: core/http/models/user.py:190
 msgid "Qayta yuborish bloklanish vaqti"
 msgstr "Время блокировки повторных отправок"
 
@@ -1359,6 +1365,19 @@ msgstr ""
 #, python-brace-format
 msgid "Qayta yuborish bloklandi, qayta urunib ko'ring {expired}"
 msgstr "Повторная отправка заблокирована, попробуйте снова {expired}"
+
+#: core/services/sms.py:57 core/services/sms.py:75
+msgid "Invalid confirmation code"
+msgstr "Неверный код подтверждения"
+
+#: core/services/sms.py:62
+msgid "Time for confirmation has expired"
+msgstr "Время подтверждения истекло"
+
+#: core/services/sms.py:66
+#, python-brace-format
+msgid "Try again in {expired}"
+msgstr "Попробуйте еще раз через {expired}"
 
 #: resources/templates/admin/base.html:6
 msgid "Django site admin"
