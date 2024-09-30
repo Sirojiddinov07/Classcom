@@ -87,6 +87,10 @@ class Moderator(AbstractBaseModel):
     def __str__(self) -> str:
         return str(self.user.first_name)
 
+    @classmethod
+    def moderator_get_status_count(cls):
+        return cls.objects.filter(is_contracted=False).count()
+
     class Meta:
         verbose_name = _("Moderator")
         verbose_name_plural = _("Moderatorlar")

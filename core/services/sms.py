@@ -54,16 +54,18 @@ class SmsService:
         sms_confirm = models.SmsConfirm.objects.filter(phone=phone).first()
 
         if sms_confirm is None:
-            raise exceptions.SmsException("Invalid confirmation code")
+            raise exceptions.SmsException(_("Invalid confirmation code"))
 
         sms_confirm.sync_limits()
 
         if sms_confirm.is_expired():
-            raise exceptions.SmsException("Time for confirmation has expired")
+            raise exceptions.SmsException(
+                _("Time for confirmation has expired")
+            )
 
         if sms_confirm.is_block():
             expired = sms_confirm.interval(sms_confirm.unlock_time)
-            raise exceptions.SmsException(f"Try again in {expired}")
+            raise exceptions.SmsException(_(f"Try again in {expired}"))
 
         if sms_confirm.code == code:
             sms_confirm.delete()
@@ -72,4 +74,4 @@ class SmsService:
         sms_confirm.try_count += 1
         sms_confirm.save()
 
-        raise exceptions.SmsException("Invalid confirmation code")
+        raise exceptions.SmsException(_("Invalid confirmation code"))
