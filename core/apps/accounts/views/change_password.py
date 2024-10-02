@@ -25,7 +25,9 @@ class ChangePasswordView(APIView, http_views.ApiResponse):
     )
     def post(self, request, *args, **kwargs):
         user = self.request.user
-        serializer = self.serializer_class(data=request.data)
+        serializer = self.serializer_class(
+            data=request.data, context={"request": request}
+        )
         serializer.is_valid(raise_exception=True)
 
         if user.check_password(request.data["old_password"]):
