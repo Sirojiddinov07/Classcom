@@ -17,7 +17,7 @@ class Topic(AbstractBaseModel):
         "Media", related_name="topic", verbose_name=_("Media"), blank=True
     )
     media_creatable = models.BooleanField(
-        default=False, verbose_name=_("Media yarata olishi.")
+        default=False, verbose_name=_("Resurs yarata olishi.")
     )
     weeks = models.PositiveIntegerField(
         default=1, verbose_name=_("Haftalar"), blank=True, null=True
