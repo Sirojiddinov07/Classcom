@@ -41,6 +41,9 @@ PAGES = [
                 "permission": lambda request: user_has_group_or_permission(
                     request.user, "view_user"
                 ),
+                "badge": lambda: __import__(
+                    "core.http.models"
+                ).http.models.User.user_get_status_count(),
             },
             {
                 "title": _("Guruhlar"),
@@ -57,6 +60,9 @@ PAGES = [
                 "permission": lambda request: user_has_group_or_permission(
                     request.user, "view_moderator"
                 ),
+                "badge": lambda: __import__(
+                    "core.apps.classcom.models"
+                ).apps.classcom.models.Moderator.moderator_get_status_count(),
             },
             {
                 "title": _("O'qituvchilar"),
