@@ -16,6 +16,7 @@ class UserSerializer(serializers.ModelSerializer):
     resource_creatable = serializers.SerializerMethodField(read_only=True)
     plan_creatable = serializers.SerializerMethodField(read_only=True)
     topic_creatable = serializers.SerializerMethodField(read_only=True)
+    is_contracted = serializers.SerializerMethodField(read_only=True)
     document = DocumentSerializer(many=True)
 
     class Meta:
@@ -38,6 +39,7 @@ class UserSerializer(serializers.ModelSerializer):
             "resource_creatable",
             "plan_creatable",
             "topic_creatable",
+            "is_contracted",
         ]
         extra_kwargs = {
             "role": {"read_only": True},
@@ -53,6 +55,15 @@ class UserSerializer(serializers.ModelSerializer):
 
     def is_moderator(self, obj):
         return obj.role == Role.MODERATOR
+
+    def get_is_contracted(self, obj):
+        if self.is_moderator(obj):
+            try:
+                moderator = Moderator.objects.get(user=obj)
+                return moderator.is_contracted
+            except Moderator.DoesNotExist:
+                return False
+        return False
 
     def get_resource_creatable(self, obj):
         if self.is_moderator(obj):
