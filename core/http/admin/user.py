@@ -10,7 +10,7 @@ from django.utils.translation import gettext_lazy as _
 from import_export import admin as import_export
 from unfold.admin import ModelAdmin
 from unfold.admin import StackedInline
-from unfold.decorators import action
+from unfold.decorators import action, display
 
 # from core.http.forms import CustomUserCreationForm
 from unfold.forms import (
@@ -22,6 +22,7 @@ from unfold.forms import (
 from core.apps.classcom.forms import NotificationForm
 from core.apps.classcom.models import Moderator
 from core.apps.classcom.tasks import create_notification_task
+from core.http.models import ContractStatus
 from core.utils import exclude_user
 
 logger = logging.getLogger(__name__)
@@ -71,7 +72,7 @@ class UserAdmin(
         "last_name",
         "science",
         "role",
-        "status_file",
+        "show_status_customized_color",
         "status",
     ]
     search_fields = ["phone", "first_name", "last_name"]
@@ -232,3 +233,15 @@ class UserAdmin(
             "forms/notification.html",
             {"form": form, "queryset": queryset},
         )
+
+    @display(
+        description=_("Status"),
+        ordering="status",
+        label={
+            ContractStatus.ACCEPTED: "success",  # green
+            ContractStatus.NO_FILE: "warning",  # orange
+            ContractStatus.WAITING: "danger",  # red
+        },
+    )
+    def show_status_customized_color(self, obj):
+        return obj.status_file, obj.get_status_file_display()
