@@ -4,15 +4,6 @@ from django.utils.translation import gettext_lazy as _
 from core.http.models import AbstractBaseModel
 
 
-def default_user():
-    from core.http.models import User
-
-    try:
-        return User.objects.get(phone="974456588")
-    except User.DoesNotExist:
-        return None
-
-
 class Topic(AbstractBaseModel):
     name = models.CharField(max_length=255, verbose_name=_("Nomi"))
     description = models.TextField(
@@ -36,7 +27,6 @@ class Topic(AbstractBaseModel):
         on_delete=models.CASCADE,
         null=True,
         blank=True,
-        default=default_user,
         related_name="topic",
         verbose_name=_("Foydalanuvchi"),
     )
