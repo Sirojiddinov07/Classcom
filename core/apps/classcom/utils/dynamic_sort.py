@@ -43,5 +43,3 @@ class OrderNumberService:
                     ).update(
                         **{order_field_name: models.F(order_field_name) - 1}
                     )
-
-        # Remove instance.save() to avoid recursion

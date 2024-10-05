@@ -18,10 +18,13 @@ class TopicApiView(APIView):
     def get(self, request):
         plan_id = request.query_params.get("plan_id")
         topic_id = request.query_params.get("id")
+        search = request.query_params.get("search")
 
         if topic_id:
             try:
                 topic = Topic.objects.get(id=topic_id)
+                topic.view_count += 1
+                topic.save()
                 serializer = TopicDetailSerializer(topic)
                 return Response(serializer.data, status=status.HTTP_200_OK)
             except Topic.DoesNotExist:
@@ -34,6 +37,8 @@ class TopicApiView(APIView):
             try:
                 plan = Plan.objects.get(id=plan_id)
                 topics = plan.topic.all()
+                if search:
+                    topics = topics.filter(name__icontains=search)
                 paginator = self.pagination_class()
                 paginated_topics = paginator.paginate_queryset(topics, request)
                 serializer = TopicDetailSerializer(paginated_topics, many=True)
@@ -78,7 +83,9 @@ class TopicApiView(APIView):
                 status=status.HTTP_403_FORBIDDEN,
             )
 
-        serializer = TopicSerializer(data=request.data, many=True)
+        serializer = TopicSerializer(
+            data=request.data, many=True, context={"request": request}
+        )
         if serializer.is_valid():
             topics = serializer.save()
             plan.topic.add(*topics)
