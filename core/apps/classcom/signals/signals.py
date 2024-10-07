@@ -33,13 +33,14 @@ def reorder_topics_on_delete(sender, instance, **kwargs):
 
 @receiver(post_save, sender=Topic)
 def reorder_topics_on_save(sender, instance, created, **kwargs):
-    if created:
-        related_topics = Topic.objects.filter(
-            plan_id=instance.plan_id
-        ).order_by("sequence_number")
-        for index, topic in enumerate(related_topics, start=1):
-            topic.sequence_number = index
-            topic.save()
+    related_topics = list(
+        Topic.objects.filter(plan_id=instance.plan_id).order_by(
+            "sequence_number"
+        )
+    )
+    for index, topic in enumerate(related_topics, start=1):
+        topic.sequence_number = index
+    Topic.objects.bulk_update(related_topics, ["sequence_number"])
 
 
 @receiver(post_save, sender=Chat)
