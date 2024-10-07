@@ -20,5 +20,5 @@ class PlanFilter(DropdownFilter):
 
     def queryset(self, request, queryset):
         if self.value():
-            return queryset.filter(plans__id=self.value())
+            return queryset.filter(plan_id__id=self.value())
         return queryset

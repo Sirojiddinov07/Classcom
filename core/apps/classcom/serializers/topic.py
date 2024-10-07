@@ -9,6 +9,7 @@ class TopicSerializer(serializers.ModelSerializer):
         model = models.Topic
         fields = [
             "id",
+            "plan_id",
             "name",
             "description",
             "hours",
@@ -33,6 +34,7 @@ class TopicDetailSerializer(serializers.ModelSerializer):
         model = models.Topic
         fields = [
             "id",
+            "plan_id",
             "name",
             "description",
             "hours",
@@ -59,3 +61,10 @@ class TopicDetailSerializer(serializers.ModelSerializer):
 
     def get_download_count(self, obj):
         return obj.all_download_count
+
+    def to_representation(self, instance):
+        from core.apps.classcom.serializers.plan import PlanDetailSerializer
+
+        representation = super().to_representation(instance)
+        representation["plan_id"] = PlanDetailSerializer(instance.plan_id).data
+        return representation

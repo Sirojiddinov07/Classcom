@@ -36,7 +36,6 @@ class PlanApiView(APIView):
         science = request.query_params.get("science", None)
         class_group = request.query_params.get("class_group", None)
         science_types = request.query_params.get("science_types", None)
-        search_topic = request.query_params.get("search_topic", None)
 
         if Moderator.objects.filter(user=user).exists():
             moderator = Moderator.objects.get(user=user)
@@ -62,8 +61,6 @@ class PlanApiView(APIView):
             plans = plans.filter(class_group=class_group)
         if science_types:
             plans = plans.filter(science_types=science_types)
-        if search_topic:
-            plans = plans.filter(topic__name__icontains=search_topic)
 
         paginator = self.pagination_class()
         paginated_plans = paginator.paginate_queryset(plans, request)
