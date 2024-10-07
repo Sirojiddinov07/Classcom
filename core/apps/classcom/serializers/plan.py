@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from core.apps.classcom.models import Plan
+from core.apps.classcom.models import Plan, Topic
 from core.apps.classcom.serializers.classes import ClassesSerializer
 from core.apps.classcom.serializers.quarter import QuarterMiniSerializer
 from core.apps.classcom.serializers.science import ScienceSerializer
@@ -45,8 +45,7 @@ class PlanDetailSerializer(serializers.ModelSerializer):
     class_group = ClassGroupSerializer()
     science_types = ScienceTypesSerializer()
     is_author = serializers.SerializerMethodField()
-
-    # topic = TopicDetailSerializer(many=True)
+    is_topic = serializers.SerializerMethodField()
 
     class Meta:
         model = Plan
@@ -62,10 +61,9 @@ class PlanDetailSerializer(serializers.ModelSerializer):
             "science",
             "class_group",
             "science_types",
-            # "topic",
+            "is_topic",
             "created_at",
         ]
-        # extra_kwargs = {"topic": {"required": False}}
 
     def get_is_author(self, obj):
         request = self.context.get("request")
@@ -77,6 +75,9 @@ class PlanDetailSerializer(serializers.ModelSerializer):
         from core.http.serializers import UserSerializer
 
         return UserSerializer(obj.user).data
+
+    def get_is_topic(self, obj):
+        return Topic.objects.filter(plan_id=obj.id).exists()
 
     def to_representation(self, instance):
         data = super().to_representation(instance)
