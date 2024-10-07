@@ -3,7 +3,7 @@ from django.dispatch import receiver
 
 from core.apps.websocket.models.notification import Notification
 from core.http.models import User, ContractStatus
-from ..models import Topic, Plan, Chat, Moderator
+from ..models import Topic, Chat, Moderator
 from ..models.feedback import Answer
 
 
@@ -21,19 +21,25 @@ def notify_user_on_answer(sender, instance, created, **kwargs):
 
 @receiver(pre_delete, sender=Topic)
 def reorder_topics_on_delete(sender, instance, **kwargs):
-    plans = Plan.objects.filter(topic=instance).distinct()
-    if not plans.exists():
-        print(f"No Plans found for Topic: {instance}")
-    else:
-        for plan in plans:
-            related_topics = (
-                plan.topic.all()
-                .order_by("sequence_number")
-                .exclude(id=instance.id)
-            )
-            for index, topic in enumerate(related_topics, start=1):
-                topic.sequence_number = index
-                topic.save()
+    related_topics = list(
+        Topic.objects.filter(plan_id=instance.plan_id)
+        .exclude(id=instance.id)
+        .order_by("sequence_number")
+    )
+    for index, topic in enumerate(related_topics, start=1):
+        topic.sequence_number = index
+    Topic.objects.bulk_update(related_topics, ["sequence_number"])
+
+
+@receiver(post_save, sender=Topic)
+def reorder_topics_on_save(sender, instance, created, **kwargs):
+    if created:
+        related_topics = Topic.objects.filter(
+            plan_id=instance.plan_id
+        ).order_by("sequence_number")
+        for index, topic in enumerate(related_topics, start=1):
+            topic.sequence_number = index
+            topic.save()
 
 
 @receiver(post_save, sender=Chat)
