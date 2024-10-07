@@ -5,7 +5,6 @@ from core.apps.classcom.serializers.classes import ClassesSerializer
 from core.apps.classcom.serializers.quarter import QuarterMiniSerializer
 from core.apps.classcom.serializers.science import ScienceSerializer
 from core.apps.classcom.serializers.science import ScienceTypesSerializer
-from core.apps.classcom.serializers.topic import TopicDetailSerializer
 from core.http.serializers import ClassGroupSerializer
 
 
@@ -46,7 +45,8 @@ class PlanDetailSerializer(serializers.ModelSerializer):
     class_group = ClassGroupSerializer()
     science_types = ScienceTypesSerializer()
     is_author = serializers.SerializerMethodField()
-    topic = TopicDetailSerializer(many=True)
+
+    # topic = TopicDetailSerializer(many=True)
 
     class Meta:
         model = Plan
@@ -62,10 +62,10 @@ class PlanDetailSerializer(serializers.ModelSerializer):
             "science",
             "class_group",
             "science_types",
-            "topic",
+            # "topic",
             "created_at",
         ]
-        extra_kwargs = {"topic": {"required": False}}
+        # extra_kwargs = {"topic": {"required": False}}
 
     def get_is_author(self, obj):
         request = self.context.get("request")

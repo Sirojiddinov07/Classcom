@@ -35,8 +35,7 @@ class TopicApiView(APIView):
 
         if plan_id:
             try:
-                plan = Plan.objects.get(id=plan_id)
-                topics = plan.topic.all()
+                topics = Topic.objects.filter(plan_id=plan_id)
                 if search:
                     topics = topics.filter(name__icontains=search)
                 paginator = self.pagination_class()
@@ -56,7 +55,11 @@ class TopicApiView(APIView):
 
     def post(self, request):
         user = request.user
-        plan_id = request.query_params.get("plan_id")
+        plan_id = (
+            request.data[0].get("plan_id")
+            if isinstance(request.data, list)
+            else request.data.get("plan_id")
+        )
         if not plan_id:
             return Response(
                 {"error": "plan_id is required"},
@@ -87,9 +90,7 @@ class TopicApiView(APIView):
             data=request.data, many=True, context={"request": request}
         )
         if serializer.is_valid():
-            topics = serializer.save()
-            plan.topic.add(*topics)
-            plan.save()
+            serializer.save(plan_id=plan)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 

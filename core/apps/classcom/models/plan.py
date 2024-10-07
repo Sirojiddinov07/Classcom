@@ -30,12 +30,12 @@ class Plan(AbstractBaseModel):
     science = models.ForeignKey(
         "Science", on_delete=models.CASCADE, verbose_name=_("Fan")
     )
-    topic = models.ManyToManyField(
-        "Topic",
-        related_name="plans",
-        verbose_name=_("Mavzu"),
-        blank=True,
-    )
+    # topic = models.ManyToManyField(
+    #     "Topic",
+    #     related_name="plans",
+    #     verbose_name=_("Mavzu"),
+    #     blank=True,
+    # )
     class_group = models.ForeignKey(
         ClassGroup,
         on_delete=models.CASCADE,

@@ -26,6 +26,7 @@ class TopicAdmin(ModelAdmin, ImportExportModelAdmin):
         "hours",
         "weeks",
         "media_creatable",
+        "plan_id",
     )
     search_fields = (
         "name",

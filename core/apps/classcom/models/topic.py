@@ -5,6 +5,9 @@ from core.http.models import AbstractBaseModel
 
 
 class Topic(AbstractBaseModel):
+    plan_id = models.ForeignKey(
+        "Plan", on_delete=models.CASCADE, related_name="topic"
+    )
     name = models.CharField(max_length=255, verbose_name=_("Nomi"))
     description = models.TextField(
         blank=True, null=True, verbose_name=_("Tavsif")
