@@ -48,7 +48,7 @@ class Plan(AbstractBaseModel):
     )
 
     def __str__(self):
-        return self.user.first_name if self.user.first_name else "Plan"
+        return f"{self.science.name}, {self.classes.name}"
 
     def save(self, *args, **kwargs):
         if not self.pk:
