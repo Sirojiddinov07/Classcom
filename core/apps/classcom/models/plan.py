@@ -48,7 +48,7 @@ class Plan(AbstractBaseModel):
     )
 
     def __str__(self):
-        return f"{self.science.name}, {self.classes.name}"
+        return f"ID: {self.id}"
 
     def save(self, *args, **kwargs):
         if not self.pk:
