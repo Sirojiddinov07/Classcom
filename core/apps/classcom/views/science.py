@@ -9,6 +9,7 @@ from rest_framework.views import APIView
 
 from core.apps.classcom import models, serializers
 from core.apps.classcom.choices import Role
+from core.apps.classcom.views import CustomPagination
 from core.apps.payments.models import Orders
 
 
@@ -18,6 +19,7 @@ class ScienceViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = serializers.ScienceSerializer
     filter_backends = [DjangoFilterBackend]
     filterset_fields = ["science_grp", "name"]
+    pagination_class = CustomPagination
 
     def get_queryset(self):
         user = self.request.user
