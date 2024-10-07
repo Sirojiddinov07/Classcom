@@ -1,4 +1,5 @@
 from django.conf import settings  # noqa
+from django.conf import settings  # noqa
 from rest_framework import serializers
 from rest_framework import status
 from rest_framework.response import Response
@@ -141,6 +142,9 @@ class UserSerializer(serializers.ModelSerializer):
     def to_representation(self, instance):
         data = super().to_representation(instance)
         request = self.context.get("request")
+
+        if request and request.user.role == Role.USER:
+            data.pop("is_contracted", None)
 
         if request and request.headers:
             language = request.headers.get("Accept-Language", "uz")
