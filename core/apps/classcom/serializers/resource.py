@@ -127,6 +127,7 @@ class ResourceCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Resource
         fields = (
+            "id",
             "name",
             "category",
             "category_type",
