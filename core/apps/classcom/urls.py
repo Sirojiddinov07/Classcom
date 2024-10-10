@@ -102,12 +102,12 @@ urlpatterns = [
     path("topic/", views.TopicApiView.as_view(), name="topic"),
     path("media/", views.MediaApiView.as_view(), name="media"),
     path(
-        "mobile_download_history/",
+        "history/mobile/download/",
         views.MobileDownloadHistoryView.as_view(),
         name="mobile_download_history",
     ),
     path(
-        "mobile_upload_history/",
+        "history/mobile/upload/",
         views.MobileUploadHistoryView.as_view(),
         name="mobile_upload_history",
     ),
