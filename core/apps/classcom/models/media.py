@@ -34,6 +34,12 @@ class Media(AbstractBaseModel):
         null=True,
         blank=True,
     )
+    object_type = models.CharField(
+        max_length=255, blank=True, null=True, verbose_name=_("Object turi")
+    )
+    object_id = models.PositiveIntegerField(
+        blank=True, null=True, verbose_name=_("Object turi ID")
+    )
 
     def __str__(self) -> str:
         return str(self.name) if self.name is not None else f"Media {self.id}"

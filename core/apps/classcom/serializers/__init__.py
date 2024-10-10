@@ -19,3 +19,4 @@ from .type import *  # noqa
 from .language import *  # noqa
 from .ai import *  # noqa
 from .document import *  # noqa
+from .download_history import *  # noqa

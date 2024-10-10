@@ -1,10 +1,14 @@
 import datetime
 
+from django.core.exceptions import ObjectDoesNotExist
 from django.http import FileResponse, Http404
 from django.shortcuts import get_object_or_404
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
+from drf_spectacular.utils import extend_schema, OpenApiParameter
+from rest_framework import generics
 from rest_framework.decorators import api_view, permission_classes
+from rest_framework.exceptions import ValidationError
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -13,8 +17,14 @@ from core.apps.classcom.choices import Role
 from core.apps.classcom.models import (
     Download,
     DownloadToken,
+    Resource,
 )
-from core.apps.classcom.models import Media, Plan, Moderator
+from core.apps.classcom.models import Media, Moderator
+from core.apps.classcom.models import Topic
+from core.apps.classcom.serializers import UploadMediaSerializer
+from core.apps.classcom.serializers.download_history import (
+    DownloadHistorySerializer,
+)
 from core.apps.classcom.views import CustomPagination
 from core.apps.payments.models import Orders
 
@@ -28,7 +38,9 @@ class DownloadMediaView(APIView):
         media = get_object_or_404(Media, id=media_id)
 
         # Check if media has an associated topic
-        plan = Plan.objects.filter(topic__media=media).last()
+        topic = Topic.objects.filter(media=media).last()
+        plan = topic.plan_id if topic else None
+        resource = Resource.objects.filter(media=media).last()
 
         order = None
         if plan:
@@ -53,6 +65,8 @@ class DownloadMediaView(APIView):
             user=user,
             media=media,
             date=current_date,
+            object_type="plan" if plan else "resource",
+            object_id=topic.id if plan else resource.id,
         )
 
         if plan:
@@ -201,3 +215,159 @@ def moderator_media_list(request):
     }
 
     return paginator.get_paginated_response(response_data)
+
+
+############################################################################################################
+# Yuklab olingan resurs media fayllarini ro'yxatini olish mobile uchun
+############################################################################################################
+@extend_schema(
+    parameters=[
+        OpenApiParameter(
+            name="type",
+            description="Type of download (required)",
+            required=True,
+            type=str,
+        ),
+        OpenApiParameter(
+            name="topic_name",
+            description="Filter by topic name (only for type 'plan')",
+            required=False,
+            type=str,
+        ),
+        OpenApiParameter(
+            name="time_range",
+            description="Filter by time range (e.g., last_hour, last_2_hours, "
+            "last_3_hours, last_24_hours, last_4_weeks)",
+            required=False,
+            type=str,
+        ),
+    ]
+)
+class MobileDownloadHistoryView(generics.ListAPIView):
+    serializer_class = DownloadHistorySerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        type_param = self.request.query_params.get("type")
+        if not type_param or type_param not in ["resource", "plan"]:
+            raise ValidationError(
+                "The 'type' query parameter is required and must be either 'resource' or 'plan'."
+            )
+
+        user = self.request.user
+        queryset = Download.objects.filter(object_type=type_param, user=user)
+
+        # Filter by topic name
+        if type_param == "plan":
+            topic_name = self.request.query_params.get("topic_name")
+            if topic_name:
+                topic_ids = Topic.objects.filter(
+                    name__icontains=topic_name
+                ).values_list("id", flat=True)
+                queryset = queryset.filter(object_id__in=topic_ids)
+
+        # Filter by time range
+        time_range = self.request.query_params.get("time_range")
+        if time_range:
+            now = timezone.now()
+            if time_range == "last_hour":
+                queryset = queryset.filter(
+                    created_at__gte=now - timezone.timedelta(hours=1)
+                )
+            elif time_range == "last_2_hours":
+                queryset = queryset.filter(
+                    created_at__gte=now - timezone.timedelta(hours=2)
+                )
+            elif time_range == "last_3_hours":
+                queryset = queryset.filter(
+                    created_at__gte=now - timezone.timedelta(hours=3)
+                )
+            elif time_range == "last_24_hours":
+                queryset = queryset.filter(
+                    created_at__gte=now - timezone.timedelta(hours=24)
+                )
+            elif time_range == "last_4_weeks":
+                queryset = queryset.filter(
+                    created_at__gte=now - timezone.timedelta(weeks=4)
+                )
+
+        return queryset
+
+
+############################################################################################################
+# Yuklab olingan resurs media fayllarini ro'yxatini olish
+############################################################################################################
+@extend_schema(
+    parameters=[
+        OpenApiParameter(
+            name="type",
+            description="Type of resource (required, 'resource' or 'plan')",
+            required=True,
+            type=str,
+        ),
+        OpenApiParameter(
+            name="time_range",
+            description="Filter by time range (last_hour, last_2_hours, last_3_hours, last_24_hours, last_4_weeks)",
+            required=False,
+            type=str,
+        ),
+        OpenApiParameter(
+            name="search",
+            description="Search by name",
+            required=False,
+            type=str,
+        ),
+    ]
+)
+class MobileUploadHistoryView(generics.ListAPIView):
+    serializer_class = UploadMediaSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        type_param = self.request.query_params.get("type")
+        if not type_param or type_param not in ["resource", "plan"]:
+            raise ValidationError(
+                "The 'type' query parameter is required and must be either 'resource' or 'plan'."
+            )
+
+        user = self.request.user
+        queryset = Media.objects.filter(user=user, object_type=type_param)
+
+        # Search by name
+        if type_param == "plan":
+            topic_name = self.request.query_params.get("topic_name")
+            if topic_name:
+                try:
+                    topic_ids = Topic.objects.filter(
+                        name__icontains=topic_name
+                    ).values_list("id", flat=True)
+                    queryset = queryset.filter(object_id__in=topic_ids)
+                except ObjectDoesNotExist:
+                    queryset = queryset.none()
+
+        # Filter by time range
+        time_range = self.request.query_params.get("time_range")
+        if time_range:
+            now = timezone.now()
+            if time_range == "last_hour":
+                queryset = queryset.filter(
+                    created_at__gte=now - timezone.timedelta(hours=1)
+                )
+            elif time_range == "last_2_hours":
+                queryset = queryset.filter(
+                    created_at__gte=now - timezone.timedelta(hours=2)
+                )
+            elif time_range == "last_3_hours":
+                queryset = queryset.filter(
+                    created_at__gte=now - timezone.timedelta(hours=3)
+                )
+            elif time_range == "last_24_hours":
+                queryset = queryset.filter(
+                    created_at__gte=now - timezone.timedelta(hours=24)
+                )
+            elif time_range == "last_4_weeks":
+                queryset = queryset.filter(
+                    created_at__gte=now - timezone.timedelta(weeks=4)
+                )
+
+        return queryset

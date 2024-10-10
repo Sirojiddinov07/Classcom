@@ -68,3 +68,20 @@ class TopicDetailSerializer(serializers.ModelSerializer):
         representation = super().to_representation(instance)
         representation["plan_id"] = PlanDetailSerializer(instance.plan_id).data
         return representation
+
+
+class MobileTopicDetailSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = models.Topic
+        fields = [
+            "id",
+            "plan_id",
+            "name",
+            "description",
+            "hours",
+            "sequence_number",
+            "created_at",
+            "weeks",
+            "banner",
+        ]

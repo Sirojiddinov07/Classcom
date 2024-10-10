@@ -83,10 +83,19 @@ class MediaApiView(APIView):
                     )
                 if not media_desc:
                     media_desc = media_file.name
-                media_data.append({"file": media_file, "desc": media_desc})
+                media_data.append(
+                    {
+                        "file": media_file,
+                        "desc": media_desc,
+                        "object_type": "plan",
+                        "object_id": topic_id,
+                    }
+                )
 
         serializer = MediaSerializer(
-            data=media_data, many=True, context={"request": request}
+            data=media_data,
+            many=True,
+            context={"request": request},
         )
         if serializer.is_valid():
             serializer.save()
