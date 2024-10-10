@@ -21,6 +21,7 @@ from .serializers import (
     UzumWebhookSerializer,
 )
 from .services import UzumService
+from ..classcom.views import CustomPagination
 
 
 class OrderViewSet(
@@ -31,6 +32,7 @@ class OrderViewSet(
     GenericViewSet,
 ):
     serializer_class = OrderSerializer
+    pagination_class = CustomPagination
 
     def perform_create(self, serializer):
         user = self.request.user

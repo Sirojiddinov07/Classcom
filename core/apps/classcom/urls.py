@@ -101,6 +101,16 @@ urlpatterns = [
     path("plan/", views.PlanApiView.as_view(), name="plan"),
     path("topic/", views.TopicApiView.as_view(), name="topic"),
     path("media/", views.MediaApiView.as_view(), name="media"),
+    path(
+        "mobile_download_history/",
+        views.MobileDownloadHistoryView.as_view(),
+        name="mobile_download_history",
+    ),
+    path(
+        "mobile_upload_history/",
+        views.MobileUploadHistoryView.as_view(),
+        name="mobile_upload_history",
+    ),
     ############################################################################################################
     # Permission bor bo'lgan foydalanuvchilar uchun
     ############################################################################################################

@@ -163,6 +163,8 @@ class ResourceCreateSerializer(serializers.ModelSerializer):
                 name=media_file.name,
                 size=media_file.size,
                 user=user,
+                object_type="resource",
+                object_id=resource.id,
             )
 
         return resource
