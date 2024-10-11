@@ -21,3 +21,4 @@ from .language import *  # noqa
 from .algorithm import *  # noqa
 from .ai import *  # noqa
 from .notification import *  # noqa
+from .changing import *  # noqa
