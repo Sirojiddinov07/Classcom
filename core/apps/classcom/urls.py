@@ -41,6 +41,11 @@ router.register("notification", NotificationViewSet, basename="notification")
 urlpatterns = [
     path("", include(router.urls)),
     path(
+        "change-moderator/",
+        views.ChangeModeratorAPIView.as_view(),
+        name="change-moderator",
+    ),
+    path(
         "create-notification-form/",
         CreateNotificationFormView.as_view(),
         name="create_notification_form",

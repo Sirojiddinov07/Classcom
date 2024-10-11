@@ -19,3 +19,4 @@ from .topic import *  # noqa
 from .weeks import *  # noqa
 from .documents import *  # noqa
 from .ai import *  # noqa
+from .changing import *  # noqa

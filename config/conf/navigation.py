@@ -72,6 +72,19 @@ PAGES = [
                     request.user, "view_teacher"
                 ),
             },
+            {
+                "title": _("Moderatorni arizasi"),
+                "icon": "task_alt",
+                "link": reverse_lazy(
+                    "admin:classcom_changemoderator_changelist"
+                ),
+                "permission": lambda request: user_has_group_or_permission(
+                    request.user, "view_changemoderator"
+                ),
+                "badge": lambda: __import__(
+                    "core.apps.classcom.models"
+                ).apps.classcom.models.ChangeModerator.get_pending(),
+            },
         ],
     },
     {
