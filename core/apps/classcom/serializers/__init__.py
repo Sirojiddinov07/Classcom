@@ -21,3 +21,4 @@ from .ai import *  # noqa
 from .document import *  # noqa
 from .download_history import *  # noqa
 from .changing import *  # noqa
+from .rtm_appeal import *  # noqa

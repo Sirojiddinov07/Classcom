@@ -115,6 +115,14 @@ PAGES = [
                     request.user, "view_ai"
                 ),
             },
+            {
+                "title": _("TMR arizalari"),
+                "icon": "handshake",
+                "link": reverse_lazy("admin:classcom_planappeal_changelist"),
+                "permission": lambda request: user_has_group_or_permission(
+                    request.user, "view_planappeal"
+                ),
+            },
         ],
     },
     {
@@ -367,6 +375,14 @@ PAGES = [
                 "link": reverse_lazy("admin:classcom_document_changelist"),
                 "permission": lambda request: user_has_group_or_permission(
                     request.user, "view_document"
+                ),
+            },
+            {
+                "title": _("TMR Fayllari"),
+                "icon": "drive_folder_upload",
+                "link": reverse_lazy("admin:classcom_tmrfiles_changelist"),
+                "permission": lambda request: user_has_group_or_permission(
+                    request.user, "view_tmrfiles"
                 ),
             },
             {

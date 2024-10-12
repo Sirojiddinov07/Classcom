@@ -46,6 +46,11 @@ urlpatterns = [
         name="change-moderator",
     ),
     path(
+        "plan-appeal/",
+        views.PlanAppealView.as_view(),
+        name="plan-appeal",
+    ),
+    path(
         "create-notification-form/",
         CreateNotificationFormView.as_view(),
         name="create_notification_form",

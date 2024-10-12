@@ -22,3 +22,4 @@ from .algorithm import *  # noqa
 from .ai import *  # noqa
 from .notification import *  # noqa
 from .changing import *  # noqa
+from .rtm_appeal import *  # noqa
