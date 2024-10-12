@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-30 15:47+0500\n"
+"POT-Creation-Date: 2024-10-12 14:40+0500\n"
 "PO-Revision-Date: 2024-09-30 15:53+0500\n"
 "Last-Translator:   <>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -38,213 +38,227 @@ msgstr ""
 msgid "Foydalanuvchilar"
 msgstr ""
 
-#: config/conf/navigation.py:46
+#: config/conf/navigation.py:49
 msgid "Guruhlar"
 msgstr ""
 
-#: config/conf/navigation.py:54 core/apps/classcom/models/moderator.py:96
+#: config/conf/navigation.py:57 core/apps/classcom/models/moderator.py:96
 #: core/apps/home/views/dashboard.py:39
 msgid "Moderatorlar"
 msgstr ""
 
-#: config/conf/navigation.py:62 core/apps/classcom/models/teacher.py:23
+#: config/conf/navigation.py:68 core/apps/classcom/models/teacher.py:23
 msgid "O'qituvchilar"
 msgstr ""
 
-#: config/conf/navigation.py:72
+#: config/conf/navigation.py:76 core/apps/classcom/models/changing.py:53
+msgid "Moderatorni arizasi"
+msgstr ""
+
+#: config/conf/navigation.py:91
 msgid "Kalendar Tematik Reja"
 msgstr ""
 
-#: config/conf/navigation.py:76 core/apps/classcom/filters/plan.py:8
+#: config/conf/navigation.py:95 core/apps/classcom/filters/plan.py:8
 #: core/apps/classcom/models/plan.py:64
 msgid "Tematik reja"
 msgstr ""
 
-#: config/conf/navigation.py:84 core/apps/classcom/models/topic.py:38
+#: config/conf/navigation.py:103 core/apps/classcom/models/topic.py:51
 msgid "Mavzular"
 msgstr ""
 
-#: config/conf/navigation.py:92 core/apps/classcom/models/ai.py:40
+#: config/conf/navigation.py:111 core/apps/classcom/models/ai.py:40
 msgid "Suniy Intellekt"
 msgstr ""
 
-#: config/conf/navigation.py:102 config/conf/navigation.py:106
+#: config/conf/navigation.py:119 core/apps/classcom/models/rtm_appeal.py:58
+#: core/apps/classcom/models/rtm_appeal.py:59
+msgid "TMR arizalari"
+msgstr ""
+
+#: config/conf/navigation.py:129 config/conf/navigation.py:133
 #: core/apps/home/views/dashboard.py:47
 msgid "Elektron resurslar"
 msgstr ""
 
-#: config/conf/navigation.py:114 core/apps/classcom/models/moderator.py:50
+#: config/conf/navigation.py:141 core/apps/classcom/models/moderator.py:50
 #: core/apps/classcom/models/resource_type.py:58
 msgid "Resurs turlari"
 msgstr ""
 
-#: config/conf/navigation.py:122 core/apps/classcom/models/category.py:15
+#: config/conf/navigation.py:149 core/apps/classcom/models/category.py:15
 msgid "Kategoriyalar"
 msgstr ""
 
-#: config/conf/navigation.py:130
+#: config/conf/navigation.py:157
 msgid "Kategoriya turlari"
 msgstr ""
 
-#: config/conf/navigation.py:140
+#: config/conf/navigation.py:167
 msgid "Maktablar"
 msgstr ""
 
-#: config/conf/navigation.py:144 core/http/models/school_type.py:9
+#: config/conf/navigation.py:171 core/http/models/school_type.py:9
 #: core/http/models/school_type.py:22 core/http/models/user.py:78
 msgid "Maktab turi"
 msgstr ""
 
-#: config/conf/navigation.py:154 config/conf/navigation.py:158
-#: core/apps/classcom/admin/plan.py:79
-#: core/apps/classcom/filters/quarter.py:43
+#: config/conf/navigation.py:181 config/conf/navigation.py:185
+#: core/apps/classcom/admin/plan.py:78 core/apps/classcom/filters/quarter.py:43
+#: core/apps/classcom/models/changing.py:41
 #: core/apps/classcom/models/classes.py:71
 #: core/apps/classcom/models/days_off.py:13
 #: core/apps/classcom/models/moderator.py:72
 #: core/apps/classcom/models/plan.py:25
 #: core/apps/classcom/models/resource.py:51
+#: core/apps/classcom/models/rtm_appeal.py:41
 #: core/apps/classcom/models/schedule.py:41 core/http/models/user.py:98
 msgid "Sinflar"
 msgstr ""
 
-#: config/conf/navigation.py:166 core/apps/classcom/models/classes.py:14
+#: config/conf/navigation.py:193 core/apps/classcom/models/classes.py:14
 msgid "Sinf Guruhi"
 msgstr ""
 
-#: config/conf/navigation.py:174 core/apps/classcom/models/science.py:34
+#: config/conf/navigation.py:201 core/apps/classcom/models/science.py:34
 #: core/apps/payments/models.py:35 core/http/models/school_group.py:8
 #: core/http/models/school_group.py:14 core/http/models/user.py:85
 msgid "Sinf turi"
 msgstr ""
 
-#: config/conf/navigation.py:184 core/apps/classcom/models/schedule.py:79
+#: config/conf/navigation.py:211 core/apps/classcom/models/schedule.py:79
 #: core/apps/classcom/models/schedule.py:80
 msgid "Dars jadvali"
 msgstr ""
 
-#: config/conf/navigation.py:188
+#: config/conf/navigation.py:215
 msgid "Darslar"
 msgstr ""
 
-#: config/conf/navigation.py:196
+#: config/conf/navigation.py:223
 msgid "Dars jadval shablonlari"
 msgstr ""
 
-#: config/conf/navigation.py:206 core/apps/classcom/models/schedule.py:126
+#: config/conf/navigation.py:233 core/apps/classcom/models/schedule.py:126
 #: core/apps/classcom/models/schedule.py:127
 msgid "Dars jadvali tanlash"
 msgstr ""
 
-#: config/conf/navigation.py:216 core/apps/classcom/models/days_off.py:26
+#: config/conf/navigation.py:243 core/apps/classcom/models/days_off.py:26
 msgid "Dam olish kunlari"
 msgstr ""
 
-#: config/conf/navigation.py:224 core/apps/classcom/models/moderator.py:84
+#: config/conf/navigation.py:251 core/apps/classcom/models/moderator.py:84
 #: core/apps/classcom/models/quarter.py:60
 msgid "Choraklar"
 msgstr ""
 
-#: config/conf/navigation.py:232 core/apps/classcom/models/topic.py:23
+#: config/conf/navigation.py:259 core/apps/classcom/models/topic.py:26
 #: core/apps/classcom/models/weeks.py:19
 msgid "Haftalar"
 msgstr ""
 
-#: config/conf/navigation.py:242
+#: config/conf/navigation.py:269
 msgid "Qo'llab quvvatlash"
 msgstr ""
 
-#: config/conf/navigation.py:246 core/apps/websocket/models/notification.py:26
+#: config/conf/navigation.py:273 core/apps/websocket/models/notification.py:26
 msgid "Bildirishnomalar"
 msgstr ""
 
-#: config/conf/navigation.py:256 core/apps/classcom/models/chat.py:31
+#: config/conf/navigation.py:283 core/apps/classcom/models/chat.py:31
 msgid "Chat"
 msgstr ""
 
-#: config/conf/navigation.py:264
+#: config/conf/navigation.py:291
 msgid "Fikr mulohazalar"
 msgstr ""
 
-#: config/conf/navigation.py:272 core/apps/classcom/models/feedback.py:56
+#: config/conf/navigation.py:299 core/apps/classcom/models/feedback.py:56
 msgid "Javoblar"
 msgstr ""
 
-#: config/conf/navigation.py:282 config/conf/navigation.py:286
+#: config/conf/navigation.py:309 config/conf/navigation.py:313
 #: core/apps/classcom/models/days_off.py:12
 #: core/apps/classcom/models/science.py:80
 #: core/apps/classcom/models/teacher.py:12
 msgid "Fanlar"
 msgstr ""
 
-#: config/conf/navigation.py:294 core/apps/classcom/models/science.py:16
+#: config/conf/navigation.py:321 core/apps/classcom/models/science.py:16
 msgid "Fan turlari"
 msgstr ""
 
-#: config/conf/navigation.py:302 core/apps/classcom/models/plan.py:47
+#: config/conf/navigation.py:329 core/apps/classcom/models/plan.py:47
 #: core/apps/classcom/models/science.py:26 core/http/models/science.py:8
 #: core/http/models/science.py:14 core/http/models/science.py:15
 #: core/http/models/user.py:71
 msgid "Fan guruhi"
 msgstr ""
 
-#: config/conf/navigation.py:312
+#: config/conf/navigation.py:339
 msgid "Manzillar"
 msgstr ""
 
-#: config/conf/navigation.py:316 core/http/models/locations.py:15
+#: config/conf/navigation.py:343 core/http/models/locations.py:15
 msgid "Viloyatlar"
 msgstr ""
 
-#: config/conf/navigation.py:324 core/http/models/locations.py:32
+#: config/conf/navigation.py:351 core/http/models/locations.py:32
 msgid "Tumanlar"
 msgstr ""
 
-#: config/conf/navigation.py:334
+#: config/conf/navigation.py:361 core/apps/classcom/models/rtm_appeal.py:51
 msgid "Fayllar"
 msgstr ""
 
-#: config/conf/navigation.py:338
+#: config/conf/navigation.py:365
 msgid "Media Fayllar"
 msgstr ""
 
-#: config/conf/navigation.py:346 core/apps/classcom/admin/moderator.py:97
+#: config/conf/navigation.py:373 core/apps/classcom/admin/moderator.py:97
 #: core/apps/classcom/models/documents.py:17
-#: core/apps/classcom/models/moderator.py:26 core/http/admin/user.py:162
+#: core/apps/classcom/models/moderator.py:26 core/http/admin/user.py:163
 msgid "Hujjatlar"
 msgstr ""
 
-#: config/conf/navigation.py:354
+#: config/conf/navigation.py:381
+msgid "TMR Fayllari"
+msgstr ""
+
+#: config/conf/navigation.py:389
 msgid "Yuklashlar"
 msgstr ""
 
-#: config/conf/navigation.py:364 config/conf/navigation.py:376
+#: config/conf/navigation.py:399 config/conf/navigation.py:411
 msgid "To'lovlar"
 msgstr ""
 
-#: config/conf/navigation.py:368 core/apps/payments/models.py:41
+#: config/conf/navigation.py:403 core/apps/payments/models.py:41
 #: core/apps/payments/models.py:42
 msgid "Buyurtmalar"
 msgstr ""
 
-#: config/conf/navigation.py:384
+#: config/conf/navigation.py:419
 msgid "Tariflar"
 msgstr ""
 
-#: config/conf/navigation.py:394
+#: config/conf/navigation.py:429
 msgid "Qo'shimcha"
 msgstr ""
 
-#: config/conf/navigation.py:398 core/apps/classcom/models/settings.py:15
+#: config/conf/navigation.py:433 core/apps/classcom/models/settings.py:15
 #: core/apps/classcom/models/settings.py:16
 msgid "Sozlamalar"
 msgstr ""
 
-#: config/conf/navigation.py:406 core/apps/classcom/choices/language.py:38
+#: config/conf/navigation.py:441 core/apps/classcom/choices/language.py:38
 #: core/apps/classcom/models/moderator.py:66
 msgid "Tillar"
 msgstr ""
 
-#: config/conf/navigation.py:416
+#: config/conf/navigation.py:451
 msgid "SMS tasdiqlash"
 msgstr ""
 
@@ -268,7 +282,8 @@ msgstr ""
 #: core/apps/accounts/models/reset_token.py:12
 #: core/apps/classcom/admin/schedule.py:36
 #: core/apps/classcom/admin/teacher.py:30 core/apps/classcom/choices/role.py:8
-#: core/apps/classcom/models/ai.py:26 core/apps/classcom/models/chat.py:10
+#: core/apps/classcom/models/ai.py:26 core/apps/classcom/models/changing.py:20
+#: core/apps/classcom/models/chat.py:10
 #: core/apps/classcom/models/days_off.py:20
 #: core/apps/classcom/models/download.py:13
 #: core/apps/classcom/models/feedback.py:27
@@ -276,10 +291,12 @@ msgstr ""
 #: core/apps/classcom/models/moderator.py:13
 #: core/apps/classcom/models/plan.py:22
 #: core/apps/classcom/models/resource.py:44
+#: core/apps/classcom/models/rtm_appeal.py:20
 #: core/apps/classcom/models/schedule.py:35
 #: core/apps/classcom/models/schedule.py:88
 #: core/apps/classcom/models/schedule.py:118
-#: core/apps/classcom/models/teacher.py:9 core/apps/payments/models.py:17
+#: core/apps/classcom/models/teacher.py:9 core/apps/classcom/models/topic.py:34
+#: core/apps/payments/models.py:17
 #: core/apps/websocket/models/notification.py:12
 msgid "Foydalanuvchi"
 msgstr ""
@@ -295,6 +312,10 @@ msgstr ""
 
 #: core/apps/accounts/serializers/change_password.py:14
 msgid "Foydalanuvchi topilmadi. Iltimos, qayta kirishni urinib ko'ring."
+msgstr ""
+
+#: core/apps/accounts/serializers/delete_account.py:13
+msgid "Foydalanuvchi topilmadi. Iltimos, qayta  urinib ko'ring."
 msgstr ""
 
 #: core/apps/accounts/serializers/moderator.py:32
@@ -318,12 +339,28 @@ msgstr ""
 msgid "Autentifikatsiya qilingan foydalanuvchi parolini o'zgartiring."
 msgstr ""
 
-#: core/apps/accounts/views/change_password.py:35
+#: core/apps/accounts/views/change_password.py:37
 msgid "parol muvaffaqiyatli o'zgartirildi"
 msgstr ""
 
-#: core/apps/accounts/views/change_password.py:40
+#: core/apps/accounts/views/change_password.py:42
 msgid "Eski parol noto'g'ri kiritildi."
+msgstr ""
+
+#: core/apps/accounts/views/delete_account.py:20
+msgid "Foydalanuvchi hisobini o'chiring."
+msgstr ""
+
+#: core/apps/accounts/views/delete_account.py:22
+msgid "Autentifikatsiya qilingan foydalanuvchi hisobini o'chirish."
+msgstr ""
+
+#: core/apps/accounts/views/delete_account.py:35
+msgid "Hisob muvaffaqiyatli o'chirildi"
+msgstr ""
+
+#: core/apps/accounts/views/delete_account.py:40
+msgid "Parol noto'g'ri kiritildi."
 msgstr ""
 
 #: core/apps/accounts/views/moderator.py:27 core/apps/accounts/views/sms.py:45
@@ -360,8 +397,24 @@ msgstr ""
 msgid "Parol yangilandi"
 msgstr ""
 
+#: core/apps/classcom/admin/changing.py:34
+#: core/apps/classcom/admin/rtm_appeal.py:36
+msgid "Qabul qilish"
+msgstr ""
+
+#: core/apps/classcom/admin/changing.py:39
+#: core/apps/classcom/admin/rtm_appeal.py:41
+msgid "Rad etish"
+msgstr ""
+
+#: core/apps/classcom/admin/changing.py:42
+#: core/apps/classcom/admin/rtm_appeal.py:44 core/http/admin/user.py:238
+#: core/http/models/user.py:122
+msgid "Status"
+msgstr ""
+
 #: core/apps/classcom/admin/chat.py:26 core/apps/classcom/admin/daysoff.py:28
-#: core/apps/classcom/admin/feedback.py:22 core/apps/classcom/admin/plan.py:74
+#: core/apps/classcom/admin/feedback.py:22 core/apps/classcom/admin/plan.py:73
 #: core/apps/classcom/admin/recource.py:30
 #: core/apps/websocket/admin/notification.py:30
 msgid "Ism Familiya"
@@ -396,44 +449,45 @@ msgid "Tasdiqlangan shartnoma"
 msgstr ""
 
 #: core/apps/classcom/admin/moderator.py:129
-#: core/apps/classcom/admin/plan.py:84 core/apps/classcom/admin/schedule.py:31
+#: core/apps/classcom/admin/plan.py:83 core/apps/classcom/admin/schedule.py:31
 #: core/apps/classcom/filters/quarter.py:29
+#: core/apps/classcom/models/changing.py:31
 #: core/apps/classcom/models/moderator.py:55
 #: core/apps/classcom/models/plan.py:31
 #: core/apps/classcom/models/resource.py:72
+#: core/apps/classcom/models/rtm_appeal.py:31
 #: core/apps/classcom/models/schedule.py:38
 #: core/apps/classcom/models/science.py:79 core/apps/payments/models.py:29
 #: core/http/models/user.py:105
 msgid "Fan"
 msgstr ""
 
-#: core/apps/classcom/admin/plan.py:89
-#: core/apps/classcom/models/schedule.py:44
+#: core/apps/classcom/admin/plan.py:88 core/apps/classcom/models/schedule.py:44
 msgid "Sinflar turi"
 msgstr ""
 
-#: core/apps/classcom/admin/plan.py:94
+#: core/apps/classcom/admin/plan.py:93 core/apps/classcom/models/changing.py:36
 #: core/apps/classcom/models/moderator.py:60
+#: core/apps/classcom/models/rtm_appeal.py:36
 #: core/apps/classcom/models/schedule.py:70
 #: core/apps/classcom/models/science.py:15
 #: core/apps/classcom/models/science.py:28 core/apps/payments/models.py:31
 msgid "Fan turi"
 msgstr ""
 
-#: core/apps/classcom/admin/plan.py:99 core/apps/classcom/filters/quarter.py:9
-#: core/apps/classcom/models/plan.py:28
-#: core/apps/classcom/models/quarter.py:26
+#: core/apps/classcom/admin/plan.py:98 core/apps/classcom/filters/quarter.py:9
+#: core/apps/classcom/models/plan.py:28 core/apps/classcom/models/quarter.py:26
 #: core/apps/classcom/models/quarter.py:59
 #: core/apps/classcom/models/schedule.py:121
 #: core/apps/classcom/models/weeks.py:9 core/apps/payments/models.py:71
 msgid "Chorak"
 msgstr ""
 
-#: core/apps/classcom/admin/plan.py:105
+#: core/apps/classcom/admin/plan.py:104 core/apps/classcom/admin/topic.py:60
 msgid "Faol qilish"
 msgstr ""
 
-#: core/apps/classcom/admin/plan.py:112
+#: core/apps/classcom/admin/plan.py:111 core/apps/classcom/admin/topic.py:49
 msgid "Nofaol qilish"
 msgstr ""
 
@@ -486,7 +540,8 @@ msgstr ""
 #: core/apps/classcom/models/resource_type.py:9
 #: core/apps/classcom/models/science.py:9
 #: core/apps/classcom/models/science.py:20
-#: core/apps/classcom/models/topic.py:8 core/http/models/another.py:9
+#: core/apps/classcom/models/tmr_files.py:8
+#: core/apps/classcom/models/topic.py:11 core/http/models/another.py:9
 msgid "Nomi"
 msgstr ""
 
@@ -605,14 +660,13 @@ msgstr ""
 msgid "Mavzuga qarab"
 msgstr ""
 
-#: core/apps/classcom/models/ai.py:18 core/apps/classcom/models/plan.py:36
-#: core/apps/classcom/models/topic.py:37
+#: core/apps/classcom/models/ai.py:18 core/apps/classcom/models/topic.py:50
 msgid "Mavzu"
 msgstr ""
 
-#: core/apps/classcom/models/ai.py:31
-#: core/apps/classcom/models/documents.py:12
+#: core/apps/classcom/models/ai.py:31 core/apps/classcom/models/documents.py:12
 #: core/apps/classcom/models/resource_type.py:11
+#: core/apps/classcom/models/tmr_files.py:12
 msgid "Turi"
 msgstr ""
 
@@ -647,6 +701,36 @@ msgstr ""
 
 #: core/apps/classcom/models/category_type.py:15
 msgid "Kategoriyalar turi"
+msgstr ""
+
+#: core/apps/classcom/models/changing.py:11
+#: core/apps/classcom/models/rtm_appeal.py:11
+msgid "Kutilmoqda"
+msgstr ""
+
+#: core/apps/classcom/models/changing.py:12
+#: core/apps/classcom/models/rtm_appeal.py:12
+msgid "Qabul qilindi"
+msgstr ""
+
+#: core/apps/classcom/models/changing.py:13
+#: core/apps/classcom/models/rtm_appeal.py:13
+msgid "Rad etildi"
+msgstr ""
+
+#: core/apps/classcom/models/changing.py:26
+#: core/apps/classcom/models/rtm_appeal.py:26
+msgid "Holat"
+msgstr ""
+
+#: core/apps/classcom/models/changing.py:46
+#: core/apps/classcom/models/moderator.py:78
+#: core/apps/classcom/models/rtm_appeal.py:46
+msgid "Sinflar turlari"
+msgstr ""
+
+#: core/apps/classcom/models/changing.py:54
+msgid "Moderator arizalari"
 msgstr ""
 
 #: core/apps/classcom/models/chat.py:12
@@ -690,7 +774,7 @@ msgstr ""
 #: core/apps/classcom/models/resource.py:65
 #: core/apps/classcom/models/resource_type.py:14
 #: core/apps/classcom/models/science.py:30
-#: core/apps/classcom/models/topic.py:13
+#: core/apps/classcom/models/topic.py:16
 msgid "Tartib raqami"
 msgstr ""
 
@@ -717,21 +801,25 @@ msgid "Dam olish kuni"
 msgstr ""
 
 #: core/apps/classcom/models/documents.py:9
+#: core/apps/classcom/models/tmr_files.py:9
 msgid "Tasnifi"
 msgstr ""
 
 #: core/apps/classcom/models/documents.py:10
 #: core/apps/classcom/models/media.py:12
+#: core/apps/classcom/models/tmr_files.py:10
 msgid "Fayl"
 msgstr ""
 
-#: core/apps/classcom/models/documents.py:11 core/apps/payments/models.py:38
+#: core/apps/classcom/models/documents.py:11
+#: core/apps/classcom/models/tmr_files.py:11 core/apps/payments/models.py:38
 #: core/apps/payments/models.py:56
 msgid "Holati"
 msgstr ""
 
 #: core/apps/classcom/models/documents.py:13
 #: core/apps/classcom/models/media.py:17
+#: core/apps/classcom/models/tmr_files.py:13
 msgid "Hajmi"
 msgstr ""
 
@@ -744,14 +832,22 @@ msgid "Sanasi"
 msgstr ""
 
 #: core/apps/classcom/models/download.py:17
-#: core/apps/classcom/models/media.py:53
+#: core/apps/classcom/models/media.py:59
 #: core/apps/classcom/models/resource.py:54
-#: core/apps/classcom/models/topic.py:17
+#: core/apps/classcom/models/topic.py:20
 msgid "Media"
 msgstr ""
 
-#: core/apps/classcom/models/download.py:24
-#: core/apps/classcom/models/download.py:25
+#: core/apps/classcom/models/download.py:20
+msgid "Yuklash turi"
+msgstr ""
+
+#: core/apps/classcom/models/download.py:23
+msgid "Object ID"
+msgstr ""
+
+#: core/apps/classcom/models/download.py:30
+#: core/apps/classcom/models/download.py:31
 msgid "Yuklamalar"
 msgstr ""
 
@@ -794,7 +890,7 @@ msgstr ""
 
 #: core/apps/classcom/models/media.py:11
 #: core/apps/classcom/models/resource.py:24
-#: core/apps/classcom/models/topic.py:10 core/http/models/another.py:34
+#: core/apps/classcom/models/topic.py:13 core/http/models/another.py:34
 msgid "Tavsif"
 msgstr ""
 
@@ -810,7 +906,15 @@ msgstr ""
 msgid "Yuklashlar soni"
 msgstr ""
 
-#: core/apps/classcom/models/media.py:54
+#: core/apps/classcom/models/media.py:38
+msgid "Object turi"
+msgstr ""
+
+#: core/apps/classcom/models/media.py:41
+msgid "Object turi ID"
+msgstr ""
+
+#: core/apps/classcom/models/media.py:60
 msgid "Medialar"
 msgstr ""
 
@@ -837,15 +941,12 @@ msgid "Tematik Reja yarata olishi"
 msgstr ""
 
 #: core/apps/classcom/models/moderator.py:41
+#: core/apps/classcom/models/topic.py:23
 msgid "Resurs yarata olishi."
 msgstr ""
 
 #: core/apps/classcom/models/moderator.py:44
 msgid "Mavzu yarata olishi."
-msgstr ""
-
-#: core/apps/classcom/models/moderator.py:78
-msgid "Sinflar turlari"
 msgstr ""
 
 #: core/apps/classcom/models/plan.py:11
@@ -861,6 +962,7 @@ msgid "Tematik rejalar"
 msgstr ""
 
 #: core/apps/classcom/models/resource.py:27
+#: core/apps/classcom/models/topic.py:38
 msgid "Banner"
 msgstr ""
 
@@ -944,12 +1046,17 @@ msgstr ""
 msgid "O'qituvchi"
 msgstr ""
 
-#: core/apps/classcom/models/topic.py:15
+#: core/apps/classcom/models/tmr_files.py:16
+#: core/apps/classcom/models/tmr_files.py:17
+msgid "Tmr Fayllari"
+msgstr ""
+
+#: core/apps/classcom/models/topic.py:18
 msgid "Soatlar"
 msgstr ""
 
-#: core/apps/classcom/models/topic.py:20
-msgid "Media yarata olishi."
+#: core/apps/classcom/models/topic.py:43
+msgid "Ko'rishlar soni"
 msgstr ""
 
 #: core/apps/classcom/models/weeks.py:11
@@ -972,8 +1079,8 @@ msgstr ""
 #: core/apps/classcom/views/resource.py:57
 #: core/apps/classcom/views/resource.py:61
 #: core/apps/classcom/views/resource.py:94
-#: core/apps/classcom/views/science.py:94
-#: core/apps/classcom/views/science.py:128 core/http/views/school_group.py:57
+#: core/apps/classcom/views/science.py:96
+#: core/apps/classcom/views/science.py:130 core/http/views/school_group.py:57
 msgid "Sizda bu amalni bajarish uchun ruxsat yo‘q."
 msgstr ""
 
@@ -1021,32 +1128,36 @@ msgstr ""
 msgid "Siz ariza topshirgansiz"
 msgstr ""
 
+#: core/apps/classcom/views/changing.py:30
+msgid "Siz allaqachon ariza topshirgansiz"
+msgstr ""
+
 #: core/apps/classcom/views/classes.py:51
 #: core/apps/classcom/views/language.py:25
 #: core/apps/classcom/views/quarter.py:34
 #: core/apps/classcom/views/resource.py:91
-#: core/apps/classcom/views/science.py:91
-#: core/apps/classcom/views/science.py:125 core/http/views/school_group.py:54
+#: core/apps/classcom/views/science.py:93
+#: core/apps/classcom/views/science.py:127 core/http/views/school_group.py:54
 msgid "Moderator topilmadi."
 msgstr ""
 
-#: core/apps/classcom/views/download.py:45
+#: core/apps/classcom/views/download.py:57
 msgid "Ushbu resurslar sizga tegishli emas"
 msgstr ""
 
-#: core/apps/classcom/views/download.py:49
+#: core/apps/classcom/views/download.py:61
 msgid "Bu resursni yuklab olish uchun buyurtma berishingiz kerak"
 msgstr ""
 
-#: core/apps/classcom/views/download.py:112
+#: core/apps/classcom/views/download.py:126
 msgid "Yuklab olish tokeni topilmadi yoki muddati oʻtgan"
 msgstr ""
 
-#: core/apps/classcom/views/download.py:124
+#: core/apps/classcom/views/download.py:138
 msgid "Fayl topilmadi"
 msgstr ""
 
-#: core/apps/classcom/views/download.py:168
+#: core/apps/classcom/views/download.py:182
 msgid "Siz moderator emassiz"
 msgstr ""
 
@@ -1132,11 +1243,11 @@ msgid ""
 "Serverda plan topilmadi bu texnik xatolik iltimos adminga murojat qiling"
 msgstr ""
 
-#: core/apps/payments/views.py:49
+#: core/apps/payments/views.py:51
 msgid "Bu foydalanuvchi uchun bu turdagi buyurtma allaqachon mavjud."
 msgstr ""
 
-#: core/apps/payments/views.py:83
+#: core/apps/payments/views.py:85
 msgid "Payment created"
 msgstr "Toʻlov yaratildi"
 
@@ -1174,7 +1285,7 @@ msgstr ""
 msgid "Parol o'zgartirildi"
 msgstr ""
 
-#: core/http/admin/user.py:166
+#: core/http/admin/user.py:167
 msgid "Tanlangan foydalanuvchilar uchun bildirishnoma yaratish"
 msgstr ""
 
@@ -1304,10 +1415,6 @@ msgstr ""
 msgid "Javob hujjati"
 msgstr ""
 
-#: core/http/models/user.py:122
-msgid "Status"
-msgstr ""
-
 #: core/http/models/user.py:132
 msgid "Standart hujjat (uz)"
 msgstr ""
@@ -1360,15 +1467,15 @@ msgstr ""
 msgid "Qayta yuborish bloklandi, qayta urunib ko'ring {expired}"
 msgstr ""
 
-#: core/services/sms.py:57 core/services/sms.py:75
+#: core/services/sms.py:57 core/services/sms.py:77
 msgid "Invalid confirmation code"
 msgstr "Tasdiqlash kodi yaroqsiz"
 
-#: core/services/sms.py:62
+#: core/services/sms.py:63
 msgid "Time for confirmation has expired"
 msgstr "Tasdiqlash vaqti tugadi"
 
-#: core/services/sms.py:66
+#: core/services/sms.py:68
 #, python-brace-format
 msgid "Try again in {expired}"
 msgstr "{expired} keyin qayta urinib koʻring"
