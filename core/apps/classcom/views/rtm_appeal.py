@@ -3,6 +3,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+from core.apps.classcom.models import PlanAppeal
 from core.apps.classcom.serializers.rtm_appeal import PlanAppealSerializer
 
 
@@ -25,3 +26,8 @@ class PlanAppealView(APIView):
                     {"detail": str(e)}, status=status.HTTP_400_BAD_REQUEST
                 )
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def get(self, request, *args, **kwargs):
+        queryset = PlanAppeal.objects.filter(user=request.user)
+        serializer = PlanAppealSerializer(queryset, many=True)
+        return Response(serializer.data)

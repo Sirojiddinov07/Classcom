@@ -47,3 +47,15 @@ class ChangeModeratorAPIView(APIView):
                 {"error": "Siz moderator meassiz!"},
                 status=status.HTTP_400_BAD_REQUEST,
             )
+
+    def get(self, request):
+        user = request.user
+        if user.role == "moderator":
+            queryset = ChangeModerator.objects.filter(user=user)
+            serializer = ChangeModeratorSerializer(queryset, many=True)
+            return Response(serializer.data)
+        else:
+            return Response(
+                {"error": "Siz moderator emassiz!"},
+                status=status.HTTP_400_BAD_REQUEST,
+            )

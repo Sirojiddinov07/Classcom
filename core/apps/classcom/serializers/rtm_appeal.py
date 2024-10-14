@@ -12,6 +12,18 @@ from core.apps.classcom.models import (
     PlanAppeal,
 )
 from core.apps.classcom.models.changing import ChangeModerator, ClassGroup
+from core.apps.classcom.serializers import (
+    ScienceSerializer,
+    ScienceTypesSerializer,
+    ClassesSerializer,
+)
+from core.http.serializers import ClassGroupSerializer
+
+
+class TmrFilesSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = TmrFiles
+        fields = "__all__"
 
 
 class PlanAppealSerializer(serializers.ModelSerializer):
@@ -82,3 +94,23 @@ class PlanAppealSerializer(serializers.ModelSerializer):
         except Exception as e:
             logging.error(f"Error in create method: {str(e)}")
             raise exceptions.ValidationError({"detail": str(e)})
+
+    def to_representation(self, instance):
+        return {
+            "id": instance.id,
+            "science": ScienceSerializer(
+                instance.science.all(), many=True
+            ).data,
+            "science_type": ScienceTypesSerializer(
+                instance.science_type.all(), many=True
+            ).data,
+            "classes": ClassesSerializer(
+                instance.classes.all(), many=True
+            ).data,
+            "class_groups": ClassGroupSerializer(
+                instance.class_groups.all(), many=True
+            ).data,
+            "tmr_files": TmrFilesSerializer(
+                instance.tmr_files.all(), many=True
+            ).data,
+        }
