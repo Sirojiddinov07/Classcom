@@ -1,17 +1,10 @@
 import logging
 
-from rest_framework import serializers, exceptions
+from rest_framework import serializers
 from rest_framework import status
 from rest_framework.response import Response
 
-from core.apps.classcom.models import (
-    Science,
-    ScienceTypes,
-    Classes,
-    TmrFiles,
-    PlanAppeal,
-)
-from core.apps.classcom.models.changing import ChangeModerator, ClassGroup
+from core.apps.classcom.models import ScienceTypes, PlanAppeal, TmrFiles
 from core.apps.classcom.serializers import (
     ScienceSerializer,
     ScienceTypesSerializer,
@@ -27,17 +20,10 @@ class TmrFilesSerializer(serializers.ModelSerializer):
 
 
 class PlanAppealSerializer(serializers.ModelSerializer):
-    science = serializers.PrimaryKeyRelatedField(
-        queryset=Science.objects.all(), many=True
-    )
-    science_type = serializers.PrimaryKeyRelatedField(
-        queryset=ScienceTypes.objects.all(), many=True
-    )
-    classes = serializers.PrimaryKeyRelatedField(
-        queryset=Classes.objects.all(), many=True
-    )
-    class_groups = serializers.PrimaryKeyRelatedField(
-        queryset=ClassGroup.objects.all(), many=True
+    science_type = serializers.ListField(
+        child=serializers.PrimaryKeyRelatedField(
+            queryset=ScienceTypes.objects.all()
+        )
     )
     tmr_files = serializers.ListField(
         child=serializers.FileField(), write_only=True
@@ -58,10 +44,7 @@ class PlanAppealSerializer(serializers.ModelSerializer):
         try:
             request = self.context.get("request")
             user = self.context["request"].user
-            sciences = validated_data.pop("science")
             science_types = validated_data.pop("science_type")
-            classes = validated_data.pop("classes")
-            class_groups = validated_data.pop("class_groups")
 
             docs_data = []
 
@@ -85,13 +68,8 @@ class PlanAppealSerializer(serializers.ModelSerializer):
                         {"docs": doc_file, "description": doc_desc}
                     )
 
-            instance = ChangeModerator.objects.create(
-                **validated_data, user=user
-            )
-            instance.science.set(sciences)
+            instance = PlanAppeal.objects.create(**validated_data, user=user)
             instance.science_type.set(science_types)
-            instance.classes.set(classes)
-            instance.class_groups.set(class_groups)
             for doc_data in docs_data:
                 document = TmrFiles.objects.create(
                     file=doc_data["docs"], description=doc_data["description"]
@@ -100,24 +78,17 @@ class PlanAppealSerializer(serializers.ModelSerializer):
             return instance
         except Exception as e:
             logging.error(f"Error in create method: {str(e)}")
-            raise exceptions.ValidationError({"detail": str(e)})
+            raise serializers.ValidationError({"detail": str(e)})
 
     def to_representation(self, instance):
-        return {
-            "id": instance.id,
-            "science": ScienceSerializer(
-                instance.science.all(), many=True
-            ).data,
-            "science_type": ScienceTypesSerializer(
-                instance.science_type.all(), many=True
-            ).data,
-            "classes": ClassesSerializer(
-                instance.classes.all(), many=True
-            ).data,
-            "class_groups": ClassGroupSerializer(
-                instance.class_groups.all(), many=True
-            ).data,
-            "tmr_files": TmrFilesSerializer(
-                instance.tmr_files.all(), many=True
-            ).data,
-        }
+        data = super().to_representation(instance)
+        data["science"] = ScienceSerializer(instance.science).data
+        data["science_type"] = ScienceTypesSerializer(
+            instance.science_type, many=True
+        ).data
+        data["classes"] = ClassesSerializer(instance.classes).data
+        data["class_groups"] = ClassGroupSerializer(instance.class_groups).data
+        data["tmr_files"] = TmrFilesSerializer(
+            instance.tmr_files.all(), many=True
+        ).data
+        return data
