@@ -122,6 +122,9 @@ PAGES = [
                 "permission": lambda request: user_has_group_or_permission(
                     request.user, "view_planappeal"
                 ),
+                "badge": lambda: __import__(
+                    "core.apps.classcom.models"
+                ).apps.classcom.models.PlanAppeal.get_pending(),
             },
         ],
     },

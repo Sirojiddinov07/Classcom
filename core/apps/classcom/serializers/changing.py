@@ -2,6 +2,12 @@ from rest_framework import serializers
 
 from core.apps.classcom.models import Science, ScienceTypes, Classes
 from core.apps.classcom.models.changing import ChangeModerator, ClassGroup
+from core.apps.classcom.serializers import (
+    ScienceSerializer,
+    ScienceTypesSerializer,
+    ClassesSerializer,
+)
+from core.http.serializers import ClassGroupSerializer
 
 
 class ChangeModeratorSerializer(serializers.ModelSerializer):
@@ -35,3 +41,20 @@ class ChangeModeratorSerializer(serializers.ModelSerializer):
         instance.classes.set(classes)
         instance.class_groups.set(class_groups)
         return instance
+
+    def to_representation(self, instance):
+        return {
+            "id": instance.id,
+            "science": ScienceSerializer(
+                instance.science.all(), many=True
+            ).data,
+            "science_type": ScienceTypesSerializer(
+                instance.science_type.all(), many=True
+            ).data,
+            "classes": ClassesSerializer(
+                instance.classes.all(), many=True
+            ).data,
+            "class_groups": ClassGroupSerializer(
+                instance.class_groups.all(), many=True
+            ).data,
+        }
