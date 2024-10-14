@@ -45,7 +45,14 @@ class PlanAppealSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = PlanAppeal
-        fields = ("id", "science", "science_type", "classes", "class_groups")
+        fields = (
+            "id",
+            "science",
+            "science_type",
+            "classes",
+            "class_groups",
+            "tmr_files",
+        )
 
     def create(self, validated_data):
         try:
