@@ -25,9 +25,11 @@ class ChangeModerator(AbstractBaseModel):
         default=ChangeModeratorStatus.PENDING,
         verbose_name=_("Holat"),
     )
-    science = models.ManyToManyField(
+    science = models.ForeignKey(
         to="Science",
         blank=True,
+        null=True,
+        on_delete=models.SET_NULL,
         verbose_name=_("Fan"),
     )
     science_type = models.ManyToManyField(
@@ -35,14 +37,18 @@ class ChangeModerator(AbstractBaseModel):
         blank=True,
         verbose_name=_("Fan turi"),
     )
-    classes = models.ManyToManyField(
+    classes = models.ForeignKey(
         Classes,
         blank=True,
+        null=True,
+        on_delete=models.SET_NULL,
         verbose_name=_("Sinflar"),
     )
-    class_groups = models.ManyToManyField(
+    class_groups = models.ForeignKey(
         ClassGroup,
         blank=True,
+        null=True,
+        on_delete=models.SET_NULL,
         verbose_name=_("Sinflar turlari"),
     )
 

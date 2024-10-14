@@ -20,13 +20,6 @@ class PlanAppealAdmin(ModelAdmin):
         "user__last_name",
     )
     list_filter = ("status",)
-    filter_horizontal = (
-        "science",
-        "science_type",
-        "classes",
-        "class_groups",
-        "tmr_files",
-    )
     readonly_fields = (
         "docs_links",
         "get_user",
@@ -117,7 +110,7 @@ class PlanAppealAdmin(ModelAdmin):
     get_user.short_description = _("Foydalanuvchi")
 
     def get_science(self, obj):
-        return ", ".join([science.name for science in obj.science.all()])
+        return f"{obj.science.name}"
 
     get_science.short_description = _("Fan")
 
@@ -129,11 +122,11 @@ class PlanAppealAdmin(ModelAdmin):
     get_science_type.short_description = _("Fan turi")
 
     def get_classes(self, obj):
-        return ", ".join([cls.name for cls in obj.classes.all()])
+        return f"{obj.classes.name}"
 
     get_classes.short_description = _("Sinflar")
 
     def get_class_groups(self, obj):
-        return ", ".join([group.name for group in obj.class_groups.all()])
+        return f"{obj.class_groups.name}"
 
     get_class_groups.short_description = _("Sinf guruhlari")
