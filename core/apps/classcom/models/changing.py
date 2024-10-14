@@ -32,11 +32,9 @@ class ChangeModerator(AbstractBaseModel):
         on_delete=models.SET_NULL,
         verbose_name=_("Fan"),
     )
-    science_type = models.ForeignKey(
+    science_type = models.ManyToManyField(
         ScienceTypes,
         blank=True,
-        null=True,
-        on_delete=models.SET_NULL,
         verbose_name=_("Fan turi"),
     )
     classes = models.ForeignKey(
