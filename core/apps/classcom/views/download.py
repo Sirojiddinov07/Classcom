@@ -325,13 +325,12 @@ class MobileUploadHistoryView(generics.ListAPIView):
 
     def get_queryset(self):
         type_param = self.request.query_params.get("type")
-        if not type_param or type_param not in ["resource", "plan"]:
-            raise ValidationError(
-                "The 'type' query parameter is required and must be either 'resource' or 'plan'."
-            )
-
         user = self.request.user
-        queryset = Media.objects.filter(user=user, object_type=type_param)
+
+        if type_param and type_param in ["resource", "plan"]:
+            queryset = Media.objects.filter(user=user, object_type=type_param)
+        else:
+            queryset = Media.objects.filter(user=user)
 
         # Search by name
         if type_param == "plan":
