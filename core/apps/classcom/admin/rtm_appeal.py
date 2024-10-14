@@ -98,7 +98,7 @@ class PlanAppealAdmin(ModelAdmin):
                 doc.file.url,
                 doc.title,
             )
-            for doc in obj.tmr_files.all()
+            for doc in obj.docs.all()
         ]
         return format_html("<br>".join(links))
 
@@ -115,9 +115,7 @@ class PlanAppealAdmin(ModelAdmin):
     get_science.short_description = _("Fan")
 
     def get_science_type(self, obj):
-        return ", ".join(
-            [science_type.name for science_type in obj.science_type.all()]
-        )
+        return f"{obj.science_type.name}"
 
     get_science_type.short_description = _("Fan turi")
 
