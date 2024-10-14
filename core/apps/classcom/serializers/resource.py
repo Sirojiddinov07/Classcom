@@ -95,6 +95,7 @@ class ResourceSerializer(serializers.ModelSerializer):
             "source",
             "degree",
             "user",
+            "banner",
         )
         extra_kwargs = {"media": {"write_only": True}}
 

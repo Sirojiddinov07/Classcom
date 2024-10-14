@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from core.apps.classcom.models import ScienceTypes, ChangeModerator
+from core.apps.classcom.models import ChangeModerator, ScienceTypes
 from core.apps.classcom.serializers import (
     ScienceSerializer,
     ScienceTypesSerializer,
@@ -10,10 +10,8 @@ from core.http.serializers import ClassGroupSerializer
 
 
 class ChangeModeratorSerializer(serializers.ModelSerializer):
-    science_type = serializers.ListField(
-        child=serializers.PrimaryKeyRelatedField(
-            queryset=ScienceTypes.objects.all()
-        )
+    science_type = serializers.PrimaryKeyRelatedField(
+        queryset=ScienceTypes.objects.all()
     )
 
     class Meta:
@@ -23,7 +21,6 @@ class ChangeModeratorSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         user = self.context["request"].user
         science_types = validated_data.pop("science_type")
-
         instance = ChangeModerator.objects.create(**validated_data, user=user)
         instance.science_type.set(science_types)
         return instance

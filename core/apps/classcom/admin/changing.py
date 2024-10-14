@@ -98,7 +98,7 @@ class ChangeModeratorAdmin(ModelAdmin):
 
     def get_science_type(self, obj):
         return ", ".join(
-            [science_type.name for science_type in obj.science_type.all()]
+            [f"{science_type.name}" for science_type in obj.science_type.all()]
         )
 
     get_science_type.short_description = _("Fan turi")

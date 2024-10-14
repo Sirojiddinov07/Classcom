@@ -32,9 +32,11 @@ class PlanAppeal(AbstractBaseModel):
         on_delete=models.SET_NULL,
         verbose_name=_("Fan"),
     )
-    science_type = models.ManyToManyField(
+    science_type = models.ForeignKey(
         ScienceTypes,
         blank=True,
+        null=True,
+        on_delete=models.SET_NULL,
         verbose_name=_("Fan turi"),
     )
     classes = models.ForeignKey(
@@ -51,7 +53,7 @@ class PlanAppeal(AbstractBaseModel):
         on_delete=models.SET_NULL,
         verbose_name=_("Sinflar turlari"),
     )
-    tmr_files = models.ManyToManyField(
+    docs = models.ManyToManyField(
         "TmrFiles",
         blank=True,
         verbose_name=_("Fayllar"),
