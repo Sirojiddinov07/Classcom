@@ -15,7 +15,11 @@ class ResourceFilter(FilterSet):
     def filter_by_all_fields(self, queryset, name, value):  # noqa
         return queryset.filter(
             Q(name__icontains=value)
+            | Q(name_ru__icontains=value)
+            | Q(name_uz__icontains=value)
             | Q(description__icontains=value)
+            | Q(description_uz__icontains=value)
+            | Q(description_ru__icontains=value)
             | Q(category__name__icontains=value)
             | Q(category_type__name__icontains=value)
             | Q(type__name__icontains=value)
