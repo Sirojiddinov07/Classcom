@@ -10,6 +10,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from core.apps.classcom import models, serializers
+from . import CustomPagination
 from ..choices import Role
 from ..filters import ResourceFilter
 
@@ -34,6 +35,7 @@ class ResourceViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticated]
     filter_backends = [DjangoFilterBackend]
     filterset_class = ResourceFilter
+    pagination_class = CustomPagination
 
     @method_decorator(never_cache)
     def dispatch(self, request, *args, **kwargs):
