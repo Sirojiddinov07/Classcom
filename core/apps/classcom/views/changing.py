@@ -9,7 +9,10 @@ from core.apps.classcom.models import (
     ChangeModerator,
     Moderator,
 )
-from core.apps.classcom.serializers import ChangeModeratorSerializer
+from core.apps.classcom.serializers import (
+    ChangeModeratorSerializer,
+    ChangeModeratorDetailSerializer,
+)
 
 
 class ChangeModeratorAPIView(APIView):
@@ -52,7 +55,7 @@ class ChangeModeratorAPIView(APIView):
         user = request.user
         if user.role == "moderator":
             queryset = ChangeModerator.objects.filter(user=user)
-            serializer = ChangeModeratorSerializer(queryset, many=True)
+            serializer = ChangeModeratorDetailSerializer(queryset, many=True)
             return Response(serializer.data)
         else:
             return Response(

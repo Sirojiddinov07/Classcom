@@ -98,17 +98,14 @@ def change_moderator_status(sender, instance, **kwargs):
     if instance.status == ChangeModeratorStatus.ACCEPTED:
         moderator = Moderator.objects.get(user=instance.user)
         if moderator:
-            moderator.science.clear()
-            moderator.science.set(instance.science.all())
+            moderator.science.set([instance.science])
 
             moderator.science_type.clear()
             moderator.science_type.set(instance.science_type.all())
 
-            moderator.classes.clear()
-            moderator.classes.set(instance.classes.all())
+            moderator.classes.set([instance.classes])
 
-            moderator.class_groups.clear()
-            moderator.class_groups.set(instance.class_groups.all())
+            moderator.class_groups.set([instance.class_groups])
             moderator.save()
             Notification.objects.create(
                 user=instance.user,
