@@ -8,7 +8,6 @@ from rest_framework.exceptions import PermissionDenied
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from rest_framework.filters import SearchFilter
 
 from core.apps.classcom import models, serializers
 from ..choices import Role
@@ -33,15 +32,8 @@ class ResourceTypesViewSet(viewsets.ViewSet):
 class ResourceViewSet(viewsets.ModelViewSet):
     queryset = models.Resource.objects.all().order_by("order_number")
     permission_classes = [permissions.IsAuthenticated]
-    filter_backends = [DjangoFilterBackend, SearchFilter]
+    filter_backends = [DjangoFilterBackend]
     filterset_class = ResourceFilter
-    search_fields = [
-        "name",
-        "description",
-        "category__name",
-        "category_type__name",
-        "type__name",
-    ]
 
     @method_decorator(never_cache)
     def dispatch(self, request, *args, **kwargs):
