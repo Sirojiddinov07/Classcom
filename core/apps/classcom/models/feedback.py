@@ -27,6 +27,10 @@ class Feedback(AbstractBaseModel):
         verbose_name=_("Foydalanuvchi"),
     )
 
+    @classmethod
+    def get_unanswered(cls):
+        return cls.objects.filter(answered=False).count()
+
     def __str__(self) -> str:
         return f"{self.user} | {self.feedback_type}"
 
