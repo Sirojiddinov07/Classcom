@@ -3,6 +3,7 @@ from django.dispatch import receiver
 
 from core.apps.websocket.models.notification import Notification
 from core.http.models import User, ContractStatus
+from ..choices import Role
 from ..models import (
     Topic,
     Chat,
@@ -80,7 +81,12 @@ def file_status_m2m(sender, instance, action, **kwargs):
 
 @receiver(post_save, sender=User)
 def file_status_pre_save(sender, instance, **kwargs):
-    if instance.response_file:
+    if (
+        instance.response_file
+        and instance.status_file == ContractStatus.WAITING
+        and instance.status is False
+        and instance.role == Role.MODERATOR
+    ):
         User.objects.filter(pk=instance.pk).update(
             status_file=ContractStatus.ACCEPTED, status=True
         )
