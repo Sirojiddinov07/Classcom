@@ -118,6 +118,3 @@ def change_moderator_status(sender, instance, **kwargs):
                 message_uz="Arizangiz qabul qilindi",
                 message_ru="Ваша заявка принята",
             )
-
-
-# Path: core/apps/classcom/signals/signals.py
