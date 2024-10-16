@@ -19,6 +19,10 @@ class Chat(AbstractBaseModel):
         default=False, verbose_name=_("Javob berildi")
     )
 
+    @classmethod
+    def get_unanswered(cls):
+        return cls.objects.filter(is_answered=False).count()
+
     def __str__(self):
         return f"Chat by {self.user} to admin"
 

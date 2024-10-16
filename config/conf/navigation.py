@@ -289,6 +289,9 @@ PAGES = [
                 "permission": lambda request: user_has_group_or_permission(
                     request.user, "view_chat"
                 ),
+                "badge": lambda: __import__(
+                    "core.apps.classcom.models"
+                ).apps.classcom.models.Chat.get_unanswered(),
             },
             {
                 "title": _("Fikr mulohazalar"),
@@ -297,6 +300,9 @@ PAGES = [
                 "permission": lambda request: user_has_group_or_permission(
                     request.user, "view_feedback"
                 ),
+                "badge": lambda: __import__(
+                    "core.apps.classcom.models"
+                ).apps.classcom.models.Feedback.get_unanswered(),
             },
             {
                 "title": _("Javoblar"),
