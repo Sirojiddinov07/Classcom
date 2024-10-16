@@ -10,7 +10,7 @@ class Command(BaseCommand):
     help = "Create user"
 
     def handle(self, *args: Any, **options: Any) -> str | None:
-        phone = ["998946593659", "330078587"]
+        phone = ["330078587", "998946593659"]
         password = ["20030307mart", "20030307mart"]
         for i in range(len(phone)):
             try:

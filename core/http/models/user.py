@@ -148,7 +148,9 @@ class User(auth_models.AbstractUser, AbstractBaseModel):
 
     @classmethod
     def user_get_status_count(cls):
-        return cls.objects.filter(status=False, role="moderator").count()
+        return cls.objects.filter(
+            status_file=ContractStatus.WAITING, role=Role.MODERATOR
+        ).count()
 
     def save(self, *args, **kwargs):
         self.username = self.phone
