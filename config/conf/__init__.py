@@ -9,3 +9,4 @@ from .rest_framework import *  # noqa
 from .websocket import *  # noqa
 from .unfold import *  # noqa
 from .navigation import *  # noqa
+from .spectacular import *  # noqa
