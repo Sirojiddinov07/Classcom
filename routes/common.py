@@ -4,8 +4,8 @@ All urls configurations tree
 
 from django.conf import settings
 from django.contrib import admin
-from django.urls import include, path, re_path
 from django.contrib.auth.decorators import login_required
+from django.urls import include, path, re_path
 from django.views.static import serve
 from drf_spectacular.views import (
     SpectacularAPIView,
