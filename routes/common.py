@@ -5,6 +5,7 @@ All urls configurations tree
 from django.conf import settings
 from django.contrib import admin
 from django.urls import include, path, re_path
+from django.contrib.auth.decorators import login_required
 from django.views.static import serve
 from drf_spectacular.views import (
     SpectacularAPIView,
@@ -35,15 +36,17 @@ urlpatterns = [
     re_path(
         r"media/(?P<path>.*)", serve, {"document_root": settings.MEDIA_ROOT}
     ),  # noqa
-    path("schema/", SpectacularAPIView.as_view(), name="schema"),
+    path(
+        "schema/", login_required(SpectacularAPIView.as_view()), name="schema"
+    ),
     path(
         "swagger/",
-        SpectacularSwaggerView.as_view(url_name="schema"),
+        login_required(SpectacularSwaggerView.as_view(url_name="schema")),
         name="swagger-ui",
     ),
     path(
         "redoc/",
-        SpectacularRedocView.as_view(url_name="schema"),
+        login_required(SpectacularRedocView.as_view(url_name="schema")),
         name="redoc",
     ),
 ]
