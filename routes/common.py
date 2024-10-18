@@ -41,12 +41,18 @@ urlpatterns = [
     # ),
     path(
         "swagger/",
-        login_required(SpectacularSwaggerView.as_view(url_name="schema")),
+        login_required(
+            SpectacularSwaggerView.as_view(url_name="schema"),
+            login_url="/admin/",
+        ),
         name="swagger-ui",
     ),
     path(
         "redoc/",
-        login_required(SpectacularRedocView.as_view(url_name="schema")),
+        login_required(
+            SpectacularRedocView.as_view(url_name="schema"),
+            login_url="/admin/",
+        ),
         name="redoc",
     ),
 ]
