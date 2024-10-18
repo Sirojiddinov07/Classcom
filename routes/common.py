@@ -36,9 +36,9 @@ urlpatterns = [
     re_path(
         r"media/(?P<path>.*)", serve, {"document_root": settings.MEDIA_ROOT}
     ),  # noqa
-    path(
-        "schema/", login_required(SpectacularAPIView.as_view()), name="schema"
-    ),
+    # path(
+    #     "schema/", login_required(SpectacularAPIView.as_view()), name="schema"
+    # ),
     path(
         "swagger/",
         login_required(SpectacularSwaggerView.as_view(url_name="schema")),
