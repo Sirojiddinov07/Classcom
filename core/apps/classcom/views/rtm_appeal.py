@@ -1,3 +1,4 @@
+from django.db.models import Q
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
@@ -30,6 +31,27 @@ class PlanAppealView(APIView):
 
     def get(self, request, *args, **kwargs):
         queryset = PlanAppeal.objects.filter(user=request.user)
+
+        status = request.query_params.get("status")
+        science = request.query_params.get("science")
+        science_type = request.query_params.get("science_type")
+        classes = request.query_params.get("classes")
+        class_groups = request.query_params.get("class_groups")
+
+        if status or science or science_type or classes or class_groups:
+            filters = Q()
+            if status:
+                filters &= Q(status=status)
+            if science:
+                filters &= Q(science=science)
+            if science_type:
+                filters &= Q(science_type__id=science_type)
+            if classes:
+                filters &= Q(classes=classes)
+            if class_groups:
+                filters &= Q(class_groups=class_groups)
+            queryset = queryset.filter(filters)
+
         paginator = CustomPagination()
         page = paginator.paginate_queryset(queryset, request)
         if page is not None:
