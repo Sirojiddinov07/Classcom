@@ -30,6 +30,7 @@ class PlanAppealSerializer(serializers.ModelSerializer):
             "science_type",
             "classes",
             "class_groups",
+            "status",
             "docs",
         )
 
