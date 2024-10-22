@@ -1,7 +1,9 @@
+from django.db.models import Q
 from django.utils.translation import gettext_lazy as _
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
+from rest_framework.status import HTTP_400_BAD_REQUEST
 from rest_framework.views import APIView
 
 from core.apps.classcom.models import (
@@ -56,6 +58,27 @@ class ChangeModeratorAPIView(APIView):
         user = request.user
         if user.role == "moderator":
             queryset = ChangeModerator.objects.filter(user=user)
+
+            status = request.query_params.get("status")
+            science = request.query_params.get("science")
+            science_type = request.query_params.get("science_type")
+            classes = request.query_params.get("classes")
+            class_groups = request.query_params.get("class_groups")
+
+            if status or science or science_type or classes or class_groups:
+                filters = Q()
+                if status:
+                    filters &= Q(status=status)
+                if science:
+                    filters &= Q(science=science)
+                if science_type:
+                    filters &= Q(science_type__id=science_type)
+                if classes:
+                    filters &= Q(classes=classes)
+                if class_groups:
+                    filters &= Q(class_groups=class_groups)
+                queryset = queryset.filter(filters)
+
             paginator = CustomPagination()
             page = paginator.paginate_queryset(queryset, request)
             if page is not None:
@@ -66,5 +89,5 @@ class ChangeModeratorAPIView(APIView):
         else:
             return Response(
                 {"error": "Siz moderator emassiz!"},
-                status=status.HTTP_400_BAD_REQUEST,
+                status=HTTP_400_BAD_REQUEST,
             )
