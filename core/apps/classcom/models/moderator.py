@@ -85,7 +85,9 @@ class Moderator(AbstractBaseModel):
     )
 
     def __str__(self) -> str:
-        return str(self.user.first_name)
+        return (
+            f"{self.user.first_name} {self.user.last_name} | {self.user.phone}"
+        )
 
     @classmethod
     def moderator_get_status_count(cls):

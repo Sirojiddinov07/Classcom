@@ -144,7 +144,7 @@ class User(auth_models.AbstractUser, AbstractBaseModel):
     objects = managers.UserManager()
 
     def __str__(self) -> str:
-        return str(self.phone)
+        return f"{self.first_name} {self.last_name} | {self.phone}"
 
     @classmethod
     def user_get_status_count(cls):
