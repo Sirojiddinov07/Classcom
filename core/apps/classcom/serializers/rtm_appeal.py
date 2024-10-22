@@ -36,30 +36,7 @@ class PlanAppealSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         try:
-            # request = self.context.get("request")
             user = self.context["request"].user
-            # docs_data = []
-            #
-            # for key in request.data:
-            #     if key.startswith("description[") and key.endswith("]"):
-            #         index = key[len("description["): -1]  # noqa: E203
-            #         file_key = f"docs[{index}]"
-            #         doc_desc = request.data.get(key)
-            #         doc_file = request.FILES.get(file_key)
-            #
-            #         if not doc_file:
-            #             return Response(
-            #                 {
-            #                     "error": f"File is required for document item {index}"
-            #                 },
-            #                 status=status.HTTP_400_BAD_REQUEST,
-            #             )
-            #         if not doc_desc:
-            #             doc_desc = doc_file.name
-            #         docs_data.append(
-            #             {"docs": doc_file, "description": doc_desc}
-            #         )
-
             docs = validated_data.pop("docs")
 
             instance = PlanAppeal.objects.create(**validated_data, user=user)

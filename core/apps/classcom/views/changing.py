@@ -13,6 +13,7 @@ from core.apps.classcom.serializers import (
     ChangeModeratorSerializer,
     ChangeModeratorDetailSerializer,
 )
+from core.apps.classcom.views import CustomPagination
 
 
 class ChangeModeratorAPIView(APIView):
@@ -55,6 +56,11 @@ class ChangeModeratorAPIView(APIView):
         user = request.user
         if user.role == "moderator":
             queryset = ChangeModerator.objects.filter(user=user)
+            paginator = CustomPagination()
+            page = paginator.paginate_queryset(queryset, request)
+            if page is not None:
+                serializer = ChangeModeratorDetailSerializer(page, many=True)
+                return paginator.get_paginated_response(serializer.data)
             serializer = ChangeModeratorDetailSerializer(queryset, many=True)
             return Response(serializer.data)
         else:

@@ -5,6 +5,7 @@ from rest_framework.views import APIView
 
 from core.apps.classcom.models import PlanAppeal
 from core.apps.classcom.serializers.rtm_appeal import PlanAppealSerializer
+from core.apps.classcom.views import CustomPagination
 
 
 class PlanAppealView(APIView):
@@ -29,5 +30,10 @@ class PlanAppealView(APIView):
 
     def get(self, request, *args, **kwargs):
         queryset = PlanAppeal.objects.filter(user=request.user)
+        paginator = CustomPagination()
+        page = paginator.paginate_queryset(queryset, request)
+        if page is not None:
+            serializer = PlanAppealSerializer(page, many=True)
+            return paginator.get_paginated_response(serializer.data)
         serializer = PlanAppealSerializer(queryset, many=True)
         return Response(serializer.data)
