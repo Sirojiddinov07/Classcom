@@ -37,24 +37,8 @@ class ChangeModeratorAdmin(ModelAdmin):
                 "fields": (
                     "get_user",
                     "status",
-                ),
-            },
-        ),
-        (
-            _("Fanlar"),
-            {
-                "classes": ["tab"],
-                "fields": (
                     "get_science",
                     "get_science_type",
-                ),
-            },
-        ),
-        (
-            _("Sinflar"),
-            {
-                "classes": ["tab"],
-                "fields": (
                     "get_classes",
                     "get_class_groups",
                 ),
