@@ -25,7 +25,9 @@ class TopicApiView(APIView):
                 topic = Topic.objects.get(id=topic_id)
                 topic.view_count += 1
                 topic.save()
-                serializer = TopicDetailSerializer(topic)
+                serializer = TopicDetailSerializer(
+                    topic, context={"request": request}
+                )
                 return Response(serializer.data, status=status.HTTP_200_OK)
             except Topic.DoesNotExist:
                 return Response(
@@ -40,7 +42,9 @@ class TopicApiView(APIView):
                     topics = topics.filter(name__icontains=search)
                 paginator = self.pagination_class()
                 paginated_topics = paginator.paginate_queryset(topics, request)
-                serializer = TopicDetailSerializer(paginated_topics, many=True)
+                serializer = TopicDetailSerializer(
+                    paginated_topics, many=True, context={"request": request}
+                )
                 return paginator.get_paginated_response(serializer.data)
             except Plan.DoesNotExist:
                 return Response(

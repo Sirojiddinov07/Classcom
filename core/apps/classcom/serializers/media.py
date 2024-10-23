@@ -53,7 +53,10 @@ class MediaDetailSerializer(serializers.ModelSerializer):
         return UserSerializer(obj.user).data
 
     def get_is_author(self, obj):
-        return obj.user == self.context["request"].user
+        request = self.context.get("request", None)
+        if request is None:
+            return False
+        return obj.user == request.user
 
 
 class MediaMiniSerializer(serializers.ModelSerializer):
