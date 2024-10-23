@@ -99,6 +99,7 @@ class MediaApiView(APIView):
         serializer = MediaSerializer(
             data=media_data,
             many=True,
+            context={"request": request},
         )
         if serializer.is_valid():
             serializer.save()
@@ -143,6 +144,7 @@ class MediaApiView(APIView):
             media,
             data=request.data,
             partial=True,
+            context={"request": request},
         )
         if serializer.is_valid():
             serializer.save()
