@@ -30,6 +30,7 @@ class MediaSerializer(serializers.ModelSerializer):
 
 class MediaDetailSerializer(serializers.ModelSerializer):
     user = serializers.SerializerMethodField()
+    is_author = serializers.SerializerMethodField()
 
     class Meta:
         model = Media
@@ -43,6 +44,7 @@ class MediaDetailSerializer(serializers.ModelSerializer):
             "statistics",
             "created_at",
             "user",
+            "is_author",
         )
 
     def get_user(self, obj):
@@ -50,15 +52,25 @@ class MediaDetailSerializer(serializers.ModelSerializer):
 
         return UserSerializer(obj.user).data
 
+    def get_is_author(self, obj):
+        return obj.user == self.context["request"].user
+
 
 class MediaMiniSerializer(serializers.ModelSerializer):
+    is_author = serializers.SerializerMethodField()
+
     class Meta:
         model = Media
         fields = (
             "id",
+            "user",
             "name",
             "desc",
             "type",
             "size",
+            "is_author",
             "created_at",
         )
+
+    def get_is_author(self, obj):
+        return obj.user == self.context["request"].user

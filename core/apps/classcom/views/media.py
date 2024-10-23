@@ -112,7 +112,7 @@ class MediaApiView(APIView):
             )
 
         try:
-            media = Media.objects.get(id=media_id)
+            media = Media.objects.get(id=media_id, user=request.user)
         except Media.DoesNotExist:
             return Response(
                 {"error": "Media not found"}, status=status.HTTP_404_NOT_FOUND
