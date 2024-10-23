@@ -22,7 +22,9 @@ class MediaApiView(APIView):
         if media_id:
             try:
                 media = Media.objects.get(id=media_id)
-                serializer = MediaDetailSerializer(media)
+                serializer = MediaDetailSerializer(
+                    media, context={"request": request}
+                )
                 return Response(serializer.data, status=status.HTTP_200_OK)
             except Media.DoesNotExist:
                 return Response(
@@ -36,7 +38,9 @@ class MediaApiView(APIView):
                 media = topic.media.all()
                 paginator = self.pagination_class()
                 paginated_media = paginator.paginate_queryset(media, request)
-                serializer = MediaDetailSerializer(paginated_media, many=True)
+                serializer = MediaDetailSerializer(
+                    paginated_media, many=True, context={"request": request}
+                )
                 return paginator.get_paginated_response(serializer.data)
             except Topic.DoesNotExist:
                 return Response(
@@ -136,7 +140,12 @@ class MediaApiView(APIView):
                 {"error": "Media not found"}, status=status.HTTP_404_NOT_FOUND
             )
 
-        serializer = MediaSerializer(media, data=request.data, partial=True)
+        serializer = MediaSerializer(
+            media,
+            data=request.data,
+            partial=True,
+            context={"request": request},
+        )
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_200_OK)
