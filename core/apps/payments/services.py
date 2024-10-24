@@ -39,7 +39,7 @@ class UzumService:
         self.lang = "uz-UZ"
 
     def register(self, client_id, order_id, amount, detail):
-        url = "https://test-chk-api.uzumcheckout.uz/api/v1/payment/register"
+        url = "https://uzumcheckout.uz/api/v1/payment/register"
 
         payload = {
             "successUrl": "https://my.classcom.uz/history/",
