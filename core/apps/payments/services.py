@@ -2,7 +2,7 @@ import requests
 from django.utils.translation import gettext as _
 from rest_framework.exceptions import APIException
 from django.utils import timezone
-from logging import log
+from logging import info
 
 from common.env import env
 
@@ -95,7 +95,7 @@ class UzumService:
         if response.status_code != 200:
             raise Exception("Status kod 200 emas")
 
-        log(response.json())
+        info(response.json())
         data = response.json().get("result", {})
         trans_id = data.get("orderId")
         redirect_url = data.get("paymentRedirectUrl")
