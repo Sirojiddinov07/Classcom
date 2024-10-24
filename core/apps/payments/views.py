@@ -98,9 +98,8 @@ class WebhookApiView(ViewSet):
         url_path="uzum",
     )
     def uzum(self, request):
-        logging.info(request.data)
         ser = UzumWebhookSerializer(data=request.data)
-        ser.is_valid(raise_exception=True)
+        ser.is_valid()
         data = ser.data
         if data.get("operationState") != "SUCCESS":
             logging.error(ser.errors)
