@@ -94,6 +94,7 @@ class UzumService:
         if response.status_code != 200:
             raise Exception("Status kod 200 emas")
 
+        raise APIException(response.json())
         data = response.json().get("result", {})
         trans_id = data.get("orderId")
         redirect_url = data.get("paymentRedirectUrl")
