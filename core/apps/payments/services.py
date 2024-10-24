@@ -51,7 +51,7 @@ class UzumService:
             "paymentDetails": detail,
             "orderNumber": str(order_id),
             "sessionTimeoutSecs": 600,
-            "amount": 100 * 100,
+            "amount": 1000 * 100,
             "merchantParams": {
                 "divisionId": "string",
                 "divisionName": "string",
