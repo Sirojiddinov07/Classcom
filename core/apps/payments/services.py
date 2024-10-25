@@ -63,7 +63,7 @@ class UzumService:
                             "title": "string",
                             "productId": "string",
                             "quantity": 1,
-                            "unitPrice": 1,
+                            "unitPrice": amount * 100,
                             "total": 1,
                             "receiptParams": {
                                 "spic": "10305008002000000",
