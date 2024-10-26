@@ -95,6 +95,7 @@ class ModeratorSerializer(serializers.ModelSerializer):
         fields = [
             "first_name",
             "last_name",
+            "father_name",
             "phone",
             "password",
             "role",
