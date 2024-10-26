@@ -230,7 +230,7 @@ class ResetPasswordView(http_views.AbstractSendSms):
 class MeView(viewsets.ViewSet):
     """Get user information"""
 
-    serializer_class = serializers.UserSerializer
+    serializer_class = serializers.UserDetailSerializer
 
     @extend_schema(
         request=serializer_class,
@@ -240,7 +240,9 @@ class MeView(viewsets.ViewSet):
     def get(self, request: rest_request.Request):
         user = request.user
         return response.Response(
-            serializers.UserSerializer(user, context={"request": request}).data
+            serializers.UserDetailSerializer(
+                user, context={"request": request}
+            ).data
         )
 
 
