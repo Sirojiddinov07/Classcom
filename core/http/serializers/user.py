@@ -26,6 +26,7 @@ class UserSerializer(serializers.ModelSerializer):
             "avatar",
             "first_name",
             "last_name",
+            "father_name",
             "phone",
             "role",
             "region",
@@ -103,6 +104,9 @@ class UserSerializer(serializers.ModelSerializer):
         )
         instance.last_name = validated_data.get(
             "last_name", instance.last_name
+        )
+        instance.father_name = validated_data.get(
+            "father_name", instance.father_name
         )
         instance.region = validated_data.get("region", instance.region)
         instance.district = validated_data.get("district", instance.district)

@@ -70,12 +70,13 @@ class UserAdmin(
         "phone",
         "first_name",
         "last_name",
+        "father_name",
         "science",
         "role",
         "show_status_customized_color",
         "status",
     ]
-    search_fields = ["phone", "first_name", "last_name"]
+    search_fields = ["phone", "first_name", "last_name", "father_name"]
     readonly_fields = ("docs_links",)
     list_filter = ["role", "status_file", "status"]
     inlines = [ModeratorInline]
@@ -100,6 +101,7 @@ class UserAdmin(
                 "fields": (
                     "first_name",
                     "last_name",
+                    "father_name",
                     "email",
                     "role",
                     "region",

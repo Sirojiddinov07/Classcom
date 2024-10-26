@@ -27,6 +27,9 @@ class User(auth_models.AbstractUser, AbstractBaseModel):
         blank=True,
         verbose_name=_("Foydalanuvchi nomi"),
     )
+    father_name = models.CharField(
+        max_length=255, null=True, blank=True, verbose_name=_("Otasining ismi")
+    )
     avatar = models.ImageField(
         upload_to="avatar/", blank=True, null=True, verbose_name=_("Avatar")
     )
@@ -144,7 +147,7 @@ class User(auth_models.AbstractUser, AbstractBaseModel):
     objects = managers.UserManager()
 
     def __str__(self) -> str:
-        return f"{self.first_name} {self.last_name} | {self.phone}"
+        return f"{self.first_name} {self.last_name} {self.father_name} | {self.phone}"
 
     @classmethod
     def user_get_status_count(cls):

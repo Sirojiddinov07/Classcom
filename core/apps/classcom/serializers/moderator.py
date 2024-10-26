@@ -38,6 +38,7 @@ class UserModeratorSerializer(serializers.ModelSerializer):
         fields = [
             "first_name",
             "last_name",
+            "father_name",
             "phone",
             "password",
             "_region",
@@ -77,6 +78,9 @@ class UserModeratorSerializer(serializers.ModelSerializer):
 class ModeratorCreateSerializer(serializers.ModelSerializer):
     first_name = serializers.CharField(source="user.first_name")
     last_name = serializers.CharField(source="user.last_name")
+    father_name = serializers.CharField(
+        source="user.father_name", required=False
+    )
     phone = serializers.CharField(source="user.phone", required=True)
     password = serializers.CharField(
         source="user.password", write_only=True, required=True
@@ -97,6 +101,7 @@ class ModeratorCreateSerializer(serializers.ModelSerializer):
         fields = [
             "first_name",
             "last_name",
+            "father_name",
             "phone",
             "password",
             "region",
