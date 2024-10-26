@@ -6,9 +6,13 @@ from rest_framework.response import Response
 
 from core.apps.classcom.choices import Role
 from core.apps.classcom.models import Moderator, Document
-from core.apps.classcom.serializers import DocumentSerializer
+from core.apps.classcom.serializers import (
+    DocumentSerializer,
+    ScienceSerializer,
+    ClassesSerializer,
+)
 from core.http import models
-from core.http.serializers import SchoolTypeSerializer
+from core.http.serializers import SchoolTypeSerializer, ClassGroupSerializer
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -179,3 +183,119 @@ class UserRoleChangeSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.User
         fields = ["role"]
+
+
+class UserDetailSerializer(serializers.ModelSerializer):
+    avatar = serializers.ImageField(max_length=None)
+    school_type = SchoolTypeSerializer()
+    science = ScienceSerializer()
+    classes = ClassesSerializer()
+    class_group = ClassGroupSerializer()
+    resource_creatable = serializers.SerializerMethodField(read_only=True)
+    plan_creatable = serializers.SerializerMethodField(read_only=True)
+    topic_creatable = serializers.SerializerMethodField(read_only=True)
+    is_contracted = serializers.SerializerMethodField(read_only=True)
+    document = DocumentSerializer(many=True)
+
+    class Meta:
+        fields = [
+            "id",
+            "avatar",
+            "first_name",
+            "last_name",
+            "father_name",
+            "phone",
+            "role",
+            "region",
+            "district",
+            "science_group",
+            "science",
+            "classes",
+            "school_type",
+            "class_group",
+            "institution",
+            "institution_number",
+            "document",
+            "response_file",
+            "resource_creatable",
+            "plan_creatable",
+            "topic_creatable",
+            "is_contracted",
+        ]
+        extra_kwargs = {
+            "role": {"read_only": True},
+            "resource_creatable": {"read_only": True},
+            "plan_creatable": {"read_only": True},
+        }
+        model = models.User
+
+    def get_avatar(self, obj):
+        if obj.avatar:
+            return obj.avatar.url.replace(settings.MEDIA_URL, "/media/")
+        return None
+
+    def is_moderator(self, obj):
+        return obj.role == Role.MODERATOR
+
+    def get_is_contracted(self, obj):
+        if self.is_moderator(obj):
+            try:
+                moderator = Moderator.objects.get(user=obj)
+                return moderator.is_contracted
+            except Moderator.DoesNotExist:
+                return False
+        return False
+
+    def get_resource_creatable(self, obj):
+        if self.is_moderator(obj):
+            try:
+                moderator = Moderator.objects.get(user=obj)
+                return moderator.resource_creatable
+            except Moderator.DoesNotExist:
+                return False
+        return False
+
+    def get_plan_creatable(self, obj):
+        if self.is_moderator(obj):
+            try:
+                moderator = Moderator.objects.get(user=obj)
+                return moderator.plan_creatable
+            except Moderator.DoesNotExist:
+                return False
+        return False
+
+    def get_topic_creatable(self, obj):
+        if self.is_moderator(obj):
+            try:
+                moderator = Moderator.objects.get(user=obj)
+                return moderator.topic_creatable
+            except Moderator.DoesNotExist:
+                return False
+        return False
+
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+        request = self.context.get("request")
+
+        if request and request.user.role == Role.USER:
+            data.pop("is_contracted", None)
+
+        if request and request.headers:
+            language = request.headers.get("Accept-Language", "uz")
+        else:
+            language = "uz"
+
+        if language == "uz":
+            data["default_document"] = (
+                instance.default_document_uz.url
+                if instance.default_document_uz
+                else None
+            )
+        elif language == "ru":
+            data["default_document"] = (
+                instance.default_document_ru.url
+                if instance.default_document_ru
+                else None
+            )
+
+        return data
