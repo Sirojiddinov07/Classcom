@@ -113,6 +113,7 @@ class UserAdmin(
                     "institution_number",
                     "school_type",
                     "class_group",
+                    "classes",
                     "default_document_uz",
                     "default_document_ru",
                 ),
