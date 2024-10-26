@@ -120,6 +120,12 @@ class UserSerializer(serializers.ModelSerializer):
         instance.science_group = validated_data.get(
             "science_group", instance.science_group
         )
+        instance.institution = validated_data.get(
+            "institution", instance.institution
+        )
+        instance.institution_number = validated_data.get(
+            "institution_number", instance.institution_number
+        )
         instance.science = validated_data.get("science", instance.science)
         instance.classes = validated_data.get("classes", instance.classes)
 
