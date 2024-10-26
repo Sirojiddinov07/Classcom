@@ -49,6 +49,7 @@ class RegisterView(views.APIView, services.UserService):
             phone,
             data.get("first_name"),
             data.get("last_name"),
+            data.get("father_name"),
             request.data.get("password"),
             data.get("region"),
             data.get("district"),

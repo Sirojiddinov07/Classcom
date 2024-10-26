@@ -62,6 +62,7 @@ class ModeratorSerializer(serializers.ModelSerializer):
                 phone=data.get("phone"),
                 first_name=data.get("first_name"),
                 last_name=data.get("last_name"),
+                father_name=data.get("father_name"),
                 password=data.get("password"),
                 region_id=data.get("region").id,
                 district_id=data.get("district").id,
