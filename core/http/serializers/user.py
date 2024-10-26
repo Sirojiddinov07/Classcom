@@ -36,6 +36,8 @@ class UserSerializer(serializers.ModelSerializer):
             "classes",
             "school_type",
             "class_group",
+            "institution",
+            "institution_number",
             "document",
             "response_file",
             "resource_creatable",
