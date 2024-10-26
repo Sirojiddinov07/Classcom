@@ -117,8 +117,8 @@ class UserSerializer(serializers.ModelSerializer):
         )
         instance.region = validated_data.get("region", instance.region)
         instance.district = validated_data.get("district", instance.district)
-        instance.science_group = validated_data.get(
-            "science_group", instance.science_group
+        instance.science_group.set(
+            validated_data.get("science_group", instance.science_group.all())
         )
         instance.institution = validated_data.get(
             "institution", instance.institution
