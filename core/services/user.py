@@ -8,7 +8,6 @@ from rest_framework_simplejwt import tokens
 from core import exceptions
 from core.apps.classcom.choices import Role
 from core.http import models
-from core.http.models import ScienceGroups
 from core.services import base_service, sms
 from core.utils import exception
 
@@ -33,7 +32,6 @@ class UserService(base_service.BaseService, sms.SmsService):
         district_id,
         institution,
         institution_number,
-        science_group_id=None,
         science_id=None,
         role=Role.USER,
         school_type_id=None,
@@ -42,11 +40,6 @@ class UserService(base_service.BaseService, sms.SmsService):
         region = get_object_or_404(models.Region, id=region_id)
         district = get_object_or_404(models.District, id=district_id)
 
-        science_group = (
-            None
-            if science_group_id is None
-            else get_object_or_404(ScienceGroups, id=science_group_id)
-        )
         science = (
             None
             if science_id is None
@@ -77,7 +70,6 @@ class UserService(base_service.BaseService, sms.SmsService):
                 "district": district,
                 "institution": institution,
                 "institution_number": institution_number,
-                "science_group": science_group,
                 "science": science,
                 "school_type": school_type,
                 "class_group": class_group,
