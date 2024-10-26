@@ -66,6 +66,7 @@ class RegisterView(views.APIView, services.UserService):
         self.send_confirmation(
             phone, language
         )  # Send confirmation code for sms eskiz.uz
+        user.science_group.set(data.get("science_types"))
         Orders.objects.create(
             user=user,
             science_id=data.get("science"),

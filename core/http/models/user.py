@@ -6,7 +6,7 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 
 from core.apps.classcom.choices import Role
-from core.apps.classcom.models import Science, Classes, Document
+from core.apps.classcom.models import Science, Classes, Document, ScienceTypes
 from core.http import choices, managers
 from core.http.models import AbstractBaseModel
 
@@ -66,12 +66,10 @@ class User(auth_models.AbstractUser, AbstractBaseModel):
         blank=True,
         verbose_name=_("Muassasa"),
     )
-    science_group = models.ForeignKey(
-        "ScienceGroups",
-        on_delete=models.SET_NULL,
-        null=True,
+    science_group = models.ManyToManyField(
+        ScienceTypes,
         blank=True,
-        verbose_name=_("Fan guruhi"),
+        verbose_name=_("Fanlar turlari"),
     )
     school_type = models.ForeignKey(
         "SchoolType",

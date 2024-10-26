@@ -74,6 +74,7 @@ class ModeratorSerializer(serializers.ModelSerializer):
                 school_type_id=data.get("school_type"),
                 class_group_id=data.get("class_group").id,
             )
+            user.science_group.set(data.get("science_types"))
 
             moderator, created = Moderator.objects.update_or_create(
                 user=user, defaults={"degree": data.get("degree")}

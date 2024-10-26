@@ -10,6 +10,7 @@ from core.apps.classcom.serializers import (
     DocumentSerializer,
     ScienceSerializer,
     ClassesSerializer,
+    ScienceTypesSerializer,
 )
 from core.http import models
 from core.http.serializers import SchoolTypeSerializer, ClassGroupSerializer
@@ -119,6 +120,12 @@ class UserSerializer(serializers.ModelSerializer):
         instance.science_group = validated_data.get(
             "science_group", instance.science_group
         )
+        instance.institution = validated_data.get(
+            "institution", instance.institution
+        )
+        instance.institution_number = validated_data.get(
+            "institution_number", instance.institution_number
+        )
         instance.science = validated_data.get("science", instance.science)
         instance.classes = validated_data.get("classes", instance.classes)
 
@@ -191,6 +198,7 @@ class UserDetailSerializer(serializers.ModelSerializer):
     science = ScienceSerializer()
     classes = ClassesSerializer()
     class_group = ClassGroupSerializer()
+    science_group = ScienceTypesSerializer(many=True)
     resource_creatable = serializers.SerializerMethodField(read_only=True)
     plan_creatable = serializers.SerializerMethodField(read_only=True)
     topic_creatable = serializers.SerializerMethodField(read_only=True)
