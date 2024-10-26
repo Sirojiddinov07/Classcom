@@ -55,7 +55,6 @@ class RegisterView(views.APIView, services.UserService):
             data.get("district"),
             data.get("institution"),
             data.get("institution_number"),
-            data.get("science_group"),
             data.get("science"),
             data.get("role"),
             data.get("school_type"),
