@@ -22,7 +22,7 @@ class TMRAppealSerializer(serializers.ModelSerializer):
         context = super().to_representation(instance)
         from core.apps.classcom.serializers import TmrFilesSerializer
 
-        context["status"] = instance.get_status_display()
+        context["status"] = instance.status
         context["science"] = instance.science.name
         context["science_type"] = instance.science_type.name
         context["classes"] = instance.classes.name
