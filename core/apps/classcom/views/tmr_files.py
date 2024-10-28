@@ -11,7 +11,7 @@ class TmrFilesAPIView(APIView):
     permission_classes = [permissions.IsAuthenticated, IsModerator]
 
     def get(self, request, *args, **kwargs):
-        files = TmrFiles.objects.filter(user=request.user)
+        files = TmrFiles.objects.filter(tmr_appeal__user=request.user)
         serializer = TmrFilesSerializer(
             files, many=True, context={"request": request}
         )
