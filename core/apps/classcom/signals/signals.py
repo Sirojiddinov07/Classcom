@@ -8,8 +8,6 @@ from ..models import (
     Topic,
     Chat,
     Moderator,
-    ChangeModerator,
-    ChangeModeratorStatus,
 )
 from ..models.feedback import Answer
 
@@ -97,24 +95,3 @@ def file_status_pre_save(sender, instance, **kwargs):
             message_uz="Shartnoma qabul qilindi",
             message_ru="Договор принят",
         )
-
-
-@receiver(post_save, sender=ChangeModerator)
-def change_moderator_status(sender, instance, **kwargs):
-    if instance.status == ChangeModeratorStatus.ACCEPTED:
-        moderator = Moderator.objects.get(user=instance.user)
-        if moderator:
-            moderator.science.set([instance.science])
-
-            moderator.science_type.clear()
-            moderator.science_type.set(instance.science_type.all())
-
-            moderator.classes.set([instance.classes])
-
-            moderator.class_groups.set([instance.class_groups])
-            moderator.save()
-            Notification.objects.create(
-                user=instance.user,
-                message_uz="Arizangiz qabul qilindi",
-                message_ru="Ваша заявка принята",
-            )

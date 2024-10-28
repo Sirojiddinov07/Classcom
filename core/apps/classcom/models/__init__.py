@@ -21,6 +21,5 @@ from ...payments.models import *  # noqa
 from .weeks import *  # noqa
 from .documents import *  # noqa
 from .ai import *  # noqa
-from .changing import *  # noqa
-from .rtm_appeal import *  # noqa
+from .tmr_appeal import *  # noqa
 from .tmr_files import *  # noqa

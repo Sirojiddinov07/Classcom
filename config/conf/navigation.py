@@ -72,19 +72,6 @@ PAGES = [
                     request.user, "view_teacher"
                 ),
             },
-            {
-                "title": _("Moderatorni arizasi"),
-                "icon": "task_alt",
-                "link": reverse_lazy(
-                    "admin:classcom_changemoderator_changelist"
-                ),
-                "permission": lambda request: user_has_group_or_permission(
-                    request.user, "view_changemoderator"
-                ),
-                "badge": lambda: __import__(
-                    "core.apps.classcom.models"
-                ).apps.classcom.models.ChangeModerator.get_pending(),
-            },
         ],
     },
     {
@@ -118,13 +105,13 @@ PAGES = [
             {
                 "title": _("TMR arizalari"),
                 "icon": "handshake",
-                "link": reverse_lazy("admin:classcom_planappeal_changelist"),
+                "link": reverse_lazy("admin:classcom_tmrappeal_changelist"),
                 "permission": lambda request: user_has_group_or_permission(
-                    request.user, "view_planappeal"
+                    request.user, "view_tmrappeal"
                 ),
                 "badge": lambda: __import__(
                     "core.apps.classcom.models"
-                ).apps.classcom.models.PlanAppeal.get_pending(),
+                ).apps.classcom.models.TMRAppeal.get_pending(),
             },
         ],
     },
