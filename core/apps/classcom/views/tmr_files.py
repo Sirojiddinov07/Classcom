@@ -11,13 +11,7 @@ class TmrFilesAPIView(APIView):
     permission_classes = [permissions.IsAuthenticated, IsModerator]
 
     def get(self, request, *args, **kwargs):
-        tmr_id = request.query_params.get("tmr_id")
-        if not tmr_id:
-            return Response(
-                {"tmr_id": ["This field is required."]},
-                status=status.HTTP_400_BAD_REQUEST,
-            )
-        files = TmrFiles.objects.filter(tmr_appeal=tmr_id)
+        files = TmrFiles.objects.filter(user=request.user)
         serializer = TmrFilesSerializer(
             files, many=True, context={"request": request}
         )
