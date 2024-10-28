@@ -10,13 +10,6 @@ from core.apps.classcom.views.tmr_appeal import IsModerator
 class TmrFilesAPIView(APIView):
     permission_classes = [permissions.IsAuthenticated, IsModerator]
 
-    def get(self, request, *args, **kwargs):
-        files = TmrFiles.objects.filter(tmr_appeal__user=request.user)
-        serializer = TmrFilesSerializer(
-            files, many=True, context={"request": request}
-        )
-        return Response(serializer.data, status=status.HTTP_200_OK)
-
     def post(self, request, *args, **kwargs):
         tmr_id = request.data.get("tmr_appeal")
         if not tmr_id:

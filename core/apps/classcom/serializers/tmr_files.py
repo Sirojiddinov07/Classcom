@@ -1,7 +1,6 @@
 from rest_framework import serializers
 
 from core.apps.classcom.models import TmrFiles
-from core.apps.classcom.serializers import TMRAppealSerializer
 
 
 class TmrFilesSerializer(serializers.ModelSerializer):
@@ -24,5 +23,4 @@ class TmrFilesSerializer(serializers.ModelSerializer):
     def to_representation(self, instance):
         context = super().to_representation(instance)
         context["url"] = instance.file.url
-        context["tmr_appeal"] = TMRAppealSerializer(instance.tmr_appeal).data
         return context

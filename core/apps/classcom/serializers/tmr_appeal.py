@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from core.apps.classcom.models import TMRAppeal
+from core.apps.classcom.models import TMRAppeal, TmrFiles
 
 
 class TMRAppealSerializer(serializers.ModelSerializer):
@@ -20,11 +20,15 @@ class TMRAppealSerializer(serializers.ModelSerializer):
 
     def to_representation(self, instance):
         context = super().to_representation(instance)
+        from core.apps.classcom.serializers import TmrFilesSerializer
+
         context["status"] = instance.get_status_display()
         context["science"] = instance.science.name
         context["science_type"] = instance.science_type.name
         context["classes"] = instance.classes.name
         context["class_groups"] = instance.class_groups.name
+        files = TmrFiles.objects.filter(tmr_appeal=instance)
+        context["files"] = TmrFilesSerializer(files, many=True).data
         return context
 
     def create(self, validated_data):
