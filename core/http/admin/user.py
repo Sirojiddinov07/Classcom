@@ -76,7 +76,7 @@ class UserAdmin(
         "show_status_customized_color",
         "status",
     ]
-    filter_horizontal = ("science_group",)
+    filter_horizontal = ("science_group", "groups", "user_permissions")
     search_fields = ["phone", "first_name", "last_name", "father_name"]
     readonly_fields = ("docs_links",)
     list_filter = ["role", "status_file", "status"]
