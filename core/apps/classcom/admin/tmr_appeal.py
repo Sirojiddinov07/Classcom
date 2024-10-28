@@ -10,6 +10,7 @@ from core.apps.classcom.models import TMRAppeal, TMRAppealStatus, TmrFiles
 @admin.register(TMRAppeal)
 class TMRAppealAdmin(ModelAdmin):
     list_display = [
+        "id",
         "user",
         "show_status_customized_color",
         "science",
