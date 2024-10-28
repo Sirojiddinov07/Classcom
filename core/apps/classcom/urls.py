@@ -41,14 +41,14 @@ router.register("notification", NotificationViewSet, basename="notification")
 urlpatterns = [
     path("", include(router.urls)),
     path(
-        "change-moderator/",
-        views.ChangeModeratorAPIView.as_view(),
-        name="change-moderator",
+        "tmr_appeal/",
+        views.TMRAppealAPIView.as_view(),
+        name="moderator-resource",
     ),
     path(
-        "plan-appeal/",
-        views.PlanAppealView.as_view(),
-        name="plan-appeal",
+        "tmr_files/",
+        views.TmrFilesAPIView.as_view(),
+        name="moderator-resource",
     ),
     path(
         "create-notification-form/",

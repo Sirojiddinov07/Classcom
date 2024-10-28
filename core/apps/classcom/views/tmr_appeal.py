@@ -1,37 +1,25 @@
 from django.db.models import Q
-from rest_framework import status
-from rest_framework.permissions import IsAuthenticated
+from rest_framework import status, permissions
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from core.apps.classcom.models import PlanAppeal
-from core.apps.classcom.serializers.rtm_appeal import PlanAppealSerializer
+from core.apps.classcom.choices import Role
+from core.apps.classcom.models import TMRAppeal
+from core.apps.classcom.serializers.tmr_appeal import TMRAppealSerializer
 from core.apps.classcom.views import CustomPagination
 
 
-class PlanAppealView(APIView):
-    permission_classes = [IsAuthenticated]
+class IsModerator(permissions.BasePermission):
+    def has_permission(self, request, view):
+        return request.user and request.user.role == Role.MODERATOR
 
-    def post(self, request, *args, **kwargs):
-        serializer = PlanAppealSerializer(
-            data=request.data, context={"request": request}
-        )
-        if serializer.is_valid():
-            try:
-                instance = serializer.save()
-                return Response(
-                    PlanAppealSerializer(instance).data,
-                    status=status.HTTP_201_CREATED,
-                )
-            except Exception as e:
-                return Response(
-                    {"detail": str(e)}, status=status.HTTP_400_BAD_REQUEST
-                )
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    def get(self, request, *args, **kwargs):
-        queryset = PlanAppeal.objects.filter(user=request.user)
+class TMRAppealAPIView(APIView):
+    permission_classes = [permissions.IsAuthenticated, IsModerator]
 
+    def get(self, request):
+        user = request.user
+        queryset = TMRAppeal.objects.filter(user=user)
         status = request.query_params.get("status")
         science = request.query_params.get("science")
         science_type = request.query_params.get("science_type")
@@ -55,7 +43,20 @@ class PlanAppealView(APIView):
         paginator = CustomPagination()
         page = paginator.paginate_queryset(queryset, request)
         if page is not None:
-            serializer = PlanAppealSerializer(page, many=True)
+            serializer = TMRAppealSerializer(
+                page, many=True, context={"request": request}
+            )
             return paginator.get_paginated_response(serializer.data)
-        serializer = PlanAppealSerializer(queryset, many=True)
+        serializer = TMRAppealSerializer(
+            queryset, many=True, context={"request": request}
+        )
         return Response(serializer.data)
+
+    def post(self, request, *args, **kwargs):
+        serializer = TMRAppealSerializer(
+            data=request.data, context={"request": request}
+        )
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

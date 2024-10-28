@@ -5,9 +5,15 @@ from core.http.models import AbstractBaseModel
 
 
 class TmrFiles(AbstractBaseModel):
+    tmr_appeal = models.ForeignKey(
+        "TMRAppeal",
+        on_delete=models.CASCADE,
+        verbose_name=_("TMR"),
+        related_name="files",
+    )
     title = models.CharField(_("Nomi"), max_length=255, blank=True, null=True)
     description = models.TextField(_("Tasnifi"), blank=True, null=True)
-    file = models.FileField(_("Fayl"), upload_to="documents/%Y/%m/%d/")
+    file = models.FileField(_("Fayl"), upload_to="tmr/%Y/%m/%d/")
     is_active = models.BooleanField(_("Holati"), default=True)
     type = models.CharField(_("Turi"), max_length=255, blank=True, null=True)
     size = models.BigIntegerField(_("Hajmi"), blank=True, null=True, default=0)
