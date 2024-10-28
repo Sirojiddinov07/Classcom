@@ -19,6 +19,7 @@ class TMRAppealAPIView(APIView):
 
     def get(self, request):
         user = request.user
+        id = request.query_params.get("id")
         queryset = TMRAppeal.objects.filter(user=user)
         status = request.query_params.get("status")
         science = request.query_params.get("science")
@@ -26,8 +27,10 @@ class TMRAppealAPIView(APIView):
         classes = request.query_params.get("classes")
         class_groups = request.query_params.get("class_groups")
 
-        if status or science or science_type or classes or class_groups:
+        if id or status or science or science_type or classes or class_groups:
             filters = Q()
+            if id:
+                filters &= Q(id=id)
             if status:
                 filters &= Q(status=status)
             if science:
