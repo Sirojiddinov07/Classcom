@@ -16,7 +16,7 @@ def send_congratulation_sms(phone, first_name, last_name):
         service.send_sms(
             phone,
             _(
-                "Assalomu alaykum %(first_name)s %(last_name)s %(father_name)s sizni https://classcom.uz "
+                "Assalomu alaykum %(last_name)s %(first_name)s %(father_name)s sizni https://classcom.uz "
                 "o’qituvchining virtual kаbinetida muallif sifatida tasdiqlanganingiz bilan tabriklaymiz!!!"
             )
             % {"first_name": first_name, "last_name": last_name},
