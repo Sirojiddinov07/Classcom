@@ -18,6 +18,7 @@ class Chat(AbstractBaseModel):
     is_answered = models.BooleanField(
         default=False, verbose_name=_("Javob berildi")
     )
+    is_read = models.BooleanField(default=False, verbose_name=_("O'qildi"))
 
     @classmethod
     def get_unanswered(cls):
