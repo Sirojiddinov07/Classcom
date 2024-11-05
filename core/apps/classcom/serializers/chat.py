@@ -18,6 +18,7 @@ class ChatSerializer(serializers.ModelSerializer):
             "responsed",
             "response",
             "response_time",
+            "is_read",
         ]
 
     def get_user(self, obj):
