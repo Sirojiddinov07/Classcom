@@ -84,9 +84,7 @@ urlpatterns = [
         views.ModeratorResourceTypesAPIView.as_view(),
         name="moderator",
     ),
-    path(
-        "chats/", views.ChatListCreateView.as_view(), name="chat-list-create"
-    ),
+    path("chats/", views.ChatView.as_view(), name="chat-list-create"),
     path(
         "science-info/<int:science_id>/",
         views.ModeratorCountsByScienceAndClassAPIView.as_view(),
