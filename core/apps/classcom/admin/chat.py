@@ -15,6 +15,7 @@ class ChatAdmin(ModelAdmin):
         "response",
         "response_time",
         "is_answered",
+        "is_read",
     )
     exclude = ("response_time",)
     search_fields = ("user__first_name", "user__last_name", "user__phone")
