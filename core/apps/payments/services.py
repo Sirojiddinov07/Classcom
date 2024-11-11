@@ -68,8 +68,8 @@ class UzumService:
                             "receiptParams": {
                                 "spic": "10305008002000000",
                                 "packageCode": "1514296",
-                                "vatPercent": 99,
-                                "PINFL": "11111111111111",
+                                "vatPercent": 0,
+                                "TIN": "207154122",
                             },
                         }
                     ],
