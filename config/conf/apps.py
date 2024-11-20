@@ -10,7 +10,6 @@ INSTALLED_APPS = [
     "django_redis",
     "rest_framework_simplejwt",
     "crispy_forms",
-    "import_export",
     "django_ckeditor_5",
     "polymorphic",
     "drf_spectacular",
