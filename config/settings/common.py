@@ -17,12 +17,12 @@ DATA_UPLOAD_MAX_MEMORY_SIZE = 734003200  # 700 MB
 FILE_UPLOAD_MAX_MEMORY_SIZE = 734003200  # 700 MB
 
 INSTALLED_APPS = [
-    "daphne",
+    # "daphne",
     # Design admin panel
     "unfold",
     "unfold.contrib.filters",
     "unfold.contrib.forms",
-    "unfold.contrib.import_export",
+    # "unfold.contrib.import_export",
     "unfold.contrib.guardian",
     "unfold.contrib.simple_history",
     "django_select2",
