@@ -4,6 +4,15 @@ from django.templatetags.static import static
 # from django.utils.translation import gettext_lazy as _
 from . import navigation
 
+
+def environment_callback(request):
+    """
+    Callback has to return a list of two values represeting text value and the color
+    type of the label displayed in top right corner.
+    """
+    return ["Production", "info"]  # info, danger, warning, success
+
+
 UNFOLD = {
     "SITE_TITLE": "CLASSCOM.UZ",
     "SITE_HEADER": "CLASSCOM.UZ",
@@ -27,6 +36,7 @@ UNFOLD = {
     "SITE_SYMBOL": "speed",  # symbol from icon set
     "SHOW_HISTORY": True,  # show/hide "History" button, default: True
     "SHOW_VIEW_ON_SITE": True,
+    "ENVIRONMENT": "config.conf.unfold.environment_callback",
     "LOGIN": {
         "image": lambda request: static("images/login.jpg"),
     },
