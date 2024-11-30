@@ -42,7 +42,11 @@ class Orders(AbstractBaseModel):
         verbose_name_plural = _("Buyurtmalar")
 
     def __str__(self) -> str:
-        return f"{self.id} {self.user.first_name}"
+        return (
+            f"{self.id} {self.user.last_name} {self.user.first_name} "
+            f"{self.user.father_name} - {self.science.name} {self.user.region.region} "
+            f"{self.user.district.district} {self.user.role}"
+        )
 
 
 class Payments(AbstractBaseModel):
