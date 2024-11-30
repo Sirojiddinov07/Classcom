@@ -42,11 +42,18 @@ class Orders(AbstractBaseModel):
         verbose_name_plural = _("Buyurtmalar")
 
     def __str__(self) -> str:
-        return (
-            f"{self.id} {self.user.last_name} {self.user.first_name} "
-            f"{self.user.father_name} - {self.science.name} {self.user.region.region} "
-            f"{self.user.district.district} {self.user.role}"
-        )
+        if (
+            self.user
+            and self.user.region
+            and self.user.district
+            and self.science
+        ):
+            return (
+                f"{self.id} {self.user.last_name} {self.user.first_name} "
+                f"{self.user.father_name} - {self.science.name} {self.user.region.region} "
+                f"{self.user.district.district} {self.user.role}"
+            )
+        return f"{self.id} - Incomplete User Information"
 
 
 class Payments(AbstractBaseModel):
@@ -67,7 +74,18 @@ class Payments(AbstractBaseModel):
         verbose_name_plural = _("Payments")
 
     def __str__(self) -> str:
-        return f"{self.id} {self.order.id}"
+        if (
+            self.order.user
+            and self.order.user.region
+            and self.order.user.district
+            and self.order.science
+        ):
+            return (
+                f"{self.id} {self.order.user.last_name} {self.order.user.first_name} "
+                f"{self.order.user.father_name} - {self.order.science.name} {self.order.user.region.region} "
+                f"{self.order.user.district.district} {self.order.user.role}"
+            )
+        return f"{self.id} - Incomplete User Information"
 
 
 class Plans(AbstractBaseModel):
