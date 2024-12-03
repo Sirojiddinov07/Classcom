@@ -75,6 +75,7 @@ class UserAdmin(
         "role",
         "show_status_customized_color",
         "status",
+        "created_at",
     ]
     filter_horizontal = ("science_group", "groups", "user_permissions")
     search_fields = ["phone", "first_name", "last_name", "father_name"]
