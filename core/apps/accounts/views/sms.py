@@ -65,12 +65,12 @@ class RegisterView(views.APIView, services.UserService):
         self.send_confirmation(
             phone, language
         )  # Send confirmation code for sms eskiz.uz
-        user.science_group.set(data.get("science_types"))
+        user.science_group.set(data.get("science_group"))
         Orders.objects.create(
             user=user,
             science_id=data.get("science"),
             class_type_id=data.get("class_group"),
-        ).types.set(data.get("science_types"))
+        ).types.set(data.get("science_group"))
         return response.Response(
             {"detail": _(enums.Messages.SEND_MESSAGE) % {"phone": phone}},
             status=status.HTTP_202_ACCEPTED,

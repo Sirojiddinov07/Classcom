@@ -78,7 +78,7 @@ class ModeratorSerializer(serializers.ModelSerializer):
             moderator, created = Moderator.objects.update_or_create(
                 user=user, defaults={"degree": data.get("degree")}
             )
-            user.science_group.set(data.get("science_types"))
+            user.science_group.set(data.get("science_group"))
 
             for doc_data in docs_data:
                 document = Document.objects.create(
