@@ -128,6 +128,9 @@ class UserSerializer(serializers.ModelSerializer):
         )
         instance.science = validated_data.get("science", instance.science)
         instance.classes = validated_data.get("classes", instance.classes)
+        instance.class_group = validated_data.get(
+            "class_group", instance.class_group
+        )
 
         for key in request.data:
             if key.startswith("description[") and key.endswith("]"):
