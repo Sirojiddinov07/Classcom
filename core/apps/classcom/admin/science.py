@@ -18,3 +18,4 @@ class ScienceAdmin(ModelAdmin, TabbedTranslationAdmin):
     ordering = ("order_number",)
     list_filter = ("types",)
     filter_horizontal = ("types",)
+    autocomplete_fields = ("science_grp", "types", "class_group")

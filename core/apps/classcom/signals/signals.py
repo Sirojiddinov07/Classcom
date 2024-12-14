@@ -67,6 +67,7 @@ def file_status_m2m(sender, instance, action, **kwargs):
         if (
             instance.document.exists()
             and instance.status_file == ContractStatus.NO_FILE
+            or instance.status_file == ContractStatus.REJECTED
         ):
             instance.status_file = ContractStatus.WAITING
             instance.save()

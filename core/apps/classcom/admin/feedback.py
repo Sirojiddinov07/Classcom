@@ -15,6 +15,7 @@ class InlineAnswer(TabularInline):
 class FeedbackAdmin(ModelAdmin):
     inlines = [InlineAnswer]
     list_display = ("id", "full_name", "feedback_type", "answered")
+    autocomplete_fields = ("user",)
 
     def full_name(self, obj):
         return f"{obj.user.first_name} {obj.user.last_name}"
@@ -27,3 +28,4 @@ class AnswerAdmin(ModelAdmin):
     list_display = ("id", "feedback", "body")
     search_fields = ("feedback", "body")
     list_filter = ("feedback",)
+    autocomplete_fields = ("feedback",)

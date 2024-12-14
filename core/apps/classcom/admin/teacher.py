@@ -22,6 +22,7 @@ class TeacherAdmin(ModelAdmin):
         "payment_status",
         "science",
     )
+    autocomplete_fields = ("user", "science")
     filter_horizontal = ("science",)
 
     def user(self, obj):

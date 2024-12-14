@@ -22,7 +22,14 @@ class ScheduleAdmin(ModelAdmin):
     )
 
     search_fields = ("user__first_name", "user__last_name", "science__name")
-
+    autocomplete_fields = (
+        "user",
+        "science",
+        "classes",
+        "class_type",
+        "science_type",
+        "class_group",
+    )
     list_filter = ("weekday",)
 
     def classes(self, obj):
@@ -41,6 +48,7 @@ class ScheduleChoicesAdmin(ModelAdmin):
     list_display = ("id", "user", "quarter", "week")
     search_fields = ("user__first_name", "user__last_name", "schedule__name")
     list_filter = ("week", "quarter")
+    autocomplete_fields = ("user", "schedule_template", "quarter", "week")
 
 
 @admin.register(ScheduleTemplate)
@@ -48,3 +56,4 @@ class ScheduleTemplateAdmin(ModelAdmin):
     list_display = ("id", "name")
     search_fields = ("name",)
     list_filter = ("name",)
+    autocomplete_fields = ("schedules", "user")

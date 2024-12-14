@@ -8,6 +8,12 @@ class Document(AbstractBaseModel):
     title = models.CharField(_("Nomi"), max_length=255, blank=True, null=True)
     description = models.TextField(_("Tasnifi"), blank=True, null=True)
     file = models.FileField(_("Fayl"), upload_to="documents/%Y/%m/%d/")
+    response_file = models.FileField(
+        _("Javob fayli"),
+        upload_to="documents/%Y/%m/%d/",
+        blank=True,
+        null=True,
+    )
     is_active = models.BooleanField(_("Holati"), default=True)
     type = models.CharField(_("Turi"), max_length=255, blank=True, null=True)
     size = models.BigIntegerField(_("Hajmi"), blank=True, null=True, default=0)

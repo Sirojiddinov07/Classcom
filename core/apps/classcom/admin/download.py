@@ -12,3 +12,4 @@ class DownloadAdmin(ModelAdmin):
         "date",
         "media",
     )
+    autocomplete_fields = ("user", "media")

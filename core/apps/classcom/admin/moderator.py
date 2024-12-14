@@ -36,6 +36,7 @@ class ModeratorAdmin(ModelAdmin):
     )
     ordering = ("-updated_at",)
     readonly_fields = ("docs_links", "balance")
+    autocomplete_fields = ("user",)
     fieldsets = (
         (
             None,

@@ -4,6 +4,8 @@ from django.dispatch import receiver
 from core.apps.accounts.tasks import send_congratulation_sms
 from core.apps.classcom.choices import Role
 from core.apps.classcom.models import Moderator
+from core.apps.websocket.models import Notification
+from core.http.models import ContractStatus
 
 
 @receiver(pre_save, sender=Moderator)
@@ -15,7 +17,20 @@ def check_is_contracted_change(sender, instance, **kwargs):
                 f"Old: {old_instance.is_contracted} New: {instance.is_contracted}"
             )
             instance.user.role = Role.USER
+            instance.user.status = False
+            instance.user.status_file = ContractStatus.REJECTED
+
+            for doc in instance.user.document.all():
+                doc.is_active = False
+                doc.response_file = instance.user.response_file
+                doc.save()
+            instance.user.response_file = None
             instance.user.save()
+            Notification.objects.create(
+                user=instance.user,
+                message_uz="Sizning moderatorlik so'rovingiz rad etildi",
+                message_ru="Ваш запрос на модераторство был отклонен",
+            )
             print("Moderator role changed to user")
         elif not old_instance.is_contracted and instance.is_contracted:
             print(
