@@ -15,6 +15,7 @@ class ContractStatus(models.TextChoices):
     NO_FILE = "NO_FILE", _("Hujjat yuklanmagan")
     WAITING = "WAITING", _("Hujjat topshirgan")
     ACCEPTED = "ACCEPTED", _("Shartnoma tuzilgan")
+    REJECTED = "REJECTED", _("Shartnoma bekor qilingan")
 
 
 class User(auth_models.AbstractUser, AbstractBaseModel):

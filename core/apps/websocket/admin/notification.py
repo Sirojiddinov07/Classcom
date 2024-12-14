@@ -23,6 +23,7 @@ class NotificationAdmin(ModelAdmin, TabbedTranslationAdmin):
         "user__phone",
     )
     list_filter = ("is_read", "is_sending")
+    autocomplete_fields = ("user",)
 
     def full_name(self, obj):
         return f"{obj.user.first_name} {obj.user.last_name}"

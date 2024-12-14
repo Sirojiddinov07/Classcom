@@ -21,6 +21,7 @@ class DaysOffAdmin(ModelAdmin):
         "reason",
     )
     filter_horizontal = ("science", "_class")
+    autocomplete_fields = ("user", "science", "_class")
 
     def full_name(self, obj):
         return f"{obj.user.first_name} {obj.user.last_name}"

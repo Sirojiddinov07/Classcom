@@ -34,6 +34,7 @@ class TopicAdmin(ModelAdmin, ImportExportModelAdmin):
     )
     list_editable = ("media_creatable",)
     filter_horizontal = ("media",)
+    autocomplete_fields = ("plan_id", "user", "media")
     list_filter = (PlanFilter, "media_creatable")
     actions = ["make_inactive", "make_active"]
 

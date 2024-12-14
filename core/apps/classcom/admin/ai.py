@@ -14,3 +14,4 @@ class AiAdmin(ModelAdmin):
         "question",
         "answer",
     )
+    autocomplete_fields = ("topic", "user")

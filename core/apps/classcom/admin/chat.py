@@ -20,6 +20,7 @@ class ChatAdmin(ModelAdmin):
     exclude = ("response_time",)
     search_fields = ("user__first_name", "user__last_name", "user__phone")
     list_filter = ("is_answered",)
+    autocomplete_fields = ("user",)
 
     def full_name(self, obj):
         return f"{obj.user.first_name} {obj.user.last_name}"

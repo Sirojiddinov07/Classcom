@@ -23,6 +23,15 @@ class ResourceAdmin(ModelAdmin, TabbedTranslationAdmin):
     )
     ordering = ("order_number",)
     filter_horizontal = ("media",)
+    autocomplete_fields = (
+        "user",
+        "media",
+        "category",
+        "category_type",
+        "type",
+        "classes",
+        "science",
+    )
 
     def full_name(self, obj):
         return f"{obj.user.first_name} {obj.user.last_name}"

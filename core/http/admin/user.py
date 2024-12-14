@@ -91,6 +91,7 @@ class UserAdmin(
                     "username",
                     "phone",
                     "password",
+                    "document",
                     "docs_links",
                     "response_file",
                 )
@@ -157,9 +158,17 @@ class UserAdmin(
     def docs_links(self, obj):
         links = [
             format_html(
+                '<a href="{}" target="_blank">{}</a> - {}<br>'
                 '<a href="{}" target="_blank">{}</a><br>',
                 doc.file.url,
                 doc.title,
+                _("Aktiv") if doc.is_active else _("Bekor qilingan"),
+                doc.response_file.url if doc.response_file else "#",
+                (
+                    _("Response File")
+                    if doc.response_file
+                    else _("No Response File")
+                ),
             )
             for doc in obj.document.all()
         ]
@@ -244,9 +253,21 @@ class UserAdmin(
         ordering="status",
         label={
             ContractStatus.ACCEPTED: "success",  # green
-            ContractStatus.NO_FILE: "warning",  # orange
-            ContractStatus.WAITING: "danger",  # red
+            ContractStatus.NO_FILE: "info",  # orange
+            ContractStatus.WAITING: "warning",  # red
+            ContractStatus.REJECTED: "danger",  # red
         },
     )
     def show_status_customized_color(self, obj):
         return obj.status_file, obj.get_status_file_display()
+
+    # def save_model(self, request, obj, form, change):
+    #     if "response_file" in form.changed_data:
+    #         obj.save(update_fields=["response_file"])
+    #     else:
+    #         super().save_model(request, obj, form, change)
+    #
+    # def has_change_permission(self, request, obj=None):
+    #     if obj and "response_file" in request.POST:
+    #         return True
+    #     return super().has_change_permission(request, obj)
