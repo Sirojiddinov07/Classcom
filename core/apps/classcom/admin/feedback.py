@@ -16,6 +16,12 @@ class FeedbackAdmin(ModelAdmin):
     inlines = [InlineAnswer]
     list_display = ("id", "full_name", "feedback_type", "answered")
     autocomplete_fields = ("user",)
+    search_fields = (
+        "user__first_name",
+        "user__last_name",
+        "feedback_type",
+        "body",
+    )
 
     def full_name(self, obj):
         return f"{obj.user.first_name} {obj.user.last_name}"

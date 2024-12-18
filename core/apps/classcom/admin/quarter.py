@@ -12,3 +12,4 @@ class QuarterAdmin(ModelAdmin):
         "start_date",
         "end_date",
     )
+    search_fields = ("choices",)
