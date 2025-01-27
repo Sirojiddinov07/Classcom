@@ -1,5 +1,6 @@
 from .category import *  # noqa
 from .classes import *  # noqa
+from .electron_resource import *  # noqa
 from .language import *  # noqa
 from .media import *  # noqa
 from .notification import *  # noqa

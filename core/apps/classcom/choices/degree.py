@@ -10,6 +10,7 @@ class Degree(models.TextChoices):
     )  # noqa
     AUTHOR = "AUTHOR", _("Darslik muallifi")
     POPULAR = "POPULAR", _("Ommlashtirilgan")
+    METHODIST = "METHODIST", _("Metodist")
 
 
 class ResourceDegree(models.TextChoices):

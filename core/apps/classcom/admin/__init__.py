@@ -21,3 +21,4 @@ from .documents import *  # noqa
 from .ai import *  # noqa
 from .tmr_files import *  # noqa
 from .tmr_appeal import *  # noqa
+from .electron_resource import *  # noqa

@@ -82,6 +82,16 @@ class UserAdmin(
     readonly_fields = ("docs_links",)
     list_filter = ["role", "status_file", "status"]
     inlines = [ModeratorInline]
+    autocomplete_fields = [
+        "region",
+        "district",
+        "science_group",
+        "school_type",
+        "class_group",
+        "classes",
+        "science",
+        "document",
+    ]
     ordering = ["-updated_at"]
     fieldsets = (
         (
@@ -91,7 +101,6 @@ class UserAdmin(
                     "username",
                     "phone",
                     "password",
-                    "document",
                     "docs_links",
                     "response_file",
                 )

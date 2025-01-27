@@ -15,7 +15,7 @@ class Moderator(AbstractBaseModel):
     balance = models.BigIntegerField(default=0, verbose_name=_("Balans"))
     degree = models.CharField(
         max_length=15,
-        choices=choices.Degree.choices,
+        choices=choices.Degree,
         default=choices.Degree.AUTHOR,
         verbose_name=_("Daraja"),
     )
