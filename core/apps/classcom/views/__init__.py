@@ -23,3 +23,4 @@ from .ai import *  # noqa
 from .notification import *  # noqa
 from .tmr_appeal import *  # noqa
 from .tmr_files import *  # noqa
+from .electron_resource import *  # noqa

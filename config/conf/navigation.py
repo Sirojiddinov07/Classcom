@@ -119,36 +119,66 @@ PAGES = [
         "title": _("Elektron resurslar"),
         "separator": True,  # Top border
         "items": [
-            {
-                "title": _("Elektron resurslar"),
-                "icon": "picture_as_pdf",
-                "link": reverse_lazy("admin:classcom_resource_changelist"),
-                "permission": lambda request: user_has_group_or_permission(
-                    request.user, "view_resource"
-                ),
-            },
-            {
-                "title": _("Resurs turlari"),
-                "icon": "border_color",
-                "link": reverse_lazy("admin:classcom_resourcetype_changelist"),
-                "permission": lambda request: user_has_group_or_permission(
-                    request.user, "view_resourcetype"
-                ),
-            },
+            # {
+            #     "title": _("Elektron resurslar"),
+            #     "icon": "picture_as_pdf",
+            #     "link": reverse_lazy("admin:classcom_resource_changelist"),
+            #     "permission": lambda request: user_has_group_or_permission(
+            #         request.user, "view_resource"
+            #     ),
+            # },
+            # {
+            #     "title": _("Resurs turlari"),
+            #     "icon": "border_color",
+            #     "link": reverse_lazy("admin:classcom_resourcetype_changelist"),
+            #     "permission": lambda request: user_has_group_or_permission(
+            #         request.user, "view_resourcetype"
+            #     ),
+            # },
+            # {
+            #     "title": _("Kategoriyalar"),
+            #     "icon": "format_list_numbered",
+            #     "link": reverse_lazy("admin:classcom_category_changelist"),
+            #     "permission": lambda request: user_has_group_or_permission(
+            #         request.user, "view_category"
+            #     ),
+            # },
+            # {
+            #     "title": _("Kategoriya turlari"),
+            #     "icon": "format_indent_increase",
+            #     "link": reverse_lazy("admin:classcom_categorytype_changelist"),
+            #     "permission": lambda request: user_has_group_or_permission(
+            #         request.user, "view_categorytype"
+            #     ),
+            # },
             {
                 "title": _("Kategoriyalar"),
-                "icon": "format_list_numbered",
-                "link": reverse_lazy("admin:classcom_category_changelist"),
+                "icon": "format_indent_increase",
+                "link": reverse_lazy(
+                    "admin:classcom_electronresourcecategory_changelist"
+                ),
                 "permission": lambda request: user_has_group_or_permission(
-                    request.user, "view_category"
+                    request.user, "view_elektronresourcecategory"
                 ),
             },
             {
-                "title": _("Kategoriya turlari"),
-                "icon": "format_indent_increase",
-                "link": reverse_lazy("admin:classcom_categorytype_changelist"),
+                "title": _("Sub Kategoriyalar"),
+                "icon": "sort",
+                "link": reverse_lazy(
+                    "admin:classcom_electronresourcesubcategory_changelist"
+                ),
                 "permission": lambda request: user_has_group_or_permission(
-                    request.user, "view_categorytype"
+                    request.user, "view_elektronresourcesubcategory"
+                ),
+            },
+            {
+                "title": _("Elektron resurslar"),
+                "icon": "cloud_download",
+                "link": reverse_lazy(
+                    "admin:classcom_electronresource_changelist"
+                ),
+                "permission": lambda request: user_has_group_or_permission(
+                    request.user, "view_elektronresource"
                 ),
             },
         ],

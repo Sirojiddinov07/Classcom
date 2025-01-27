@@ -6,6 +6,12 @@ from core.apps.classcom.views import (
     UnifiedSearchView,
     WeeksByQuarterView,
     CreateNotificationFormView,
+    ElectronResourceCategoryView,
+    ElectronResourceSubCategoryView,
+    ElectronResourceView,
+    ElectronResourceCategoryDetailView,
+    ElectronResourceSubCategoryDetailView,
+    ElectronResourceDetailView,
 )
 from core.apps.websocket.views import NotificationViewSet
 from core.http.views import (
@@ -161,5 +167,35 @@ urlpatterns = [
         "algorithm/",
         views.AlgorithmApiView.as_view(),
         name="algorithm",
+    ),
+    path(
+        "electron-resource/category/",
+        ElectronResourceCategoryView.as_view(),
+        name="electron-resource-category",
+    ),
+    path(
+        "electron-resource/category/<int:pk>/",
+        ElectronResourceCategoryDetailView.as_view(),
+        name="electron-resource-category-detail",
+    ),
+    path(
+        "electron-resource/sub-category/",
+        ElectronResourceSubCategoryView.as_view(),
+        name="electron-resource-sub-category",
+    ),
+    path(
+        "electron-resource/sub-category/<int:pk>/",
+        ElectronResourceSubCategoryDetailView.as_view(),
+        name="electron-resource-sub-category-detail",
+    ),
+    path(
+        "electron-resource/files/",
+        ElectronResourceView.as_view(),
+        name="electron-resource-files",
+    ),
+    path(
+        "electron-resource/files/<int:pk>/",
+        ElectronResourceDetailView.as_view(),
+        name="electron-resource-files-detail",
     ),
 ]

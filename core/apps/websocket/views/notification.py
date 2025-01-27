@@ -16,9 +16,9 @@ class NotificationViewSet(ModelViewSet):
     pagination_class = CustomPagination
 
     def get_queryset(self):
-        return self.queryset.filter(
-            user=self.request.user, is_read=False
-        ).order_by("-created_at")
+        return self.queryset.filter(user=self.request.user).order_by(
+            "-created_at"
+        )
 
     def partial_update(self, request, *args, **kwargs):
         instance = self.get_object()
